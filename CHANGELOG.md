@@ -268,7 +268,13 @@ Foundational work: faster reviews, narrower diffs, and a safety net under the pa
 * **Responsive layout:** **3** cards in one row on 2K-class screens, **2** cards in one row at 1080p (the orphan third card on a second row is hidden via container query), and all **3** stacked vertically on truly narrow / mobile widths.
 * Toggleable in the Home customizer like every other rail; respects the existing performance flags ("Disable rail artwork", "Disable Home album rows").
 
+### Playlists — virtualized tracklist for large playlists
 
+**By [@artplan1](https://github.com/artplan1), PR [#755](https://github.com/Psychotoxical/psysonic/pull/755)**
+
+* Opening a very large playlist (10 000+ tracks) no longer mounts every row into the DOM. The playlist tracklist is windowed with `@tanstack/react-virtual` on the shared app scroll viewport — the same convention as Artists, Composers, and the library card grids.
+* Row rendering moved into a memoized `PlaylistRow` with a stable callback bundle so virtualizer scroll updates do not re-render the full list.
+* Drag-and-drop reordering is preserved: drop-indicator overlay and edge auto-scroll during drags.
 
 ## Changed
 
