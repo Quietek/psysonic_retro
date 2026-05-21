@@ -3723,6 +3723,7 @@ dependencies = [
  "psysonic-audio",
  "psysonic-core",
  "psysonic-integration",
+ "psysonic-library",
  "psysonic-syncfs",
  "reqwest",
  "ringbuf",
@@ -3823,6 +3824,21 @@ dependencies = [
  "tauri",
  "tokio",
  "url",
+ "wiremock",
+]
+
+[[package]]
+name = "psysonic-library"
+version = "1.47.0-dev"
+dependencies = [
+ "psysonic-core",
+ "psysonic-integration",
+ "reqwest",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "tauri",
+ "tokio",
  "wiremock",
 ]
 

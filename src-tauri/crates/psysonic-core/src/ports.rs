@@ -49,3 +49,63 @@ impl PlaybackQueryHandle {
         (self.should_defer_backfill)(track_id)
     }
 }
+
+/// Bridge for the analysis→library back-edge (E2 content_hash): when the
+/// analysis pipeline has the playback-derived `md5_16kb` for a track, it records
+/// it as `track.content_hash` in the library DB. `psysonic-analysis` must not
+/// depend on `psysonic-library`, so the shell crate registers a closure that
+/// captures an `AppHandle` and patches the library; analysis looks this handle
+/// up via `try_state::<…>()` and fires it after a successful seed.
+///
+/// The patch is a no-op when the library has no row for `(server_id, track_id)`
+/// (index off for that server), so the sink is safe to call unconditionally.
+type RecordContentHashFn = Arc<dyn Fn(&str, &str, &str) + Send + Sync + 'static>;
+
+#[derive(Clone)]
+pub struct ContentHashSink {
+    record: RecordContentHashFn,
+}
+
+impl ContentHashSink {
+    pub fn new<F>(record: F) -> Self
+    where
+        F: Fn(&str, &str, &str) + Send + Sync + 'static,
+    {
+        Self { record: Arc::new(record) }
+    }
+
+    /// Record `md5_16kb` as the library `content_hash` for `(server_id, track_id)`.
+    /// Best-effort: the registered closure swallows errors and no-ops when the
+    /// library has no matching row.
+    pub fn record_content_hash(&self, server_id: &str, track_id: &str, md5_16kb: &str) {
+        (self.record)(server_id, track_id, md5_16kb)
+    }
+}
+
+/// Library→analysis readiness probe (E3 enrichment): given `(server_id,
+/// track_id, md5_16kb)`, returns `(waveform_ready, loudness_ready)` from the
+/// analysis cache. `psysonic-library` must not depend on `psysonic-analysis`, so
+/// the shell crate registers a closure that captures an `AppHandle`, looks up the
+/// `AnalysisCache`, and probes the exact key with a legacy `''` fallback —
+/// **read-only, no lazy re-tag**. Library looks this handle up via
+/// `try_state::<…>()`; absent handle ⇒ `(false, false)`.
+type QueryReadinessFn = Arc<dyn Fn(&str, &str, &str) -> (bool, bool) + Send + Sync + 'static>;
+
+#[derive(Clone)]
+pub struct AnalysisReadinessQuery {
+    query: QueryReadinessFn,
+}
+
+impl AnalysisReadinessQuery {
+    pub fn new<F>(query: F) -> Self
+    where
+        F: Fn(&str, &str, &str) -> (bool, bool) + Send + Sync + 'static,
+    {
+        Self { query: Arc::new(query) }
+    }
+
+    /// `(waveform_ready, loudness_ready)` for `(server_id, track_id, md5_16kb)`.
+    pub fn readiness(&self, server_id: &str, track_id: &str, md5_16kb: &str) -> (bool, bool) {
+        (self.query)(server_id, track_id, md5_16kb)
+    }
+}

@@ -68,12 +68,18 @@ export async function apiForServer<T>(
   return apiWithCredentials(server.url, server.username, server.password, endpoint, extra, timeout);
 }
 
-export async function api<T>(endpoint: string, extra: Record<string, unknown> = {}, timeout = 15000): Promise<T> {
+export async function api<T>(
+  endpoint: string,
+  extra: Record<string, unknown> = {},
+  timeout = 15000,
+  signal?: AbortSignal,
+): Promise<T> {
   const { baseUrl, params } = getClient();
   const resp = await axios.get(`${baseUrl}/${endpoint}`, {
     params: { ...params, ...extra },
     paramsSerializer: { indexes: null },
     timeout,
+    signal,
   });
   const data = resp.data?.['subsonic-response'];
   if (!data) throw new Error('Invalid response from server (possibly not a Subsonic server)');
@@ -87,9 +93,16 @@ export function libraryFilterParams(): Record<string, string | number> {
   return activeServerId ? libraryFilterParamsForServer(activeServerId) : {};
 }
 
+/** Navidrome/Subsonic music folder id for the local library index, or undefined for all libraries. */
+export function libraryScopeForServer(serverId: string): string | undefined {
+  const f = useAuthStore.getState().musicLibraryFilterByServer[serverId];
+  if (f === undefined || f === 'all') return undefined;
+  return f;
+}
+
 /** Library folder filter for an explicit saved server (e.g. Now Playing while browsing another). */
 export function libraryFilterParamsForServer(serverId: string): Record<string, string | number> {
-  const f = useAuthStore.getState().musicLibraryFilterByServer[serverId];
-  if (f === undefined || f === 'all') return {};
-  return { musicFolderId: f };
+  const scope = libraryScopeForServer(serverId);
+  if (!scope) return {};
+  return { musicFolderId: scope };
 }

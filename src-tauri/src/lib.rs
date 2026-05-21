@@ -103,6 +103,97 @@ pub fn run() {
                 app.manage(cache);
             }
 
+            // ── Library track store (psysonic-library, PR-5a + PR-5b) ─────
+            // PR-5a brought up the read-only Tauri surface + LibraryRuntime.
+            // PR-5b adds the mutating commands, sync session map, current-job
+            // tracker, and the 30-second background scheduler tick task below
+            // — which sweeps every bound session through
+            // `BackgroundScheduler::tick` while honouring the runtime's
+            // `scheduler_cancel` flag.
+            {
+                let store = psysonic_library::store::LibraryStore::init(app.handle())
+                    .map_err(|e| format!("library store init failed: {e}"))?;
+                let runtime = psysonic_library::LibraryRuntime::new(std::sync::Arc::new(store));
+                app.manage(runtime);
+
+                let app_for_sched = app.handle().clone();
+                tauri::async_runtime::spawn(async move {
+                    use std::sync::atomic::Ordering;
+                    use std::time::Duration;
+                    use tokio::time::MissedTickBehavior;
+
+                    let mut interval = tokio::time::interval(Duration::from_secs(30));
+                    interval.set_missed_tick_behavior(MissedTickBehavior::Skip);
+                    loop {
+                        interval.tick().await;
+                        let Some(state) = app_for_sched
+                            .try_state::<psysonic_library::LibraryRuntime>()
+                        else {
+                            break;
+                        };
+                        if state.scheduler_cancel.load(Ordering::SeqCst) {
+                            break;
+                        }
+                        let sessions = state.snapshot_sessions();
+                        if sessions.is_empty() {
+                            continue;
+                        }
+                        let hint = state.current_playback_hint();
+                        let now_ms = std::time::SystemTime::now()
+                            .duration_since(std::time::UNIX_EPOCH)
+                            .map(|d| d.as_millis().min(i64::MAX as u128) as i64)
+                            .unwrap_or(0);
+                        for session in sessions {
+                            let scope = session.library_scope.clone().unwrap_or_default();
+                            let flags_bits = psysonic_library::repos::SyncStateRepository::new(
+                                &state.store,
+                            )
+                            .get_capability_flags(&session.server_id, &scope)
+                            .ok()
+                            .flatten()
+                            .unwrap_or(0);
+                            let flags = psysonic_library::sync::capability::CapabilityFlags::new(
+                                flags_bits,
+                            );
+                            let subsonic = psysonic_integration::subsonic::SubsonicClient::new(
+                                session.base_url.clone(),
+                                session.username.clone(),
+                                session.password.clone(),
+                            );
+                            let mut sched =
+                                psysonic_library::sync::scheduler::BackgroundScheduler::new(
+                                    &state.store,
+                                    &subsonic,
+                                    session.server_id.clone(),
+                                    scope.clone(),
+                                    flags,
+                                )
+                                .with_playback_hint(hint);
+                            if let Some(tok) = session.navidrome_token.clone() {
+                                sched = sched.with_navidrome_credentials(
+                                    psysonic_library::sync::capability::NavidromeProbeCredentials {
+                                        server_url: session.base_url.clone(),
+                                        bearer_token: tok,
+                                    },
+                                );
+                            }
+                            let foreground_job = state
+                                .current_job()
+                                .is_some_and(|j| j.server_id == session.server_id);
+                            if foreground_job {
+                                sched = sched.with_foreground_sync_job_active(true);
+                            }
+                            let _ = sched.tick(now_ms).await;
+                            // Background ticks stay silent in PR-5b — Tauri
+                            // emit for the scheduler path lands when the
+                            // Settings panel needs it (PR-5c). Manual
+                            // `library_sync_start` already emits via its
+                            // own orchestrator.
+                        }
+                    }
+                });
+            }
+
             audio::cleanup_orphan_stream_spill_dir(app.handle());
 
             // ── Playback-query port (analysis → audio back-edge) ──────────
@@ -125,6 +216,62 @@ pub fn run() {
                     },
                 );
                 app.manage(handle);
+            }
+
+            // ── Content-hash sink (analysis → library E2 back-edge) ───────
+            // After a seed the analysis pipeline records the playback-derived
+            // md5_16kb as `track.content_hash` so id-remap can rebind a track
+            // when the server reassigns ids. Decoupled from psysonic-library
+            // via a psysonic-core port; a no-op when the library has no row for
+            // the (server_id, track_id) — i.e. the index is off for that server.
+            {
+                let app_for_hash = app.handle().clone();
+                let sink = psysonic_core::ports::ContentHashSink::new(
+                    move |server_id: &str, track_id: &str, md5: &str| {
+                        if let Some(runtime) =
+                            app_for_hash.try_state::<psysonic_library::LibraryRuntime>()
+                        {
+                            let _ = psysonic_library::commands::patch_content_hash(
+                                &runtime, server_id, track_id, md5,
+                            );
+                        }
+                    },
+                );
+                app.manage(sink);
+            }
+
+            // ── Analysis-readiness query (library → analysis E3 back-edge) ──
+            // `library_get_track` enrichment asks whether waveform/loudness are
+            // cached for (server_id, track_id, content_hash). Read-only probe:
+            // exact key then legacy '' fallback, no re-tag. Decoupled from
+            // psysonic-analysis via a psysonic-core port.
+            {
+                let app_for_readiness = app.handle().clone();
+                let query = psysonic_core::ports::AnalysisReadinessQuery::new(
+                    move |server_id: &str, track_id: &str, md5: &str| {
+                        let Some(cache) = app_for_readiness
+                            .try_state::<analysis_cache::AnalysisCache>()
+                        else {
+                            return (false, false);
+                        };
+                        let probe = |sid: &str| {
+                            let key = analysis_cache::TrackKey {
+                                server_id: sid.to_string(),
+                                track_id: track_id.to_string(),
+                                md5_16kb: md5.to_string(),
+                            };
+                            let wf = cache.get_waveform(&key).ok().flatten().is_some();
+                            let ld = cache.loudness_row_exists_for_key(&key).unwrap_or(false);
+                            (wf, ld)
+                        };
+                        let (wf, ld) = probe(server_id);
+                        // Legacy '' fallback for rows analysed before E1 wiring.
+                        let wf = wf || (!server_id.is_empty() && probe("").0);
+                        let ld = ld || (!server_id.is_empty() && probe("").1);
+                        (wf, ld)
+                    },
+                );
+                app.manage(query);
             }
 
             // Periodic analysis queue sizes (debug logging mode only).
@@ -426,6 +573,29 @@ pub fn run() {
             psysonic_analysis::commands::analysis_delete_all_waveforms,
             psysonic_analysis::commands::analysis_enqueue_seed_from_url,
             psysonic_analysis::commands::analysis_prune_pending_to_track_ids,
+            psysonic_library::commands::library_get_status,
+            psysonic_library::commands::library_search,
+            psysonic_library::commands::library_live_search,
+            psysonic_library::commands::library_advanced_search,
+            psysonic_library::commands::library_search_cross_server,
+            psysonic_library::commands::library_get_track,
+            psysonic_library::commands::library_get_tracks_batch,
+            psysonic_library::commands::library_get_tracks_by_album,
+            psysonic_library::commands::library_get_artifact,
+            psysonic_library::commands::library_get_facts,
+            psysonic_library::commands::library_get_offline_path,
+            psysonic_library::commands::library_sync_bind_session,
+            psysonic_library::commands::library_sync_clear_session,
+            psysonic_library::commands::library_set_playback_hint,
+            psysonic_library::commands::library_get_playback_hint,
+            psysonic_library::commands::library_sync_start,
+            psysonic_library::commands::library_sync_verify_integrity,
+            psysonic_library::commands::library_sync_cancel,
+            psysonic_library::commands::library_patch_track,
+            psysonic_library::commands::library_put_artifact,
+            psysonic_library::commands::library_put_fact,
+            psysonic_library::commands::library_purge_server,
+            psysonic_library::commands::library_delete_server_data,
             psysonic_syncfs::cache::offline::download_track_offline,
             psysonic_syncfs::cache::offline::cancel_offline_downloads,
             psysonic_syncfs::cache::offline::clear_offline_cancel,

@@ -16,14 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.47.0]
 
-### Settings + Queue polish
-
-**By [@kveld9](https://github.com/kveld9) + [@Psychotoxical](https://github.com/Psychotoxical), adopted from PR [#558](https://github.com/Psychotoxical/psysonic/pull/558), rewritten in PR [#778](https://github.com/Psychotoxical/psysonic/pull/778)**
-
-* Settings toggle rows dim non-toggle content to 0.6 opacity when their switch is off; mutex-disabled rows (Crossfade/Gapless) unchanged.
-* Queue toolbar `Clear` → `Clear queue` across all 9 locales.
-
-
+## Added
 
 ### Servers — edit existing profiles
 
@@ -33,13 +26,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-### Interface Scale — covers the whole window
+### Local library index + search (preview)
 
-**By [@Psychotoxical](https://github.com/Psychotoxical), PR [#781](https://github.com/Psychotoxical/psysonic/pull/781)**
+**By [@Psychotoxical](https://github.com/Psychotoxical) + [@cucadmuh](https://github.com/cucadmuh), PR [#846](https://github.com/Psychotoxical/psysonic/pull/846)**
 
-* Settings → Appearance → Interface Scale now scales sidebar, queue, player bar, modals/portals and the fullscreen player alongside the main content — same behaviour as browser Ctrl+/−.
+* **Settings → Library:** local SQLite track index per server — background initial and delta sync, full resync, integrity verify, and auto-reconcile when the server reports fewer tracks than expected.
+* **Live Search** and **Advanced Search** query the local index when it is ready (fast, offline-capable).
+* **Multi-server UI** (by [@cucadmuh](https://github.com/cucadmuh)): per-server exclude/include; indexing runs one server at a time so SQLite stays responsive; offline servers are retried automatically.
+* Local search results respect the sidebar music-library filter; parallel album fetch during initial sync.
 
 
+
+## Changed
 
 ### Linux — session GDK, WebKitGTK mitigations, and Wayland text
 
@@ -60,20 +58,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-### Fixed
+### Settings + Queue polish
+
+**By [@kveld9](https://github.com/kveld9) + [@Psychotoxical](https://github.com/Psychotoxical), adopted from PR [#558](https://github.com/Psychotoxical/psysonic/pull/558), rewritten in PR [#778](https://github.com/Psychotoxical/psysonic/pull/778)**
+
+* Settings toggle rows dim non-toggle content to 0.6 opacity when their switch is off; mutex-disabled rows (Crossfade/Gapless) unchanged.
+* Queue toolbar `Clear` → `Clear queue` across all 9 locales.
+
+
+
+### Interface Scale — covers the whole window
+
+**By [@Psychotoxical](https://github.com/Psychotoxical), PR [#781](https://github.com/Psychotoxical/psysonic/pull/781)**
+
+* Settings → Appearance → Interface Scale now scales sidebar, queue, player bar, modals/portals and the fullscreen player alongside the main content — same behaviour as browser Ctrl+/−.
+
+
+
+### Radio — card control polish
+
+**By [@Psychotoxical](https://github.com/Psychotoxical), reported by zunoz on Discord, PR [#786](https://github.com/Psychotoxical/psysonic/pull/786)**
+
+* Repeat is disabled while a radio stream plays.
+* Deleting the playing station fades out instead of cutting hard.
+* Play / Stop tooltip on the cover-overlay button; stop uses a Square icon.
+
+
+
+## Fixed
+
+### In-page browse — virtual scroll and cover-art priority
 
 **By [@cucadmuh](https://github.com/cucadmuh), PR [#783](https://github.com/Psychotoxical/psysonic/pull/783)**
 
 * **In-page browse:** virtual artist/album/composer grids and lists no longer lose all rows after deep scroll — `scrollMargin` now targets the in-page overlay viewport, not the locked main route scrollport.
 * **Cover art on browse pages:** `CachedImage` priority scoring follows the real scrolling pane so visible thumbnails win network fetch slots; Artists infinite scroll loads one page per batch instead of re-entrantly queueing many pages during a fast fling.
 
+
+
+### Lucky Mix after server switch
+
 **By [@cucadmuh](https://github.com/cucadmuh), PR [#785](https://github.com/Psychotoxical/psysonic/pull/785)**
 
-* **Lucky Mix after server switch:** starting a mix on the browsed server no longer spams cross-server enqueue errors — unpinned or foreign queues hand off cleanly before batch enqueue.
+* Starting a mix on the browsed server no longer spams cross-server enqueue errors — unpinned or foreign queues hand off cleanly before batch enqueue.
 
-**By [@Psychotoxical](https://github.com/Psychotoxical), PR [#844](https://github.com/Psychotoxical/psysonic/pull/844)**
+### Radio — paused streams stay paused
 
-* **Album view:** bulk "Add to playlist" no longer clears the track selection without opening the playlist picker.
+**By [@Psychotoxical](https://github.com/Psychotoxical), reported by drelabre on GitHub, PR [#786](https://github.com/Psychotoxical/psysonic/pull/786)**
+
+* Pausing a radio stream no longer auto-resumes after about a minute on macOS.
 
 
 
@@ -86,21 +119,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-### Radio — paused streams stay paused
+### Album view — bulk add to playlist selection
 
-**By [@Psychotoxical](https://github.com/Psychotoxical), reported by drelabre on GitHub, PR [#786](https://github.com/Psychotoxical/psysonic/pull/786)**
+**By [@Psychotoxical](https://github.com/Psychotoxical), PR [#844](https://github.com/Psychotoxical/psysonic/pull/844)**
 
-* Pausing a radio stream no longer auto-resumes after about a minute on macOS.
-
-
-
-### Radio — card control polish
-
-**By [@Psychotoxical](https://github.com/Psychotoxical), reported by zunoz on Discord, PR [#786](https://github.com/Psychotoxical/psysonic/pull/786)**
-
-* Repeat is disabled while a radio stream plays.
-* Deleting the playing station fades out instead of cutting hard.
-* Play / Stop tooltip on the cover-overlay button; stop uses a Square icon.
+* Bulk "Add to playlist" no longer clears the track selection without opening the playlist picker.
 
 
 

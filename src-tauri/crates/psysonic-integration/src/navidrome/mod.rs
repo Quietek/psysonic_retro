@@ -7,5 +7,8 @@
 mod client;
 pub mod covers;
 pub mod playlists;
+pub mod probe;
 pub mod queries;
 pub mod users;
+
+pub use client::navidrome_token;
