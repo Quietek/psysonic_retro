@@ -34,6 +34,7 @@ import { PlaybackTime, RemainingTime } from './playerBar/PlaybackClock';
 import { PlayerTrackInfo } from './playerBar/PlayerTrackInfo';
 import { PlayerTransportControls } from './playerBar/PlayerTransportControls';
 import { PlayerSeekbarSection } from './playerBar/PlayerSeekbarSection';
+import { PlayerPlaybackRate } from './playerBar/PlayerPlaybackRate';
 import { PlayerVolume } from './playerBar/PlayerVolume';
 import { PlayerOverflowMenu } from './playerBar/PlayerOverflowMenu';
 import { useFloatingPlayerBar } from '../hooks/useFloatingPlayerBar';
@@ -279,6 +280,10 @@ export default function PlayerBar() {
         </div>
       ) : (
         <>
+          {isLayoutVisible('playbackRate') && (
+            <PlayerPlaybackRate t={t} />
+          )}
+
           {isLayoutVisible('equalizer') && (
             <button
               className={`player-btn player-btn-sm player-eq-btn ${eqOpen ? 'active' : ''}`}

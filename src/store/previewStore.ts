@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import { invoke } from '@tauri-apps/api/core';
 import { usePlayerStore } from './playerStore';
 import { useAuthStore } from './authStore';
-import { useOrbitStore } from './orbitStore';
+import { isOrbitPlaybackSyncActive } from '../utils/orbit';
 
 /** Minimal track info needed to surface the preview in the player bar UI. */
 export interface PreviewingTrack {
@@ -55,7 +55,7 @@ const PREVIEW_VOLUME_MATCH = true;
  * preview-specific gain, so we pre-multiply here). Master headroom is added on
  * the Rust side.
  */
-function computePreviewVolume(): number {
+export function computePreviewVolume(): number {
   const auth = useAuthStore.getState();
   let volume = usePlayerStore.getState().volume;
   if (PREVIEW_VOLUME_MATCH && auth.normalizationEngine === 'loudness') {
@@ -82,10 +82,7 @@ export const usePreviewStore = create<PreviewState>((set, get) => ({
     // preview started by a guest would yank the host's track out from
     // under them. UI buttons are hidden via `[data-orbit-active]` CSS;
     // this guards keyboard shortcuts / programmatic callers.
-    const orbit = useOrbitStore.getState();
-    const inOrbit = (orbit.role === 'host' || orbit.role === 'guest')
-      && (orbit.phase === 'active' || orbit.phase === 'joining' || orbit.phase === 'starting');
-    if (inOrbit) return;
+    if (isOrbitPlaybackSyncActive()) return;
 
     const current = get().previewingId;
     if (current === song.id) {
@@ -158,14 +155,3 @@ export const usePreviewStore = create<PreviewState>((set, get) => ({
     set({ previewingId: null, previewingTrack: null, elapsed: 0, audioStarted: false });
   },
 }));
-
-// Keep the preview sink in sync with player volume slider movements while a
-// preview is in flight. Without this the Rust preview Sink stays at whatever
-// level was set at `audio_preview_play` — slider drags only ramp the main
-// sink. Auth/normalization changes during preview are intentionally ignored
-// (preview is short and the case is rare).
-usePlayerStore.subscribe((state, prev) => {
-  if (state.volume === prev.volume) return;
-  if (!usePreviewStore.getState().previewingId) return;
-  invoke('audio_preview_set_volume', { volume: computePreviewVolume() }).catch(() => {});
-});
