@@ -18,6 +18,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 
+### Artist detail — album year sort
+
+**By [@cucadmuh](https://github.com/cucadmuh), PR [#877](https://github.com/Psychotoxical/psysonic/pull/877)**
+
+* **Albums by …** on the artist page: toggle year sort (newest/oldest) within each release-type block; preference persists for the session per server.
+
+
+
 ### Servers — edit existing profiles
 
 **By [@Psychotoxical](https://github.com/Psychotoxical), PR [#780](https://github.com/Psychotoxical/psysonic/pull/780)**
