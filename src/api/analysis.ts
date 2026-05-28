@@ -28,12 +28,6 @@ export interface AnalysisPipelineQueueStatsDto {
   cpuDecodeActiveLow: number;
 }
 
-export interface LibraryAnalysisBackfillBatchDto {
-  trackIds: string[];
-  nextCursor: string | null;
-  exhausted: boolean;
-}
-
 export interface LibraryAnalysisProgressDto {
   totalTracks: number;
   pendingTracks: number;
@@ -52,8 +46,6 @@ export interface AnalysisDeleteServerReportDto {
   loudness: number;
 }
 
-export const LIBRARY_ANALYSIS_BACKFILL_BATCH_SIZE = 20;
-
 function serverIndexKeyForId(serverId: string): string {
   const server = useAuthStore.getState().servers.find(s => s.id === serverId);
   if (!server) return serverId;
@@ -66,19 +58,6 @@ export function analysisGetBackfillQueueStats(): Promise<AnalysisBackfillQueueSt
 
 export function analysisGetPipelineQueueStats(): Promise<AnalysisPipelineQueueStatsDto> {
   return invoke<AnalysisPipelineQueueStatsDto>('analysis_get_pipeline_queue_stats');
-}
-
-export function libraryAnalysisBackfillBatch(
-  serverId: string,
-  cursor?: string | null,
-  limit = LIBRARY_ANALYSIS_BACKFILL_BATCH_SIZE,
-): Promise<LibraryAnalysisBackfillBatchDto> {
-  const indexKey = serverIndexKeyForId(serverId);
-  return invoke<LibraryAnalysisBackfillBatchDto>('library_analysis_backfill_batch', {
-    serverId: indexKey,
-    cursor: cursor ?? null,
-    limit,
-  });
 }
 
 export function libraryAnalysisProgress(
@@ -156,4 +135,22 @@ export function analysisEnqueueSeedFromUrl(
 ): Promise<void> {
   const indexKey = serverIndexKeyForId(serverId);
   return invoke('analysis_enqueue_seed_from_url', { trackId, url, serverId: indexKey, priority });
+}
+
+export type LibraryAnalysisBackfillConfigureArgs = {
+  enabled: boolean;
+  serverIndexKey: string;
+  libraryServerId: string;
+  serverUrl: string;
+  username: string;
+  password: string;
+  workers: number;
+};
+
+/** Start/stop native library analysis backfill (advanced strategy only). */
+export function libraryAnalysisBackfillConfigure(
+  args: LibraryAnalysisBackfillConfigureArgs,
+): Promise<void> {
+  // Flat payload — same as `library_cover_backfill_configure` (not `{ args: … }`).
+  return invoke('library_analysis_backfill_configure', args);
 }
