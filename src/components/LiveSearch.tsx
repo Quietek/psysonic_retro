@@ -22,6 +22,7 @@ import {
 } from '../utils/library/libraryDevLog';
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useNavigateToAlbum } from '../hooks/useNavigateToAlbum';
 import { Search, Disc3, Users, Music, TextSearch, Database, Globe } from 'lucide-react';
 import { usePlayerStore } from '../store/playerStore';
 import { useAuthStore } from '../store/authStore';
@@ -108,6 +109,7 @@ export default function LiveSearch() {
   const localReadyRef = useRef(false);
   const liveSearchGenRef = useRef(0);
   const navigate = useNavigate();
+  const navigateToAlbum = useNavigateToAlbum();
   const enqueue = usePlayerStore(state => state.enqueue);
   const openContextMenu = usePlayerStore(state => state.openContextMenu);
   const ctxIsOpen = usePlayerStore(state => state.contextMenu.isOpen);
@@ -160,6 +162,20 @@ export default function LiveSearch() {
     setQuery('');
     setSearchSource(null);
   }, []);
+
+  /** Leave live search for a full-page route — cancel in-flight queries and reset overlay state. */
+  const leaveLiveSearchFor = useCallback((path: string) => {
+    liveSearchGenRef.current += 1;
+    setOpen(false);
+    setQuery('');
+    setResults(null);
+    setSearchSource(null);
+    setActiveIndex(-1);
+    setLoading(false);
+    setIsFocused(false);
+    inputRef.current?.blur();
+    navigate(path);
+  }, [navigate]);
 
   const share = useShareSearch(query, closeSearch);
 
@@ -459,7 +475,7 @@ export default function LiveSearch() {
     },
   ] : results ? [
     ...(results.artists.map(a => ({ id: a.id, action: () => { navigate(`/artist/${a.id}`); setOpen(false); setQuery(''); } }))),
-    ...(results.albums.map(a => ({ id: a.id, action: () => { navigate(`/album/${a.id}`); setOpen(false); setQuery(''); } }))),
+    ...(results.albums.map(a => ({ id: a.id, action: () => { navigateToAlbum(a.id); setOpen(false); setQuery(''); } }))),
    ...(results.songs.map(s => ({ id: s.id, action: () => {
        const track = songToTrack(s);
        enqueue([track]);
@@ -486,7 +502,10 @@ export default function LiveSearch() {
       return;
     }
     if (!open || !flatItems.length) {
-      if (e.key === 'Enter' && query.trim()) { setOpen(false); navigate(`/search?q=${encodeURIComponent(query.trim())}`); }
+      if (e.key === 'Enter' && query.trim()) {
+        e.preventDefault();
+        leaveLiveSearchFor(`/search?q=${encodeURIComponent(query.trim())}`);
+      }
       return;
     }
     if (e.key === 'ArrowDown') {
@@ -502,7 +521,9 @@ export default function LiveSearch() {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       if (activeIndex >= 0) { flatItems[activeIndex].action(); setActiveIndex(-1); }
-      else if (query.trim()) { setOpen(false); navigate(`/search?q=${encodeURIComponent(query.trim())}`); }
+      else if (query.trim()) {
+        leaveLiveSearchFor(`/search?q=${encodeURIComponent(query.trim())}`);
+      }
     } else if (e.key === 'Escape') {
       setOpen(false); setActiveIndex(-1);
     }
@@ -574,7 +595,10 @@ export default function LiveSearch() {
             // remain active long enough for this button click to fire.
             e.preventDefault();
           }}
-          onClick={() => navigate(query.trim() ? `/search/advanced?q=${encodeURIComponent(query.trim())}` : '/search/advanced')}
+          onClick={() => {
+            const q = query.trim();
+            leaveLiveSearchFor(q ? `/search/advanced?q=${encodeURIComponent(q)}` : '/search/advanced');
+          }}
           data-tooltip={t('search.advanced')}
           data-tooltip-pos="bottom"
           aria-label={t('search.advanced')}
@@ -678,7 +702,7 @@ export default function LiveSearch() {
                     const isCtxActive = ctxIsOpen && ctxType === 'album' && ctxItemId === a.id;
                     return (
                       <button key={a.id} className={`search-result-item${activeIndex === i ? ' active' : ''}${isCtxActive ? ' context-active' : ''}`}
-                        onClick={() => { navigate(`/album/${a.id}`); setOpen(false); setQuery(''); }}
+                        onClick={() => { navigateToAlbum(a.id); setOpen(false); setQuery(''); }}
                         onContextMenu={(e) => {
                           e.preventDefault();
                           openContextMenu(e.clientX, e.clientY, a, 'album');

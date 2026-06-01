@@ -140,6 +140,7 @@ const CONTRIBUTOR_ENTRIES = [
       'Analytics: library backfill scan phase/cursor persistence so advanced indexing can finish large libraries (PR #882)',
       'Analytics: Opus waveform/LUFS/enrichment decode via symphonia-adapter-libopus in the analysis pipeline (PR #883)',
       'Artist page: top-track thumbnails use the same album cover path and warm batch as the albums grid (PR #886)',
+      'Library browse navigation: session restore on back for Artists, Search/Tracks, New Releases, Random Albums; unified SearchBrowsePage (PR #936)',
     ],
   },
   {
@@ -183,7 +184,7 @@ const CONTRIBUTOR_ENTRIES = [
       'Albums and playlist headers redesign with improved layout and theme integration (PR #186)',
       'Tracklist column picker overflow fix in AlbumTrackList (PR #188)',
       'Spotify CSV playlist import (PR #190)',
-      'Context menu for songs in AdvancedSearch and SearchResults (PR #191)',
+      'Context menu for songs in SearchBrowsePage (PR #191)',
       'Tracklist column picker alignment and toggle fix across Favorites and PlaylistDetail (PR #192)',
       'CSV import: dynamic match threshold, cleaned title search, score display in report (PR #199)',
       'Discord Rich Presence: configurable text templates for details, state and album tooltip (PR #198)',

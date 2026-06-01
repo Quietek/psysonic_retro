@@ -1,6 +1,7 @@
-import React, { Suspense, useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ensurePlaybackServerActive } from '../utils/playback/playbackServer';
+import { navigatePathWithAlbumReturnTo, shouldSkipMainScrollResetOnRouteChange } from '../utils/navigation/albumDetailNavigation';
 import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWebview } from '@tauri-apps/api/webview';
 import { PanelRight } from 'lucide-react';
@@ -24,7 +25,7 @@ import TooltipPortal from '../components/TooltipPortal';
 import OverlayScrollArea from '../components/OverlayScrollArea';
 import {
   APP_MAIN_SCROLL_VIEWPORT_ID,
-  MAIN_ROUTE_INPAGE_SCROLL_VIEWPORT_ID_BY_PATH,
+  mainRouteInpageScrollViewportId,
 } from '../constants/appScroll';
 import ConnectionIndicator from '../components/ConnectionIndicator';
 import LastfmIndicator from '../components/LastfmIndicator';
@@ -98,6 +99,7 @@ export function AppShell() {
   const { status: connStatus, isRetrying: connRetrying, retry: connRetry, isLan, serverName } = useConnectionStatus();
   const navigate = useNavigate();
   const location = useLocation();
+  const prevPathnameRef = useRef(location.pathname);
   useCoverNavigationPriority();
   useNowPlayingPrewarm();
   const useCustomTitlebar = useAuthStore(s => s.useCustomTitlebar);
@@ -113,17 +115,22 @@ export function AppShell() {
       const detail = (e as CustomEvent).detail;
       if (!detail?.to) return;
       void ensurePlaybackServerActive().then(ok => {
-        if (ok) navigate(detail.to);
+        if (ok) navigatePathWithAlbumReturnTo(navigate, location, detail.to);
       });
     };
     window.addEventListener('psy:navigate', onPsyNavigate);
     return () => window.removeEventListener('psy:navigate', onPsyNavigate);
-  }, [navigate]);
+  }, [navigate, location]);
 
-  // Reset scroll position on route change (main viewport is overlay scroll)
+  // Reset scroll on route change only — not when the same path gets a new location.state
+  // (Advanced Search strips `advancedSearchRestore` after applying saved scroll).
   useEffect(() => {
+    const pathnameChanged = prevPathnameRef.current !== location.pathname;
+    prevPathnameRef.current = location.pathname;
+    if (!pathnameChanged) return;
+    if (shouldSkipMainScrollResetOnRouteChange(location.pathname, location.state)) return;
     document.getElementById(APP_MAIN_SCROLL_VIEWPORT_ID)?.scrollTo({ top: 0 });
-  }, [location.pathname]);
+  }, [location.pathname, location.state]);
 
   useOfflineAutoNav(connStatus, hasOfflineContent, location.pathname, navigate);
 
@@ -256,7 +263,7 @@ export function AppShell() {
           <OverlayScrollArea
             className="app-shell-route-scroll"
             viewportClassName={
-              MAIN_ROUTE_INPAGE_SCROLL_VIEWPORT_ID_BY_PATH[location.pathname]
+              mainRouteInpageScrollViewportId(location.pathname)
                 ? 'app-shell-route-scroll__viewport app-shell-route-scroll__viewport--inpage-split'
                 : 'app-shell-route-scroll__viewport'
             }

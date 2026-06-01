@@ -1,7 +1,7 @@
 /**
  * Advanced Search against the local library index (spec §5.13 / F2).
  *
- * Maps the AdvancedSearch UI inputs to a `library_advanced_search` request and
+ * Maps the SearchBrowsePage filter inputs to a `library_advanced_search` request and
  * the response back to the Subsonic shapes the existing rows render. The sync
  * engine stores each entity's original Subsonic JSON in `rawJson` (ADR-7), so
  * that's preferred verbatim; the flat hot columns are a fallback when a row's
@@ -23,11 +23,16 @@ import {
 import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '../../api/subsonicTypes';
 import { search } from '../../api/subsonicSearch';
 import { libraryScopeForServer } from '../../api/subsonicClient';
+import { fetchAlbumBrowseNetwork } from './albumBrowseNetwork';
+import type { AlbumBrowseQuery } from './albumBrowseTypes';
+import { resolveAlbumYearBounds } from './albumYearFilter';
 import { libraryIsReady } from './libraryReady';
 import { logLibrarySearch, timed } from './libraryDevLog';
 import { isLosslessSuffix } from './losslessFormats';
 import { albumIsCompilation } from './albumCompilation';
 import { OXIMEDIA_MOOD_SEARCH_ENABLED } from './trackEnrichment';
+
+export const ADVANCED_SEARCH_YEAR_ALBUM_LIMIT = 100;
 
 export type AdvancedResultType = 'all' | 'artists' | 'albums' | 'songs';
 
@@ -238,7 +243,7 @@ export function artistToArtist(ar: LibraryArtistDto): SubsonicArtist {
 }
 
 /**
- * Network search3 path for Advanced Search free-text (mirrors AdvancedSearch.tsx filters).
+ * Network search3 path for Advanced Search free-text (mirrors SearchBrowsePage.tsx filters).
  */
 export async function runNetworkAdvancedTextSearch(
   opts: LocalSearchOpts,
@@ -392,4 +397,47 @@ export async function loadMoreLocalSongs(
   const req = buildRequest(serverId, opts, ['track'], pageSize, offset, true);
   const resp = await libraryAdvancedSearch(req);
   return resp.tracks.map(trackToSong);
+}
+
+/** Local index first; retry without the ready gate when sync is still catching up. */
+export async function tryRunLocalAdvancedSearch(
+  serverId: string | null | undefined,
+  opts: LocalSearchOpts,
+  songsLimit: number,
+  suppressLog = false,
+): Promise<LocalAdvancedSearchPage | null> {
+  const readyPage = await runLocalAdvancedSearch(
+    serverId,
+    opts,
+    songsLimit,
+    false,
+    true,
+    suppressLog,
+  );
+  if (readyPage) return readyPage;
+  return runLocalAdvancedSearch(serverId, opts, songsLimit, true, true, suppressLog);
+}
+
+function yearOnlyAlbumBrowseQuery(opts: LocalSearchOpts): AlbumBrowseQuery | null {
+  const { active, bounds } = resolveAlbumYearBounds(opts.yearFrom, opts.yearTo);
+  if (!active) return null;
+  return {
+    sort: 'alphabeticalByName',
+    genres: [],
+    year: bounds,
+    losslessOnly: !!opts.losslessOnly,
+    starredOnly: false,
+    compFilter: 'all',
+  };
+}
+
+/** Network fallback for year-only Advanced Search albums (open-ended year bounds). */
+export async function runNetworkAdvancedYearAlbums(
+  opts: LocalSearchOpts,
+  pageSize = ADVANCED_SEARCH_YEAR_ALBUM_LIMIT,
+): Promise<SubsonicAlbum[]> {
+  const query = yearOnlyAlbumBrowseQuery(opts);
+  if (!query) return [];
+  const page = await fetchAlbumBrowseNetwork(query, 0, pageSize);
+  return page.albums;
 }

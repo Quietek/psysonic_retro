@@ -1,26 +1,65 @@
 import { getGenres, getAlbumsByGenre } from '../api/subsonicGenres';
 import { search, searchSongsPaged } from '../api/subsonicSearch';
-import { getAlbumList, getRandomSongs } from '../api/subsonicLibrary';
+import { getRandomSongs } from '../api/subsonicLibrary';
 import type { SubsonicGenre, SubsonicArtist, SubsonicAlbum, SubsonicSong } from '../api/subsonicTypes';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { SlidersVertical, X } from 'lucide-react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useLocation, useNavigate, useNavigationType, useSearchParams } from 'react-router-dom';
+import { SlidersVertical, Search, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import AlbumRow from '../components/AlbumRow';
 import ArtistRow from '../components/ArtistRow';
 import PagedSongList from '../components/PagedSongList';
 import CustomSelect from '../components/CustomSelect';
 import StarFilterButton from '../components/StarFilterButton';
+import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
 import { useAuthStore } from '../store/authStore';
 import { usePlayerStore } from '../store/playerStore';
-import { runLocalAdvancedSearch, loadMoreLocalSongs, runNetworkAdvancedTextSearch } from '../utils/library/advancedSearchLocal';
+import { isAdvancedSearchLeaveTargetPath } from '../store/albumBrowseSessionStore';
+import {
+  isAdvancedSearchPath,
+  isAdvancedSearchPanelPath,
+  isTracksBrowsePath,
+  useAdvancedSearchSessionStore,
+  type AdvancedSearchSessionStash,
+} from '../store/advancedSearchSessionStore';
+import {
+  readAdvancedSearchRestore,
+  shouldRestoreAdvancedSearchSession,
+} from '../utils/navigation/albumDetailNavigation';
+import {
+  clearAdvancedSearchLeaveSnapshots,
+  consumeAdvancedSearchLeavingForDetail,
+  readAdvancedSearchLeaveSnapshot,
+  registerAdvancedSearchLeaveScrollProvider,
+  registerAdvancedSearchSessionProvider,
+  resolveAdvancedSearchLeaveSnapshot,
+  type AdvancedSearchLeaveSnapshot,
+} from '../utils/navigation/advancedSearchScrollSnapshot';
+import { restoreMainViewportScroll } from '../utils/navigation/restoreMainViewportScroll';
+import {
+  loadMoreLocalSongs,
+  runNetworkAdvancedTextSearch,
+  runNetworkAdvancedYearAlbums,
+  tryRunLocalAdvancedSearch,
+} from '../utils/library/advancedSearchLocal';
 import { isLosslessSuffix } from '../utils/library/losslessFormats';
 import { LOSSLESS_MODE_QUERY } from '../utils/library/losslessMode';
 import { OXIMEDIA_MOOD_SEARCH_ENABLED } from '../utils/library/trackEnrichment';
 import { raceSearchSources } from '../utils/library/searchRace';
 import { logLibrarySearch } from '../utils/library/libraryDevLog';
+import {
+  browseRaceCountsFullSearch,
+  loadMoreLocalBrowseSongs,
+  raceBrowseWithLocalFallback,
+  runLocalBrowseFullSearch,
+  runNetworkBrowseFullSearch,
+} from '../utils/library/browseTextSearch';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
 import { MOOD_GROUP_IDS } from '../config/moodGroups';
+import { usePerfProbeFlags } from '../utils/perf/perfFlags';
+import { useSongBrowseList, type SongBrowseListRestore } from '../hooks/useSongBrowseList';
+import TracksPageChrome from '../components/tracks/TracksPageChrome';
+import SongBrowseSection from '../components/tracks/SongBrowseSection';
 
 const MOOD_UI_ENABLED = OXIMEDIA_MOOD_SEARCH_ENABLED;
 
@@ -51,22 +90,41 @@ function parseBpmInput(raw: string): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
-export default function AdvancedSearch() {
+function peekAdvancedSearchRestoreStash(
+  navigationType: ReturnType<typeof useNavigationType>,
+  locationState: unknown,
+): AdvancedSearchSessionStash | null {
+  if (!shouldRestoreAdvancedSearchSession(navigationType, locationState)) return null;
+  return useAdvancedSearchSessionStore.getState().peekReturnStash();
+}
+
+/** Shared shell for `/search`, `/search/advanced`, and `/tracks` (pathname picks chrome). */
+export default function SearchBrowsePage() {
+  const perfFlags = usePerfProbeFlags();
   const { t } = useTranslation();
+  const navigationType = useNavigationType();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [params] = useSearchParams();
   const qFromUrl = params.get('q') ?? '';
-  const [query, setQuery] = useState(params.get('q') ?? '');
-  const [genre, setGenre] = useState('');
-  const [yearFrom, setYearFrom] = useState('');
-  const [yearTo, setYearTo] = useState('');
-  const [bpmFrom, setBpmFrom] = useState('');
-  const [bpmTo, setBpmTo] = useState('');
-  const [moodGroup, setMoodGroup] = useState('');
-  const [losslessOnly, setLosslessOnly] = useState(false);
-  const [resultType, setResultType] = useState<ResultType>('all');
-  const [starredOnly, setStarredOnly] = useState(false);
+  const showTracksChrome = isTracksBrowsePath(location.pathname);
+  const showAdvancedPanel = isAdvancedSearchPanelPath(location.pathname);
+  const restoreStash = peekAdvancedSearchRestoreStash(navigationType, location.state);
+  const hadRestoreOnMountRef = useRef(restoreStash != null);
+  const restoredFromStashRef = useRef(restoreStash != null);
+
+  const [query, setQuery] = useState(() => restoreStash?.query ?? qFromUrl);
+  const [genre, setGenre] = useState(() => restoreStash?.genre ?? '');
+  const [yearFrom, setYearFrom] = useState(() => restoreStash?.yearFrom ?? '');
+  const [yearTo, setYearTo] = useState(() => restoreStash?.yearTo ?? '');
+  const [bpmFrom, setBpmFrom] = useState(() => restoreStash?.bpmFrom ?? '');
+  const [bpmTo, setBpmTo] = useState(() => restoreStash?.bpmTo ?? '');
+  const [moodGroup, setMoodGroup] = useState(() => restoreStash?.moodGroup ?? '');
+  const [losslessOnly, setLosslessOnly] = useState(() => restoreStash?.losslessOnly ?? false);
+  const [resultType, setResultType] = useState<ResultType>(() => restoreStash?.resultType ?? 'all');
+  const [starredOnly, setStarredOnly] = useState(() => restoreStash?.starredOnly ?? false);
   const [genres, setGenres] = useState<SubsonicGenre[]>([]);
-  const [results, setResults] = useState<Results | null>(null);
+  const [results, setResults] = useState<Results | null>(() => restoreStash?.results ?? null);
   const starredOverrides = usePlayerStore(s => s.starredOverrides);
   const filteredResults = useMemo<Results | null>(() => {
     if (!results) return null;
@@ -83,23 +141,153 @@ export default function AdvancedSearch() {
     ? filteredResults.artists.length + filteredResults.albums.length + filteredResults.songs.length
     : 0;
   const [loading, setLoading] = useState(false);
-  const [hasSearched, setHasSearched] = useState(false);
-  const [genreNote, setGenreNote] = useState(false);
+  const [hasSearched, setHasSearched] = useState(() => restoreStash?.hasSearched ?? false);
+  const [genreNote, setGenreNote] = useState(() => restoreStash?.genreNote ?? false);
   // True while the current results came from the local index (drives the
   // pagination branch — local pages every result type, network only free-text).
-  const [localMode, setLocalMode] = useState(false);
+  const [localMode, setLocalMode] = useState(() => restoreStash?.localMode ?? false);
+  const [basicSearchMode, setBasicSearchMode] = useState(
+    () => restoreStash?.basicSearchMode ?? (!showAdvancedPanel && !showTracksChrome),
+  );
   const musicLibraryFilterVersion = useAuthStore(s => s.musicLibraryFilterVersion);
   const serverId = useAuthStore(s => s.activeServerId);
   const indexEnabled = useLibraryIndexStore(s => s.isIndexEnabled(serverId));
   const searchRunRef = useRef(0);
 
-  // Pagination — only the free-text-query branch uses search3 with offset
+  // Pagination — basic quick search uses smaller pages than advanced form search.
+  const BASIC_SONGS_INITIAL = 50;
+  const BASIC_SONGS_PAGE_SIZE = 50;
   const SONGS_INITIAL = 100;
   const SONGS_PAGE_SIZE = 50;
-  const [activeSearch, setActiveSearch] = useState<SearchOpts | null>(null);
-  const [songsServerOffset, setSongsServerOffset] = useState(0);
-  const [songsHasMore, setSongsHasMore] = useState(false);
+  const [activeSearch, setActiveSearch] = useState<SearchOpts | null>(() => restoreStash?.activeSearch ?? null);
+  const [songsServerOffset, setSongsServerOffset] = useState(() => restoreStash?.songsServerOffset ?? 0);
+  const [songsHasMore, setSongsHasMore] = useState(() => restoreStash?.songsHasMore ?? false);
   const [loadingMoreSongs, setLoadingMoreSongs] = useState(false);
+
+  const songBrowseInitialRestore: SongBrowseListRestore | null =
+    restoreStash && showTracksChrome
+      ? {
+          query: restoreStash.query,
+          songs: restoreStash.results?.songs ?? [],
+          offset: restoreStash.songsServerOffset,
+          hasMore: restoreStash.songsHasMore,
+          localSearchMode: restoreStash.localMode,
+          browseUnsupported: restoreStash.tracksBrowseUnsupported ?? false,
+          hasSearched: restoreStash.hasSearched,
+        }
+      : null;
+
+  const songBrowse = useSongBrowseList({
+    enabled: showTracksChrome,
+    initialRestore: songBrowseInitialRestore,
+  });
+
+  const restoringSession =
+    shouldRestoreAdvancedSearchSession(navigationType, location.state) || restoreStash != null;
+  const leaveSnapshotRef = useRef<AdvancedSearchLeaveSnapshot | null>(
+    restoringSession ? resolveAdvancedSearchLeaveSnapshot(restoreStash) : null,
+  );
+  const scrollTopRestoreTargetRef = useRef(leaveSnapshotRef.current?.scrollTop ?? 0);
+  const albumRowScrollLeftRestoreRef = useRef(leaveSnapshotRef.current?.albumRowScrollLeft ?? 0);
+  const artistRowScrollLeftRestoreRef = useRef(leaveSnapshotRef.current?.artistRowScrollLeft ?? 0);
+  const mainScrollTopRef = useRef(0);
+  const albumRowScrollLeftRef = useRef(0);
+  const artistRowScrollLeftRef = useRef(0);
+  const skipSearchAutoFocusRef = useRef(restoreStash != null);
+  const skipEnterAnimationRef = useRef(restoreStash != null || leaveSnapshotRef.current != null);
+  const leaveRestoreUiFinishedRef = useRef(leaveSnapshotRef.current == null);
+  const [tracksChromeLayoutReady, setTracksChromeLayoutReady] = useState(
+    () => !showTracksChrome || leaveSnapshotRef.current == null,
+  );
+  const [isLeaveRestorePending, setIsLeaveRestorePending] = useState(
+    () => leaveSnapshotRef.current != null,
+  );
+
+  const handleTracksChromeLayoutReady = useCallback(() => {
+    setTracksChromeLayoutReady(true);
+  }, []);
+
+  const finishLeaveRestoreUi = useCallback(() => {
+    if (leaveRestoreUiFinishedRef.current) return;
+    leaveRestoreUiFinishedRef.current = true;
+    clearAdvancedSearchLeaveSnapshots();
+    leaveSnapshotRef.current = null;
+    setIsLeaveRestorePending(false);
+    if (hadRestoreOnMountRef.current) {
+      useAdvancedSearchSessionStore.getState().clearReturnStash();
+    }
+  }, []);
+
+  const sessionRef = useRef<AdvancedSearchSessionStash>({
+    query: '',
+    genre: '',
+    yearFrom: '',
+    yearTo: '',
+    bpmFrom: '',
+    bpmTo: '',
+    moodGroup: '',
+    losslessOnly: false,
+    resultType: 'all',
+    starredOnly: false,
+    results: null,
+    hasSearched: false,
+    activeSearch: null,
+    localMode: false,
+    songsServerOffset: 0,
+    songsHasMore: false,
+    genreNote: false,
+    basicSearchMode: false,
+    tracksBrowseMode: false,
+    tracksBrowseUnsupported: false,
+  });
+  sessionRef.current = {
+    query: showTracksChrome ? songBrowse.query : query,
+    genre,
+    yearFrom,
+    yearTo,
+    bpmFrom,
+    bpmTo,
+    moodGroup,
+    losslessOnly,
+    resultType,
+    starredOnly,
+    results: showTracksChrome
+      ? { artists: [], albums: [], songs: songBrowse.songs }
+      : results,
+    hasSearched: showTracksChrome ? songBrowse.hasSearched : hasSearched,
+    activeSearch,
+    localMode: showTracksChrome ? songBrowse.localSearchMode : localMode,
+    songsServerOffset: showTracksChrome ? songBrowse.offset : songsServerOffset,
+    songsHasMore: showTracksChrome ? songBrowse.hasMore : songsHasMore,
+    genreNote,
+    basicSearchMode: showTracksChrome ? false : basicSearchMode,
+    tracksBrowseMode: showTracksChrome,
+    tracksBrowseUnsupported: showTracksChrome ? songBrowse.browseUnsupported : false,
+  };
+
+  useEffect(() => {
+    const unregisterScroll = registerAdvancedSearchLeaveScrollProvider(() => ({
+      scrollTop: mainScrollTopRef.current,
+      albumRowScrollLeft: albumRowScrollLeftRef.current,
+      artistRowScrollLeft: artistRowScrollLeftRef.current,
+    }));
+    const unregisterSession = registerAdvancedSearchSessionProvider(() => sessionRef.current);
+    return () => {
+      unregisterScroll();
+      unregisterSession();
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = document.getElementById(APP_MAIN_SCROLL_VIEWPORT_ID);
+    if (!el) return;
+    const syncScroll = () => {
+      mainScrollTopRef.current = el.scrollTop;
+    };
+    syncScroll();
+    el.addEventListener('scroll', syncScroll, { passive: true });
+    return () => el.removeEventListener('scroll', syncScroll);
+  }, []);
 
   const applySongFilters = (
     list: SubsonicSong[],
@@ -120,6 +308,76 @@ export default function AdvancedSearch() {
     return r;
   };
 
+  const runBasicSearch = async (rawQuery: string) => {
+    const q = rawQuery.trim();
+    const runId = ++searchRunRef.current;
+    const isStale = () => runId !== searchRunRef.current;
+
+    setLoading(true);
+    setHasSearched(true);
+    setGenreNote(false);
+    setBasicSearchMode(true);
+    setQuery(q);
+    setActiveSearch({
+      query: q,
+      genre: '',
+      yearFrom: '',
+      yearTo: '',
+      bpmFrom: '',
+      bpmTo: '',
+      moodGroup: '',
+      losslessOnly: false,
+      resultType: 'all',
+    });
+    setSongsServerOffset(0);
+    setSongsHasMore(false);
+    setLocalMode(false);
+
+    if (!q) {
+      setResults(null);
+      setLoading(false);
+      return;
+    }
+
+    try {
+      if (serverId && indexEnabled) {
+        const outcome = await raceBrowseWithLocalFallback(
+          isStale,
+          () => runLocalBrowseFullSearch(serverId, q, BASIC_SONGS_INITIAL),
+          () => runNetworkBrowseFullSearch(q, BASIC_SONGS_INITIAL),
+          {
+            surface: 'search_results',
+            query: q,
+            indexEnabled,
+            counts: browseRaceCountsFullSearch,
+          },
+        );
+        if (isStale()) return;
+        if (outcome) {
+          setResults(outcome.result);
+          setSongsServerOffset(outcome.result.songs.length);
+          setSongsHasMore(outcome.result.songs.length >= BASIC_SONGS_INITIAL);
+          setLocalMode(outcome.source === 'local');
+          return;
+        }
+      }
+
+      const network = await runNetworkBrowseFullSearch(q, BASIC_SONGS_INITIAL);
+      if (isStale()) return;
+      if (network) {
+        setResults(network);
+        setSongsServerOffset(network.songs.length);
+        setSongsHasMore(network.songs.length >= BASIC_SONGS_INITIAL);
+      } else {
+        setResults({ artists: [], albums: [], songs: [] });
+      }
+    } catch {
+      if (!isStale()) setResults(null);
+    } finally {
+      if (!isStale()) setLoading(false);
+    }
+  };
+
   const runSearch = async (opts: SearchOpts) => {
     const runId = ++searchRunRef.current;
     const isStale = () => runId !== searchRunRef.current;
@@ -127,10 +385,10 @@ export default function AdvancedSearch() {
     setLoading(true);
     setHasSearched(true);
     setGenreNote(false);
+    setBasicSearchMode(false);
     setActiveSearch(opts);
     setSongsServerOffset(0);
     setSongsHasMore(false);
-
     const q = opts.query.trim();
     const searchT0 = performance.now();
     const moodFilterActive = MOOD_UI_ENABLED && !!opts.moodGroup;
@@ -146,8 +404,7 @@ export default function AdvancedSearch() {
           [
             {
               source: 'local',
-              run: () =>
-                runLocalAdvancedSearch(serverId, opts, SONGS_INITIAL, false, true, true),
+              run: () => tryRunLocalAdvancedSearch(serverId, opts, SONGS_INITIAL, true),
             },
             {
               source: 'network',
@@ -189,7 +446,7 @@ export default function AdvancedSearch() {
       }
       setLocalMode(false);
     } else if (serverId && indexEnabled) {
-      const localPage = await runLocalAdvancedSearch(serverId, opts, SONGS_INITIAL);
+      const localPage = await tryRunLocalAdvancedSearch(serverId, opts, SONGS_INITIAL);
       if (isStale()) return;
       if (localPage) {
         setResults({
@@ -268,9 +525,9 @@ export default function AdvancedSearch() {
         if (to !== null) albums = albums.filter(a => !a.year || a.year <= to);
         if (songs.length > 0) setGenreNote(true);
       } else if (from !== null || to !== null) {
-        const fromYear = from ?? 1900;
-        const toYear = to ?? new Date().getFullYear();
-        albums = await getAlbumList('byYear', 100, 0, { fromYear, toYear });
+        if (rt !== 'artists' && rt !== 'songs') {
+          albums = await runNetworkAdvancedYearAlbums(opts, 100);
+        }
       }
 
       const finalResults = {
@@ -302,12 +559,99 @@ export default function AdvancedSearch() {
   };
 
   useEffect(() => {
+    return () => {
+      const path = window.location.pathname;
+      const leaving = consumeAdvancedSearchLeavingForDetail();
+      const existingLeave = useAdvancedSearchSessionStore.getState().peekLeaveScrollSnapshot();
+      if (isAdvancedSearchLeaveTargetPath(path) || leaving || existingLeave) {
+        const snapshot = existingLeave ?? readAdvancedSearchLeaveSnapshot();
+        useAdvancedSearchSessionStore.getState().setLeaveScrollSnapshot(snapshot);
+        useAdvancedSearchSessionStore.getState().stashReturnSession({
+          ...sessionRef.current,
+          scrollTop: snapshot.scrollTop,
+          albumRowScrollLeft: snapshot.albumRowScrollLeft,
+          artistRowScrollLeft: snapshot.artistRowScrollLeft,
+        });
+      } else if (!isAdvancedSearchPath(path)) {
+        useAdvancedSearchSessionStore.getState().clearReturnStash();
+        clearAdvancedSearchLeaveSnapshots();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (shouldRestoreAdvancedSearchSession(navigationType, location.state)) {
+      restoredFromStashRef.current = true;
+      const stash = useAdvancedSearchSessionStore.getState().peekReturnStash();
+      if (stash) {
+        setQuery(stash.query);
+        setGenre(stash.genre);
+        setYearFrom(stash.yearFrom);
+        setYearTo(stash.yearTo);
+        setBpmFrom(stash.bpmFrom);
+        setBpmTo(stash.bpmTo);
+        setMoodGroup(stash.moodGroup);
+        setLosslessOnly(stash.losslessOnly);
+        setResultType(stash.resultType);
+        setStarredOnly(stash.starredOnly);
+        setResults(stash.results);
+        setHasSearched(stash.hasSearched);
+        setActiveSearch(stash.activeSearch);
+        setLocalMode(stash.localMode);
+        setSongsServerOffset(stash.songsServerOffset);
+        setSongsHasMore(stash.songsHasMore);
+        setGenreNote(stash.genreNote);
+        setBasicSearchMode(stash.basicSearchMode);
+      }
+      if (!leaveSnapshotRef.current) {
+        useAdvancedSearchSessionStore.getState().clearReturnStash();
+      }
+      return;
+    }
+    if (restoredFromStashRef.current) return;
+    useAdvancedSearchSessionStore.getState().clearReturnStash();
+  }, [navigationType, location.state]);
+
+  const leaveRestoreContentReady = showTracksChrome
+    ? tracksChromeLayoutReady
+      && ((hadRestoreOnMountRef.current && songBrowse.hasSearched) || (songBrowse.hasSearched && !songBrowse.loading))
+    : ((hadRestoreOnMountRef.current && results !== null) || (hasSearched && !loading));
+
+  useLayoutEffect(() => {
+    if (!leaveRestoreContentReady || leaveRestoreUiFinishedRef.current) return;
+    const target = scrollTopRestoreTargetRef.current;
+    if (target <= 0) {
+      finishLeaveRestoreUi();
+      return;
+    }
+    return restoreMainViewportScroll(target, finishLeaveRestoreUi);
+  }, [leaveRestoreContentReady, finishLeaveRestoreUi]);
+
+  useEffect(() => {
+    if (isLeaveRestorePending || !readAdvancedSearchRestore(location.state)) return;
+    navigate(`${location.pathname}${location.search}${location.hash}`, { replace: true, state: null });
+  }, [isLeaveRestorePending, location.pathname, location.search, location.hash, location.state, navigate]);
+
+  useEffect(() => {
     getGenres().then(data =>
       setGenres(data.sort((a, b) => a.value.localeCompare(b.value)))
     ).catch(() => {});
-    if (qFromUrl) {
+  }, []);
+
+  useEffect(() => {
+    if (hadRestoreOnMountRef.current) return;
+    if (showTracksChrome) return;
+    const q = qFromUrl.trim();
+    if (!q) {
+      if (!showAdvancedPanel) {
+        setResults(null);
+        setHasSearched(false);
+      }
+      return;
+    }
+    if (showAdvancedPanel) {
       runSearch({
-        query: qFromUrl,
+        query: q,
         genre: '',
         yearFrom: '',
         yearTo: '',
@@ -317,11 +661,32 @@ export default function AdvancedSearch() {
         losslessOnly: false,
         resultType: 'all',
       });
+    } else {
+      void runBasicSearch(q);
     }
-  }, [musicLibraryFilterVersion, qFromUrl]);
+  }, [musicLibraryFilterVersion, qFromUrl, showAdvancedPanel, showTracksChrome, serverId, indexEnabled]);
 
   const loadMoreSongs = useCallback(async () => {
     if (loadingMoreSongs || !songsHasMore || !activeSearch) return;
+
+    if (basicSearchMode) {
+      const q = activeSearch.query.trim();
+      if (!q) return;
+      setLoadingMoreSongs(true);
+      try {
+        const page = localMode && serverId
+          ? await loadMoreLocalBrowseSongs(serverId, q, songsServerOffset, BASIC_SONGS_PAGE_SIZE)
+          : await searchSongsPaged(q, BASIC_SONGS_PAGE_SIZE, songsServerOffset);
+        setResults(prev => prev ? { ...prev, songs: [...prev.songs, ...page] } : prev);
+        setSongsServerOffset(o => o + page.length);
+        if (page.length < BASIC_SONGS_PAGE_SIZE) setSongsHasMore(false);
+      } catch {
+        setSongsHasMore(false);
+      } finally {
+        setLoadingMoreSongs(false);
+      }
+      return;
+    }
 
     // Local mode pages every result type (genre/year too), not just free-text.
     if (localMode) {
@@ -368,7 +733,7 @@ export default function AdvancedSearch() {
     } finally {
       setLoadingMoreSongs(false);
     }
-  }, [loadingMoreSongs, songsHasMore, activeSearch, songsServerOffset, localMode, serverId]);
+  }, [loadingMoreSongs, songsHasMore, activeSearch, songsServerOffset, localMode, serverId, basicSearchMode]);
 
   const trackFilterActive =
     (MOOD_UI_ENABLED && !!moodGroup) || !!(bpmFrom || bpmTo);
@@ -420,14 +785,54 @@ export default function AdvancedSearch() {
   );
 
   return (
-    <div className="content-body animate-fade-in">
+    <div
+      className={`content-body${skipEnterAnimationRef.current ? '' : ' animate-fade-in'}${showTracksChrome ? ' tracks-page' : ''}`}
+      style={{ position: 'relative' }}
+      data-advanced-search-root
+    >
+      <div style={{ visibility: isLeaveRestorePending ? 'hidden' : 'visible' }}>
+      <div>
+      {showTracksChrome ? (
+        <>
+          <TracksPageChrome
+            onLayoutReady={
+              isLeaveRestorePending && showTracksChrome ? handleTracksChromeLayoutReady : undefined
+            }
+          />
+          {!perfFlags.disableMainstageVirtualLists && (
+            <SongBrowseSection
+              title={t('tracks.browseTitle')}
+              emptyBrowseText={t('tracks.browseUnsupported')}
+              query={songBrowse.query}
+              onQueryChange={songBrowse.setQuery}
+              songs={songBrowse.songs}
+              hasMore={songBrowse.hasMore}
+              loading={songBrowse.loading}
+              browseUnsupported={songBrowse.browseUnsupported}
+              onLoadMore={() => { void songBrowse.loadMore(); }}
+            />
+          )}
+        </>
+      ) : (
+      <>
       <div style={{ marginBottom: '1.5rem' }}>
         <h1 className="page-title" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <SlidersVertical size={22} style={{ color: 'var(--accent)', flexShrink: 0 }} />
-          {t('search.advanced')}
+          {showAdvancedPanel ? (
+            <>
+              <SlidersVertical size={22} style={{ color: 'var(--accent)', flexShrink: 0 }} />
+              {t('search.advanced')}
+            </>
+          ) : (
+            <>
+              <Search size={22} />
+              {query.trim() ? t('search.resultsFor', { query }) : t('search.title')}
+            </>
+          )}
         </h1>
       </div>
 
+      {showAdvancedPanel && (
+      <>
       {/* ── Filter panel ──────────────────────────────────────── */}
       <form onSubmit={handleSubmit}>
         <div className="settings-card" style={{ padding: '1.25rem', marginBottom: '2rem' }}>
@@ -445,7 +850,7 @@ export default function AdvancedSearch() {
                 onChange={e => setQuery(e.target.value)}
                 placeholder={t('search.advancedSearchPlaceholder')}
                 style={{ flex: 1 }}
-                autoFocus
+                autoFocus={!skipSearchAutoFocusRef.current}
               />
             </div>
 
@@ -622,9 +1027,11 @@ export default function AdvancedSearch() {
           </div>
         </div>
       </form>
+      </>
+      )}
 
       {/* ── Results ───────────────────────────────────────────── */}
-      {!hasSearched ? (
+      {showAdvancedPanel && !hasSearched ? (
         <div className="empty-state" style={{ opacity: 0.6 }}>
           {t('search.advancedEmpty')}
         </div>
@@ -633,26 +1040,58 @@ export default function AdvancedSearch() {
           <div className="spinner" />
         </div>
       ) : total === 0 ? (
-        <div className="empty-state">{t('search.advancedNoResults')}</div>
+        <div className="empty-state">
+          {basicSearchMode && query.trim()
+            ? t('search.noResults', { query })
+            : t('search.advancedNoResults')}
+        </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
 
           {filteredResults && filteredResults.artists.length > 0 && (
+            <div data-advanced-search-artist-row>
             <ArtistRow
-              title={`${t('search.artists')} (${filteredResults.artists.length})`}
+              title={
+                basicSearchMode
+                  ? t('search.artists')
+                  : `${t('search.artists')} (${filteredResults.artists.length})`
+              }
               artists={filteredResults.artists}
               artistLinkQuery={activeSearch?.losslessOnly ? LOSSLESS_MODE_QUERY : undefined}
+              restoreScrollLeft={
+                artistRowScrollLeftRestoreRef.current > 0
+                  ? artistRowScrollLeftRestoreRef.current
+                  : undefined
+              }
+              onScrollLeftSnapshot={(left) => {
+                artistRowScrollLeftRef.current = left;
+              }}
             />
+            </div>
           )}
 
           {filteredResults && filteredResults.albums.length > 0 && (
+            <div data-advanced-search-album-row>
             <AlbumRow
-              title={`${t('search.albums')} (${filteredResults.albums.length})`}
+              title={
+                basicSearchMode
+                  ? t('search.albums')
+                  : `${t('search.albums')} (${filteredResults.albums.length})`
+              }
               albums={filteredResults.albums}
               albumLinkQuery={activeSearch?.losslessOnly ? LOSSLESS_MODE_QUERY : undefined}
               windowArtworkByViewport
               initialArtworkBudget={12}
+              restoreScrollLeft={
+                albumRowScrollLeftRestoreRef.current > 0
+                  ? albumRowScrollLeftRestoreRef.current
+                  : undefined
+              }
+              onScrollLeftSnapshot={(left) => {
+                albumRowScrollLeftRef.current = left;
+              }}
             />
+            </div>
           )}
 
           {filteredResults && filteredResults.songs.length > 0 && (
@@ -674,6 +1113,25 @@ export default function AdvancedSearch() {
               />
             </section>
           )}
+        </div>
+      )}
+      </>
+      )}
+
+      </div>
+      </div>
+      {isLeaveRestorePending && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          <div className="spinner" />
         </div>
       )}
     </div>

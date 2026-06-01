@@ -1,51 +1,104 @@
-import { useEffect, useRef, useState } from 'react';
-import { useNavigationType, type NavigationType } from 'react-router-dom';
+import { useEffect, useRef, useState, type RefObject } from 'react';
+import { useLocation, useNavigationType, type NavigationType } from 'react-router-dom';
+import {
+  ALBUMS_INPAGE_SCROLL_VIEWPORT_ID,
+  readInpageScrollTop,
+} from '../constants/appScroll';
 import {
   DEFAULT_ALBUM_BROWSE_RETURN_FILTERS,
   type AlbumBrowseCompFilter,
   type AlbumBrowseReturnFilters,
+  type AlbumBrowseSurface,
   albumBrowseSortForServer,
+  albumBrowseSurfaceForPath,
   isAlbumDetailPath,
   useAlbumBrowseSessionStore,
 } from '../store/albumBrowseSessionStore';
 import type { AlbumBrowseSort } from '../utils/library/browseTextSearch';
+import { shouldRestoreAlbumBrowseSession } from '../utils/navigation/albumDetailNavigation';
+
+const ALBUMS_SURFACE: AlbumBrowseSurface = 'albums';
 
 function returnFiltersForNavigation(
   serverId: string,
   navigationType: NavigationType,
+  locationState: unknown,
 ): AlbumBrowseReturnFilters {
-  if (navigationType !== 'POP' || !serverId) return DEFAULT_ALBUM_BROWSE_RETURN_FILTERS;
+  if (!shouldRestoreAlbumBrowseSession(navigationType, locationState) || !serverId) {
+    return DEFAULT_ALBUM_BROWSE_RETURN_FILTERS;
+  }
   return (
-    useAlbumBrowseSessionStore.getState().peekReturnStash(serverId)
+    useAlbumBrowseSessionStore.getState().peekReturnStash(serverId, ALBUMS_SURFACE)
     ?? DEFAULT_ALBUM_BROWSE_RETURN_FILTERS
   );
 }
 
-export function useAlbumBrowseFilters(serverId: string) {
+export type AlbumBrowseScrollSnapshot = {
+  scrollTop: number;
+  displayCount: number;
+};
+
+/** Keep scroll snapshot in sync with the in-page viewport (not only on React re-renders). */
+export function useAlbumBrowseScrollSnapshotSync(
+  snapshotRef: RefObject<AlbumBrowseScrollSnapshot>,
+  scrollBodyEl: HTMLElement | null,
+  displayCount: number,
+): void {
+  useEffect(() => {
+    snapshotRef.current.displayCount = displayCount;
+  }, [displayCount, snapshotRef]);
+
+  useEffect(() => {
+    if (!scrollBodyEl) return;
+    const syncScrollTop = () => {
+      snapshotRef.current.scrollTop = scrollBodyEl.scrollTop;
+    };
+    syncScrollTop();
+    scrollBodyEl.addEventListener('scroll', syncScrollTop, { passive: true });
+    return () => scrollBodyEl.removeEventListener('scroll', syncScrollTop);
+  }, [scrollBodyEl, snapshotRef]);
+}
+
+export function useAlbumBrowseScrollSnapshotRef(
+  scrollBodyEl: HTMLElement | null,
+  displayCount: number,
+): RefObject<AlbumBrowseScrollSnapshot> {
+  const snapshotRef = useRef<AlbumBrowseScrollSnapshot>({ scrollTop: 0, displayCount: 0 });
+  useAlbumBrowseScrollSnapshotSync(snapshotRef, scrollBodyEl, displayCount);
+  return snapshotRef;
+}
+
+export function useAlbumBrowseFilters(
+  serverId: string,
+  scrollSnapshotRef?: RefObject<AlbumBrowseScrollSnapshot>,
+) {
   const navigationType = useNavigationType();
+  const location = useLocation();
   const sort = useAlbumBrowseSessionStore(s => albumBrowseSortForServer(s.sortByServer, serverId));
   const setBrowseSort = useAlbumBrowseSessionStore(s => s.setSort);
 
   const [selectedGenres, setSelectedGenres] = useState<string[]>(() =>
-    returnFiltersForNavigation(serverId, navigationType).selectedGenres,
+    returnFiltersForNavigation(serverId, navigationType, location.state).selectedGenres,
   );
   const [yearFrom, setYearFrom] = useState(() =>
-    returnFiltersForNavigation(serverId, navigationType).yearFrom,
+    returnFiltersForNavigation(serverId, navigationType, location.state).yearFrom,
   );
   const [yearTo, setYearTo] = useState(() =>
-    returnFiltersForNavigation(serverId, navigationType).yearTo,
+    returnFiltersForNavigation(serverId, navigationType, location.state).yearTo,
   );
   const [compFilter, setCompFilter] = useState<AlbumBrowseCompFilter>(() =>
-    returnFiltersForNavigation(serverId, navigationType).compFilter,
+    returnFiltersForNavigation(serverId, navigationType, location.state).compFilter,
   );
   const [starredOnly, setStarredOnly] = useState(() =>
-    returnFiltersForNavigation(serverId, navigationType).starredOnly,
+    returnFiltersForNavigation(serverId, navigationType, location.state).starredOnly,
   );
   const [losslessOnly, setLosslessOnly] = useState(() =>
-    returnFiltersForNavigation(serverId, navigationType).losslessOnly,
+    returnFiltersForNavigation(serverId, navigationType, location.state).losslessOnly,
   );
 
   const filtersRef = useRef<AlbumBrowseReturnFilters>(DEFAULT_ALBUM_BROWSE_RETURN_FILTERS);
+  /** Guards against re-reset when `albumBrowseRestore` is cleared from location state. */
+  const restoredFromStashRef = useRef(false);
   filtersRef.current = {
     selectedGenres,
     yearFrom,
@@ -56,10 +109,15 @@ export function useAlbumBrowseFilters(serverId: string) {
   };
 
   useEffect(() => {
+    restoredFromStashRef.current = false;
+  }, [serverId]);
+
+  useEffect(() => {
     if (!serverId) return;
 
-    if (navigationType === 'POP') {
-      const restored = useAlbumBrowseSessionStore.getState().peekReturnStash(serverId);
+    if (shouldRestoreAlbumBrowseSession(navigationType, location.state)) {
+      restoredFromStashRef.current = true;
+      const restored = useAlbumBrowseSessionStore.getState().peekReturnStash(serverId, ALBUMS_SURFACE);
       if (restored) {
         setSelectedGenres(restored.selectedGenres);
         setYearFrom(restored.yearFrom);
@@ -67,31 +125,41 @@ export function useAlbumBrowseFilters(serverId: string) {
         setCompFilter(restored.compFilter);
         setStarredOnly(restored.starredOnly);
         setLosslessOnly(restored.losslessOnly);
-        useAlbumBrowseSessionStore.getState().clearReturnStash(serverId);
       }
       return;
     }
 
-    useAlbumBrowseSessionStore.getState().clearReturnStash(serverId);
+    if (restoredFromStashRef.current) return;
+
+    useAlbumBrowseSessionStore.getState().clearReturnStash(serverId, ALBUMS_SURFACE);
     setSelectedGenres([]);
     setYearFrom('');
     setYearTo('');
     setCompFilter('all');
     setStarredOnly(false);
     setLosslessOnly(false);
-  }, [serverId, navigationType]);
+  }, [serverId, navigationType, location.state]);
 
   useEffect(() => {
     return () => {
       if (!serverId) return;
       const path = window.location.pathname;
       if (isAlbumDetailPath(path)) {
-        useAlbumBrowseSessionStore.getState().stashReturnFilters(serverId, filtersRef.current);
-      } else if (path !== '/albums') {
-        useAlbumBrowseSessionStore.getState().clearReturnStash(serverId);
+        const snapshot = scrollSnapshotRef?.current;
+        const scrollTop = Math.max(
+          readInpageScrollTop(ALBUMS_INPAGE_SCROLL_VIEWPORT_ID),
+          snapshot?.scrollTop ?? 0,
+        );
+        useAlbumBrowseSessionStore.getState().stashReturnFilters(serverId, ALBUMS_SURFACE, {
+          ...filtersRef.current,
+          scrollTop,
+          displayCount: snapshot?.displayCount,
+        });
+      } else if (albumBrowseSurfaceForPath(path) !== ALBUMS_SURFACE) {
+        useAlbumBrowseSessionStore.getState().clearReturnStash(serverId, ALBUMS_SURFACE);
       }
     };
-  }, [serverId]);
+  }, [serverId, scrollSnapshotRef]);
 
   const onSortChange = (value: AlbumBrowseSort) => setBrowseSort(serverId, value);
 

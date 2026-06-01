@@ -14,6 +14,7 @@ import StarFilterButton from '../components/StarFilterButton';
 import LosslessFilterButton from '../components/LosslessFilterButton';
 import SortDropdown from '../components/SortDropdown';
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useOfflineStore } from '../store/offlineStore';
 import { useDownloadModalStore } from '../store/downloadModalStore';
 import { usePlayerStore } from '../store/playerStore';
@@ -32,8 +33,11 @@ import { VirtualCardGrid } from '../components/VirtualCardGrid';
 import OverlayScrollArea from '../components/OverlayScrollArea';
 import { ALBUMS_INPAGE_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
-import { useAlbumBrowseFilters } from '../hooks/useAlbumBrowseFilters';
+import { useAlbumBrowseFilters, useAlbumBrowseScrollSnapshotSync, type AlbumBrowseScrollSnapshot } from '../hooks/useAlbumBrowseFilters';
 import { useAlbumBrowseData } from '../hooks/useAlbumBrowseData';
+import { useAlbumBrowseScrollRestore } from '../hooks/useAlbumBrowseScrollRestore';
+import { peekAlbumBrowseScrollRestore } from '../store/albumBrowseSessionStore';
+import { readAlbumBrowseRestore } from '../utils/navigation/albumDetailNavigation';
 import { useAlbumCatalogYearBounds } from '../hooks/useAlbumCatalogYearBounds';
 import type { AlbumBrowseSort } from '../utils/library/albumBrowseSort';
 import { LOSSLESS_MODE_QUERY } from '../utils/library/losslessMode';
@@ -55,6 +59,11 @@ export default function Albums() {
   const downloadAlbum = useOfflineStore(s => s.downloadAlbum);
   const requestDownloadFolder = useDownloadModalStore(s => s.requestFolder);
 
+  const scrollSnapshotRef = useRef<AlbumBrowseScrollSnapshot>({ scrollTop: 0, displayCount: 0 });
+  const restoreDisplayCountRef = useRef<number | undefined>(
+    peekAlbumBrowseScrollRestore(serverId, 'albums')?.displayCount,
+  );
+
   const {
     sort,
     onSortChange,
@@ -70,7 +79,7 @@ export default function Albums() {
     setStarredOnly,
     losslessOnly,
     setLosslessOnly,
-  } = useAlbumBrowseFilters(serverId);
+  } = useAlbumBrowseFilters(serverId, scrollSnapshotRef);
 
   const {
     scrollBodyEl,
@@ -95,6 +104,7 @@ export default function Albums() {
     compFilterActive,
     pendingClientFilterMatch,
     bindLoadMoreSentinel,
+    loadMore,
   } = useAlbumBrowseData({
     serverId,
     indexEnabled,
@@ -109,7 +119,28 @@ export default function Albums() {
     starredOverrides,
     getScrollRoot,
     scrollRootEl: scrollBodyEl,
+    restoreDisplayCount: restoreDisplayCountRef.current,
   });
+
+  useAlbumBrowseScrollSnapshotSync(scrollSnapshotRef, scrollBodyEl, displayAlbums.length);
+
+  const { isScrollRestorePending } = useAlbumBrowseScrollRestore({
+    serverId,
+    surface: 'albums',
+    scrollBodyEl,
+    displayAlbumsLength: displayAlbums.length,
+    loading,
+    loadingMore,
+    hasMore,
+    loadMore,
+  });
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isScrollRestorePending || !readAlbumBrowseRestore(location.state)) return;
+    navigate(`${location.pathname}${location.search}${location.hash}`, { replace: true, state: null });
+  }, [isScrollRestorePending, location.pathname, location.search, location.hash, location.state, navigate]);
 
   const gridMeasureRef = useRef<HTMLDivElement>(null);
   const maxGridCols = useAuthStore(s => clampLibraryGridMaxColumns(s.libraryGridMaxColumns));
@@ -388,39 +419,55 @@ export default function Albums() {
             {visibleEmptyMessage}
           </div>
         ) : (
-          <>
-            {!perfFlags.disableMainstageGridCards && (
-              <div ref={gridMeasureRef}>
-                <VirtualCardGrid
-                  items={displayAlbums}
-                  itemKey={(a, _i) => a.id}
-                  rowVariant="album"
-                  disableVirtualization={perfFlags.disableMainstageVirtualLists}
-                  layoutSignal={displayAlbums.length}
-                  scrollRootId={ALBUMS_INPAGE_SCROLL_VIEWPORT_ID}
-                  warmGridCovers={albumGridWarmCovers(
-                    albumCellDisplayCssPx,
-                    Math.min(displayAlbums.length, Math.max(albumGridCols * 6, 48)),
-                  )}
-                  renderItem={a => (
-                    <AlbumCard
-                      album={a}
-                      displayCssPx={albumCellDisplayCssPx}
-                      observeScrollRootId={ALBUMS_INPAGE_SCROLL_VIEWPORT_ID}
-                      linkQuery={losslessOnly ? LOSSLESS_MODE_QUERY : undefined}
-                      selectionMode={selectionMode}
-                      selected={selectedIds.has(a.id)}
-                      onToggleSelect={toggleSelect}
-                      selectedAlbums={selectedAlbums}
-                    />
-                  )}
-                />
+          <div style={{ position: 'relative' }}>
+            <div style={{ visibility: isScrollRestorePending ? 'hidden' : 'visible' }}>
+              {!perfFlags.disableMainstageGridCards && (
+                <div ref={gridMeasureRef}>
+                  <VirtualCardGrid
+                    items={displayAlbums}
+                    itemKey={(a, _i) => a.id}
+                    rowVariant="album"
+                    disableVirtualization={perfFlags.disableMainstageVirtualLists}
+                    layoutSignal={displayAlbums.length}
+                    scrollRootId={ALBUMS_INPAGE_SCROLL_VIEWPORT_ID}
+                    warmGridCovers={albumGridWarmCovers(
+                      albumCellDisplayCssPx,
+                      Math.min(displayAlbums.length, Math.max(albumGridCols * 6, 48)),
+                    )}
+                    renderItem={a => (
+                      <AlbumCard
+                        album={a}
+                        displayCssPx={albumCellDisplayCssPx}
+                        observeScrollRootId={ALBUMS_INPAGE_SCROLL_VIEWPORT_ID}
+                        linkQuery={losslessOnly ? LOSSLESS_MODE_QUERY : undefined}
+                        selectionMode={selectionMode}
+                        selected={selectedIds.has(a.id)}
+                        onToggleSelect={toggleSelect}
+                        selectedAlbums={selectedAlbums}
+                      />
+                    )}
+                  />
+                </div>
+              )}
+              {hasMore && (
+                <InpageScrollSentinel bindSentinel={bindLoadMoreSentinel} loading={loadingMore} />
+              )}
+            </div>
+            {isScrollRestorePending && (
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  paddingTop: '3rem',
+                  background: 'var(--ctp-base)',
+                }}
+              >
+                <div className="spinner" />
               </div>
             )}
-            {hasMore && (
-              <InpageScrollSentinel bindSentinel={bindLoadMoreSentinel} loading={loadingMore} />
-            )}
-          </>
+          </div>
         )}
       </OverlayScrollArea>
     </div>

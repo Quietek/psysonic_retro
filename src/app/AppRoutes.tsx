@@ -20,11 +20,9 @@ const MostPlayed = lazy(() => import('../pages/MostPlayed'));
 const LosslessAlbums = lazy(() => import('../pages/LosslessAlbums'));
 const RandomAlbums = lazy(() => import('../pages/RandomAlbums'));
 const LuckyMixPage = lazy(() => import('../pages/LuckyMix'));
-const SearchResults = lazy(() => import('../pages/SearchResults'));
 const Playlists = lazy(() => import('../pages/Playlists'));
 const PlaylistDetail = lazy(() => import('../pages/PlaylistDetail'));
 const NowPlayingPage = lazy(() => import('../pages/NowPlaying'));
-const Tracks = lazy(() => import('../pages/Tracks'));
 const Settings = lazy(() => import('../pages/Settings'));
 const Statistics = lazy(() => import('../pages/Statistics'));
 const Help = lazy(() => import('../pages/Help'));
@@ -32,7 +30,7 @@ const WhatsNew = lazy(() => import('../pages/WhatsNew'));
 const DeviceSync = lazy(() => import('../pages/DeviceSync'));
 const OfflineLibrary = lazy(() => import('../pages/OfflineLibrary'));
 const LabelAlbums = lazy(() => import('../pages/LabelAlbums'));
-const AdvancedSearch = lazy(() => import('../pages/AdvancedSearch'));
+const SearchBrowsePage = lazy(() => import('../pages/SearchBrowsePage'));
 const FolderBrowser = lazy(() => import('../pages/FolderBrowser'));
 const InternetRadio = lazy(() => import('../pages/InternetRadio'));
 const Genres = lazy(() => import('../pages/Genres'));
@@ -50,7 +48,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/albums" element={<Albums />} />
-      <Route path="/tracks" element={<Tracks />} />
+      <Route path="/tracks" element={<SearchBrowsePage />} />
       <Route path="/random" element={<RandomLanding />} />
       <Route path="/random/albums" element={<RandomAlbums />} />
       <Route path="/album/:id" element={<AlbumDetail />} />
@@ -63,8 +61,8 @@ export default function AppRoutes() {
       <Route path="/random/mix" element={<RandomMix />} />
       <Route path="/lucky-mix" element={<LuckyMixPage />} />
       <Route path="/label/:name" element={<LabelAlbums />} />
-      <Route path="/search" element={<SearchResults />} />
-      <Route path="/search/advanced" element={<AdvancedSearch />} />
+      <Route path="/search" element={<SearchBrowsePage />} />
+      <Route path="/search/advanced" element={<SearchBrowsePage />} />
       <Route path="/statistics" element={<Statistics />} />
       <Route path="/player-stats" element={<Statistics />} />
       <Route path="/most-played" element={<MostPlayed />} />
