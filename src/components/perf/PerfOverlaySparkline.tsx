@@ -62,7 +62,7 @@ function scale(samples: readonly PerfLiveSample[], kind: SparklineKind): { min: 
   const minVal = Math.min(...values);
   const maxVal = Math.max(...values);
   if (kind === 'cpu') {
-    return { min: 0, max: Math.max(100, maxVal * 1.1) };
+    return { min: 0, max: Math.max(5, maxVal * 1.25) };
   }
   const pad = Math.max((maxVal - minVal) * 0.08, maxVal * 0.02, 1);
   return { min: Math.max(0, minVal - pad), max: maxVal + pad };
@@ -74,8 +74,10 @@ function stableScale(
   peakRef: { current: number },
 ): { min: number; max: number } {
   const raw = scale(samples, kind);
-  if (kind === 'cpu') return raw;
   if (raw.max > peakRef.current) peakRef.current = raw.max;
+  if (kind === 'cpu') {
+    return { min: 0, max: Math.max(5, Math.max(peakRef.current, raw.max)) };
+  }
   return { min: 0, max: Math.max(peakRef.current, raw.max) };
 }
 
