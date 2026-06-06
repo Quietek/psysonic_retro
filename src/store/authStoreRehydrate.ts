@@ -150,7 +150,30 @@ export function computeAuthStoreRehydration(state: AuthState): Partial<AuthState
     discordCoverSourceMigrated = { discordCoverSource: 'apple' };
   }
 
+  // One-time: legacy unified `maxCacheMb` cap removed from Settings (offline + IDB covers).
+  const maxCacheMbMigrationKey = 'psysonic-max-cache-mb-removed-v1';
+  let maxCacheMbMigrated: { maxCacheMb?: number } = {};
+  try {
+    if (!localStorage.getItem(maxCacheMbMigrationKey)) {
+      maxCacheMbMigrated = { maxCacheMb: 0 };
+      localStorage.setItem(maxCacheMbMigrationKey, '1');
+    }
+  } catch { /* ignore */ }
+
+  let mediaDirMigrated: { mediaDir?: string } = {};
+  const stMedia = state as { mediaDir?: unknown; offlineDownloadDir?: string; hotCacheDownloadDir?: string };
+  if (!stMedia.mediaDir || (typeof stMedia.mediaDir === 'string' && stMedia.mediaDir.trim() === '')) {
+    const offline = (stMedia.offlineDownloadDir ?? '').trim();
+    const hot = (stMedia.hotCacheDownloadDir ?? '').trim();
+    if (offline && (!hot || offline === hot)) {
+      mediaDirMigrated = { mediaDir: offline };
+    } else if (hot) {
+      mediaDirMigrated = { mediaDir: hot };
+    }
+  }
+
   return {
+    ...mediaDirMigrated,
     mixMinRatingSong: clampMixFilterMinStars(state.mixMinRatingSong as number),
     mixMinRatingAlbum: clampMixFilterMinStars(state.mixMinRatingAlbum as number),
     mixMinRatingArtist: clampMixFilterMinStars(state.mixMinRatingArtist as number),
@@ -172,5 +195,6 @@ export function computeAuthStoreRehydration(state: AuthState): Partial<AuthState
     ...queueDisplayModeMigrated,
     ...linuxWaylandTextRenderProfileMigrated,
     ...discordCoverSourceMigrated,
+    ...maxCacheMbMigrated,
   };
 }
