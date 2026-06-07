@@ -400,7 +400,7 @@ export function ServersTab({
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '2px' }}>
                         <span style={{ fontWeight: 600 }}>{serverListDisplayLabel(srv, auth.servers)}</span>
                         {isActive && (
-                          <span style={{ fontSize: 11, background: 'var(--accent)', color: 'var(--ctp-crust)', padding: '1px 6px', borderRadius: 'var(--radius-sm)', fontWeight: 600 }}>
+                          <span style={{ fontSize: 11, background: 'var(--accent)', color: 'var(--text-on-accent)', padding: '1px 6px', borderRadius: 'var(--radius-sm)', fontWeight: 600 }}>
                             {t('settings.serverActive')}
                           </span>
                         )}
@@ -500,7 +500,7 @@ export function ServersTab({
                             {!!auth.audiomuseNavidromeByServer[srv.id] && auth.audiomuseNavidromeIssueByServer[srv.id] && (
                               <AlertTriangle
                                 size={16}
-                                style={{ color: 'var(--color-warning, #f59e0b)', flexShrink: 0 }}
+                                style={{ color: 'var(--warning, #f59e0b)', flexShrink: 0 }}
                                 data-tooltip={t('settings.audiomuseIssueHint')}
                                 aria-label={t('settings.audiomuseIssueHint')}
                               />

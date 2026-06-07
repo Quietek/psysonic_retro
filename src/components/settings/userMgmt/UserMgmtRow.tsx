@@ -75,13 +75,13 @@ export function UserMgmtRow({
         <span style={{ fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>· {u.name}</span>
       )}
       {isSelf && (
-        <span style={{ fontSize: 10, background: 'var(--accent)', color: 'var(--ctp-crust)', padding: '1px 6px', borderRadius: 10, fontWeight: 600, flexShrink: 0 }}>
+        <span style={{ fontSize: 10, background: 'var(--accent)', color: 'var(--text-on-accent)', padding: '1px 6px', borderRadius: 10, fontWeight: 600, flexShrink: 0 }}>
           {t('settings.userMgmtYouBadge')}
         </span>
       )}
       {u.isAdmin && (
         <span
-          style={{ fontSize: 10, display: 'inline-flex', alignItems: 'center', gap: 3, padding: '1px 6px', borderRadius: 10, fontWeight: 600, background: 'color-mix(in srgb, var(--color-warning, #f59e0b) 22%, transparent)', color: 'var(--text-primary)', flexShrink: 0 }}
+          style={{ fontSize: 10, display: 'inline-flex', alignItems: 'center', gap: 3, padding: '1px 6px', borderRadius: 10, fontWeight: 600, background: 'color-mix(in srgb, var(--warning, #f59e0b) 22%, transparent)', color: 'var(--text-primary)', flexShrink: 0 }}
           data-tooltip={t('settings.userMgmtRoleAdmin')}
         >
           <Shield size={10} />

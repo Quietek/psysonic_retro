@@ -190,7 +190,7 @@
 }
 
 .offline-library-delete:hover {
-  color: var(--color-error, #e05050);
+  color: var(--danger);
 }
 
 .offline-library-delete--spacer {
@@ -226,7 +226,7 @@
 
 .offline-filter-tab.active {
   background: var(--accent);
-  color: var(--ctp-base);
+  color: var(--bg-app);
   border-color: var(--accent);
   font-weight: 600;
 }

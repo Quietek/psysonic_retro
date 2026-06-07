@@ -1,7 +1,22 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type Theme = 'mocha' | 'macchiato' | 'frappe' | 'latte' | 'nord' | 'nord-snowstorm' | 'nord-frost' | 'nord-aurora' | 'psychowave' | 'wnamp' | 'poison' | 'nucleo' | 'muma-jukebox' | 'winmedplayer' | 'p-dvd' | 'vintage-tube-radio' | 'neon-drift' | 'aero-glass' | 'luna-teal' | 'w98' | 'cupertino-light' | 'cupertino-dark' | 'gruvbox-dark-hard' | 'gruvbox-dark-medium' | 'gruvbox-dark-soft' | 'gruvbox-light-hard' | 'gruvbox-light-medium' | 'gruvbox-light-soft' | 'spotless' | 'dzr0' | 'cupertino-beats' | 'lambda-17' | 'gw1' | 'grand-theft-audio' | 'v-tactical' | 'nightcity-2077' | 'middle-earth' | 'morpheus' | 'stark-hud' | 'blade' | 'heisenberg' | 'ice-and-fire' | 'doh-matic' | 't-800' | 'dune' | 'tetrastack' | 'the-book' | 'readit' | 'insta' | 'hill-valley-85' | 'turtle-power' | 'w3-1' | 'aqua-quartz' | 'spider-tech' | 'dos' | 'unix' | 'jayfin' | 'horde' | 'alliance' | 'w11' | 'w10' | 'north-park' | 'dark-side-of-the-moon' | 'powerslave' | 'nightfox' | 'dayfox' | 'dawnfox' | 'duskfox' | 'nordfox' | 'terafox' | 'carbonfox' | 'dracula' | 'kanagawa-wave' | 'kanagawa-dragon' | 'kanagawa-lotus' | 'one-dark' | 'one-light' | 'vs-1984' | 'vs-1984-cyberpunk' | 'vs-1984-light' | 'vs-1984-orwell' | 'vision-dark' | 'vision-navy';
+/** Themes that ship bundled with the app and can never be uninstalled. */
+export type BuiltinTheme =
+  | 'mocha'
+  | 'latte'
+  | 'kanagawa-wave'
+  | 'stark-hud'
+  | 'vision-dark'
+  | 'vision-navy';
+
+/**
+ * A theme id. Built-in ids get autocomplete; installed community themes apply
+ * any string id (the `& {}` keeps the literal hints without collapsing to a
+ * bare `string`). Non-core palettes now live in the community Theme Store and
+ * are applied by their string id once installed.
+ */
+export type Theme = BuiltinTheme | (string & {});
 
 interface ThemeState {
   theme: Theme;
@@ -44,23 +59,6 @@ export function getScheduledTheme(state: Pick<ThemeState, 'enableThemeScheduler'
   return isDay ? state.themeDay : state.themeNight;
 }
 
-/** Themes removed in PR #490 (community theme redesign). Each key maps to the
- *  closest surviving palette so persisted state from older builds doesn't land
- *  on a non-existent `data-theme` attribute and silently fall back to :root. */
-const REMOVED_THEME_REMAP: Record<string, string> = {
-  'amber-night':    'obsidian-gold',   // warm gold/amber dark family
-  'ice-blue':       'carbon-grey',     // cool neutral dark (no surviving cyan)
-  'monochrome':     'carbon-grey',     // neutral grey dark
-  'phosphor-green': 'deep-forest',     // green dark family
-  'rose-dark':      'sakura-night',    // pink/rose dark family
-};
-
-function remapTheme(value: unknown): unknown {
-  return typeof value === 'string' && value in REMOVED_THEME_REMAP
-    ? REMOVED_THEME_REMAP[value]
-    : value;
-}
-
 export const useThemeStore = create<ThemeState>()(
   persist(
     (set) => ({
@@ -92,16 +90,10 @@ export const useThemeStore = create<ThemeState>()(
     {
       name: 'psysonic_theme',
       version: 1,
-      migrate: (persistedState, _version) => {
-        if (!persistedState || typeof persistedState !== 'object') return persistedState;
-        const s = persistedState as Record<string, unknown>;
-        return {
-          ...s,
-          theme:      remapTheme(s.theme),
-          themeDay:   remapTheme(s.themeDay),
-          themeNight: remapTheme(s.themeNight),
-        };
-      },
+      // Identity migrate: preserve persisted state from older versions as-is.
+      // Theme-id repair for removed / store-only themes now happens in the
+      // pre-React bootstrap migration (see utils/themes/themeMigration).
+      migrate: (persistedState) => persistedState,
     }
   )
 );
