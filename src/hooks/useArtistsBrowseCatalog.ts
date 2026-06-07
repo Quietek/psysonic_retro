@@ -6,6 +6,13 @@ import {
   fetchLocalArtistCatalogChunk,
   fetchNetworkStarredArtists,
 } from '../utils/library/browseTextSearch';
+import { useOfflineBrowseContext } from './useOfflineBrowseContext';
+import { useOfflineBrowseReloadToken } from './useOfflineBrowseReloadToken';
+import {
+  fetchOfflineLocalArtistCatalogChunk,
+  fetchOfflineLocalStarredArtists,
+  offlineLocalBrowseEnabled,
+} from '../utils/offline/offlineLocalBrowse';
 
 /** Local-index artist catalog buffer grows by this many rows per background SQL chunk. */
 export const ARTIST_CATALOG_CHUNK_SIZE = 200;
@@ -25,6 +32,8 @@ export function useArtistsBrowseCatalog({
   starredOnly,
   musicLibraryFilterVersion,
 }: UseArtistsBrowseCatalogArgs) {
+  const offlineBrowseActive = useOfflineBrowseContext().active;
+  const offlineBrowseReloadTs = useOfflineBrowseReloadToken();
   const [catalogArtists, setCatalogArtists] = useState<SubsonicArtist[]>([]);
   const [loading, setLoading] = useState(true);
   const [catalogHasMore, setCatalogHasMore] = useState(false);
@@ -41,6 +50,27 @@ export function useArtistsBrowseCatalog({
     catalogLoadingRef.current = true;
     setCatalogLoadingMore(true);
     try {
+      if (offlineBrowseActive) {
+        if (!offlineLocalBrowseEnabled(serverId)) return;
+        const chunk = await fetchOfflineLocalArtistCatalogChunk(
+          serverId,
+          catalogOffsetRef.current,
+          ARTIST_CATALOG_CHUNK_SIZE,
+        );
+        if (generation !== loadGenerationRef.current || chunk == null) return;
+        if (append) {
+          setCatalogArtists(prev => {
+            const merged = dedupeById([...prev, ...chunk.artists]);
+            catalogOffsetRef.current = merged.length;
+            return merged;
+          });
+        } else {
+          setCatalogArtists(chunk.artists);
+          catalogOffsetRef.current = chunk.artists.length;
+        }
+        setCatalogHasMore(chunk.hasMore);
+        return;
+      }
       const chunk = await fetchLocalArtistCatalogChunk(
         serverId,
         catalogOffsetRef.current,
@@ -65,7 +95,7 @@ export function useArtistsBrowseCatalog({
         setCatalogLoadingMore(false);
       }
     }
-  }, [serverId]);
+  }, [offlineBrowseActive, serverId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -80,6 +110,27 @@ export function useArtistsBrowseCatalog({
 
     void (async () => {
       try {
+        if (offlineBrowseActive) {
+          if (!cancelled && generation === loadGenerationRef.current) {
+            if (serverId && starredOnly && offlineLocalBrowseEnabled(serverId)) {
+              setCatalogArtists((await fetchOfflineLocalStarredArtists(serverId)) ?? []);
+            } else if (serverId && !starredOnly && offlineLocalBrowseEnabled(serverId)) {
+              const first = await fetchOfflineLocalArtistCatalogChunk(
+                serverId,
+                0,
+                ARTIST_CATALOG_CHUNK_SIZE,
+              );
+              setCatalogArtists(first?.artists ?? []);
+              catalogOffsetRef.current = first?.artists.length ?? 0;
+              setCatalogHasMore(first?.hasMore ?? false);
+            } else {
+              setCatalogArtists([]);
+              setCatalogHasMore(false);
+            }
+            setBrowseMode('slice');
+          }
+          return;
+        }
         if (starredOnly) {
           if (!cancelled && generation === loadGenerationRef.current) {
             setCatalogArtists(await fetchNetworkStarredArtists());
@@ -116,7 +167,7 @@ export function useArtistsBrowseCatalog({
     return () => {
       cancelled = true;
     };
-  }, [musicLibraryFilterVersion, indexEnabled, serverId, starredOnly]);
+  }, [musicLibraryFilterVersion, indexEnabled, offlineBrowseActive, offlineBrowseReloadTs, serverId, starredOnly]);
 
   return {
     catalogArtists,

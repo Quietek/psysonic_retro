@@ -9,6 +9,8 @@ import {
   runNetworkBrowseArtists,
   type LibrarySearchSurface,
 } from '../utils/library/browseTextSearch';
+import { useOfflineBrowseContext } from './useOfflineBrowseContext';
+import { offlineLocalBrowseEnabled, searchOfflineLocalArtists } from '../utils/offline/offlineLocalBrowse';
 
 /**
  * Debounced artist/composer name search with local-vs-network race when the
@@ -22,6 +24,7 @@ export function useBrowseArtistTextSearch(
   serverId: string | null | undefined,
   surface: LibrarySearchSurface = 'artists_browse',
 ) {
+  const offlineBrowseActive = useOfflineBrowseContext().active;
   const [debouncedFilter, setDebouncedFilter] = useState('');
   const [textSearchArtists, setTextSearchArtists] = useState<SubsonicArtist[] | null>(null);
   const [textSearchLoading, setTextSearchLoading] = useState(false);
@@ -46,6 +49,15 @@ export function useBrowseArtistTextSearch(
     setTextSearchLoading(true);
 
     void (async () => {
+      if (offlineBrowseActive) {
+        const artists = offlineLocalBrowseEnabled(serverId)
+          ? await searchOfflineLocalArtists(serverId, q)
+          : [];
+        if (isStale()) return;
+        setTextSearchArtists(artists);
+        setTextSearchLoading(false);
+        return;
+      }
       const outcome = await raceBrowseWithLocalFallback(
         isStale,
         () => runLocalBrowseArtists(serverId, q),
@@ -61,7 +73,7 @@ export function useBrowseArtistTextSearch(
       setTextSearchArtists(outcome?.result ?? null);
       setTextSearchLoading(false);
     })();
-  }, [debouncedFilter, indexEnabled, serverId, surface]);
+  }, [debouncedFilter, indexEnabled, offlineBrowseActive, serverId, surface]);
 
   const effectiveFilter = textSearchArtists != null ? '' : filter;
   return { textSearchArtists, textSearchLoading, effectiveFilter };

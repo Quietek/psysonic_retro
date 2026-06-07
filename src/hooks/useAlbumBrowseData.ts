@@ -31,6 +31,13 @@ import {
   ALBUM_YEAR_FILTER_DEBOUNCE_MS,
   resolveAlbumYearBounds,
 } from '../utils/library/albumYearFilter';
+import { loadOfflineAlbumBrowseInitial } from '../utils/offline/offlineAlbumBrowseCatalog';
+import { useOfflineBrowseReloadToken } from './useOfflineBrowseReloadToken';
+import {
+  fetchAlbumBrowseCatalogChunk,
+  mergeAlbumCatalogChunk,
+} from '../utils/library/albumBrowseCatalogChunk';
+import { useOfflineBrowseContext } from './useOfflineBrowseContext';
 import { useClientSliceInfiniteScroll } from './useClientSliceInfiniteScroll';
 import { useDebouncedValue } from './useDebouncedValue';
 import { useInpageScrollSentinel } from './useInpageScrollSentinel';
@@ -91,6 +98,8 @@ export function useAlbumBrowseData({
   scrollRootEl,
   restoreDisplayCount,
 }: UseAlbumBrowseDataArgs) {
+  const offlineBrowseActive = useOfflineBrowseContext().active;
+  const offlineBrowseReloadTs = useOfflineBrowseReloadToken();
   const [albums, setAlbums] = useState<SubsonicAlbum[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -232,18 +241,19 @@ export function useAlbumBrowseData({
     catalogLoadingRef.current = true;
     setCatalogLoadingMore(true);
     try {
-      const chunk = await fetchLocalAlbumCatalogChunk(serverId, query, offset, CATALOG_CHUNK_SIZE);
+      const chunk = await fetchAlbumBrowseCatalogChunk(
+        serverId,
+        query,
+        offset,
+        CATALOG_CHUNK_SIZE,
+        starredOverrides,
+      );
       if (generation !== loadGenerationRef.current || chunk == null) return;
-      if (append) {
-        setAlbums(prev => {
-          const merged = dedupeById([...prev, ...chunk.albums]);
-          catalogOffsetRef.current = merged.length;
-          return merged;
-        });
-      } else {
-        setAlbums(chunk.albums);
-        catalogOffsetRef.current = chunk.albums.length;
-      }
+      setAlbums(prev => {
+        const { albums: next, offset: nextOffset } = mergeAlbumCatalogChunk(prev, chunk, append);
+        catalogOffsetRef.current = nextOffset;
+        return next;
+      });
       setCatalogHasMore(chunk.hasMore);
     } finally {
       catalogLoadingRef.current = false;
@@ -251,7 +261,7 @@ export function useAlbumBrowseData({
         setCatalogLoadingMore(false);
       }
     }
-  }, [serverId]);
+  }, [offlineBrowseActive, serverId, starredOverrides]);
 
   const loadBrowse = useCallback(async (
     query: AlbumBrowseQuery,
@@ -321,6 +331,28 @@ export function useAlbumBrowseData({
     setLoading(true);
 
     void (async () => {
+      if (offlineBrowseActive) {
+        const generation = ++loadGenerationRef.current;
+        if (cancelled || generation !== loadGenerationRef.current) return;
+        setBrowseMode('slice');
+        try {
+          const first = await loadOfflineAlbumBrowseInitial(
+            serverId,
+            browseQuery,
+            CATALOG_CHUNK_SIZE,
+            starredOverrides,
+          );
+          if (cancelled || generation !== loadGenerationRef.current) return;
+          setAlbums(first.albums);
+          catalogOffsetRef.current = first.albums.length;
+          setCatalogHasMore(first.hasMore);
+        } catch {
+          setAlbums([]);
+          setCatalogHasMore(false);
+        }
+        setLoading(false);
+        return;
+      }
       if (indexEnabled && serverId) {
         const generation = ++loadGenerationRef.current;
         coverTrafficBeginGridPagination();
@@ -353,7 +385,7 @@ export function useAlbumBrowseData({
     return () => {
       cancelled = true;
     };
-  }, [browseQuery, indexEnabled, serverId, loadBrowse, musicLibraryFilterVersion]);
+  }, [browseQuery, indexEnabled, offlineBrowseActive, offlineBrowseReloadTs, serverId, loadBrowse, musicLibraryFilterVersion]);
 
   useEffect(() => {
     if (!genreCatalogActive) {

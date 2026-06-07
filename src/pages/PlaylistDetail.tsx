@@ -54,6 +54,8 @@ import { usePlaylistDerived } from '../hooks/usePlaylistDerived';
 import { usePlaylistRouteEffects } from '../hooks/usePlaylistRouteEffects';
 import { useBulkPlPickerOutsideClick } from '../hooks/useBulkPlPickerOutsideClick';
 import { usePlaylistDnDReorder } from '../hooks/usePlaylistDnDReorder';
+import { useOfflineBrowseContext } from '../hooks/useOfflineBrowseContext';
+import { offlineActionPolicy } from '../utils/offline/offlineActionPolicy';
 
 // ── Column configuration ──────────────────────────────────────────────────────
 const PL_COLUMNS: readonly ColDef[] = [
@@ -179,13 +181,15 @@ export default function PlaylistDetail() {
 
   // ── Load ─────────────────────────────────────────────────────
   const lastModified = usePlaylistStore(s => (id ? s.lastModified[id] : undefined));
+  const { active: offlineBrowseActive } = useOfflineBrowseContext();
+  const actionPolicy = offlineActionPolicy('playlistDetail', offlineBrowseActive);
 
   useEffect(() => {
     if (!id) return;
     runPlaylistLoad({
       id, setLoading, setPlaylist, setSongs, setCustomCoverId, setRatings, setStarredSongs,
     });
-  }, [id, lastModified]);
+  }, [id, lastModified, offlineBrowseActive]);
 
   // ── Meta edit ─────────────────────────────────────────────────
   const handleSaveMeta = async (opts: {
@@ -280,6 +284,7 @@ export default function PlaylistDetail() {
         offlineStatus={resolvedOfflineStatus}
         offlineProgress={offlineProgress}
         activeServerId={activeServerId}
+        actionPolicy={actionPolicy}
         setEditingMeta={setEditingMeta}
         setSearchOpen={setSearchOpen}
         setSearchQuery={setSearchQuery}

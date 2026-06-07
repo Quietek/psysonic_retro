@@ -22,10 +22,16 @@ import { useLibraryCoverPrefetch } from '../cover/useLibraryCoverPrefetch';
 import { primeAlbumCoversForDisplay, warmHomeMainstageCovers } from '../cover/warmDiskPeek';
 import { readBecauseYouLikeCache } from '../store/becauseYouLikeCache';
 import {
+  isHomeFeedSnapshotEmpty,
   readHomeFeedCache,
+  readHomeFeedCacheStale,
   writeHomeFeedCache,
   type HomeFeedSnapshot,
 } from '../store/homeFeedCache';
+import { useConnectionStatus } from '../hooks/useConnectionStatus';
+import { useOfflineBrowseContext } from '../hooks/useOfflineBrowseContext';
+import { useOfflineBrowseReloadToken } from '../hooks/useOfflineBrowseReloadToken';
+import { useDevOfflineBrowseStore } from '../store/devOfflineBrowseStore';
 
 /** Match Random Albums overshoot when mix filter uses album/artist axes so hero + discover row can still fill. */
 const HOME_RANDOM_FETCH = 100;
@@ -52,7 +58,8 @@ const HOME_ARTWORK_VISIBLE_ROW_BUDGET_WHEN_ENABLED = 8;
 function getInitialHomeFeed(): HomeFeedSnapshot | null {
   const { activeServerId, musicLibraryFilterVersion } = useAuthStore.getState();
   if (!activeServerId) return null;
-  return readHomeFeedCache(activeServerId, musicLibraryFilterVersion);
+  return readHomeFeedCache(activeServerId, musicLibraryFilterVersion)
+    ?? readHomeFeedCacheStale(activeServerId);
 }
 
 export default function Home() {
@@ -63,6 +70,10 @@ export default function Home() {
   const homeSections = useHomeStore(s => s.sections);
   const activeServerId = useAuthStore(s => s.activeServerId);
   const musicLibraryFilterVersion = useAuthStore(s => s.musicLibraryFilterVersion);
+  const connStatus = useConnectionStatus().status;
+  const devForceOffline = useDevOfflineBrowseStore(s => s.forceOffline);
+  const offlineBrowseActive = useOfflineBrowseContext().active;
+  const offlineBrowseReloadTs = useOfflineBrowseReloadToken();
   // Mix-rating deps intentionally NOT subscribed here — they change during Zustand
   // rehydration and would trigger a second useEffect fire right after the first,
   // showing the cached home feed briefly and then replacing it (~500 ms later)
@@ -119,7 +130,6 @@ export default function Home() {
   useEffect(() => {
     if (!activeServerId) return;
     let cancelled = false;
-
     const fetchFreshHomeFeed = async (): Promise<HomeFeedSnapshot | null> => {
       const mixCfg = getMixMinRatingsConfigFromAuth();
       const albumMix =
@@ -154,7 +164,8 @@ export default function Home() {
       };
     };
 
-    const cached = readHomeFeedCache(activeServerId, musicLibraryFilterVersion);
+    const cached = readHomeFeedCache(activeServerId, musicLibraryFilterVersion)
+      ?? (offlineBrowseActive ? readHomeFeedCacheStale(activeServerId) : null);
     if (cached) {
       // When lazy initializers already pre-populated state from this same
       // snapshot, re-applying it would only create new array references and
@@ -168,19 +179,28 @@ export default function Home() {
       });
       // Keep the current visit visually stable, but prepare fresh data so the
       // next re-enter opens with a newer snapshot immediately.
-      void (async () => {
-        try {
-          const fresh = await fetchFreshHomeFeed();
-          if (!fresh || cancelled) return;
-          writeHomeFeedCache(fresh);
-          void warmHomeMainstageCovers(fresh);
-        } catch {
-          /* ignore */
-        }
-      })();
+      if (!offlineBrowseActive) {
+        void (async () => {
+          try {
+            const fresh = await fetchFreshHomeFeed();
+            if (!fresh || cancelled || isHomeFeedSnapshotEmpty(fresh)) return;
+            writeHomeFeedCache(fresh);
+            void warmHomeMainstageCovers(fresh);
+          } catch {
+            /* ignore */
+          }
+        })();
+      }
       return () => {
         cancelled = true;
       };
+    }
+
+    const stale = offlineBrowseActive ? readHomeFeedCacheStale(activeServerId) : null;
+    if (stale) {
+      applyFeedSnapshot(stale);
+      setLoading(false);
+      return () => { cancelled = true; };
     }
 
     setLoading(true);
@@ -189,6 +209,7 @@ export default function Home() {
         const snap = await fetchFreshHomeFeed();
         if (!snap) return;
         if (cancelled) return;
+        if (offlineBrowseActive && isHomeFeedSnapshotEmpty(snap)) return;
         writeHomeFeedCache(snap);
         applyFeedSnapshot(snap);
         if (!cancelled) setLoading(false);
@@ -208,7 +229,19 @@ export default function Home() {
     activeServerId,
     musicLibraryFilterVersion,
     homeSections,
+    offlineBrowseActive,
+    offlineBrowseReloadTs,
   ]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  /** When offline toggles without a library-filter bump, re-apply stale cache if the feed was cleared. */
+  useEffect(() => {
+    if (!activeServerId || !offlineBrowseActive) return;
+    const stale = readHomeFeedCacheStale(activeServerId);
+    if (!stale || isHomeFeedSnapshotEmpty(stale)) return;
+    if (recent.length > 0 || random.length > 0 || heroAlbums.length > 0) return;
+    applyFeedSnapshot(stale);
+    setLoading(false);
+  }, [activeServerId, connStatus, devForceOffline, offlineBrowseActive]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadMore = async (
     type: 'starred' | 'newest' | 'random' | 'frequent' | 'recent',

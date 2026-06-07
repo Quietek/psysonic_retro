@@ -14,6 +14,13 @@ import {
 } from '../utils/library/browseTextSearch';
 import { useAuthStore } from '../store/authStore';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { useOfflineBrowseContext } from './useOfflineBrowseContext';
+import { useOfflineBrowseReloadToken } from './useOfflineBrowseReloadToken';
+import {
+  fetchOfflineLocalBrowsableSongPage,
+  offlineLocalBrowseEnabled,
+  searchOfflineLocalBrowsableSongs,
+} from '../utils/offline/offlineLocalBrowse';
 
 const PAGE_SIZE = 50;
 
@@ -50,7 +57,10 @@ type UseSongBrowseListArgs = {
 /** Tracks hub song browse — all-library paging or filtered text search. */
 export function useSongBrowseList({ enabled, searchQuery, initialRestore }: UseSongBrowseListArgs) {
   const serverId = useAuthStore(s => s.activeServerId);
+  const musicLibraryFilterVersion = useAuthStore(s => s.musicLibraryFilterVersion);
   const indexEnabled = useLibraryIndexStore(s => s.isIndexEnabled(serverId));
+  const offlineBrowseActive = useOfflineBrowseContext().active;
+  const offlineBrowseReloadTs = useOfflineBrowseReloadToken();
 
   const [debouncedQuery, setDebouncedQuery] = useState(
     () => initialRestore?.query.trim() ?? searchQuery.trim(),
@@ -73,7 +83,6 @@ export function useSongBrowseList({ enabled, searchQuery, initialRestore }: UseS
   const restoreQueryHoldRef = useRef(
     initialRestore?.query.trim() ? initialRestore.query.trim() : null,
   );
-
   useEffect(() => {
     if (!enabled) return;
     const incoming = searchQuery.trim();
@@ -88,6 +97,15 @@ export function useSongBrowseList({ enabled, searchQuery, initialRestore }: UseS
 
   const fetchSongPage = useCallback(
     async (q: string, pageOffset: number, isStale: () => boolean): Promise<SubsonicSong[]> => {
+      if (offlineBrowseActive && serverId && offlineLocalBrowseEnabled(serverId)) {
+        localSearchModeRef.current = true;
+        if (q === '') {
+          const page = await fetchOfflineLocalBrowsableSongPage(serverId, pageOffset, PAGE_SIZE);
+          return page?.songs ?? [];
+        }
+        return (await searchOfflineLocalBrowsableSongs(serverId, q, pageOffset, PAGE_SIZE)) ?? [];
+      }
+
       if (q === '') {
         return fetchBrowseAllPage(serverId, pageOffset);
       }
@@ -123,7 +141,7 @@ export function useSongBrowseList({ enabled, searchQuery, initialRestore }: UseS
 
       return (await runNetworkBrowseSongPage(q, pageOffset, PAGE_SIZE)) ?? [];
     },
-    [indexEnabled, serverId],
+    [indexEnabled, musicLibraryFilterVersion, offlineBrowseActive, serverId],
   );
 
   useEffect(() => {
@@ -171,7 +189,7 @@ export function useSongBrowseList({ enabled, searchQuery, initialRestore }: UseS
     return () => {
       cancelled = true;
     };
-  }, [debouncedQuery, searchQuery, fetchSongPage, enabled]);
+  }, [debouncedQuery, searchQuery, fetchSongPage, enabled, musicLibraryFilterVersion, offlineBrowseReloadTs]);
 
   const loadMore = useCallback(async () => {
     if (!enabled || loading || !hasMore) return;

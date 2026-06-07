@@ -4,13 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Settings, HardDriveDownload } from 'lucide-react';
 import { useSidebarStore } from '../store/sidebarStore';
 import { useAuthStore } from '../store/authStore';
-import { useOfflineStore } from '../store/offlineStore';
 import { ALL_NAV_ITEMS } from '../config/navItems';
 import { useLuckyMixAvailable } from '../hooks/useLuckyMixAvailable';
-import { isOfflineSidebarLibraryNavAllowed } from '../utils/offline/favoritesOfflineBrowse';
-import { hasAnyOfflineAlbums } from '../utils/offline/offlineLibraryHelpers';
-import { useConnectionStatus } from '../hooks/useConnectionStatus';
-import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { isOfflineSidebarNavAllowed } from '../utils/offline/offlineNavPolicy';
+import { useOfflineBrowseContext } from '../hooks/useOfflineBrowseContext';
+import { offlineBrowseNavFlags } from '../utils/offline/offlineBrowseContext';
 
 const BOTTOM_NAV_ROUTES = new Set(['/', '/albums', '/now-playing']);
 
@@ -18,14 +16,10 @@ export default function MobileMoreOverlay({ onClose }: { onClose: () => void }) 
   const { t } = useTranslation();
   const sidebarItems = useSidebarStore(s => s.items);
   const randomNavMode = useAuthStore(s => s.randomNavMode);
-  const serverId = useAuthStore(s => s.activeServerId ?? '');
-  const favoritesOfflineEnabled = useAuthStore(s => s.favoritesOfflineEnabled);
-  const libraryIndexEnabled = useLibraryIndexStore(s => s.isIndexEnabled(serverId));
-  const favoritesOfflineBrowse = favoritesOfflineEnabled && libraryIndexEnabled;
-  const { status: connStatus } = useConnectionStatus();
-  const isServerOffline = connStatus === 'disconnected';
-  const offlineAlbums = useOfflineStore(s => s.albums);
-  const hasOfflineContent = hasAnyOfflineAlbums(offlineAlbums);
+  const offlineCtx = useOfflineBrowseContext();
+  const offlineNav = offlineBrowseNavFlags(offlineCtx.capabilities);
+  const isServerOffline = offlineCtx.active;
+  const hasOfflineContent = offlineCtx.capabilities.manualPins;
   const luckyMixBase = useLuckyMixAvailable();
   const luckyMixAvailable = luckyMixBase && randomNavMode === 'separate';
 
@@ -38,7 +32,13 @@ export default function MobileMoreOverlay({ onClose }: { onClose: () => void }) 
       if (randomNavMode === 'hub' && (cfg.id === 'randomMix' || cfg.id === 'randomAlbums')) return false;
       if (randomNavMode === 'separate' && cfg.id === 'randomPicker') return false;
       if (cfg.id === 'luckyMix' && !luckyMixAvailable) return false;
-      if (isServerOffline && !isOfflineSidebarLibraryNavAllowed(cfg.id, favoritesOfflineBrowse)) {
+      if (isServerOffline && !isOfflineSidebarNavAllowed(
+        cfg.id,
+        offlineNav.favoritesOfflineBrowse,
+        offlineNav.localLibraryBrowse,
+        offlineNav.playerStatsBrowse,
+        offlineNav.playlistsOfflineBrowse,
+      )) {
         return false;
       }
       return true;

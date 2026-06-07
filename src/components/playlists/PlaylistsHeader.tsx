@@ -5,6 +5,7 @@ import type { SubsonicPlaylist } from '../../api/subsonicTypes';
 import {
   defaultSmartFilters, type SmartFilters,
 } from '../../utils/playlist/playlistsSmart';
+import { offlineActionPolicy, type OfflineActionPolicy } from '../../utils/offline/offlineActionPolicy';
 
 interface Props {
   selectionMode: boolean;
@@ -24,6 +25,7 @@ interface Props {
   setEditingSmartId: React.Dispatch<React.SetStateAction<string | null>>;
   setSmartFilters: React.Dispatch<React.SetStateAction<SmartFilters>>;
   setGenreQuery: React.Dispatch<React.SetStateAction<string>>;
+  actionPolicy?: OfflineActionPolicy;
 }
 
 export default function PlaylistsHeader({
@@ -32,8 +34,10 @@ export default function PlaylistsHeader({
   creating, setCreating, setCreatingSmart,
   newName, setNewName, nameInputRef, handleCreate,
   isNavidromeServer, setEditingSmartId, setSmartFilters, setGenreQuery,
+  actionPolicy,
 }: Props) {
   const { t } = useTranslation();
+  const policy = actionPolicy ?? offlineActionPolicy('playlistsHeader', false);
 
   return (
     <div className="playlists-header">
@@ -43,7 +47,7 @@ export default function PlaylistsHeader({
           : t('playlists.title')}
       </h1>
       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-        {!(selectionMode && selectedIds.size > 0) && (<>
+        {policy.canEditPlaylist && !(selectionMode && selectedIds.size > 0) && (<>
             {creating ? (
               <>
                 <input

@@ -11,6 +11,7 @@ import PlayerBar from '../components/PlayerBar';
 import BottomNav from '../components/BottomNav';
 import { useIsMobile } from '../hooks/useIsMobile';
 import LiveSearch from '../components/LiveSearch';
+import DevNetworkModeToggle from '../components/DevNetworkModeToggle';
 import NowPlayingDropdown from '../components/NowPlayingDropdown';
 import QueuePanel from '../components/QueuePanel';
 import AppRoutes from './AppRoutes';
@@ -39,11 +40,8 @@ import { useOrbitHost } from '../hooks/useOrbitHost';
 import { useOrbitGuest } from '../hooks/useOrbitGuest';
 import { useOrbitBodyAttrs } from '../hooks/useOrbitBodyAttrs';
 import { usePlatformShellSetup } from '../hooks/usePlatformShellSetup';
-import {
-  hasOfflineBrowsingContent,
-} from '../utils/offline/favoritesOfflineBrowse';
-import { hasAnyOfflineAlbums } from '../utils/offline/offlineLibraryHelpers';
-import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { useOfflineBrowseContext } from '../hooks/useOfflineBrowseContext';
+import { offlineBrowseNavFlags } from '../utils/offline/offlineBrowseContext';
 import { useWindowFullscreenState } from '../hooks/useWindowFullscreenState';
 import { useNowPlayingTrayTitle } from '../hooks/useNowPlayingTrayTitle';
 import { useTrayMenuI18n } from '../hooks/useTrayMenuI18n';
@@ -56,11 +54,11 @@ import { useCoverNavigationPriority } from '../hooks/useCoverNavigationPriority'
 import { useLiveSearchRouteScope } from '../hooks/useLiveSearchRouteScope';
 import { useNowPlayingPrewarm } from '../hooks/useNowPlayingPrewarm';
 import { useOfflineAutoNav } from '../hooks/useOfflineAutoNav';
+import { useOfflineLibraryFilterSuspend } from '../hooks/useOfflineLibraryFilterSuspend';
 import { AppShellQueueResizerSeam } from '../components/AppShellQueueResizerSeam';
 import { IS_LINUX } from '../utils/platform';
 import { useConnectionStatus } from '../hooks/useConnectionStatus';
 import { useAuthStore } from '../store/authStore';
-import { useOfflineStore } from '../store/offlineStore';
 import { usePlayerStore } from '../store/playerStore';
 import '../store/previewPlayerVolumeSync';
 import '../store/queueResolverBridge';
@@ -110,13 +108,10 @@ export function AppShell() {
   useLiveSearchRouteScope();
   useNowPlayingPrewarm();
   const useCustomTitlebar = useAuthStore(s => s.useCustomTitlebar);
-  const offlineAlbums = useOfflineStore(s => s.albums);
-  const favoritesOfflineEnabled = useAuthStore(s => s.favoritesOfflineEnabled);
-  const activeServerId = useAuthStore(s => s.activeServerId);
-  const libraryIndexEnabled = useLibraryIndexStore(s => s.isIndexEnabled(activeServerId));
-  const favoritesOfflineBrowse = favoritesOfflineEnabled && libraryIndexEnabled;
-  const hasManualOfflineContent = hasAnyOfflineAlbums(offlineAlbums);
-  const hasOfflineContent = hasOfflineBrowsingContent(offlineAlbums);
+  const offlineCtx = useOfflineBrowseContext();
+  const offlineNav = offlineBrowseNavFlags(offlineCtx.capabilities);
+  const hasOfflineContent = offlineCtx.hasBrowsingContent;
+  const hasOfflineBrowse = offlineCtx.hasBrowseCapability;
   const floatingPlayerBar = useThemeStore(s => s.floatingPlayerBar);
   const perfFlags = usePerfProbeFlags();
 
@@ -144,13 +139,8 @@ export function AppShell() {
     document.getElementById(APP_MAIN_SCROLL_VIEWPORT_ID)?.scrollTo({ top: 0 });
   }, [location.pathname, location.state]);
 
-  useOfflineAutoNav(
-    connStatus,
-    hasManualOfflineContent,
-    favoritesOfflineBrowse,
-    location.pathname,
-    navigate,
-  );
+  useOfflineAutoNav(connStatus, offlineNav, location, navigate);
+  useOfflineLibraryFilterSuspend();
 
   useEffect(() => {
     initializeFromServerQueue();
@@ -264,6 +254,7 @@ export function AppShell() {
         <div className="main-content-zoom">
         <header className="content-header">
           <LiveSearch />
+          {import.meta.env.DEV && <DevNetworkModeToggle />}
           <div className="spacer" />
           <ConnectionIndicator status={connStatus} isLan={isLan} serverName={serverName} />
           <LastfmIndicator />
@@ -282,7 +273,7 @@ export function AppShell() {
         </header>
         <OrbitSessionBar />
         {connStatus === 'disconnected' && (
-          <OfflineBanner onRetry={connRetry} isChecking={connRetrying} showSettingsLink={!hasOfflineContent} serverName={serverName} />
+          <OfflineBanner onRetry={connRetry} isChecking={connRetrying} showSettingsLink={!hasOfflineBrowse} serverName={serverName} />
         )}
         <div className="content-body app-shell-route-host">
           <OverlayScrollArea

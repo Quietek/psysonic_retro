@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { filterSongsToActiveLibrary } from '../api/subsonicLibrary';
 import { getPlaylist } from '../api/subsonicPlaylists';
 import type { SubsonicPlaylist } from '../api/subsonicTypes';
+import { useOfflineBrowseContext } from './useOfflineBrowseContext';
 
 export interface PlaylistsLibraryScopeCountsResult {
   filteredSongCountByPlaylist: Record<string, number>;
@@ -20,6 +21,7 @@ export function usePlaylistsLibraryScopeCounts(
 ): PlaylistsLibraryScopeCountsResult {
   const [filteredSongCountByPlaylist, setFilteredSongCountByPlaylist] = useState<Record<string, number>>({});
   const [filteredDurationByPlaylist, setFilteredDurationByPlaylist] = useState<Record<string, number>>({});
+  const offlineBrowseActive = useOfflineBrowseContext().active;
 
   useEffect(() => {
     let cancelled = false;
@@ -28,6 +30,19 @@ export function usePlaylistsLibraryScopeCounts(
         if (!cancelled) {
           setFilteredSongCountByPlaylist({});
           setFilteredDurationByPlaylist({});
+        }
+        return;
+      }
+      if (offlineBrowseActive) {
+        const next: Record<string, number> = {};
+        const nextDuration: Record<string, number> = {};
+        for (const pl of playlists) {
+          next[pl.id] = pl.songCount;
+          nextDuration[pl.id] = pl.duration;
+        }
+        if (!cancelled) {
+          setFilteredSongCountByPlaylist(next);
+          setFilteredDurationByPlaylist(nextDuration);
         }
         return;
       }
@@ -60,7 +75,7 @@ export function usePlaylistsLibraryScopeCounts(
     };
     run();
     return () => { cancelled = true; };
-  }, [playlists, musicLibraryFilterVersion]);
+  }, [playlists, musicLibraryFilterVersion, offlineBrowseActive]);
 
   return { filteredSongCountByPlaylist, filteredDurationByPlaylist };
 }

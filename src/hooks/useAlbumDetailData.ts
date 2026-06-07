@@ -1,22 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { getAlbum, getAlbumForServer } from '../api/subsonicLibrary';
-import { getArtist, getArtistForServer } from '../api/subsonicArtists';
 import type { SubsonicAlbum } from '../api/subsonicTypes';
 import { useAuthStore } from '../store/authStore';
-import { useConnectionStatus } from './useConnectionStatus';
 import {
   loadAlbumFromLibraryIndex,
   loadArtistFromLibraryIndex,
-  resolveAlbumForServer,
-} from '../utils/offline/favoritesOfflineBrowse';
+} from '../utils/offline/offlineLibraryIndexLoad';
+import {
+  resolveAlbum,
+  resolveArtist,
+  type ResolvedAlbum,
+} from '../utils/offline/offlineMediaResolve';
+import { useOfflineBrowseContext } from './useOfflineBrowseContext';
+import {
+  loadArtistFromLocalPlayback,
+  offlineLocalBrowseEnabled,
+} from '../utils/offline/offlineLocalBrowse';
 import { readDetailServerId } from '../utils/navigation/detailServerScope';
 import {
   shouldAttemptSubsonicForActiveServer,
   shouldAttemptSubsonicForServer,
 } from '../utils/network/subsonicNetworkGuard';
 
-type AlbumPayload = Awaited<ReturnType<typeof getAlbum>>;
+type AlbumPayload = ResolvedAlbum;
 
 interface UseAlbumDetailDataResult {
   album: AlbumPayload | null;
@@ -44,7 +50,7 @@ export function useAlbumDetailData(id: string | undefined): UseAlbumDetailDataRe
   const activeServerId = useAuthStore(s => s.activeServerId);
   const [searchParams] = useSearchParams();
   const detailServerId = readDetailServerId(searchParams, activeServerId);
-  const { status: connStatus } = useConnectionStatus();
+  const offlineBrowseActive = useOfflineBrowseContext().active && !!detailServerId;
 
   useEffect(() => {
     if (!id) return;
@@ -64,22 +70,25 @@ export function useAlbumDetailData(id: string | undefined): UseAlbumDetailDataRe
       serverId: string | null,
       artistId: string | undefined,
       useLocalArtist: boolean,
+      localBytesOnly: boolean,
     ) => {
       if (!artistId) return;
       try {
         if (useLocalArtist && serverId) {
-          const artistLocal = await loadArtistFromLibraryIndex(serverId, artistId);
+          const artistLocal = localBytesOnly
+            ? await loadArtistFromLocalPlayback(serverId, artistId)
+            : await loadArtistFromLibraryIndex(serverId, artistId);
           if (artistLocal) {
             setRelatedAlbums(artistLocal.albums.filter(a => a.id !== id));
             return;
           }
         }
         const relatedServerId = serverId ?? detailServerId ?? activeServerId;
-        if (!relatedServerId || !shouldAttemptSubsonicForServer(relatedServerId)) return;
-        const artistData = detailServerId
-          ? await getArtistForServer(detailServerId, artistId)
-          : await getArtist(artistId);
-        setRelatedAlbums(artistData.albums.filter(a => a.id !== id));
+        if (!relatedServerId) return;
+        const artistData = await resolveArtist(relatedServerId, artistId);
+        if (artistData) {
+          setRelatedAlbums(artistData.albums.filter(a => a.id !== id));
+        }
       } catch (e) {
         console.error('Failed to fetch related albums', e);
       }
@@ -88,12 +97,28 @@ export function useAlbumDetailData(id: string | undefined): UseAlbumDetailDataRe
     const libraryFirst = favoritesOfflineEnabled && !!detailServerId;
 
     void (async () => {
+      if (offlineBrowseActive && detailServerId) {
+        const local = await resolveAlbum(detailServerId, id);
+        if (local) {
+          applyAlbumPayload(local);
+          await loadRelatedAlbums(
+            detailServerId,
+            local.album.artistId,
+            true,
+            offlineLocalBrowseEnabled(detailServerId),
+          );
+          return;
+        }
+        setLoading(false);
+        return;
+      }
+
       if (libraryFirst && detailServerId) {
         try {
-          const local = await resolveAlbumForServer(detailServerId, id);
+          const local = await resolveAlbum(detailServerId, id);
           if (local) {
             applyAlbumPayload(local);
-            await loadRelatedAlbums(detailServerId, local.album.artistId, true);
+            await loadRelatedAlbums(detailServerId, local.album.artistId, true, false);
             return;
           }
         } catch { /* fall through */ }
@@ -106,10 +131,10 @@ export function useAlbumDetailData(id: string | undefined): UseAlbumDetailDataRe
       if (!detailNetworkAllowed) {
         if (favoritesOfflineEnabled && detailServerId) {
           try {
-            const local = await loadAlbumFromLibraryIndex(detailServerId, id);
+            const local = await resolveAlbum(detailServerId, id);
             if (local) {
               applyAlbumPayload(local);
-              await loadRelatedAlbums(detailServerId, local.album.artistId, true);
+              await loadRelatedAlbums(detailServerId, local.album.artistId, true, false);
               return;
             }
           } catch { /* ignore */ }
@@ -119,18 +144,25 @@ export function useAlbumDetailData(id: string | undefined): UseAlbumDetailDataRe
       }
 
       try {
-        const data = detailServerId
-          ? await getAlbumForServer(detailServerId, id)
-          : await getAlbum(id);
+        const sid = detailServerId ?? activeServerId;
+        if (!sid) {
+          setLoading(false);
+          return;
+        }
+        const data = await resolveAlbum(sid, id);
+        if (!data) {
+          setLoading(false);
+          return;
+        }
         applyAlbumPayload(data);
-        await loadRelatedAlbums(detailServerId, data.album.artistId, false);
+        await loadRelatedAlbums(detailServerId, data.album.artistId, false, false);
       } catch {
         if (favoritesOfflineEnabled && detailServerId) {
           try {
             const local = await loadAlbumFromLibraryIndex(detailServerId, id);
             if (local) {
               applyAlbumPayload(local);
-              await loadRelatedAlbums(detailServerId, local.album.artistId, true);
+              await loadRelatedAlbums(detailServerId, local.album.artistId, true, false);
               return;
             }
           } catch { /* ignore */ }
@@ -138,7 +170,7 @@ export function useAlbumDetailData(id: string | undefined): UseAlbumDetailDataRe
         setLoading(false);
       }
     })();
-  }, [id, connStatus, favoritesOfflineEnabled, detailServerId, searchParams]);
+  }, [activeServerId, detailServerId, favoritesOfflineEnabled, id, offlineBrowseActive, searchParams]);
 
   return { album, setAlbum, relatedAlbums, loading, isStarred, setIsStarred, starredSongs, setStarredSongs };
 }

@@ -1,14 +1,21 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useAuthStore } from '../../store/authStore';
+import { useLibraryIndexStore } from '../../store/libraryIndexStore';
 import { useLocalPlaybackStore } from '../../store/localPlaybackStore';
 import {
   favoritesOfflineBrowseEnabled,
   hasOfflineBrowsingContent,
+} from './favoritesOfflineBrowse';
+import {
   isOfflineSidebarLibraryNavAllowed,
+  isOfflineSidebarNavAllowed,
+  isOfflineSidebarSystemNavAllowed,
+} from './offlineNavPolicy';
+import {
   loadStarredFromLibraryIndex,
   mergeStarredFromServers,
-  resolveAlbumForServer,
-} from './favoritesOfflineBrowse';
+} from './offlineStarredLoad';
+import { resolveAlbumForServer } from './offlineMediaResolve';
 
 const isActiveServerReachableMock = vi.fn(() => true);
 const shouldAttemptSubsonicForServerMock = vi.fn((_serverId: string, _trackId?: string) => true);
@@ -23,6 +30,7 @@ vi.mock('../network/subsonicNetworkGuard', () => ({
 const getAlbumForServerMock = vi.fn();
 const libraryAdvancedSearchMock = vi.fn();
 const libraryGetTracksByAlbumMock = vi.fn();
+const libraryGetTracksBatchChunkedMock = vi.fn();
 
 vi.mock('../../api/subsonicLibrary', () => ({
   getAlbumForServer: (...args: unknown[]) => getAlbumForServerMock(...args),
@@ -31,6 +39,7 @@ vi.mock('../../api/subsonicLibrary', () => ({
 vi.mock('../../api/library', () => ({
   libraryAdvancedSearch: (...args: unknown[]) => libraryAdvancedSearchMock(...args),
   libraryGetTracksByAlbum: (...args: unknown[]) => libraryGetTracksByAlbumMock(...args),
+  libraryGetTracksBatchChunked: (...args: unknown[]) => libraryGetTracksBatchChunkedMock(...args),
 }));
 
 describe('favoritesOfflineBrowse', () => {
@@ -40,6 +49,8 @@ describe('favoritesOfflineBrowse', () => {
     getAlbumForServerMock.mockReset();
     libraryGetTracksByAlbumMock.mockReset();
     libraryAdvancedSearchMock.mockReset();
+    libraryGetTracksBatchChunkedMock.mockReset();
+    useLibraryIndexStore.setState({ masterEnabled: true });
     useAuthStore.setState({
       favoritesOfflineEnabled: false,
       activeServerId: 'srv-1',
@@ -87,26 +98,119 @@ describe('favoritesOfflineBrowse', () => {
     expect(merged.songs.map(s => s.serverId)).toEqual(['srv-1', 'srv-2']);
   });
 
-  it('isOfflineSidebarLibraryNavAllowed keeps only favorites when offline', () => {
+  it('isOfflineSidebarLibraryNavAllowed gates offline sidebar entries', () => {
     expect(isOfflineSidebarLibraryNavAllowed('favorites', true)).toBe(true);
     expect(isOfflineSidebarLibraryNavAllowed('favorites', false)).toBe(false);
-    expect(isOfflineSidebarLibraryNavAllowed('albums', true)).toBe(false);
+    expect(isOfflineSidebarLibraryNavAllowed('artists', false, true)).toBe(true);
+    expect(isOfflineSidebarLibraryNavAllowed('allAlbums', false, true)).toBe(true);
+    expect(isOfflineSidebarLibraryNavAllowed('tracks', false, true)).toBe(true);
+    expect(isOfflineSidebarLibraryNavAllowed('tracks', false, false)).toBe(false);
+    expect(isOfflineSidebarLibraryNavAllowed('allAlbums', false, false)).toBe(false);
+    expect(isOfflineSidebarLibraryNavAllowed('offline', false, false)).toBe(true);
+    expect(isOfflineSidebarLibraryNavAllowed('playlists', false, false, true)).toBe(true);
+    expect(isOfflineSidebarLibraryNavAllowed('playlists', false, false, false)).toBe(false);
   });
 
-  it('loadStarredFromLibraryIndex omits artist entity (no artist.starred_at in index)', async () => {
+  it('isOfflineSidebarSystemNavAllowed keeps help and player stats offline', () => {
+    expect(isOfflineSidebarSystemNavAllowed('help', false)).toBe(true);
+    expect(isOfflineSidebarSystemNavAllowed('statistics', true)).toBe(true);
+    expect(isOfflineSidebarSystemNavAllowed('statistics', false)).toBe(false);
+    expect(isOfflineSidebarNavAllowed('help', false, false, false)).toBe(true);
+    expect(isOfflineSidebarNavAllowed('statistics', false, false, true)).toBe(true);
+    expect(isOfflineSidebarNavAllowed('tracks', false, true, false)).toBe(true);
+    expect(isOfflineSidebarNavAllowed('playlists', false, false, false, true)).toBe(true);
+  });
+
+  it('loadStarredFromLibraryIndex uses starred advanced search when not offline-bytes', async () => {
     libraryAdvancedSearchMock.mockResolvedValue({
       albums: [{ id: 'alb-1', name: 'A', artist: 'X', artistId: 'art-1', serverId: 'srv-1' }],
-      artists: [{ id: 'art-99', name: 'Not A Favorite', serverId: 'srv-1' }],
       tracks: [{ id: 't-1', title: 'S', artist: 'X', album: 'A', albumId: 'alb-1', durationSec: 1, serverId: 'srv-1' }],
+      artists: [],
     });
 
     const starred = await loadStarredFromLibraryIndex('srv-1');
     expect(libraryAdvancedSearchMock).toHaveBeenCalledWith(expect.objectContaining({
+      serverId: 'srv-1',
       entityTypes: ['album', 'track'],
       starredOnly: true,
     }));
+    expect(libraryGetTracksBatchChunkedMock).not.toHaveBeenCalled();
     expect(starred.artists).toEqual([]);
     expect(starred.songs).toHaveLength(1);
+  });
+
+  it('loadStarredFromLibraryIndex prefers local bytes then starred filter when offline', async () => {
+    useLocalPlaybackStore.setState({
+      entries: {
+        'a.test:t1': {
+          serverIndexKey: 'a.test',
+          trackId: 't1',
+          localPath: '/media/library/a.test/a/al/t1.mp3',
+          layoutFingerprint: 'fp',
+          sizeBytes: 1,
+          tier: 'favorite-auto',
+          cachedAt: 1,
+          suffix: 'mp3',
+        },
+        'a.test:t2': {
+          serverIndexKey: 'a.test',
+          trackId: 't2',
+          localPath: '/media/library/a.test/a/al/t2.mp3',
+          layoutFingerprint: 'fp',
+          sizeBytes: 1,
+          tier: 'favorite-auto',
+          cachedAt: 1,
+          suffix: 'mp3',
+        },
+      },
+    });
+    libraryGetTracksBatchChunkedMock.mockResolvedValue([
+      {
+        id: 't1',
+        title: 'Starred',
+        artist: 'X',
+        album: 'A',
+        albumId: 'alb-1',
+        durationSec: 1,
+        starredAt: 1,
+        serverId: 'srv-1',
+      },
+      {
+        id: 't2',
+        title: 'Not starred',
+        artist: 'X',
+        album: 'A',
+        albumId: 'alb-1',
+        durationSec: 1,
+        serverId: 'srv-1',
+      },
+    ]);
+    libraryAdvancedSearchMock.mockResolvedValue({
+      albums: [{
+        id: 'alb-2',
+        name: 'Album star only',
+        artist: 'Y',
+        artistId: 'art-2',
+        starredAt: 1,
+        serverId: 'srv-1',
+      }],
+      artists: [],
+      tracks: [],
+    });
+
+    const starred = await loadStarredFromLibraryIndex('srv-1', true);
+
+    expect(libraryGetTracksBatchChunkedMock).toHaveBeenCalled();
+    expect(libraryAdvancedSearchMock).toHaveBeenCalled();
+    expect(libraryAdvancedSearchMock).toHaveBeenCalledWith(expect.objectContaining({
+      serverId: 'srv-1',
+      entityTypes: ['album'],
+      starredOnly: true,
+      restrictAlbumIds: ['alb-1'],
+    }));
+    expect(starred.songs).toHaveLength(1);
+    expect(starred.songs[0]?.id).toBe('t1');
+    expect(starred.albums.map(a => a.id).sort()).toEqual(['alb-1', 'alb-2']);
   });
 
   it('resolveAlbumForServer uses library index when network fails', async () => {

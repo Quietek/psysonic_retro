@@ -8,6 +8,8 @@ import {
   runLocalBrowseAlbums,
   runNetworkBrowseAlbums,
 } from '../utils/library/browseTextSearch';
+import { useOfflineBrowseContext } from './useOfflineBrowseContext';
+import { offlineLocalBrowseEnabled, searchOfflineLocalAlbums } from '../utils/offline/offlineLocalBrowse';
 
 /**
  * Debounced album title search with local-vs-network race when the
@@ -19,6 +21,7 @@ export function useBrowseAlbumTextSearch(
   serverId: string | null | undefined,
   losslessOnly = false,
 ) {
+  const offlineBrowseActive = useOfflineBrowseContext().active;
   const [debouncedFilter, setDebouncedFilter] = useState('');
   const [textSearchAlbums, setTextSearchAlbums] = useState<SubsonicAlbum[] | null>(null);
   const [textSearchLoading, setTextSearchLoading] = useState(false);
@@ -43,6 +46,15 @@ export function useBrowseAlbumTextSearch(
     setTextSearchLoading(true);
 
     void (async () => {
+      if (offlineBrowseActive) {
+        const albums = offlineLocalBrowseEnabled(serverId)
+          ? await searchOfflineLocalAlbums(serverId, q, losslessOnly)
+          : [];
+        if (isStale()) return;
+        setTextSearchAlbums(albums);
+        setTextSearchLoading(false);
+        return;
+      }
       if (!indexEnabled) {
         const albums = await runNetworkBrowseAlbums(q);
         if (isStale()) return;
@@ -66,7 +78,7 @@ export function useBrowseAlbumTextSearch(
       setTextSearchAlbums(outcome?.result ?? null);
       setTextSearchLoading(false);
     })();
-  }, [debouncedFilter, indexEnabled, serverId, losslessOnly]);
+  }, [debouncedFilter, indexEnabled, offlineBrowseActive, serverId, losslessOnly]);
 
   const effectiveFilter = textSearchAlbums != null ? '' : filter;
   return { textSearchAlbums, textSearchLoading, effectiveFilter };

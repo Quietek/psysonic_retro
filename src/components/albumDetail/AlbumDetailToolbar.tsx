@@ -3,6 +3,7 @@ import { ListPlus, Search, X } from 'lucide-react';
 import type { TFunction } from 'i18next';
 import { useSelectionStore } from '../../store/selectionStore';
 import { AddToPlaylistSubmenu } from '../ContextMenu';
+import { offlineActionPolicy, type OfflineActionPolicy } from '../../utils/offline/offlineActionPolicy';
 
 interface Props {
   filterText: string;
@@ -12,6 +13,7 @@ interface Props {
   showPlPicker: boolean;
   setShowPlPicker: React.Dispatch<React.SetStateAction<boolean>>;
   t: TFunction;
+  actionPolicy?: OfflineActionPolicy;
 }
 
 /**
@@ -31,7 +33,9 @@ export function AlbumDetailToolbar({
   showPlPicker,
   setShowPlPicker,
   t,
+  actionPolicy,
 }: Props) {
+  const policy = actionPolicy ?? offlineActionPolicy('albumDetail', false);
   return (
     <div className="album-track-toolbar">
       <div className="album-track-toolbar-filter">
@@ -59,22 +63,24 @@ export function AlbumDetailToolbar({
             <span className="bulk-action-count">
               {t('common.bulkSelected', { count: selectedCount })}
             </span>
-            <div className="bulk-pl-picker-wrap">
-              <button
-                className="btn btn-surface btn-sm"
-                onClick={() => setShowPlPicker(v => !v)}
-              >
-                <ListPlus size={14} />
-                {t('common.bulkAddToPlaylist')}
-              </button>
-              {showPlPicker && (
-                <AddToPlaylistSubmenu
-                  songIds={[...useSelectionStore.getState().selectedIds]}
-                  onDone={() => { setShowPlPicker(false); useSelectionStore.getState().clearAll(); }}
-                  dropDown
-                />
-              )}
-            </div>
+            {policy.canAddToPlaylist && (
+              <div className="bulk-pl-picker-wrap">
+                <button
+                  className="btn btn-surface btn-sm"
+                  onClick={() => setShowPlPicker(v => !v)}
+                >
+                  <ListPlus size={14} />
+                  {t('common.bulkAddToPlaylist')}
+                </button>
+                {showPlPicker && (
+                  <AddToPlaylistSubmenu
+                    songIds={[...useSelectionStore.getState().selectedIds]}
+                    onDone={() => { setShowPlPicker(false); useSelectionStore.getState().clearAll(); }}
+                    dropDown
+                  />
+                )}
+              </div>
+            )}
             <button
               className="btn btn-ghost btn-sm"
               onClick={() => useSelectionStore.getState().clearAll()}

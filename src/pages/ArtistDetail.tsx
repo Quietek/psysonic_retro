@@ -2,7 +2,6 @@ import { uploadArtistImage } from '../api/subsonicPlaylists';
 import { useCoverArt } from '../cover/useCoverArt';
 import { useArtistCoverRef } from '../cover/useLibraryCoverRef';
 import { setRating, star, unstar } from '../api/subsonicStarRating';
-import { getAlbum } from '../api/subsonicLibrary';
 import type { SubsonicArtist, SubsonicAlbum, SubsonicSong, SubsonicArtistInfo } from '../api/subsonicTypes';
 import { songToTrack } from '../utils/playback/songToTrack';
 import { useEffect, useState, useRef, Fragment, useMemo } from 'react';
@@ -31,8 +30,11 @@ import {
 import { useArtistDetailData } from '../hooks/useArtistDetailData';
 import { useArtistSimilarArtists } from '../hooks/useArtistSimilarArtists';
 import {
+  fetchArtistDetailTracks,
   runArtistDetailPlayAll, runArtistDetailShuffle, runArtistDetailStartRadio,
 } from '../utils/componentHelpers/runArtistDetailPlay';
+import { useOfflineBrowseContext } from '../hooks/useOfflineBrowseContext';
+import { offlineActionPolicy } from '../utils/offline/offlineActionPolicy';
 import {
   runArtistEntityRating, runArtistToggleStar, runArtistShare, runArtistImageUpload,
 } from '../utils/componentHelpers/runArtistDetailActions';
@@ -101,6 +103,8 @@ export default function ArtistDetail() {
   const entityRatingSupportByServer = useAuthStore(s => s.entityRatingSupportByServer);
   const setEntityRatingSupport = useAuthStore(s => s.setEntityRatingSupport);
   const artistEntityRatingSupport = entityRatingSupportByServer[activeServerId] ?? 'unknown';
+  const offlineCtx = useOfflineBrowseContext();
+  const artistActionPolicy = offlineActionPolicy('artistDetail', offlineCtx.active);
 
   const [artistEntityRating, setArtistEntityRating] = useState(0);
 
@@ -122,8 +126,12 @@ export default function ArtistDetail() {
 
   const toggleStar = () => runArtistToggleStar({ artist, isStarred, setIsStarred });
 
-  const handlePlayAll = () => runArtistDetailPlayAll({ albums, setPlayAllLoading, playTrack });
-  const handleShuffle = () => runArtistDetailShuffle({ albums, setPlayAllLoading, playTrack });
+  const handlePlayAll = () => runArtistDetailPlayAll({
+    albums, serverId: activeServerId, setPlayAllLoading, playTrack,
+  });
+  const handleShuffle = () => runArtistDetailShuffle({
+    albums, serverId: activeServerId, setPlayAllLoading, playTrack,
+  });
   const handleStartRadio = () => {
     if (!artist) return;
     return runArtistDetailStartRadio({ artist, t, setRadioLoading, playTrack, enqueue });
@@ -139,9 +147,7 @@ export default function ArtistDetail() {
     setPlayAllLoading(true);
     try {
       // Get all artist tracks ordered by album and track number
-      const results = await Promise.all(albums.map(a => getAlbum(a.id)));
-      const sorted = [...results].sort((a, b) => (a.album.year ?? 0) - (b.album.year ?? 0));
-      const allTracks = sorted.flatMap(r => [...r.songs].sort((a, b) => (a.track ?? 0) - (b.track ?? 0))).map(songToTrack);
+      const allTracks = await fetchArtistDetailTracks(albums, activeServerId);
 
       // Top songs from clicked index onward
       const topTracksFromIndex = topSongs.slice(startIndex).map(songToTrack);
@@ -314,6 +320,7 @@ export default function ArtistDetail() {
         coverRevision={coverRevision}
         headerCoverFailed={headerCoverFailed}
         setHeaderCoverFailed={setHeaderCoverFailed}
+        actionPolicy={artistActionPolicy}
       />
 
       {losslessOnly && <LosslessModeBanner />}
