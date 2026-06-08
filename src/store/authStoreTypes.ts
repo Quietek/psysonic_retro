@@ -1,5 +1,6 @@
 import type { EntityRatingSupportLevel } from '../api/subsonicTypes';
 import type {
+  AudiomusePluginProbeResult,
   InstantMixProbeResult,
   SubsonicServerIdentity,
 } from '../utils/server/subsonicServerIdentity';
@@ -250,7 +251,8 @@ export interface AuthState {
   setEntityRatingSupport: (serverId: string, level: EntityRatingSupportLevel) => void;
 
   /**
-   * Per server: Navidrome has the AudioMuse-AI plugin — use `getSimilarSongs` (Instant Mix) and
+   * Per server: AudioMuse-AI features active — manual opt-in on pre-0.62 Navidrome; auto-set on
+   * 0.62+ when `sonicSimilarity` probe is `present`. Uses `getSimilarSongs` (Instant Mix) and
    * `getArtistInfo2` similar artists instead of Last.fm for discovery on this server.
    */
   audiomuseNavidromeByServer: Record<string, boolean>;
@@ -265,10 +267,16 @@ export interface AuthState {
   setAudiomuseNavidromeIssue: (serverId: string, hasIssue: boolean) => void;
 
   /**
-   * `getSimilarSongs` probe per server (after ping). `empty` hides the AudioMuse row; re-run by testing connection.
+   * `getSimilarSongs` probe per server (after ping). `empty` hides the AudioMuse row on pre-0.62 Navidrome.
    */
   instantMixProbeByServer: Record<string, InstantMixProbeResult>;
   setInstantMixProbe: (serverId: string, result: InstantMixProbeResult) => void;
+
+  /**
+   * Navidrome ≥ 0.62: `sonicSimilarity` extension probe (`present` = AudioMuse-style plugin active).
+   */
+  audiomusePluginProbeByServer: Record<string, AudiomusePluginProbeResult>;
+  setAudiomusePluginProbe: (serverId: string, result: AudiomusePluginProbeResult) => void;
 
   // Status
   isLoggedIn: boolean;

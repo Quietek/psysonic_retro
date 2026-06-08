@@ -24,7 +24,10 @@ import {
 } from '../../utils/server/serverUrlRemigration';
 import { useConfirmModalStore } from '../../store/confirmModalStore';
 import { showToast } from '../../utils/ui/toast';
-import { showAudiomuseNavidromeServerSetting } from '../../utils/server/subsonicServerIdentity';
+import PerfProbeStatusBadge, { type PerfProbeBadgeTone } from '../sidebar/perfProbe/PerfProbeStatusBadge';
+import { FEATURE_AUDIOMUSE_SIMILAR_TRACKS } from '../../serverCapabilities/catalog';
+import { resolveFeatureForServer } from '../../serverCapabilities/storeView';
+import type { CapabilityStatus, ResolvedCapability } from '../../serverCapabilities/types';
 import { serverListDisplayLabel } from '../../utils/server/serverDisplayName';
 import { serverIndexKeyForProfile } from '../../utils/server/serverIndexKey';
 import { switchActiveServer } from '../../utils/server/switchActiveServer';
@@ -32,6 +35,24 @@ import { AddServerForm } from './AddServerForm';
 import { ServerGripHandle } from './ServerGripHandle';
 
 const AUDIOMUSE_NV_PLUGIN_URL = 'https://github.com/NeptuneHub/AudioMuse-AI-NV-plugin';
+
+function audiomuseProbeBadge(
+  status: CapabilityStatus,
+  t: (key: string) => string,
+): { tone: PerfProbeBadgeTone; label: string } {
+  switch (status) {
+    case 'present': return { tone: 'ok', label: t('settings.audiomuseStatusActive') };
+    case 'absent': return { tone: 'muted', label: t('settings.audiomuseStatusNotDetected') };
+    case 'error': return { tone: 'error', label: t('settings.audiomuseStatusProbeFailed') };
+    default: return { tone: 'warn', label: t('settings.audiomuseStatusChecking') };
+  }
+}
+
+/** Row visibility: hide only when a manual (legacy) strategy proves the feature absent. */
+function showAudiomuseRow(resolved: ResolvedCapability | null): boolean {
+  if (!resolved || resolved.strategyId === null || resolved.status === 'ineligible') return false;
+  return !(resolved.activation === 'manual' && resolved.status === 'absent');
+}
 
 type ServerDropTarget = { idx: number; before: boolean } | null;
 
@@ -135,7 +156,7 @@ export function ServersTab({
           openSubsonic: probe.ping.openSubsonic,
         };
         auth.setSubsonicServerIdentity(server.id, identity);
-        scheduleInstantMixProbeForServer(server.id, probe.baseUrl, server.username, server.password, identity);
+        scheduleInstantMixProbeForServer(server.id, probe.baseUrl, server.username, server.password, identity, true);
       }
       setConnStatus(s => ({ ...s, [server.id]: probe.ok ? 'ok' : 'error' }));
     } catch {
@@ -232,7 +253,7 @@ export function ServersTab({
           openSubsonic: ping.openSubsonic,
         };
         auth.setSubsonicServerIdentity(id, identity);
-        scheduleInstantMixProbeForServer(id, data.url, data.username, data.password, identity);
+        scheduleInstantMixProbeForServer(id, data.url, data.username, data.password, identity, true);
         setConnStatus(s => ({ ...s, [id]: 'ok' }));
         const added = useAuthStore.getState().servers.find(s => s.id === id);
         if (added) void bootstrapIndexedServer(added);
@@ -324,7 +345,7 @@ export function ServersTab({
           openSubsonic: ping.openSubsonic,
         };
         auth.setSubsonicServerIdentity(id, identity);
-        scheduleInstantMixProbeForServer(id, data.url, data.username, data.password, identity);
+        scheduleInstantMixProbeForServer(id, data.url, data.username, data.password, identity, true);
       }
       setConnStatus(s => ({ ...s, [id]: ping.ok ? 'ok' : 'error' }));
     } catch {
@@ -483,10 +504,13 @@ export function ServersTab({
                     onVerify={() => void librarySync.runServerAction(serverIndexKeyForProfile(srv), 'verify')}
                     onCancel={() => void librarySync.handleCancel()}
                   />
-                  {showAudiomuseNavidromeServerSetting(
-                    auth.subsonicServerIdentityByServer[srv.id],
-                    auth.instantMixProbeByServer[srv.id],
-                  ) && (
+                  {(() => {
+                    const resolved = resolveFeatureForServer(srv.id, FEATURE_AUDIOMUSE_SIMILAR_TRACKS);
+                    if (!showAudiomuseRow(resolved) || !resolved) return null;
+                    const autoManaged = resolved.activation === 'auto';
+                    const probeBadge = audiomuseProbeBadge(resolved.status, t);
+                    const audiomuseActive = !!auth.audiomuseNavidromeByServer[srv.id];
+                    return (
                     <div
                       className="settings-toggle-row"
                       data-settings-search={t('settings.audiomuseTitle')}
@@ -497,7 +521,7 @@ export function ServersTab({
                         <div>
                           <div style={{ fontWeight: 500, display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
                             {t('settings.audiomuseTitle')}
-                            {!!auth.audiomuseNavidromeByServer[srv.id] && auth.audiomuseNavidromeIssueByServer[srv.id] && (
+                            {audiomuseActive && auth.audiomuseNavidromeIssueByServer[srv.id] && (
                               <AlertTriangle
                                 size={16}
                                 style={{ color: 'var(--warning, #f59e0b)', flexShrink: 0 }}
@@ -506,35 +530,42 @@ export function ServersTab({
                               />
                             )}
                           </div>
-                          <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
-                            <Trans
-                              i18nKey="settings.audiomuseDesc"
-                              components={{
-                                pluginLink: (
-                                  <a
-                                    href={AUDIOMUSE_NV_PLUGIN_URL}
-                                    onClick={e => {
-                                      e.preventDefault();
-                                      void openUrl(AUDIOMUSE_NV_PLUGIN_URL);
-                                    }}
-                                    style={{ color: 'var(--accent)', textDecoration: 'underline' }}
-                                  />
-                                ),
-                              }}
-                            />
-                          </div>
+                          {!autoManaged && (
+                            <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
+                              <Trans
+                                i18nKey="settings.audiomuseDesc"
+                                components={{
+                                  pluginLink: (
+                                    <a
+                                      href={AUDIOMUSE_NV_PLUGIN_URL}
+                                      onClick={e => {
+                                        e.preventDefault();
+                                        void openUrl(AUDIOMUSE_NV_PLUGIN_URL);
+                                      }}
+                                      style={{ color: 'var(--accent)', textDecoration: 'underline' }}
+                                    />
+                                  ),
+                                }}
+                              />
+                            </div>
+                          )}
                         </div>
                       </div>
-                      <label className="toggle-switch" aria-label={t('settings.audiomuseTitle')}>
-                        <input
-                          type="checkbox"
-                          checked={!!auth.audiomuseNavidromeByServer[srv.id]}
-                          onChange={e => auth.setAudiomuseNavidromeEnabled(srv.id, e.target.checked)}
-                        />
-                        <span className="toggle-track" />
-                      </label>
+                      {autoManaged ? (
+                        <PerfProbeStatusBadge tone={probeBadge.tone}>{probeBadge.label}</PerfProbeStatusBadge>
+                      ) : (
+                        <label className="toggle-switch" aria-label={t('settings.audiomuseTitle')}>
+                          <input
+                            type="checkbox"
+                            checked={audiomuseActive}
+                            onChange={e => auth.setAudiomuseNavidromeEnabled(srv.id, e.target.checked)}
+                          />
+                          <span className="toggle-track" />
+                        </label>
+                      )}
                     </div>
-                  )}
+                    );
+                  })()}
                 </div>
               );
             })}

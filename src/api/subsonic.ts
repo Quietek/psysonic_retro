@@ -2,10 +2,18 @@ import axios from 'axios';
 import md5 from 'md5';
 import { useAuthStore } from '../store/authStore';
 import {
-  isNavidromeAudiomuseSoftwareEligible,
   type InstantMixProbeResult,
   type SubsonicServerIdentity,
 } from '../utils/server/subsonicServerIdentity';
+import { fetchOpenSubsonicExtensionsWithCredentials } from './subsonicOpenSubsonic';
+import { buildCapabilityContext } from '../serverCapabilities/context';
+import {
+  PROBE_LEGACY_INSTANT_MIX,
+  PROBE_OPENSUBSONIC_EXTENSIONS,
+  SERVER_CAPABILITY_CATALOG,
+  SONIC_SIMILARITY_EXTENSION,
+} from '../serverCapabilities/catalog';
+import { neededProbeIds } from '../serverCapabilities/resolve';
 import {
   SUBSONIC_CLIENT,
   api,
@@ -104,16 +112,54 @@ export async function probeInstantMixWithCredentials(
   }
 }
 
-/** After a successful ping, probe Instant Mix in the background (Navidrome ≥ 0.60 only). */
+/**
+ * After a successful ping, run the server-capability probes needed by the catalog
+ * (`serverCapabilities/`). Which probes run is decided by the strategies eligible
+ * for this server generation — not by inline version checks here.
+ *
+ * Currently: Navidrome ≥ 0.62 → `getOpenSubsonicExtensions` (sonicSimilarity);
+ * Navidrome 0.60–0.61 → legacy `getSimilarSongs` Instant Mix probe.
+ *
+ * Idempotent: a server's advertised capabilities are static within a session, so
+ * once a definitive result is cached the probe is skipped. This is called on every
+ * 120 s connection poll, so re-fetching each time would be wasteful and would flip
+ * the resolved status (and the routed endpoint) through a `probing` window. Pass
+ * `force` for user-initiated refreshes (add/edit/test server); a server version or
+ * type change clears the cache (see `setSubsonicServerIdentity`), forcing a re-probe.
+ */
 export function scheduleInstantMixProbeForServer(
   serverId: string,
   serverUrl: string,
   username: string,
   password: string,
   identity: SubsonicServerIdentity,
+  force = false,
 ): void {
-  if (!isNavidromeAudiomuseSoftwareEligible(identity)) return;
-  void probeInstantMixWithCredentials(serverUrl, username, password).then(result =>
-    useAuthStore.getState().setInstantMixProbe(serverId, result),
-  );
+  const ctx = buildCapabilityContext(identity);
+  const probeIds = neededProbeIds(SERVER_CAPABILITY_CATALOG, ctx);
+  const store = useAuthStore.getState();
+
+  if (probeIds.has(PROBE_OPENSUBSONIC_EXTENSIONS)) {
+    const cached = store.audiomusePluginProbeByServer[serverId];
+    // Re-probe only without a definitive cached result (or on force / prior error).
+    // `probing` means an in-flight fetch — skip to avoid a duplicate request.
+    if (force || cached === undefined || cached === 'error') {
+      store.setAudiomusePluginProbe(serverId, 'probing');
+      void fetchOpenSubsonicExtensionsWithCredentials(serverUrl, username, password).then(extensions => {
+        const result = extensions === null
+          ? 'error'
+          : extensions.includes(SONIC_SIMILARITY_EXTENSION) ? 'present' : 'absent';
+        useAuthStore.getState().setAudiomusePluginProbe(serverId, result);
+      });
+    }
+  }
+
+  if (probeIds.has(PROBE_LEGACY_INSTANT_MIX)) {
+    const cached = store.instantMixProbeByServer[serverId];
+    if (force || cached === undefined || cached === 'error') {
+      void probeInstantMixWithCredentials(serverUrl, username, password).then(result =>
+        useAuthStore.getState().setInstantMixProbe(serverId, result),
+      );
+    }
+  }
 }
