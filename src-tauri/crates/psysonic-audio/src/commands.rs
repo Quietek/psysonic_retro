@@ -15,9 +15,12 @@ use super::engine::{audio_http_client, AudioEngine};
 use super::helpers::*;
 use super::ipc::{maybe_emit_normalization_state, NormalizationStatePayload};
 use super::play_input::{
-    build_playback_source_with_probe_fallback, select_play_input,
-    spawn_legacy_stream_start_when_armed, swap_in_new_sink, url_format_hint, BuildSourceArgs,
-    PlayInputContext, SinkSwapInputs,
+    build_playback_source_with_probe_fallback, select_play_input, url_format_hint, BuildSourceArgs,
+    PlayInputContext,
+};
+use super::sink_swap::{
+    spawn_legacy_stream_start_when_armed, swap_in_new_sink, LegacyStreamStartWhenArmed,
+    SinkSwapInputs,
 };
 use super::playback_rate::preserve_pitch_will_run;
 use super::preview::preview_clear_for_new_main_playback;
@@ -53,9 +56,13 @@ pub async fn audio_play(
     analysis_track_id: Option<String>,
     server_id: Option<String>,
     stream_format_suffix: Option<String>,
+    // Silent load: no `audio:playing`, sink stays paused. Optional + defaults to
+    // `false` so older/external `audio_play` callers that omit it still work.
+    start_paused: Option<bool>,
     app: AppHandle,
     state: State<'_, AudioEngine>,
 ) -> Result<(), String> {
+    let start_paused = start_paused.unwrap_or(false);
     let gapless = state.gapless_enabled.load(Ordering::Relaxed);
 
     // ── Ghost-command guard ───────────────────────────────────────────────────
@@ -311,22 +318,24 @@ pub async fn audio_play(
         };
         let needs_switch = target_rate > 0 && target_rate != current_stream_rate;
         if needs_switch {
-            let (reply_tx, reply_rx) = std::sync::mpsc::sync_channel::<Arc<rodio::MixerDeviceSink>>(0);
             let dev = state.selected_device.lock().unwrap().clone();
-            if state.stream_reopen_tx.send((target_rate, hi_res_enabled, dev, reply_tx)).is_ok() {
-                match reply_rx.recv_timeout(std::time::Duration::from_secs(5)) {
-                    Ok(new_handle) => {
-                        *state.stream_handle.lock().unwrap() = new_handle;
-                        state.stream_sample_rate.store(target_rate, Ordering::Relaxed);
-                        // Give PipeWire time to reconfigure at the new rate before
-                        // we open a Sink — only needed for large hi-res quanta.
-                        if hi_res_enabled && target_rate > 48_000 {
-                            tokio::time::sleep(Duration::from_millis(150)).await;
-                        }
+            match super::engine::open_output_stream_blocking(
+                &state,
+                target_rate,
+                hi_res_enabled,
+                dev,
+            ) {
+                Ok(_) => {
+                    // Give PipeWire time to reconfigure at the new rate before
+                    // we open a Sink — only needed for large hi-res quanta.
+                    if hi_res_enabled && target_rate > 48_000 {
+                        tokio::time::sleep(Duration::from_millis(150)).await;
                     }
-                    Err(_) => {
-                        crate::app_eprintln!("[psysonic] stream rate switch timed out, keeping {current_stream_rate} Hz");
-                    }
+                }
+                Err(_) => {
+                    crate::app_eprintln!(
+                        "[psysonic] stream rate switch timed out, keeping {current_stream_rate} Hz"
+                    );
                 }
             }
         }
@@ -337,7 +346,8 @@ pub async fn audio_play(
         }
     }
 
-    let sink = Arc::new(Player::connect_new(state.stream_handle.lock().unwrap().mixer()));
+    let stream = super::engine::ensure_output_stream_open(&state)?;
+    let sink = Arc::new(Player::connect_new(stream.mixer()));
     sink.set_volume(effective_volume);
 
     // ── Sink pre-fill for hi-res tracks ──────────────────────────────────────
@@ -401,7 +411,7 @@ pub async fn audio_play(
         if state.generation.load(Ordering::SeqCst) != gen {
             return Ok(()); // skipped during pre-fill — abort silently
         }
-        if !defer_playback_start {
+        if !defer_playback_start && !start_paused {
             sink.play();
         }
     }
@@ -415,24 +425,26 @@ pub async fn audio_play(
         fadeout_samples: built.fadeout_samples,
         crossfade_enabled,
         actual_fade_secs,
+        start_paused,
     });
 
     if defer_playback_start {
-        {
+        if !start_paused {
             let mut cur = state.current.lock().unwrap();
             cur.play_started = None;
             cur.paused_at = Some(0.0);
         }
-        spawn_legacy_stream_start_when_armed(
+        spawn_legacy_stream_start_when_armed(LegacyStreamStartWhenArmed {
             gen,
-            state.generation.clone(),
-            state.stream_playback_armed.clone(),
-            state.samples_played.clone(),
-            state.current.clone(),
-            app.clone(),
+            gen_arc: state.generation.clone(),
+            playback_armed: state.stream_playback_armed.clone(),
+            samples_played: state.samples_played.clone(),
+            current: state.current.clone(),
+            app: app.clone(),
             duration_secs,
-        );
-    } else {
+            hold_paused: start_paused,
+        });
+    } else if !start_paused {
         app.emit("audio:playing", duration_secs).ok();
     }
 

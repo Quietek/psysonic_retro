@@ -401,47 +401,6 @@ async fn open_ranged_or_streaming_input(
     }))
 }
 
-/// Legacy `AudioStreamReader`: keep the sink paused until the download task arms
-/// playback, then reset counters and emit `audio:playing` so the UI does not
-/// extrapolate ahead of audible output.
-pub(super) fn spawn_legacy_stream_start_when_armed(
-    gen: u64,
-    gen_arc: Arc<AtomicU64>,
-    playback_armed: Arc<AtomicBool>,
-    samples_played: Arc<AtomicU64>,
-    current: Arc<Mutex<super::engine::AudioCurrent>>,
-    app: AppHandle,
-    duration_secs: f64,
-) {
-    tokio::spawn(async move {
-        loop {
-            if gen_arc.load(Ordering::SeqCst) != gen {
-                return;
-            }
-            if playback_armed.load(Ordering::Relaxed) {
-                break;
-            }
-            tokio::time::sleep(Duration::from_millis(50)).await;
-        }
-        if gen_arc.load(Ordering::SeqCst) != gen {
-            return;
-        }
-        samples_played.store(0, Ordering::Relaxed);
-        let sink = current.lock().unwrap().sink.clone();
-        if let Some(sink) = sink {
-            {
-                let mut cur = current.lock().unwrap();
-                cur.play_started = Some(std::time::Instant::now());
-                cur.paused_at = None;
-                cur.seek_offset = 0.0;
-            }
-            sink.play();
-            app.emit("audio:playing", duration_secs).ok();
-            crate::app_deprintln!("[stream] legacy track-stream: playback started after buffer ready");
-        }
-    });
-}
-
 /// Pulled out of the format_hint extraction block in `audio_play` — strip the
 /// query string first so Subsonic-style URLs (`stream.view?...&v=1.16.1&...`)
 /// don't latch onto random query-param substrings; only accept short
@@ -484,84 +443,6 @@ pub(crate) struct BuildSourceArgs<'a> {
 pub(crate) struct PlaybackSource {
     pub(crate) built: BuiltSource,
     pub(crate) is_seekable: bool,
-}
-
-/// State + decisions audio_play computed before the sink swap.
-pub(crate) struct SinkSwapInputs {
-    pub(crate) sink: Arc<rodio::Player>,
-    pub(crate) duration_secs: f64,
-    pub(crate) volume: f32,
-    pub(crate) gain_linear: f32,
-    pub(crate) fadeout_trigger: Arc<AtomicBool>,
-    pub(crate) fadeout_samples: Arc<std::sync::atomic::AtomicU64>,
-    pub(crate) crossfade_enabled: bool,
-    pub(crate) actual_fade_secs: f32,
-}
-
-/// Atomically swap the new sink into `state.current`, then handle the old
-/// sink: trigger sample-level fade-out (crossfade enabled) or stop it
-/// immediately (hard cut). The fade-out is handed off to a small spawned
-/// task that drops the old sink ~`actual_fade_secs + 0.5 s` later.
-pub(crate) fn swap_in_new_sink(state: &State<'_, AudioEngine>, inputs: SinkSwapInputs) {
-    use std::time::Instant;
-
-    let SinkSwapInputs {
-        sink,
-        duration_secs,
-        volume,
-        gain_linear,
-        fadeout_trigger: new_fadeout_trigger,
-        fadeout_samples: new_fadeout_samples,
-        crossfade_enabled,
-        actual_fade_secs,
-    } = inputs;
-
-    let (old_sink, old_fadeout_trigger, old_fadeout_samples) = {
-        let mut cur = state.current.lock().unwrap();
-        let old = cur.sink.take();
-        let old_fo_trigger = cur.fadeout_trigger.take();
-        let old_fo_samples = cur.fadeout_samples.take();
-        cur.sink = Some(sink);
-        cur.duration_secs = duration_secs;
-        cur.seek_offset = 0.0;
-        cur.play_started = Some(Instant::now());
-        cur.paused_at = None;
-        cur.replay_gain_linear = gain_linear;
-        cur.base_volume = volume.clamp(0.0, 1.0);
-        cur.fadeout_trigger = Some(new_fadeout_trigger);
-        cur.fadeout_samples = Some(new_fadeout_samples);
-        (old, old_fo_trigger, old_fo_samples)
-    };
-
-    if crossfade_enabled {
-        if let Some(old) = old_sink {
-            // Trigger sample-level fade-out on Track A via TriggeredFadeOut.
-            // Calculate total fade samples from the measured actual_fade_secs.
-            let rate = state.current_sample_rate.load(Ordering::Relaxed);
-            let ch = state.current_channels.load(Ordering::Relaxed);
-            let fade_total = (actual_fade_secs as f64 * rate as f64 * ch as f64) as u64;
-
-            if let (Some(trigger), Some(samples)) = (old_fadeout_trigger, old_fadeout_samples) {
-                samples.store(fade_total.max(1), Ordering::SeqCst);
-                trigger.store(true, Ordering::SeqCst);
-            }
-
-            // Keep old sink alive until the fade completes + small margin,
-            // then drop it. No volume stepping needed — the fade-out runs
-            // at sample level inside the audio thread.
-            *state.fading_out_sink.lock().unwrap() = Some(old);
-            let fo_arc = state.fading_out_sink.clone();
-            let cleanup_dur = Duration::from_secs_f32(actual_fade_secs + 0.5);
-            tokio::spawn(async move {
-                tokio::time::sleep(cleanup_dur).await;
-                if let Some(s) = fo_arc.lock().unwrap().take() {
-                    s.stop();
-                }
-            });
-        }
-    } else if let Some(old) = old_sink {
-        old.stop();
-    }
 }
 
 fn play_media_format_hint(input: &PlayInput) -> Option<String> {

@@ -24,9 +24,10 @@ use tauri::Manager;
 
 use super::engine::AudioEngine;
 use super::play_input::{
-    build_playback_source_with_probe_fallback, swap_in_new_sink, url_format_hint,
-    BuildSourceArgs, PlayInput, PlaybackSource, SinkSwapInputs,
+    build_playback_source_with_probe_fallback, url_format_hint, BuildSourceArgs, PlayInput,
+    PlaybackSource,
 };
+use super::sink_swap::{swap_in_new_sink, SinkSwapInputs};
 use super::progress_task::spawn_progress_task;
 use super::stream::LocalFileSource;
 
@@ -187,9 +188,14 @@ pub(crate) async fn try_resume_after_device_change(
         .current_channels
         .store(ps.built.output_channels as u32, Ordering::Relaxed);
 
-    let sink = Arc::new(Player::connect_new(
-        engine.stream_handle.lock().unwrap().mixer(),
-    ));
+    let stream = match super::engine::ensure_output_stream_open(&engine) {
+        Ok(s) => s,
+        Err(e) => {
+            crate::app_eprintln!("[device-resume] output stream open failed: {e}");
+            return false;
+        }
+    };
+    let sink = Arc::new(Player::connect_new(stream.mixer()));
     let effective_volume = (snap.base_volume * snap.gain_linear).clamp(0.0, 1.0);
     sink.set_volume(effective_volume);
     sink.append(ps.built.source);
@@ -205,6 +211,7 @@ pub(crate) async fn try_resume_after_device_change(
             fadeout_samples: ps.built.fadeout_samples,
             crossfade_enabled: false,
             actual_fade_secs: 0.0,
+            start_paused: false,
         },
     );
 
