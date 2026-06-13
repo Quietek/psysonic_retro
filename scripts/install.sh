@@ -14,20 +14,22 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Log helpers write to stderr so functions that return values via stdout
+# (e.g. get_download_url) stay clean when called in command substitution.
 info() {
-    echo -e "${BLUE}[INFO]${NC} $1"
+    echo -e "${BLUE}[INFO]${NC} $1" >&2
 }
 
 success() {
-    echo -e "${GREEN}[SUCCESS]${NC} $1"
+    echo -e "${GREEN}[SUCCESS]${NC} $1" >&2
 }
 
 warn() {
-    echo -e "${YELLOW}[WARN]${NC} $1"
+    echo -e "${YELLOW}[WARN]${NC} $1" >&2
 }
 
 error() {
-    echo -e "${RED}[ERROR]${NC} $1"
+    echo -e "${RED}[ERROR]${NC} $1" >&2
     exit 1
 }
 
@@ -105,7 +107,7 @@ install_package() {
     
     if [ "$OS_TYPE" = "debian" ]; then
         package_file="${package_file}.deb"
-        curl -L -o "$package_file" "$download_url"
+        curl --fail --globoff -L -o "$package_file" "$download_url"
         
         info "Installing package..."
         $PACKAGE_MANAGER install -y "$package_file" || {
@@ -114,7 +116,7 @@ install_package() {
         }
     elif [ "$OS_TYPE" = "rhel" ]; then
         package_file="${package_file}.rpm"
-        curl -L -o "$package_file" "$download_url"
+        curl --fail --globoff -L -o "$package_file" "$download_url"
         
         info "Installing package..."
         $PACKAGE_MANAGER install -y "$package_file"
@@ -128,8 +130,17 @@ install_package() {
 check_installed() {
     if command -v $APP_NAME &> /dev/null || command -v ${APP_NAME^} &> /dev/null; then
         warn "${APP_NAME} appears to be already installed."
-        read -p "Do you want to reinstall? (y/N): " -n 1 -r
-        echo
+        # Under `curl ... | bash`, stdin is the script stream itself, so
+        # read the answer from the controlling terminal instead. Probe by
+        # opening: `[ -r /dev/tty ]` passes on the 0666 device node even
+        # without a controlling terminal; only open() reports the failure.
+        if { : < /dev/tty; } 2>/dev/null; then
+            read -p "Do you want to reinstall? (y/N): " -n 1 -r < /dev/tty
+            echo
+        else
+            warn "No terminal available for prompt; skipping reinstall."
+            exit 0
+        fi
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             info "Installation cancelled."
             exit 0
