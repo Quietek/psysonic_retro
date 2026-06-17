@@ -85,6 +85,27 @@ import {
   getSeekTargetSetAt,
 } from './seekTargetState';
 import { refreshWaveformForTrack } from './waveformRefresh';
+import { analyzeBoundary, computeWaveformSilence, STANDARD_BLEND_SEC } from '../utils/waveform/waveformSilence';
+import { isCrossfadeNextReady, maybeCrossfadeBytePreload } from './crossfadePreload';
+import { armCrossfadeDynamicOverlap, getCrossfadeTransition } from './crossfadeTrimCache';
+
+// Silence-aware crossfade (A-tail): guards the early advance to once per play
+// generation so a single playback instance triggers at most one trim-advance
+// (re-arms automatically on the next play / repeat-all loop, never loops on a
+// backward seek within the same playback).
+let crossfadeTrimAdvanceGen = -1;
+
+// AutoDJ: mirror of the engine's `autodj_suppress_autocrossfade` flag so we only
+// invoke the setter on change. When a content fade is pending for the upcoming
+// transition we suppress the engine's autonomous crossfade timer and let the JS
+// A-tail advance drive it (gated on the next track being playable) — otherwise
+// the engine would start a still-buffering next track and fade over it (a jump).
+let autodjSuppressSent: boolean | null = null;
+function syncAutodjSuppress(want: boolean): void {
+  if (autodjSuppressSent === want) return;
+  autodjSuppressSent = want;
+  invoke('audio_set_autodj_suppress', { enabled: want }).catch(() => {});
+}
 
 /** Rust-side `audio:normalization-state` event payload. */
 export type NormalizationStatePayload = {
@@ -231,19 +252,100 @@ export function handleAudioProgress(
   // Pre-buffer / pre-chain next track for gapless and crossfade.
   const {
     gaplessEnabled,
-    hotCacheEnabled,
     crossfadeEnabled,
     crossfadeSecs,
+    crossfadeTrimSilence,
   } = useAuthStore.getState();
   const remaining = dur - current_time;
 
-  const shouldChainGapless = gaplessEnabled && remaining < 30 && remaining > 0;
-  // Crossfade needs the next track bytes ready before the fade window.
-  const crossfadeWindowSecs = Math.max(8, Math.min(30, crossfadeSecs + 6));
-  const shouldBytePreloadForCrossfade =
-    !hotCacheEnabled && !gaplessEnabled && crossfadeEnabled && remaining < crossfadeWindowSecs && remaining > 0;
+  // Silence-aware crossfade — current track's trailing silence, derived once
+  // from its cached waveform. Drives both the early A-tail advance AND a wider
+  // pre-buffer window (the early advance must not outrun the next track's
+  // download, or its stream starts late and the fade has nothing to overlap).
+  const trimActive =
+    crossfadeEnabled && crossfadeTrimSilence && !gaplessEnabled && !store.currentRadio;
+  const curTrailSilenceSec = trimActive
+    ? computeWaveformSilence(store.waveformBins, dur).trailSilenceSec
+    : 0;
 
-  if (shouldChainGapless || shouldBytePreloadForCrossfade || gaplessEnabled) {
+  // A-tail: start the next track early so the fade overlaps *audible* tail/head.
+  // The overlap is content-driven ("by fact"): the planned value (A fade-out vs
+  // B buildup) when ready, else A's own fade-out measured synchronously from its
+  // already-loaded waveform. We only pre-empt the engine's own crossfade trigger
+  // (which fires `crossfadeSecs` before the end) when we'd actually start
+  // earlier — i.e. there's dead air to skip OR the content overlap is longer than
+  // crossfadeSecs (a real fade/buildup). Plain loud→loud endings fall through to
+  // the normal engine crossfade.
+  // When a content fade is pending we suppress the engine's autonomous
+  // crossfade timer (set below) so JS solely drives this transition; cleared
+  // for plain loud→loud (engine keeps its normal crossfade) and non-AutoDJ.
+  let autodjSuppressWant = false;
+  if (trimActive && store.isPlaying && store.repeatMode !== 'one') {
+    const nextIdx = store.queueIndex + 1;
+    const nextRef = nextIdx < store.queueItems.length
+      ? store.queueItems[nextIdx]
+      : (store.repeatMode === 'all' && store.queueItems.length > 0 ? store.queueItems[0] : null);
+    const nextTrackId = nextRef ? resolveQueueTrack(nextRef)?.id : undefined;
+    if (nextTrackId) {
+      const cf = Math.max(0.1, Math.min(12, crossfadeSecs));
+      const plan = getCrossfadeTransition(nextTrackId);
+      let contentOverlap: number;
+      // Scenario A: does A carry its own recorded fade-out? If so we let it ride
+      // at full engine gain (no double fade) and bring B up underneath.
+      let aRidesOwnFade: boolean;
+      if (plan && plan.overlapSec > 0) {
+        contentOverlap = plan.overlapSec;
+        aRidesOwnFade = plan.outgoingFadeSec <= 0.001;
+      } else {
+        // No next-track envelope (cold plan) → judge A from its own waveform.
+        const aShape = analyzeBoundary(store.waveformBins, dur);
+        contentOverlap = aShape.outroFadeSec;
+        aRidesOwnFade = aShape.outroFadeSec >= 1.0;
+      }
+      const wantEarly = curTrailSilenceSec > 0.3 || contentOverlap > cf + 0.3;
+      if (wantEarly) {
+        // This transition is ours to drive: stop the engine from firing its own
+        // crossfade into a possibly-cold next track. If B never readies, A plays
+        // out to its natural end and we degrade to a clean sequential start.
+        autodjSuppressWant = true;
+        let overlap = Math.max(0.5, Math.min(12, contentOverlap || 0.5));
+        // Hard, loud→loud meeting reached by trimming protective silence (no
+        // natural fade to ride): use a standard ~2 s blend instead of a near-cut.
+        if (!aRidesOwnFade && overlap < STANDARD_BLEND_SEC) overlap = STANDARD_BLEND_SEC;
+        const outgoingFade = aRidesOwnFade ? 0 : overlap;
+        const triggerAt = Math.max(0, dur - curTrailSilenceSec - overlap);
+        const gen = getPlayGeneration();
+        // Readiness gate: only advance when B's audio is actually available (RAM
+        // preload slot or local on disk). A cold stream can't sustain a stable
+        // fade, so we leave the gen guard unset and re-check on later ticks — if
+        // B readies before A ends we fade then; if never, A plays out (engine
+        // timer suppressed) and the source-exhaustion end gives a clean cut.
+        if (
+          current_time >= triggerAt
+          && crossfadeTrimAdvanceGen !== gen
+          && isCrossfadeNextReady(
+            nextTrackId,
+            playbackProfileIdForRef(nextRef),
+            playbackCacheKeyForRef(nextRef),
+          )
+        ) {
+          crossfadeTrimAdvanceGen = gen;
+          armCrossfadeDynamicOverlap(nextTrackId, overlap, outgoingFade);
+          store.next(false);
+          return;
+        }
+      }
+    }
+  }
+  syncAutodjSuppress(autodjSuppressWant);
+
+  // Crossfade pre-buffer (next-track byte download + leading-silence probe).
+  // Self-gating; also invoked right after a seek into the window (see seekAction).
+  maybeCrossfadeBytePreload(current_time, dur);
+
+  const shouldChainGapless = gaplessEnabled && remaining < 30 && remaining > 0;
+
+  if (gaplessEnabled) {
     const { queueItems, queueIndex, repeatMode } = store;
     const nextIdx = queueIndex + 1;
     // Next track for preload/chain. The resolver bridge keeps the window around
@@ -281,9 +383,9 @@ export function handleAudioProgress(
       : getPlaybackIndexKey();
     const nextUrl = resolvePlaybackUrl(nextTrack.id, serverId);
 
-    // Byte pre-download — gapless backup or crossfade; runs early so bytes are ready by chain time.
+    // Byte pre-download — gapless backup; runs early so bytes are ready by chain time.
     if (
-      (shouldBytePreloadForCrossfade || shouldBytePreloadForGaplessBackup)
+      shouldBytePreloadForGaplessBackup
       && nextTrack.id !== getBytePreloadingId()
     ) {
       setBytePreloadingId(nextTrack.id);
@@ -294,7 +396,6 @@ export function handleAudioProgress(
         console.info('[psysonic][preload-request]', {
           nextTrackId: nextTrack.id,
           nextUrl,
-          shouldBytePreloadForCrossfade,
           shouldBytePreloadForGaplessBackup,
           remaining,
           gaplessEnabled,

@@ -212,6 +212,7 @@ pub(crate) async fn try_resume_after_device_change(
             fadeout_samples: ps.built.fadeout_samples,
             crossfade_enabled: false,
             actual_fade_secs: 0.0,
+            outgoing_fade_secs: 0.0,
             start_paused: false,
         },
     );
@@ -261,6 +262,7 @@ pub(crate) async fn try_resume_after_device_change(
         engine.chained_info.clone(),
         engine.crossfade_enabled.clone(),
         engine.crossfade_secs.clone(),
+        engine.autodj_suppress_autocrossfade.clone(),
         done_flag,
         app.clone(),
         Some(analysis_app),
