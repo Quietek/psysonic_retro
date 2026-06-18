@@ -15,6 +15,8 @@ import { AboutPsysonicBrandHeader } from '../AboutPsysonicLol';
 import CustomSelect from '../CustomSelect';
 import LicensesPanel from '../LicensesPanel';
 import SettingsSubSection from '../SettingsSubSection';
+import { SettingsGroup } from './SettingsGroup';
+import { SettingsToggle } from './SettingsToggle';
 import { BackupSection } from './BackupSection';
 import { CONTRIBUTORS, MAINTAINERS } from '../../config/settingsCredits';
 
@@ -55,23 +57,25 @@ export function SystemTab() {
         icon={<Globe size={16} />}
       >
         <div className="settings-card">
-          <div className="form-group" style={{ maxWidth: '300px' }}>
-            <CustomSelect
-              value={i18n.language}
-              onChange={v => i18n.changeLanguage(v)}
-              options={[
-                { value: 'en', label: t('settings.languageEn') },
-                { value: 'de', label: t('settings.languageDe') },
-                { value: 'es', label: t('settings.languageEs') },
-                { value: 'fr', label: t('settings.languageFr') },
-                { value: 'nl', label: t('settings.languageNl') },
-                { value: 'nb', label: t('settings.languageNb') },
-                { value: 'ru', label: t('settings.languageRu') },
-                { value: 'zh', label: t('settings.languageZh') },
-                { value: 'ro', label: t('settings.languageRo') },
-              ]}
-            />
-          </div>
+          <SettingsGroup>
+            <div className="form-group" style={{ maxWidth: '300px' }}>
+              <CustomSelect
+                value={i18n.language}
+                onChange={v => i18n.changeLanguage(v)}
+                options={[
+                  { value: 'en', label: t('settings.languageEn') },
+                  { value: 'de', label: t('settings.languageDe') },
+                  { value: 'es', label: t('settings.languageEs') },
+                  { value: 'fr', label: t('settings.languageFr') },
+                  { value: 'nl', label: t('settings.languageNl') },
+                  { value: 'nb', label: t('settings.languageNb') },
+                  { value: 'ru', label: t('settings.languageRu') },
+                  { value: 'zh', label: t('settings.languageZh') },
+                  { value: 'ro', label: t('settings.languageRo') },
+                ]}
+              />
+            </div>
+          </SettingsGroup>
         </div>
       </SettingsSubSection>
 
@@ -81,59 +85,37 @@ export function SystemTab() {
         icon={<AppWindow size={16} />}
       >
         <div className="settings-card">
-          <div className="settings-toggle-row">
-            <div>
-              <div style={{ fontWeight: 500 }}>{t('settings.showTrayIcon')}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.showTrayIconDesc')}</div>
-            </div>
-            <label className="toggle-switch" aria-label={t('settings.showTrayIcon')}>
-              <input type="checkbox" checked={auth.showTrayIcon} onChange={e => auth.setShowTrayIcon(e.target.checked)} />
-              <span className="toggle-track" />
-            </label>
-          </div>
-          <div className="settings-section-divider" />
-          <div className="settings-toggle-row">
-            <div>
-              <div style={{ fontWeight: 500 }}>{t('settings.minimizeToTray')}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.minimizeToTrayDesc')}</div>
-            </div>
-            <label className="toggle-switch" aria-label={t('settings.minimizeToTray')}>
-              <input type="checkbox" checked={auth.minimizeToTray} onChange={e => auth.setMinimizeToTray(e.target.checked)} />
-              <span className="toggle-track" />
-            </label>
-          </div>
+          <SettingsGroup title={t('settings.groupTray')}>
+            <SettingsToggle
+              label={t('settings.showTrayIcon')}
+              desc={t('settings.showTrayIconDesc')}
+              checked={auth.showTrayIcon}
+              onChange={auth.setShowTrayIcon}
+            />
+            <div className="settings-section-divider" />
+            <SettingsToggle
+              label={t('settings.minimizeToTray')}
+              desc={t('settings.minimizeToTrayDesc')}
+              checked={auth.minimizeToTray}
+              onChange={auth.setMinimizeToTray}
+            />
+          </SettingsGroup>
+
           {IS_LINUX && (
-            <>
+            <SettingsGroup title={t('settings.groupLinuxRendering')}>
+              <SettingsToggle
+                label={t('settings.linuxWebkitSmoothScroll')}
+                desc={t('settings.linuxWebkitSmoothScrollDesc')}
+                checked={auth.linuxWebkitKineticScroll}
+                onChange={auth.setLinuxWebkitKineticScroll}
+              />
               <div className="settings-section-divider" />
-              <div className="settings-toggle-row">
-                <div>
-                  <div style={{ fontWeight: 500 }}>{t('settings.linuxWebkitSmoothScroll')}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.linuxWebkitSmoothScrollDesc')}</div>
-                </div>
-                <label className="toggle-switch" aria-label={t('settings.linuxWebkitSmoothScroll')}>
-                  <input
-                    type="checkbox"
-                    checked={auth.linuxWebkitKineticScroll}
-                    onChange={e => auth.setLinuxWebkitKineticScroll(e.target.checked)}
-                  />
-                  <span className="toggle-track" />
-                </label>
-              </div>
-              <div className="settings-section-divider" />
-              <div className="settings-toggle-row">
-                <div>
-                  <div style={{ fontWeight: 500 }}>{t('settings.linuxWebkitInputForceRepaint')}</div>
-                  <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.linuxWebkitInputForceRepaintDesc')}</div>
-                </div>
-                <label className="toggle-switch" aria-label={t('settings.linuxWebkitInputForceRepaint')}>
-                  <input
-                    type="checkbox"
-                    checked={auth.linuxWebkitInputForceRepaint}
-                    onChange={e => auth.setLinuxWebkitInputForceRepaint(e.target.checked)}
-                  />
-                  <span className="toggle-track" />
-                </label>
-              </div>
+              <SettingsToggle
+                label={t('settings.linuxWebkitInputForceRepaint')}
+                desc={t('settings.linuxWebkitInputForceRepaintDesc')}
+                checked={auth.linuxWebkitInputForceRepaint}
+                onChange={auth.setLinuxWebkitInputForceRepaint}
+              />
               {waylandTextRenderAvailable && (
                 <>
                   <div className="settings-section-divider" />
@@ -155,26 +137,28 @@ export function SystemTab() {
                   </div>
                 </>
               )}
-            </>
+            </SettingsGroup>
           )}
-          <div className="settings-section-divider" />
-          <div className="settings-toggle-row">
-            <div style={{ minWidth: 0 }}>
-              <div style={{ fontWeight: 500 }}>{t('settings.clockFormat')}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.clockFormatDesc')}</div>
+
+          <SettingsGroup title={t('settings.groupClock')}>
+            <div className="settings-toggle-row">
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontWeight: 500 }}>{t('settings.clockFormat')}</div>
+                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.clockFormatDesc')}</div>
+              </div>
+              <div style={{ minWidth: 160 }}>
+                <CustomSelect
+                  value={auth.clockFormat}
+                  onChange={(v) => auth.setClockFormat(v as ClockFormat)}
+                  options={[
+                    { value: 'auto', label: t('settings.clockFormatAuto') },
+                    { value: '24h',  label: t('settings.clockFormatTwentyFour') },
+                    { value: '12h',  label: t('settings.clockFormatTwelve') },
+                  ]}
+                />
+              </div>
             </div>
-            <div style={{ minWidth: 160 }}>
-              <CustomSelect
-                value={auth.clockFormat}
-                onChange={(v) => auth.setClockFormat(v as ClockFormat)}
-                options={[
-                  { value: 'auto', label: t('settings.clockFormatAuto') },
-                  { value: '24h',  label: t('settings.clockFormatTwentyFour') },
-                  { value: '12h',  label: t('settings.clockFormatTwelve') },
-                ]}
-              />
-            </div>
-          </div>
+          </SettingsGroup>
         </div>
       </SettingsSubSection>
 
@@ -190,26 +174,28 @@ export function SystemTab() {
         icon={<Sliders size={16} />}
       >
         <div className="settings-card">
-          <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
-            {t('settings.loggingModeDesc')}
-          </div>
-          <CustomSelect
-            value={auth.loggingMode}
-            onChange={(v) => auth.setLoggingMode(v as LoggingMode)}
-            options={[
-              { value: 'off', label: t('settings.loggingModeOff') },
-              { value: 'normal', label: t('settings.loggingModeNormal') },
-              { value: 'debug', label: t('settings.loggingModeDebug') },
-            ]}
-          />
-          {auth.loggingMode === 'debug' && (
-            <div style={{ marginTop: '0.75rem' }}>
-              <button className="btn btn-surface" onClick={exportRuntimeLogs}>
-                <Download size={14} />
-                {t('settings.loggingExport')}
-              </button>
+          <SettingsGroup>
+            <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: '0.75rem' }}>
+              {t('settings.loggingModeDesc')}
             </div>
-          )}
+            <CustomSelect
+              value={auth.loggingMode}
+              onChange={(v) => auth.setLoggingMode(v as LoggingMode)}
+              options={[
+                { value: 'off', label: t('settings.loggingModeOff') },
+                { value: 'normal', label: t('settings.loggingModeNormal') },
+                { value: 'debug', label: t('settings.loggingModeDebug') },
+              ]}
+            />
+            {auth.loggingMode === 'debug' && (
+              <div style={{ marginTop: '0.75rem' }}>
+                <button className="btn btn-surface" onClick={exportRuntimeLogs}>
+                  <Download size={14} />
+                  {t('settings.loggingExport')}
+                </button>
+              </div>
+            )}
+          </SettingsGroup>
         </div>
       </SettingsSubSection>
 
@@ -271,20 +257,12 @@ export function SystemTab() {
           </div>
 
           <div className="settings-section-divider" style={{ marginTop: '1.25rem' }} />
-          <div className="settings-toggle-row">
-            <div>
-              <div style={{ fontWeight: 500 }}>{t('settings.showChangelogOnUpdate')}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.showChangelogOnUpdateDesc')}</div>
-            </div>
-            <label className="toggle-switch" aria-label={t('settings.showChangelogOnUpdate')}>
-              <input
-                type="checkbox"
-                checked={auth.showChangelogOnUpdate}
-                onChange={e => auth.setShowChangelogOnUpdate(e.target.checked)}
-              />
-              <span className="toggle-track" />
-            </label>
-          </div>
+          <SettingsToggle
+            label={t('settings.showChangelogOnUpdate')}
+            desc={t('settings.showChangelogOnUpdateDesc')}
+            checked={auth.showChangelogOnUpdate}
+            onChange={auth.setShowChangelogOnUpdate}
+          />
 
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.25rem', flexWrap: 'wrap' }}>
             <button

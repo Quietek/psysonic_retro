@@ -8,6 +8,8 @@ import { usePlaylistLayoutStore } from '../../store/playlistLayoutStore';
 import { useQueueToolbarStore } from '../../store/queueToolbarStore';
 import { useSidebarStore } from '../../store/sidebarStore';
 import SettingsSubSection from '../SettingsSubSection';
+import { SettingsGroup } from './SettingsGroup';
+import { SettingsToggle } from './SettingsToggle';
 import { ArtistLayoutCustomizer } from './ArtistLayoutCustomizer';
 import { HomeCustomizer } from './HomeCustomizer';
 import { PlayerBarLayoutCustomizer } from './PlayerBarLayoutCustomizer';
@@ -37,7 +39,9 @@ export function PersonalisationTab() {
           </button>
         }
       >
-        <SidebarCustomizer />
+        <SettingsGroup>
+          <SidebarCustomizer />
+        </SettingsGroup>
       </SettingsSubSection>
 
       <SettingsSubSection
@@ -56,7 +60,9 @@ export function PersonalisationTab() {
           </button>
         }
       >
-        <HomeCustomizer />
+        <SettingsGroup>
+          <HomeCustomizer />
+        </SettingsGroup>
       </SettingsSubSection>
 
       <SettingsSubSection
@@ -76,7 +82,9 @@ export function PersonalisationTab() {
           </button>
         }
       >
-        <ArtistLayoutCustomizer />
+        <SettingsGroup>
+          <ArtistLayoutCustomizer />
+        </SettingsGroup>
       </SettingsSubSection>
 
       <SettingsSubSection
@@ -84,53 +92,31 @@ export function PersonalisationTab() {
         icon={<ListOrdered size={16} />}
       >
         <div className="settings-card">
-          {/* Three mutually exclusive modes — exactly one is always active, so
-              turning one on turns the others off; the active one cannot be
-              switched off directly (ignore the uncheck). */}
-          <div className="settings-toggle-row">
-            <div>
-              <div style={{ fontWeight: 500 }}>{t('queue.title')}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.queueModeQueueSub')}</div>
-            </div>
-            <label className="toggle-switch" aria-label={t('queue.title')}>
-              <input
-                type="checkbox"
-                checked={queueDisplayMode === 'queue'}
-                onChange={e => { if (e.target.checked) setQueueDisplayMode('queue'); }}
-              />
-              <span className="toggle-track" />
-            </label>
-          </div>
-          <div className="settings-section-divider" />
-          <div className="settings-toggle-row">
-            <div>
-              <div style={{ fontWeight: 500 }}>{t('queue.modePlaylist')}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.queueModePlaylistSub')}</div>
-            </div>
-            <label className="toggle-switch" aria-label={t('queue.modePlaylist')}>
-              <input
-                type="checkbox"
-                checked={queueDisplayMode === 'playlist'}
-                onChange={e => { if (e.target.checked) setQueueDisplayMode('playlist'); }}
-              />
-              <span className="toggle-track" />
-            </label>
-          </div>
-          <div className="settings-section-divider" />
-          <div className="settings-toggle-row">
-            <div>
-              <div style={{ fontWeight: 500 }}>{t('queue.modeTimeline')}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.queueModeTimelineSub')}</div>
-            </div>
-            <label className="toggle-switch" aria-label={t('queue.modeTimeline')}>
-              <input
-                type="checkbox"
-                checked={queueDisplayMode === 'timeline'}
-                onChange={e => { if (e.target.checked) setQueueDisplayMode('timeline'); }}
-              />
-              <span className="toggle-track" />
-            </label>
-          </div>
+          <SettingsGroup>
+            {/* Three mutually exclusive modes — exactly one is always active, so
+                turning one on turns the others off; the active one cannot be
+                switched off directly (ignore the uncheck). */}
+            <SettingsToggle
+              label={t('queue.title')}
+              desc={t('settings.queueModeQueueSub')}
+              checked={queueDisplayMode === 'queue'}
+              onChange={c => { if (c) setQueueDisplayMode('queue'); }}
+            />
+            <div className="settings-section-divider" />
+            <SettingsToggle
+              label={t('queue.modePlaylist')}
+              desc={t('settings.queueModePlaylistSub')}
+              checked={queueDisplayMode === 'playlist'}
+              onChange={c => { if (c) setQueueDisplayMode('playlist'); }}
+            />
+            <div className="settings-section-divider" />
+            <SettingsToggle
+              label={t('queue.modeTimeline')}
+              desc={t('settings.queueModeTimelineSub')}
+              checked={queueDisplayMode === 'timeline'}
+              onChange={c => { if (c) setQueueDisplayMode('timeline'); }}
+            />
+          </SettingsGroup>
         </div>
       </SettingsSubSection>
 
@@ -151,7 +137,9 @@ export function PersonalisationTab() {
           </button>
         }
       >
-        <QueueToolbarCustomizer />
+        <SettingsGroup>
+          <QueueToolbarCustomizer />
+        </SettingsGroup>
       </SettingsSubSection>
 
       <SettingsSubSection
@@ -171,7 +159,9 @@ export function PersonalisationTab() {
           </button>
         }
       >
-        <PlaylistLayoutCustomizer />
+        <SettingsGroup>
+          <PlaylistLayoutCustomizer />
+        </SettingsGroup>
       </SettingsSubSection>
 
       <SettingsSubSection
@@ -191,7 +181,9 @@ export function PersonalisationTab() {
           </button>
         }
       >
-        <PlayerBarLayoutCustomizer />
+        <SettingsGroup>
+          <PlayerBarLayoutCustomizer />
+        </SettingsGroup>
       </SettingsSubSection>
     </>
   );

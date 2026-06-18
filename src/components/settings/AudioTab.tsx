@@ -4,6 +4,8 @@ import { Music2, Sliders, Waves } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import Equalizer from '../Equalizer';
 import SettingsSubSection from '../SettingsSubSection';
+import { SettingsGroup } from './SettingsGroup';
+import { SettingsToggle } from './SettingsToggle';
 import { effectiveLoudnessPreAnalysisAttenuationDb } from '../../utils/audio/loudnessPreAnalysisSlider';
 import { useAudioDevicesProbe } from '../../hooks/useAudioDevicesProbe';
 import { AudioOutputDeviceSection } from './audio/AudioOutputDeviceSection';
@@ -51,21 +53,15 @@ export function AudioTab() {
         icon={<Waves size={16} />}
       >
         <div className="settings-card">
-          <div className="settings-toggle-row">
-            <div>
-              <div style={{ fontWeight: 500 }}>{t('settings.hiResEnabled')}</div>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('settings.hiResDesc')}</div>
-            </div>
-            <label className="toggle-switch" aria-label={t('settings.hiResEnabled')}>
-              <input
-                type="checkbox"
-                checked={auth.enableHiRes}
-                onChange={e => auth.setEnableHiRes(e.target.checked)}
-                id="hires-enabled-toggle"
-              />
-              <span className="toggle-track" />
-            </label>
-          </div>
+          <SettingsGroup>
+            <SettingsToggle
+              desc={t('settings.hiResDesc')}
+              ariaLabel={t('settings.hiResEnabled')}
+              id="hires-enabled-toggle"
+              checked={auth.enableHiRes}
+              onChange={auth.setEnableHiRes}
+            />
+          </SettingsGroup>
         </div>
       </SettingsSubSection>
 
@@ -75,7 +71,9 @@ export function AudioTab() {
         icon={<Sliders size={16} />}
       >
         <div className="settings-card">
-          <Equalizer />
+          <SettingsGroup>
+            <Equalizer />
+          </SettingsGroup>
         </div>
       </SettingsSubSection>
 
@@ -85,7 +83,9 @@ export function AudioTab() {
         icon={<Gauge size={16} />}
       >
         <div className="settings-card">
-          <PlaybackRateBlock t={t} />
+          <SettingsGroup>
+            <PlaybackRateBlock t={t} />
+          </SettingsGroup>
         </div>
       </SettingsSubSection>
 
