@@ -5,6 +5,20 @@ import { setDeferHotCachePrefetch } from '../utils/cache/hotCacheGate';
 import { orbitBulkGuard } from '../utils/orbitBulkGuard';
 import { sameQueueTrackId } from '../utils/playback/queueIdentity';
 import {
+  computeAutodjManualBlendPlan,
+  shouldAutodjInterruptBlend,
+} from '../utils/playback/autodjManualBlend';
+import type { CrossfadeTransitionPlan } from '../utils/waveform/waveformSilence';
+import {
+  armInterruptHandoff,
+  clearInterruptHandoff,
+  runInterruptBlendPrep,
+  shouldDeferInterruptHandoffUi,
+} from '../utils/playback/autodjInterruptPrep';
+import { isCrossfadeNextReady } from './crossfadePreload';
+import { STANDARD_BLEND_SEC } from '../utils/waveform/waveformSilence';
+import { armAutodjMixing, clearAutodjTransitionUi } from './autodjTransitionUi';
+import {
   bindQueueServerForTracks,
   getPlaybackCacheServerKey,
   getPlaybackIndexKey,
@@ -20,7 +34,7 @@ import {
 import { resolvePlaybackUrl } from '../utils/playback/resolvePlaybackUrl';
 import { resolveReplayGainDb } from '../utils/audio/resolveReplayGainDb';
 import { useAuthStore } from './authStore';
-import { consumeCrossfadeDynamicOverlap, getCrossfadeTransition } from './crossfadeTrimCache';
+import { consumeCrossfadeDynamicOverlap, getCrossfadeTransition, peekArmedCrossfadeDynamicOverlap } from './crossfadeTrimCache';
 import {
   bumpPlayGeneration,
   getPlayGeneration,
@@ -36,6 +50,7 @@ import {
   loudnessGainDbForEngineBind,
 } from './loudnessGainCache';
 import { refreshLoudnessForTrack } from './loudnessRefresh';
+import { fetchWaveformBins, refreshWaveformForTrack } from './waveformRefresh';
 import { deriveNormalizationSnapshot } from './normalizationSnapshot';
 import { useOrbitStore } from './orbitStore';
 import {
@@ -64,8 +79,6 @@ import {
   clearSeekTarget,
   setSeekTarget,
 } from './seekTargetState';
-import { refreshWaveformForTrack } from './waveformRefresh';
-
 type SetState = (
   partial: Partial<PlayerState> | ((state: PlayerState) => Partial<PlayerState>),
 ) => void;
@@ -177,6 +190,7 @@ export function runPlayTrack(
   set({ scheduledPauseAtMs: null, scheduledPauseStartMs: null, scheduledResumeAtMs: null, scheduledResumeStartMs: null });
 
   const gen = bumpPlayGeneration();
+  clearInterruptHandoff();
   setIsAudioPaused(false);
   clearPreloadingIds(); // new track — allow fresh preload for next
   clearSeekDebounce(); clearSeekTarget();
@@ -190,6 +204,9 @@ export function runPlayTrack(
   }
 
   const state = get();
+  const wasPlayingBeforeSkip = state.isPlaying;
+  const skipFromTimeSec = state.currentTime;
+  const outgoingWaveformBins = state.waveformBins;
   const prevTrack = state.currentTrack;
   if (prevTrack?.id !== scopedTrack.id) {
     setSeekFallbackTrackId(null);
@@ -319,27 +336,74 @@ export function runPlayTrack(
     } else if (queueSid) {
       seedQueueResolver(queueSid, [scopedTrack]);
     }
-    set({
-      currentTrack: scopedTrack,
-      currentRadio: null,
-      waveformBins: null,
-      ...deriveNormalizationSnapshot(scopedTrack, normWindow, normIdx),
-      // Only a replace rewrites the queue; navigation keeps the canonical refs.
-      ...(replacing ? { queueItems: toQueueItemRefs(queueSid, scopedQueue) } : {}),
-      queueIndex: idx >= 0 ? idx : 0,
-      progress: initialProgress,
-      buffered: 0,
-      currentTime: initialTime,
-      scrobbled: false,
-      networkLoved: false,
-      // HTTP stream: wait for Rust `audio:playing` so the seekbar does not
-      // extrapolate while RangedHttpSource / legacy reader is still buffering.
-      isPlaying: playbackSourceHint !== 'stream',
-      isPlaybackBuffering: playbackSourceHint === 'stream',
-      currentPlaybackSource: playbackSourceHint,
-      enginePreloadedTrackId: keepPreloadHint ? scopedTrack.id : null,
-    });
 
+    const hasJsAutoHandoff = !manual && peekArmedCrossfadeDynamicOverlap(scopedTrack.id);
+    const wantInterruptBlend = Boolean(
+      shouldAutodjInterruptBlend(wasPlayingBeforeSkip, hasJsAutoHandoff)
+      && prevTrack
+      && !sameQueueTrackId(prevTrack.id, scopedTrack.id),
+    );
+    const bReadyNow = isCrossfadeNextReady(scopedTrack.id, playbackSid, playbackCacheSid);
+    /** Cold interrupt: engine still on A — don't swap player-bar metadata until handoff. */
+    const deferInterruptUi = shouldDeferInterruptHandoffUi(wantInterruptBlend, bReadyNow);
+
+    const applyInterruptHandoffUi = () => {
+      set({
+        currentTrack: scopedTrack,
+        waveformBins: null,
+        ...deriveNormalizationSnapshot(scopedTrack, normWindow, normIdx),
+        progress: initialProgress,
+        buffered: 0,
+        currentTime: initialTime,
+        scrobbled: false,
+        networkLoved: false,
+        isPlaying: playbackSourceHint !== 'stream',
+        isPlaybackBuffering: playbackSourceHint === 'stream',
+        currentPlaybackSource: playbackSourceHint,
+        enginePreloadedTrackId: keepPreloadHint ? scopedTrack.id : null,
+      });
+      void refreshWaveformForTrack(scopedTrack.id);
+      void refreshLoudnessForTrack(scopedTrack.id, { syncPlayingEngine: false });
+    };
+
+    if (deferInterruptUi) {
+      set({
+        currentRadio: null,
+        ...(replacing ? { queueItems: toQueueItemRefs(queueSid, scopedQueue) } : {}),
+        queueIndex: idx >= 0 ? idx : 0,
+      });
+    } else {
+      set({
+        currentTrack: scopedTrack,
+        currentRadio: null,
+        waveformBins: null,
+        ...deriveNormalizationSnapshot(scopedTrack, normWindow, normIdx),
+        // Only a replace rewrites the queue; navigation keeps the canonical refs.
+        ...(replacing ? { queueItems: toQueueItemRefs(queueSid, scopedQueue) } : {}),
+        queueIndex: idx >= 0 ? idx : 0,
+        progress: initialProgress,
+        buffered: 0,
+        currentTime: initialTime,
+        scrobbled: false,
+        networkLoved: false,
+        // HTTP stream: wait for Rust `audio:playing` so the seekbar does not
+        // extrapolate while RangedHttpSource / legacy reader is still buffering.
+        // During interrupt prep A is still audible — keep the play affordance on.
+        isPlaying: (wantInterruptBlend && wasPlayingBeforeSkip) || playbackSourceHint !== 'stream',
+        isPlaybackBuffering: wantInterruptBlend && wasPlayingBeforeSkip
+          ? false
+          : playbackSourceHint === 'stream',
+        currentPlaybackSource: playbackSourceHint,
+        enginePreloadedTrackId: keepPreloadHint ? scopedTrack.id : null,
+      });
+      void refreshWaveformForTrack(scopedTrack.id);
+      void refreshLoudnessForTrack(
+        scopedTrack.id,
+        wantInterruptBlend ? { syncPlayingEngine: false } : undefined,
+      );
+    }
+
+    setDeferHotCachePrefetch(true);
     if (
       prevTrack
       && !sameQueueTrackId(prevTrack.id, scopedTrack.id)
@@ -354,114 +418,191 @@ export function runPlayTrack(
         );
       }
     }
-    void refreshWaveformForTrack(scopedTrack.id);
-    void refreshLoudnessForTrack(scopedTrack.id);
-    setDeferHotCachePrefetch(true);
     const replayGainDb = resolveReplayGainDb(
       scopedTrack, prevTrack, nextNeighbour,
       isReplayGainActive(), authStateNow.replayGainMode,
     );
     const replayGainPeak = isReplayGainActive() ? (scopedTrack.replayGainPeak ?? null) : null;
-    // Silence-aware crossfade (B-head + dynamic overlap): on a fresh auto-advance
-    // under crossfade, start past this track's leading silence (always, from the
-    // plan) and — only when the JS A-tail advance positioned this transition —
-    // fade over the content-driven overlap it armed. Engine-driven advances
-    // (plain loud→loud) leave the overlap unset and keep the normal crossfade
-    // length. Manual skips hard-cut and resumes keep their saved offset.
-    const useTrim =
-      !manual
-      && authStateNow.crossfadeEnabled
-      && authStateNow.crossfadeTrimSilence
-      && !authStateNow.gaplessEnabled
-      && initialTime <= 0.05;
-    const crossfadePlan = useTrim ? getCrossfadeTransition(scopedTrack.id) : null;
-    const armedOverlap = useTrim ? consumeCrossfadeDynamicOverlap(scopedTrack.id) : null;
-    const crossfadeStartSecs = crossfadePlan?.bStartSec ?? 0;
-    const crossfadeSecsOverride = armedOverlap ? armedOverlap.overlapSec : null;
-    // Scenario A: 0 ⇒ don't fade A (it rides its own recorded fade); only sent
-    // when JS drove this advance, so engine-driven swaps keep today's behaviour.
-    const outgoingFadeSecsOverride = armedOverlap ? armedOverlap.outgoingFadeSec : null;
-    invoke('audio_play', {
-      url,
-      volume: state.volume,
-      durationHint: scopedTrack.duration,
-      replayGainDb,
-      replayGainPeak,
-      loudnessGainDb: loudnessGainDbForEngineBind(scopedTrack.id),
-      preGainDb: authStateNow.replayGainPreGainDb,
-      fallbackDb: authStateNow.replayGainFallbackDb,
-      manual,
-      hiResEnabled: authStateNow.enableHiRes,
-      analysisTrackId: scopedTrack.id,
-      serverId: getPlaybackIndexKey() || null,
-      streamFormatSuffix: scopedTrack.suffix ?? null,
-      startPaused: false,
-      startSecs: crossfadeStartSecs > 0.05 ? crossfadeStartSecs : null,
-      crossfadeSecsOverride,
-      outgoingFadeSecsOverride,
-    })
-      .then(() => {
-        if (getPlayGeneration() !== gen) return;
-        if (keepPreloadHint) {
-          set({ enginePreloadedTrackId: null });
-        }
-        const durSeek = scopedTrack.duration && scopedTrack.duration > 0 ? scopedTrack.duration : null;
-        const seekTo = initialTime;
-        const canSeekAfterPlay =
-          seekTo > 0.05 && (durSeek == null || seekTo < durSeek - 0.05);
-        if (canSeekAfterPlay) {
-          void invoke('audio_seek', { seconds: seekTo })
-            .then(() => {
-              if (getPlayGeneration() !== gen) return;
-              setSeekTarget(seekTo);
-              if (getSeekFallbackVisualTarget()?.trackId === scopedTrack.id) {
-                setSeekFallbackVisualTarget(null);
-              }
-            })
-            .catch(() => {
-              if (getSeekFallbackVisualTarget()?.trackId === scopedTrack.id) {
-                setSeekFallbackVisualTarget(null);
-              }
-            });
-        }
-      })
-      .catch((err: unknown) => {
-        if (getPlayGeneration() !== gen) return;
-        setDeferHotCachePrefetch(false);
-        console.error('[psysonic] audio_play failed:', err);
-        set({ isPlaying: false });
-        setTimeout(() => {
-          if (getPlayGeneration() !== gen) return;
-          get().next(false);
-        }, 500);
-      });
 
-    // Subsonic-server now-playing follows nowPlayingEnabled; Music Network
-    // now-playing follows scrobbling, as Last.fm now-playing did (runtime gates
-    // internally). playbackReportStart opens the live FSM on extension-capable
-    // servers and falls back to the legacy presence call otherwise.
-    playbackReportStart(scopedTrack.id, playbackSid);
-    const runtime = getMusicNetworkRuntimeOrNull();
-    void runtime?.dispatchNowPlaying({
-      title: scopedTrack.title,
-      artist: scopedTrack.artist,
-      album: scopedTrack.album,
-      duration: scopedTrack.duration,
-      timestamp: Date.now(),
-    });
-    if (runtime?.getEnrichmentPrimaryId()) {
-      void runtime
-        .isTrackLoved({ title: scopedTrack.title, artist: scopedTrack.artist })
-        .then(loved => {
-          const cacheKey = `${scopedTrack.title}::${scopedTrack.artist}`;
-          set(s => ({
-            networkLoved: loved,
-            networkLovedCache: { ...s.networkLovedCache, [cacheKey]: loved },
-          }));
+    const invokeAudioPlay = (manualBlend: CrossfadeTransitionPlan | null) => {
+      // Silence-aware crossfade (B-head + dynamic overlap): on a fresh auto-advance
+      // under crossfade, start past this track's leading silence (always, from the
+      // plan) and — only when the JS A-tail advance positioned this transition —
+      // fade over the content-driven overlap it armed. AutoDJ smooth skip uses the
+      // same rules from the current playback position on manual next/previous.
+      const useTrimAuto =
+        !manual
+        && authStateNow.crossfadeEnabled
+        && authStateNow.crossfadeTrimSilence
+        && !authStateNow.gaplessEnabled
+        && initialTime <= 0.05;
+      const useManualBlend = manualBlend !== null;
+
+      const crossfadePlan = useTrimAuto ? getCrossfadeTransition(scopedTrack.id) : null;
+      const armedOverlap = useTrimAuto ? consumeCrossfadeDynamicOverlap(scopedTrack.id) : null;
+      const crossfadeStartSecs = useManualBlend
+        ? manualBlend.bStartSec
+        : (crossfadePlan?.bStartSec ?? 0);
+      const crossfadeSecsOverride = useManualBlend
+        ? manualBlend.overlapSec
+        : (armedOverlap ? armedOverlap.overlapSec : null);
+      const outgoingFadeSecsOverride = useManualBlend
+        ? manualBlend.outgoingFadeSec
+        : (armedOverlap ? armedOverlap.outgoingFadeSec : null);
+
+      if (useManualBlend) {
+        armAutodjMixing(manualBlend.overlapSec);
+      } else if (crossfadeSecsOverride != null && crossfadeSecsOverride > 0) {
+        armAutodjMixing(crossfadeSecsOverride);
+      } else if (manual) {
+        clearAutodjTransitionUi();
+      }
+
+      invoke('audio_play', {
+        url,
+        volume: state.volume,
+        durationHint: scopedTrack.duration,
+        replayGainDb,
+        replayGainPeak,
+        loudnessGainDb: loudnessGainDbForEngineBind(scopedTrack.id),
+        preGainDb: authStateNow.replayGainPreGainDb,
+        fallbackDb: authStateNow.replayGainFallbackDb,
+        manual,
+        hiResEnabled: authStateNow.enableHiRes,
+        analysisTrackId: scopedTrack.id,
+        serverId: getPlaybackIndexKey() || null,
+        streamFormatSuffix: scopedTrack.suffix ?? null,
+        startPaused: false,
+        startSecs: crossfadeStartSecs > 0.05 ? crossfadeStartSecs : null,
+        crossfadeSecsOverride,
+        outgoingFadeSecsOverride,
+        manualAutodjBlend: useManualBlend ? true : null,
+      })
+        .then(() => {
+          if (getPlayGeneration() !== gen) return;
+          if (wantInterruptBlend) {
+            get().updateReplayGainForCurrentTrack();
+          }
+          if (keepPreloadHint) {
+            set({ enginePreloadedTrackId: null });
+          }
+          const durSeek = scopedTrack.duration && scopedTrack.duration > 0 ? scopedTrack.duration : null;
+          const seekTo = initialTime;
+          const canSeekAfterPlay =
+            seekTo > 0.05 && (durSeek == null || seekTo < durSeek - 0.05);
+          if (canSeekAfterPlay) {
+            void invoke('audio_seek', { seconds: seekTo })
+              .then(() => {
+                if (getPlayGeneration() !== gen) return;
+                setSeekTarget(seekTo);
+                if (getSeekFallbackVisualTarget()?.trackId === scopedTrack.id) {
+                  setSeekFallbackVisualTarget(null);
+                }
+              })
+              .catch(() => {
+                if (getSeekFallbackVisualTarget()?.trackId === scopedTrack.id) {
+                  setSeekFallbackVisualTarget(null);
+                }
+              });
+          }
+        })
+        .catch((err: unknown) => {
+          if (getPlayGeneration() !== gen) return;
+          setDeferHotCachePrefetch(false);
+          console.error('[psysonic] audio_play failed:', err);
+          set({ isPlaying: false });
+          setTimeout(() => {
+            if (getPlayGeneration() !== gen) return;
+            get().next(false);
+          }, 500);
         });
+    };
+
+    const finishPlaybackSideEffects = () => {
+      // Subsonic-server now-playing follows nowPlayingEnabled; Music Network
+      // now-playing follows scrobbling, as Last.fm now-playing did (runtime gates
+      // internally). playbackReportStart opens the live FSM on extension-capable
+      // servers and falls back to the legacy presence call otherwise.
+      playbackReportStart(scopedTrack.id, playbackSid);
+      const runtime = getMusicNetworkRuntimeOrNull();
+      void runtime?.dispatchNowPlaying({
+        title: scopedTrack.title,
+        artist: scopedTrack.artist,
+        album: scopedTrack.album,
+        duration: scopedTrack.duration,
+        timestamp: Date.now(),
+      });
+      if (runtime?.getEnrichmentPrimaryId()) {
+        void runtime
+          .isTrackLoved({ title: scopedTrack.title, artist: scopedTrack.artist })
+          .then(loved => {
+            const cacheKey = `${scopedTrack.title}::${scopedTrack.artist}`;
+            set(s => ({
+              networkLoved: loved,
+              networkLovedCache: { ...s.networkLovedCache, [cacheKey]: loved },
+            }));
+          });
+      }
+      syncQueueToServer(get().queueItems, scopedTrack, initialTime);
+      touchHotCacheOnPlayback(scopedTrack.id, playbackCacheSid);
+    };
+
+    const startAudio = (manualBlend: CrossfadeTransitionPlan | null) => {
+      if (deferInterruptUi) applyInterruptHandoffUi();
+      clearInterruptHandoff();
+      invokeAudioPlay(manualBlend);
+      finishPlaybackSideEffects();
+    };
+
+    if (wantInterruptBlend && prevTrack) {
+      const aDur = prevTrack.duration || 0;
+      armAutodjMixing(STANDARD_BLEND_SEC);
+      armInterruptHandoff(gen);
+      void (async () => {
+        try {
+          const [prep, bBins] = await Promise.all([
+            bReadyNow
+              ? Promise.resolve({ ready: true })
+              : runInterruptBlendPrep(
+                scopedTrack,
+                playbackSid,
+                playbackCacheSid,
+                () => getPlayGeneration() !== gen,
+              ),
+            fetchWaveformBins(scopedTrack.id, playbackCacheSid || null),
+          ]);
+          if (getPlayGeneration() !== gen) {
+            clearInterruptHandoff();
+            return;
+          }
+          const blend = prep.ready
+            ? computeAutodjManualBlendPlan(
+              outgoingWaveformBins,
+              aDur,
+              skipFromTimeSec,
+              bBins,
+              scopedTrack.duration || 0,
+            )
+            : null;
+          startAudio(blend
+            ? {
+              ...blend,
+              // Prep fade already ducked A when we waited for a cold B.
+              outgoingFadeSec: bReadyNow ? blend.outgoingFadeSec : 0,
+            }
+            : null);
+        } catch {
+          if (getPlayGeneration() !== gen) {
+            clearInterruptHandoff();
+            return;
+          }
+          startAudio(null);
+        }
+      })();
+      return;
     }
-    syncQueueToServer(get().queueItems, scopedTrack, initialTime);
-    touchHotCacheOnPlayback(scopedTrack.id, playbackCacheSid);
+
+    startAudio(null);
   };
 
   const hotPromoteSid = getPlaybackCacheServerKey();
