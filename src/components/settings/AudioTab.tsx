@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Music2, Sliders, Waves } from 'lucide-react';
+import { Blend, Gauge, Sliders, Volume2, Waves } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 import Equalizer from '../Equalizer';
 import SettingsSubSection from '../SettingsSubSection';
@@ -8,11 +8,11 @@ import { SettingsGroup } from './SettingsGroup';
 import { SettingsToggle } from './SettingsToggle';
 import { effectiveLoudnessPreAnalysisAttenuationDb } from '../../utils/audio/loudnessPreAnalysisSlider';
 import { useAudioDevicesProbe } from '../../hooks/useAudioDevicesProbe';
+import { IS_MACOS } from '../../utils/platform';
 import { AudioOutputDeviceSection } from './audio/AudioOutputDeviceSection';
 import { NormalizationBlock } from './audio/NormalizationBlock';
-import { Gauge } from 'lucide-react';
-import { PlaybackBehaviorBlock } from './audio/PlaybackBehaviorBlock';
 import { PlaybackRateBlock } from './audio/PlaybackRateBlock';
+import { TrackTransitionsBlock } from './audio/TrackTransitionsBlock';
 import { TrackPreviewsSection } from './audio/TrackPreviewsSection';
 
 export function AudioTab() {
@@ -37,15 +37,41 @@ export function AudioTab() {
 
   return (
     <>
-      <AudioOutputDeviceSection
-        audioDevices={audioDevices}
-        osDefaultAudioDeviceId={osDefaultAudioDeviceId}
-        deviceSwitching={deviceSwitching}
-        devicesLoading={devicesLoading}
-        setDeviceSwitching={setDeviceSwitching}
-        refreshAudioDevices={refreshAudioDevices}
-        t={t}
-      />
+      {/* Output-device picker is hidden on macOS — the stream is pinned to the
+          system default there, so the whole category is gated out. */}
+      {!IS_MACOS && (
+        <AudioOutputDeviceSection
+          audioDevices={audioDevices}
+          osDefaultAudioDeviceId={osDefaultAudioDeviceId}
+          deviceSwitching={deviceSwitching}
+          devicesLoading={devicesLoading}
+          setDeviceSwitching={setDeviceSwitching}
+          refreshAudioDevices={refreshAudioDevices}
+          t={t}
+        />
+      )}
+
+      {/* Normalization — loudness levelling (own category) */}
+      <SettingsSubSection
+        title={t('settings.normalization')}
+        description={t('settings.normalizationDesc')}
+        icon={<Volume2 size={16} />}
+      >
+        <div className="settings-card">
+          <NormalizationBlock preAnalysisEffectiveDb={preAnalysisEffectiveDb} t={t} />
+        </div>
+      </SettingsSubSection>
+
+      {/* Track transitions — crossfade / gapless / AutoDJ (own category) */}
+      <SettingsSubSection
+        title={t('settings.transitionsTitle')}
+        description={t('settings.transitionsDesc')}
+        icon={<Blend size={16} />}
+      >
+        <div className="settings-card">
+          <TrackTransitionsBlock t={t} />
+        </div>
+      </SettingsSubSection>
 
       {/* Native Hi-Res Playback */}
       <SettingsSubSection
@@ -86,17 +112,6 @@ export function AudioTab() {
           <SettingsGroup>
             <PlaybackRateBlock t={t} />
           </SettingsGroup>
-        </div>
-      </SettingsSubSection>
-
-      {/* Replay Gain + Crossfade + Gapless */}
-      <SettingsSubSection
-        title={t('settings.playbackTitle')}
-        icon={<Music2 size={16} />}
-      >
-        <div className="settings-card">
-          <NormalizationBlock preAnalysisEffectiveDb={preAnalysisEffectiveDb} t={t} />
-          <PlaybackBehaviorBlock t={t} />
         </div>
       </SettingsSubSection>
 
