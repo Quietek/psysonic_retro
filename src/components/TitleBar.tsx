@@ -3,6 +3,7 @@ import { getCurrentWindow } from '@tauri-apps/api/window';
 import { Minus, Square, X } from 'lucide-react';
 import { usePlayerStore } from '../store/playerStore';
 import { useAuthStore } from '../store/authStore';
+import { IS_MACOS } from '../utils/platform';
 
 export default function TitleBar() {
   const win = getCurrentWindow();
@@ -13,6 +14,11 @@ export default function TitleBar() {
 
   return (
     <div className="titlebar" data-tauri-drag-region>
+      {/* macOS drops the now-playing label: subpixel antialiasing is disabled
+          in the Overlay title-bar zone, so small text renders frayed. The bar
+          stays a clean themed strip with the native traffic lights (#1198);
+          the track is already shown in the player bar. */}
+      {!IS_MACOS && (
       <div className="titlebar-track" data-tauri-drag-region>
         {currentTrack && (
           <>
@@ -23,7 +29,11 @@ export default function TitleBar() {
           </>
         )}
       </div>
+      )}
 
+      {/* macOS keeps its native traffic lights (floating over the bar via
+          titleBarStyle: Overlay); only Linux draws in-page window buttons. */}
+      {!IS_MACOS && (
       <div className="titlebar-controls" data-btnstyle={windowButtonStyle}>
         {showMinimizeButton && (
           <button
@@ -55,6 +65,7 @@ export default function TitleBar() {
           <X size={10} strokeWidth={2.5} aria-hidden />
         </button>
       </div>
+      )}
     </div>
   );
 }
