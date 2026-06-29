@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import type {
   MigrationPair, MigrationPhase, MigrationResult,
-} from '../../utils/deviceSync/runDeviceSyncMigration';
+} from '@/features/deviceSync/utils/runDeviceSyncMigration';
 
 interface Props {
   migrationPhase: MigrationPhase;

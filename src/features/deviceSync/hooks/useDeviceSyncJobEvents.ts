@@ -2,11 +2,11 @@ import { useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import type { TFunction } from 'i18next';
-import { useDeviceSyncJobStore } from '../store/deviceSyncJobStore';
-import { useDeviceSyncStore } from '../store/deviceSyncStore';
-import { showToast } from '../utils/ui/toast';
-import { trackToSyncInfo } from '../utils/deviceSync/deviceSyncHelpers';
-import { fetchTracksForSource } from '../utils/playback/fetchTracksForSource';
+import { useDeviceSyncJobStore } from '@/features/deviceSync/store/deviceSyncJobStore';
+import { useDeviceSyncStore } from '@/features/deviceSync/store/deviceSyncStore';
+import { showToast } from '@/utils/ui/toast';
+import { trackToSyncInfo } from '@/features/deviceSync/utils/deviceSyncHelpers';
+import { fetchTracksForSource } from '@/utils/playback/fetchTracksForSource';
 
 export function useDeviceSyncJobEvents(
   t: TFunction,

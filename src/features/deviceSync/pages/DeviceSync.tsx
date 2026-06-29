@@ -1,33 +1,33 @@
-import type { SubsonicSong } from '../api/subsonicTypes';
+import type { SubsonicSong } from '@/api/subsonicTypes';
 import React, { useState, useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDeviceSyncStore, DeviceSyncSource } from '../store/deviceSyncStore';
-import { useDeviceSyncJobStore } from '../store/deviceSyncJobStore';
+import { useDeviceSyncStore, DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
+import { useDeviceSyncJobStore } from '@/features/deviceSync/store/deviceSyncJobStore';
 
 import {
   type SourceTab,
-} from '../utils/deviceSync/deviceSyncHelpers';
-import { useDeviceSyncDrives } from '../hooks/useDeviceSyncDrives';
-import { useDeviceSyncSourceStatuses } from '../hooks/useDeviceSyncSourceStatuses';
-import { useDeviceSyncBrowser } from '../hooks/useDeviceSyncBrowser';
-import { useDeviceSyncDeviceScan } from '../hooks/useDeviceSyncDeviceScan';
-import { useDeviceSyncJobEvents } from '../hooks/useDeviceSyncJobEvents';
+} from '@/features/deviceSync/utils/deviceSyncHelpers';
+import { useDeviceSyncDrives } from '@/features/deviceSync/hooks/useDeviceSyncDrives';
+import { useDeviceSyncSourceStatuses } from '@/features/deviceSync/hooks/useDeviceSyncSourceStatuses';
+import { useDeviceSyncBrowser } from '@/features/deviceSync/hooks/useDeviceSyncBrowser';
+import { useDeviceSyncDeviceScan } from '@/features/deviceSync/hooks/useDeviceSyncDeviceScan';
+import { useDeviceSyncJobEvents } from '@/features/deviceSync/hooks/useDeviceSyncJobEvents';
 import {
   runDeviceSyncMigrationPreview,
   runDeviceSyncMigrationExecute,
   type MigrationPhase, type MigrationPair, type MigrationResult,
-} from '../utils/deviceSync/runDeviceSyncMigration';
+} from '@/features/deviceSync/utils/runDeviceSyncMigration';
 import {
   runDeviceSyncSummaryPrompt,
   runDeviceSyncExecute,
   type SyncDelta,
-} from '../utils/deviceSync/runDeviceSyncExecution';
-import { runDeviceSyncChooseFolder } from '../utils/deviceSync/runDeviceSyncChooseFolder';
-import DeviceSyncHeader from '../components/deviceSync/DeviceSyncHeader';
-import DeviceSyncPreSyncModal from '../components/deviceSync/DeviceSyncPreSyncModal';
-import DeviceSyncMigrationModal from '../components/deviceSync/DeviceSyncMigrationModal';
-import DeviceSyncBrowserPanel from '../components/deviceSync/DeviceSyncBrowserPanel';
-import DeviceSyncDevicePanel from '../components/deviceSync/DeviceSyncDevicePanel';
+} from '@/features/deviceSync/utils/runDeviceSyncExecution';
+import { runDeviceSyncChooseFolder } from '@/features/deviceSync/utils/runDeviceSyncChooseFolder';
+import DeviceSyncHeader from '@/features/deviceSync/components/DeviceSyncHeader';
+import DeviceSyncPreSyncModal from '@/features/deviceSync/components/DeviceSyncPreSyncModal';
+import DeviceSyncMigrationModal from '@/features/deviceSync/components/DeviceSyncMigrationModal';
+import DeviceSyncBrowserPanel from '@/features/deviceSync/components/DeviceSyncBrowserPanel';
+import DeviceSyncDevicePanel from '@/features/deviceSync/components/DeviceSyncDevicePanel';
 
 // ─── component ───────────────────────────────────────────────────────────────
 

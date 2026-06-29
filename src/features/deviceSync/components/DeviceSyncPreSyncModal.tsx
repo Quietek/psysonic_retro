@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AlertCircle, Loader2 } from 'lucide-react';
-import type { SyncDelta } from '../../utils/deviceSync/runDeviceSyncExecution';
-import { formatMb } from '../../utils/format/formatBytes';
+import type { SyncDelta } from '@/features/deviceSync/utils/runDeviceSyncExecution';
+import { formatMb } from '@/utils/format/formatBytes';
 
 interface Props {
   preSyncOpen: boolean;

@@ -1,11 +1,11 @@
 import type React from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import type { DeviceSyncSource } from '../../store/deviceSyncStore';
-import type { SubsonicSong } from '../../api/subsonicTypes';
-import { applyLegacyTemplate } from './deviceSyncLegacyTemplate';
-import { trackToSyncInfo } from './deviceSyncHelpers';
-import { fetchTracksForSource } from '../playback/fetchTracksForSource';
-import { IS_WINDOWS } from '../platform';
+import type { DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
+import type { SubsonicSong } from '@/api/subsonicTypes';
+import { applyLegacyTemplate } from '@/features/deviceSync/utils/deviceSyncLegacyTemplate';
+import { trackToSyncInfo } from '@/features/deviceSync/utils/deviceSyncHelpers';
+import { fetchTracksForSource } from '@/utils/playback/fetchTracksForSource';
+import { IS_WINDOWS } from '@/utils/platform';
 
 export type MigrationPhase = 'closed' | 'loading' | 'preview' | 'executing' | 'done' | 'nothing';
 

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
-import { getPlaylists } from '../api/subsonicPlaylists';
-import { getArtists, getArtist } from '../api/subsonicArtists';
-import { getAlbumList } from '../api/subsonicLibrary';
-import { search as searchSubsonic } from '../api/subsonicSearch';
+import { getPlaylists } from '@/api/subsonicPlaylists';
+import { getArtists, getArtist } from '@/api/subsonicArtists';
+import { getAlbumList } from '@/api/subsonicLibrary';
+import { search as searchSubsonic } from '@/api/subsonicSearch';
 import type {
   SubsonicAlbum, SubsonicArtist, SubsonicPlaylist,
-} from '../api/subsonicTypes';
-import type { SourceTab } from '../utils/deviceSync/deviceSyncHelpers';
+} from '@/api/subsonicTypes';
+import type { SourceTab } from '@/features/deviceSync/utils/deviceSyncHelpers';
 
 export interface DeviceSyncBrowserResult {
   playlists: SubsonicPlaylist[];

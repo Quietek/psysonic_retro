@@ -1,4 +1,4 @@
-import { IS_WINDOWS } from '../platform';
+import { IS_WINDOWS } from '@/utils/platform';
 
 // Same sanitize rules the Rust side uses (`sanitize_path_component`): strip
 // Windows-illegal chars and control chars, trim leading/trailing dots + spaces.

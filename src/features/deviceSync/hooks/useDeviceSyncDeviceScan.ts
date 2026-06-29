@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import type { TFunction } from 'i18next';
-import { useDeviceSyncStore, type DeviceSyncSource } from '../store/deviceSyncStore';
-import { showToast } from '../utils/ui/toast';
+import { useDeviceSyncStore, type DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
+import { showToast } from '@/utils/ui/toast';
 
 export interface DeviceSyncDeviceScanResult {
   scanDevice: () => Promise<void>;

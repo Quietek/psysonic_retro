@@ -1,5 +1,5 @@
 import type { SubsonicSong } from '../../api/subsonicTypes';
-import type { DeviceSyncSource } from '../../store/deviceSyncStore';
+import type { DeviceSyncSource } from '@/features/deviceSync';
 import {
   resolveAlbum,
   resolveArtist,

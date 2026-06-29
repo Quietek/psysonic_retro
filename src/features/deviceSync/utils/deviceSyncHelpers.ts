@@ -1,4 +1,4 @@
-import type { SubsonicSong } from '../../api/subsonicTypes';
+import type { SubsonicSong } from '@/api/subsonicTypes';
 
 export type SourceTab = 'playlists' | 'albums' | 'artists';
 

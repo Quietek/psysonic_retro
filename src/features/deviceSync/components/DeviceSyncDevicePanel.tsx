@@ -5,9 +5,9 @@ import {
   AlertCircle, CheckCircle2, Clock, HardDriveUpload, Loader2,
   Trash2, Undo2,
 } from 'lucide-react';
-import { useDeviceSyncJobStore } from '../../store/deviceSyncJobStore';
-import type { DeviceSyncSource } from '../../store/deviceSyncStore';
-import type { SyncStatus } from '../../utils/deviceSync/deviceSyncHelpers';
+import { useDeviceSyncJobStore } from '@/features/deviceSync/store/deviceSyncJobStore';
+import type { DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
+import type { SyncStatus } from '@/features/deviceSync/utils/deviceSyncHelpers';
 
 interface Props {
   sources: DeviceSyncSource[];

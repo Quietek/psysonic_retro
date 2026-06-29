@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import type { RemovableDrive } from '../utils/deviceSync/deviceSyncHelpers';
+import type { RemovableDrive } from '@/features/deviceSync/utils/deviceSyncHelpers';
 
 export interface DeviceSyncDrivesResult {
   drives: RemovableDrive[];

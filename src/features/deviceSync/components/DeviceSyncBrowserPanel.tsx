@@ -6,10 +6,10 @@ import {
 } from 'lucide-react';
 import type {
   SubsonicAlbum, SubsonicArtist, SubsonicPlaylist,
-} from '../../api/subsonicTypes';
-import type { DeviceSyncSource } from '../../store/deviceSyncStore';
-import type { SourceTab } from '../../utils/deviceSync/deviceSyncHelpers';
-import BrowserRow from './BrowserRow';
+} from '@/api/subsonicTypes';
+import type { DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
+import type { SourceTab } from '@/features/deviceSync/utils/deviceSyncHelpers';
+import BrowserRow from '@/features/deviceSync/components/BrowserRow';
 
 interface Props {
   activeTab: SourceTab;

@@ -1,12 +1,12 @@
 import type { TFunction } from 'i18next';
 import { invoke } from '@tauri-apps/api/core';
-import { buildDownloadUrl } from '../../api/subsonicStreamUrl';
-import type { SubsonicSong } from '../../api/subsonicTypes';
-import { useDeviceSyncStore, type DeviceSyncSource } from '../../store/deviceSyncStore';
-import { useDeviceSyncJobStore } from '../../store/deviceSyncJobStore';
-import { showToast } from '../ui/toast';
-import { trackToSyncInfo, uuid } from './deviceSyncHelpers';
-import { fetchTracksForSource } from '../playback/fetchTracksForSource';
+import { buildDownloadUrl } from '@/api/subsonicStreamUrl';
+import type { SubsonicSong } from '@/api/subsonicTypes';
+import { useDeviceSyncStore, type DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
+import { useDeviceSyncJobStore } from '@/features/deviceSync/store/deviceSyncJobStore';
+import { showToast } from '@/utils/ui/toast';
+import { trackToSyncInfo, uuid } from '@/features/deviceSync/utils/deviceSyncHelpers';
+import { fetchTracksForSource } from '@/utils/playback/fetchTracksForSource';
 
 export interface SyncDelta {
   addBytes: number;
@@ -37,7 +37,7 @@ export async function runDeviceSyncSummaryPrompt(deps: RunDeviceSyncSummaryDeps)
   setPreSyncOpen(true);
 
   try {
-    const { getClient } = await import('../../api/subsonicClient');
+    const { getClient } = await import('@/api/subsonicClient');
     const { baseUrl, params } = getClient();
     const payload = await invoke<SyncDelta>('calculate_sync_payload', {
       sources,

@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { usePlayerStore } from '../store/playerStore';
 import { useOfflineJobStore } from '../store/offlineJobStore';
 import { clearOfflinePinTasks } from '../utils/offline/offlinePinQueue';
-import { useDeviceSyncJobStore } from '../store/deviceSyncJobStore';
+import { useDeviceSyncJobStore } from '@/features/deviceSync';
 import { useAuthStore } from '../store/authStore';
 import { useSidebarStore } from '../store/sidebarStore';
 import { useLocation } from 'react-router-dom';
