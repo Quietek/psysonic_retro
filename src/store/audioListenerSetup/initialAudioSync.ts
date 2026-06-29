@@ -5,7 +5,7 @@ import { emitNormalizationDebug } from '../normalizationDebug';
 import { invokeAudioSetNormalizationDeduped } from '../normalizationIpcDedupe';
 import { usePlayerStore } from '../playerStore';
 import { refreshLoudnessForTrack } from '../loudnessRefresh';
-import { refreshWaveformForTrack } from '@/features/waveform';
+import { refreshWaveformForTrack } from '@/store/waveformRefresh';
 
 /**
  * One-shot startup sync: pushes the persisted audio settings to the Rust engine

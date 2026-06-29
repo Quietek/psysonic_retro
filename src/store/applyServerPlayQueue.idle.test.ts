@@ -27,7 +27,7 @@ vi.mock('./pausedRestorePrepare', () => ({
   preparePausedRestoreOnStartup: vi.fn(),
 }));
 
-vi.mock('@/features/waveform', () => ({
+vi.mock('@/store/waveformRefresh', () => ({
   refreshWaveformForTrack: vi.fn(),
 }));
 

@@ -9,7 +9,7 @@ import { useAuthStore } from './authStore';
 import { usePlayerStore } from './playerStore';
 import { preparePausedRestoreOnStartup } from './pausedRestorePrepare';
 import { pushQueueUndoFromGetter } from './queueUndo';
-import { refreshWaveformForTrack } from '@/features/waveform';
+import { refreshWaveformForTrack } from '@/store/waveformRefresh';
 import {
   getIdlePullGeneration,
   isIdleQueuePullSuspended,

@@ -24,8 +24,8 @@ import {
   markNormalizationUiUpdate,
 } from '../playbackThrottles';
 import { usePlayerStore } from '../playerStore';
-import { refreshWaveformForTrack } from '@/features/waveform';
-import { bumpWaveformRefreshGen } from '@/features/waveform';
+import { refreshWaveformForTrack } from '@/store/waveformRefresh';
+import { bumpWaveformRefreshGen } from '@/store/waveformRefreshGen';
 import { setBytePreloadingId } from '../gaplessPreloadState';
 
 type PreloadEventPayload = {

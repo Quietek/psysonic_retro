@@ -39,7 +39,7 @@ vi.mock('./playerStore', () => ({
     setState: hoisted.playerSetStateMock,
   },
 }));
-vi.mock('@/features/waveform', () => ({
+vi.mock('@/store/waveformRefreshGen', () => ({
   bumpWaveformRefreshGen: hoisted.bumpWaveformRefreshGenMock,
 }));
 vi.mock('./loudnessGainCache', () => ({

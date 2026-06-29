@@ -87,7 +87,7 @@ import {
   getSeekTarget,
   getSeekTargetSetAt,
 } from './seekTargetState';
-import { refreshWaveformForTrack } from '@/features/waveform';
+import { refreshWaveformForTrack } from '@/store/waveformRefresh';
 import { analyzeBoundary, computeWaveformSilence } from '../utils/waveform/waveformSilence';
 import { autodjMaxOverlapCapSec } from '../utils/playback/autodjOverlapCap';
 import {

@@ -7,8 +7,8 @@ import { invokeAudioSetNormalizationDeduped } from '../normalizationIpcDedupe';
 import { usePlayerStore } from '../playerStore';
 import { clearLoudnessCacheStateForTrackId } from '../loudnessGainCache';
 import { refreshLoudnessForTrack } from '../loudnessRefresh';
-import { refreshWaveformForTrack } from '@/features/waveform';
-import { bumpWaveformRefreshGen } from '@/features/waveform';
+import { refreshWaveformForTrack } from '@/store/waveformRefresh';
+import { bumpWaveformRefreshGen } from '@/store/waveformRefreshGen';
 
 /**
  * Keeps the Rust audio engine in sync whenever the auth store changes

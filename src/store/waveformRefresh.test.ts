@@ -22,18 +22,18 @@ const hoisted = vi.hoisted(() => ({
 }));
 
 vi.mock('@tauri-apps/api/core', () => ({ invoke: hoisted.invokeMock }));
-vi.mock('@/features/waveform/utils/waveformParse', () => ({ coerceWaveformBins: hoisted.coerceWaveformBinsMock }));
+vi.mock('@/utils/waveform/waveformParse', () => ({ coerceWaveformBins: hoisted.coerceWaveformBinsMock }));
 vi.mock('@/store/playerStore', () => ({
   usePlayerStore: {
     getState: () => hoisted.playerSnapshot,
     setState: hoisted.playerSetStateMock,
   },
 }));
-vi.mock('@/features/waveform/store/waveformRefreshGen', () => ({
+vi.mock('@/store/waveformRefreshGen', () => ({
   getWaveformRefreshGen: hoisted.getGenMock,
 }));
 
-import { refreshWaveformForTrack } from '@/features/waveform/store/waveformRefresh';
+import { refreshWaveformForTrack } from '@/store/waveformRefresh';
 
 beforeEach(() => {
   hoisted.invokeMock.mockReset();

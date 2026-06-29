@@ -11,7 +11,7 @@ import { clearSeekDebounce } from './seekDebounce';
 import { clearSeekFallbackRetry } from './seekFallbackState';
 import { clearSeekTarget } from './seekTargetState';
 import { tryAcquireTogglePlayLock } from './togglePlayLock';
-import { refreshWaveformForTrack } from '@/features/waveform';
+import { refreshWaveformForTrack } from '@/store/waveformRefresh';
 import { clearAutodjTransitionUi } from './autodjTransitionUi';
 
 type SetState = (

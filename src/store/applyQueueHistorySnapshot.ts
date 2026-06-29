@@ -20,7 +20,7 @@ import {
   type QueueUndoSnapshot,
 } from './queueUndo';
 import { refreshLoudnessForTrack } from './loudnessRefresh';
-import { refreshWaveformForTrack } from '@/features/waveform';
+import { refreshWaveformForTrack } from '@/store/waveformRefresh';
 import { stopRadio } from './radioPlayer';
 import { clearAllPlaybackScheduleTimers } from './scheduleTimers';
 import { syncUserQueueMutationToServer } from './queueSync';
