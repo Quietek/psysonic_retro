@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { heatmapCellMetrics } from './heatmapLevels';
+import { heatmapCellMetrics } from '@/features/stats/utils/heatmapLevels';
 
 describe('heatmapCellMetrics', () => {
   it('shrinks cells to fit narrow containers', () => {

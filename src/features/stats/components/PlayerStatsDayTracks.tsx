@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import type { PlaySessionDayDetail } from '../../api/library';
-import { formatPlayerStatsListenedSec } from '../../utils/format/formatHumanDuration';
+import type { PlaySessionDayDetail } from '@/api/library';
+import { formatPlayerStatsListenedSec } from '@/utils/format/formatHumanDuration';
 
 type Props = {
   detail: PlaySessionDayDetail;

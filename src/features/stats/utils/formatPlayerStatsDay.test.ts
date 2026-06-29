@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatPlayerStatsDayLabel } from './formatPlayerStatsDay';
+import { formatPlayerStatsDayLabel } from '@/features/stats/utils/formatPlayerStatsDay';
 
 const t = (key: string) => {
   if (key === 'statistics.playerDayToday') return 'Today';

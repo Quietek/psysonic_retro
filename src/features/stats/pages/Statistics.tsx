@@ -1,21 +1,21 @@
-import { fetchStatisticsFormatSample, fetchStatisticsLibraryAggregates, fetchStatisticsOverview } from '../api/subsonicStatistics';
-import { getAlbumList } from '../api/subsonicLibrary';
-import type { SubsonicAlbum, SubsonicGenre } from '../api/subsonicTypes';
+import { fetchStatisticsFormatSample, fetchStatisticsLibraryAggregates, fetchStatisticsOverview } from '@/features/stats/api/subsonicStatistics';
+import { getAlbumList } from '@/api/subsonicLibrary';
+import type { SubsonicAlbum, SubsonicGenre } from '@/api/subsonicTypes';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Share2 } from 'lucide-react';
-import { formatHumanHoursMinutes } from '../utils/format/formatHumanDuration';
-import AlbumRow from '../components/AlbumRow';
-import StatsExportModal from '../components/StatsExportModal';
-import PlayerStatisticsPanel from '../components/statistics/PlayerStatisticsPanel';
-import StatisticsTabBar from '../components/statistics/StatisticsTabBar';
+import { formatHumanHoursMinutes } from '@/utils/format/formatHumanDuration';
+import AlbumRow from '@/components/AlbumRow';
+import StatsExportModal from '@/features/stats/components/StatsExportModal';
+import PlayerStatisticsPanel from '@/features/stats/components/PlayerStatisticsPanel';
+import StatisticsTabBar from '@/features/stats/components/StatisticsTabBar';
 import { useTranslation } from 'react-i18next';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { useLocation } from 'react-router-dom';
-import { getMusicNetworkRuntime, type RecentTrack, type StatsPeriod, type TopItem } from '../music-network';
-import { useOfflineBrowseContext } from '../hooks/useOfflineBrowseContext';
-import { usePlayerStatsRecordingEnabled } from '../hooks/usePlayerStatsRecordingEnabled';
-import { useEnrichmentPrimaryLabel } from '../hooks/useEnrichmentPrimaryLabel';
+import { getMusicNetworkRuntime, type RecentTrack, type StatsPeriod, type TopItem } from '@/music-network';
+import { useOfflineBrowseContext } from '@/hooks/useOfflineBrowseContext';
+import { usePlayerStatsRecordingEnabled } from '@/features/stats/hooks/usePlayerStatsRecordingEnabled';
+import { useEnrichmentPrimaryLabel } from '@/hooks/useEnrichmentPrimaryLabel';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function relativeTime(timestamp: number, t: (key: string, opts?: any) => string): string {

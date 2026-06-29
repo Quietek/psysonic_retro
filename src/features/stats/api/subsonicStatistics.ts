@@ -1,7 +1,7 @@
-import { useAuthStore } from '../store/authStore';
-import { genreTagsFor } from '../utils/library/genreTags';
-import { getArtists } from './subsonicArtists';
-import { getAlbumList, getRandomSongs } from './subsonicLibrary';
+import { useAuthStore } from '@/store/authStore';
+import { genreTagsFor } from '@/utils/library/genreTags';
+import { getArtists } from '@/api/subsonicArtists';
+import { getAlbumList, getRandomSongs } from '@/api/subsonicLibrary';
 import type {
   StatisticsFormatSample,
   StatisticsLibraryAggregates,
@@ -10,7 +10,7 @@ import type {
   SubsonicArtist,
   SubsonicGenre,
   SubsonicSong,
-} from './subsonicTypes';
+} from '@/api/subsonicTypes';
 
 /** Cache TTL for statistics page aggregates — same 7-minute window as
  *  the rating prefetch cache in subsonicRatings.ts. */

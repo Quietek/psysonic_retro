@@ -1,7 +1,7 @@
 import { useAuthStore } from '../store/authStore';
 import { useOfflineStore } from '../store/offlineStore';
 import { useConnectionStatus } from './useConnectionStatus';
-import { usePlayerStatsRecordingEnabled } from './usePlayerStatsRecordingEnabled';
+import { usePlayerStatsRecordingEnabled } from '@/features/stats';
 import { hasOfflineBrowsingContent } from '../utils/offline/favoritesOfflineBrowse';
 import { useOfflineBrowseActive } from '../utils/offline/offlineBrowseMode';
 import {

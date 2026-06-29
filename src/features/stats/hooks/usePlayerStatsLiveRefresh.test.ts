@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { usePlayerStatsLiveRefresh } from './usePlayerStatsLiveRefresh';
-import { emitPlaySessionRecorded } from '../store/playSessionRecorded';
+import { usePlayerStatsLiveRefresh } from '@/features/stats/hooks/usePlayerStatsLiveRefresh';
+import { emitPlaySessionRecorded } from '@/store/playSessionRecorded';
 
 describe('usePlayerStatsLiveRefresh', () => {
   it('refreshes when a play session is recorded and the tab is visible', () => {

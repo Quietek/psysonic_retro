@@ -7,13 +7,13 @@ import {
   libraryGetPlayerStatsYearSummary,
   type PlaySessionYearBounds,
   type PlaySessionYearSummary,
-} from '../../api/library';
-import { usePlayerStatsLiveRefresh } from '../../hooks/usePlayerStatsLiveRefresh';
-import { usePlayerStatsRecordingEnabled } from '../../hooks/usePlayerStatsRecordingEnabled';
-import PlayerStatsHeatmap from './PlayerStatsHeatmap';
-import PlayerStatsIndexRequiredNotice from './PlayerStatsIndexRequiredNotice';
-import PlayerStatsRecentDays from './PlayerStatsRecentDays';
-import { formatPlayerStatsListeningTotal } from '../../utils/format/formatHumanDuration';
+} from '@/api/library';
+import { usePlayerStatsLiveRefresh } from '@/features/stats/hooks/usePlayerStatsLiveRefresh';
+import { usePlayerStatsRecordingEnabled } from '@/features/stats/hooks/usePlayerStatsRecordingEnabled';
+import PlayerStatsHeatmap from '@/features/stats/components/PlayerStatsHeatmap';
+import PlayerStatsIndexRequiredNotice from '@/features/stats/components/PlayerStatsIndexRequiredNotice';
+import PlayerStatsRecentDays from '@/features/stats/components/PlayerStatsRecentDays';
+import { formatPlayerStatsListeningTotal } from '@/utils/format/formatHumanDuration';
 
 const currentCalendarYear = () => new Date().getFullYear();
 

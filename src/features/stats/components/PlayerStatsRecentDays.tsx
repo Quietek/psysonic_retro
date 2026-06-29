@@ -6,13 +6,13 @@ import {
   libraryGetPlayerStatsRecentDays,
   type PlaySessionDayDetail,
   type PlaySessionRecentDay,
-} from '../../api/library';
-import { formatPlayerStatsListeningTotal } from '../../utils/format/formatHumanDuration';
+} from '@/api/library';
+import { formatPlayerStatsListeningTotal } from '@/utils/format/formatHumanDuration';
 import {
   formatPlayerStatsDayLabel,
   PLAYER_STATS_RECENT_DAYS_LIMIT,
-} from '../../utils/playerStats/formatPlayerStatsDay';
-import PlayerStatsDayTracks from './PlayerStatsDayTracks';
+} from '@/features/stats/utils/formatPlayerStatsDay';
+import PlayerStatsDayTracks from '@/features/stats/components/PlayerStatsDayTracks';
 
 type Props = {
   /** Day selected on the heatmap — auto-expand when present. */

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { onPlaySessionRecorded } from '../store/playSessionRecorded';
+import { onPlaySessionRecorded } from '@/store/playSessionRecorded';
 
 /** Refresh player stats when a listen is persisted or the tab becomes visible again. */
 export function usePlayerStatsLiveRefresh(onRefresh: () => void) {

@@ -8,7 +8,7 @@ import {
   heatmapWeekColumns,
   heatmapWeekdayLabels,
   type HeatmapCell,
-} from '../../utils/playerStats/heatmapLevels';
+} from '@/features/stats/utils/heatmapLevels';
 
 const LEVEL_OPACITY = [0.14, 0.32, 0.52, 0.72, 1] as const;
 
