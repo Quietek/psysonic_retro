@@ -14,7 +14,7 @@ import DevNetworkModeToggle from '../components/DevNetworkModeToggle';
 import NowPlayingDropdown from '../components/NowPlayingDropdown';
 import QueuePanel from '../components/QueuePanel';
 import AppRoutes from './AppRoutes';
-import FullscreenPlayer from '../components/fullscreenPlayer/FullscreenPlayerStatic';
+import FullscreenPlayer from '@/features/fullscreenPlayer';
 import ContextMenu from '../components/ContextMenu';
 import SongInfoModal from '../components/SongInfoModal';
 import DownloadFolderModal from '../components/DownloadFolderModal';

@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useAuthStore } from '../../store/authStore';
-import { formatClockTime } from '../../utils/format/formatClockTime';
+import { useAuthStore } from '@/store/authStore';
+import { formatClockTime } from '@/utils/format/formatClockTime';
 
 /**
  * Standalone wall-clock for the fullscreen player. Owns its own state so the

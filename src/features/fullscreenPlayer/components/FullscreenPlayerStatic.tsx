@@ -4,22 +4,22 @@ import {
   Shuffle, ListMusic, ChevronDown, Star, MicVocal,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePlayerStore } from '../../store/playerStore';
-import { queueSongStar, queueSongRating } from '../../store/pendingStarSync';
-import { useAlbumCoverRef, useArtistCoverRef } from '../../cover/useLibraryCoverRef';
-import { usePlaybackCoverArt } from '../../hooks/usePlaybackCoverArt';
+import { usePlayerStore } from '@/store/playerStore';
+import { queueSongStar, queueSongRating } from '@/store/pendingStarSync';
+import { useAlbumCoverRef, useArtistCoverRef } from '@/cover/useLibraryCoverRef';
+import { usePlaybackCoverArt } from '@/hooks/usePlaybackCoverArt';
 import { useCachedUrl } from '@/ui/CachedImage';
-import { useArtistFanart } from '../../cover/useArtistFanart';
-import { backdropFromConfig } from '../../cover/artistBackdrop';
-import { useThemeStore } from '../../store/themeStore';
-import { useFsIdleFade } from '../../hooks/useFsIdleFade';
-import { useQueueTrackAt } from '../../hooks/useQueueTracks';
+import { useArtistFanart } from '@/cover/useArtistFanart';
+import { backdropFromConfig } from '@/cover/artistBackdrop';
+import { useThemeStore } from '@/store/themeStore';
+import { useFsIdleFade } from '@/hooks/useFsIdleFade';
+import { useQueueTrackAt } from '@/hooks/useQueueTracks';
 import { WaveformSeek } from '@/features/waveform';
-import { FsQueueModal } from './FsQueueModal';
-import { FsLyricsApple } from './FsLyricsApple';
-import { FsPlayBtn } from './FsPlayBtn';
-import { FsClock } from './FsClock';
-import { FsTimeReadout } from './FsTimeReadout';
+import { FsQueueModal } from '@/features/fullscreenPlayer/components/FsQueueModal';
+import { FsLyricsApple } from '@/features/fullscreenPlayer/components/FsLyricsApple';
+import { FsPlayBtn } from '@/features/fullscreenPlayer/components/FsPlayBtn';
+import { FsClock } from '@/features/fullscreenPlayer/components/FsClock';
+import { FsTimeReadout } from '@/features/fullscreenPlayer/components/FsTimeReadout';
 
 interface Props {
   onClose: () => void;

@@ -1,14 +1,14 @@
 import { memo, useMemo, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
-import { usePlayerStore } from '../../store/playerStore';
-import type { Track } from '../../store/playerStoreTypes';
-import { resolveQueueTrack } from '../../utils/library/queueTrackView';
+import { usePlayerStore } from '@/store/playerStore';
+import type { Track } from '@/store/playerStoreTypes';
+import { resolveQueueTrack } from '@/utils/library/queueTrackView';
 import {
   getQueueResolverVersion,
   subscribeQueueResolver,
-} from '../../utils/library/queueTrackResolver';
-import { formatTrackTime } from '../../utils/format/formatDuration';
+} from '@/utils/library/queueTrackResolver';
+import { formatTrackTime } from '@/utils/format/formatDuration';
 
 interface Props {
   onClose: () => void;

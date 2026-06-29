@@ -1,9 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { screen } from '@testing-library/react';
-import { renderWithProviders } from '../../test/helpers/renderWithProviders';
-import { resetAuthStore } from '../../test/helpers/storeReset';
-import { useAuthStore } from '../../store/authStore';
-import { FsClock } from './FsClock';
+import { renderWithProviders } from '@/test/helpers/renderWithProviders';
+import { resetAuthStore } from '@/test/helpers/storeReset';
+import { useAuthStore } from '@/store/authStore';
+import { FsClock } from '@/features/fullscreenPlayer/components/FsClock';
 
 describe('FsClock', () => {
   beforeEach(() => {

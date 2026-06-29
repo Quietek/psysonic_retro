@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef } from 'react';
-import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '../../store/playbackProgress';
-import { formatTrackTime } from '../../utils/format/formatDuration';
+import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/store/playbackProgress';
+import { formatTrackTime } from '@/utils/format/formatDuration';
 
 /**
  * Centered "current / total" readout for the control bar. Updates the current

@@ -1,12 +1,12 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { usePlayerStore } from '../../store/playerStore';
-import { useAuthStore } from '../../store/authStore';
-import { useLyrics, type WordLyricsLine } from '../../hooks/useLyrics';
-import { useWordLyricsSync } from '../../hooks/useWordLyricsSync';
-import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '../../store/playbackProgress';
-import type { LrcLine } from '../../api/lrclib';
-import type { Track } from '../../store/playerStoreTypes';
-import { EaseScroller, targetForFraction } from '../../utils/ui/easeScroll';
+import { usePlayerStore } from '@/store/playerStore';
+import { useAuthStore } from '@/store/authStore';
+import { useLyrics, type WordLyricsLine } from '@/hooks/useLyrics';
+import { useWordLyricsSync } from '@/hooks/useWordLyricsSync';
+import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/store/playbackProgress';
+import type { LrcLine } from '@/api/lrclib';
+import type { Track } from '@/store/playerStoreTypes';
+import { EaseScroller, targetForFraction } from '@/utils/ui/easeScroll';
 
 // Fullscreen synced lyrics.
 // Full-screen scrollable list. The active line auto-scrolls following the

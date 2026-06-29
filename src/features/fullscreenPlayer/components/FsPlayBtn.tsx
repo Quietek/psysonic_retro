@@ -1,11 +1,11 @@
 import React, { memo, useRef } from 'react';
 import { Moon, Pause, Play, Sunrise } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePlayerStore } from '../../store/playerStore';
-import { usePlaybackDelayPress } from '../../hooks/usePlaybackDelayPress';
-import { usePlaybackScheduleRemaining } from '../../utils/format/playbackScheduleFormat';
-import PlaybackDelayModal from '../PlaybackDelayModal';
-import PlaybackScheduleBadge from '../PlaybackScheduleBadge';
+import { usePlayerStore } from '@/store/playerStore';
+import { usePlaybackDelayPress } from '@/hooks/usePlaybackDelayPress';
+import { usePlaybackScheduleRemaining } from '@/utils/format/playbackScheduleFormat';
+import PlaybackDelayModal from '@/components/PlaybackDelayModal';
+import PlaybackScheduleBadge from '@/components/PlaybackScheduleBadge';
 
 // Play/Pause button (isolated — subscribes to isPlaying only).
 export const FsPlayBtn = memo(function FsPlayBtn({
