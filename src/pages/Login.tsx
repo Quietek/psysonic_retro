@@ -4,7 +4,7 @@ import { Wifi, WifiOff, Eye, EyeOff, Server, Globe } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import type { CustomHeaderEntry, CustomHeadersApplyTo, ServerProfile } from '../store/authStoreTypes';
 import { pingWithCredentialsForProfile, scheduleInstantMixProbeForServer } from '../api/subsonic';
-import { CustomHttpHeadersEditor } from '../components/settings/CustomHttpHeadersEditor';
+import { CustomHttpHeadersEditor } from '@/features/settings';
 import {
   DEFAULT_CUSTOM_HEADERS_APPLY_TO,
   serverCustomHeadersFromForm,

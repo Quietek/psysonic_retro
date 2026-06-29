@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useHelpModalStore } from '../store/helpModalStore';
-import SettingsSubSection from './SettingsSubSection';
+import { SettingsSubSection } from '@/features/settings';
 
 /**
  * Orbit help modal. Rendered once at the app root; triggered from the

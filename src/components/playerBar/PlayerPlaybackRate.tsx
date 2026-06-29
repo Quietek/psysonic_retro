@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import type { TFunction } from 'i18next';
-import { PlaybackRateControls } from '../settings/audio/PlaybackRateBlock';
+import { PlaybackRateControls } from '@/features/settings';
 import { usePlaybackRateStore } from '../../store/playbackRateStore';
 import { useOrbitStore } from '../../store/orbitStore';
 import {
