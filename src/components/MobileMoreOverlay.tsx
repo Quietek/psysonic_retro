@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Settings, HardDriveDownload } from 'lucide-react';
-import { useSidebarStore } from '../store/sidebarStore';
+import { useSidebarStore } from '@/features/sidebar';
 import { useAuthStore } from '../store/authStore';
 import { ALL_NAV_ITEMS } from '../config/navItems';
 import { useLuckyMixAvailable } from '../hooks/useLuckyMixAvailable';

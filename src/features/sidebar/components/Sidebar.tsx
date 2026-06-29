@@ -1,34 +1,34 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { usePlayerStore } from '../store/playerStore';
-import { useOfflineJobStore } from '../store/offlineJobStore';
-import { clearOfflinePinTasks } from '../utils/offline/offlinePinQueue';
+import { usePlayerStore } from '@/store/playerStore';
+import { useOfflineJobStore } from '@/store/offlineJobStore';
+import { clearOfflinePinTasks } from '@/utils/offline/offlinePinQueue';
 import { useDeviceSyncJobStore } from '@/features/deviceSync';
-import { useAuthStore } from '../store/authStore';
-import { useSidebarStore } from '../store/sidebarStore';
+import { useAuthStore } from '@/store/authStore';
+import { useSidebarStore } from '@/features/sidebar/store/sidebarStore';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PanelLeft, PanelLeftClose, Trash2 } from 'lucide-react';
-import PsysonicLogo from './PsysonicLogo';
-import PSmallLogo from './PSmallLogo';
-import { usePlaylistStore } from '../store/playlistStore';
+import PsysonicLogo from '@/components/PsysonicLogo';
+import PSmallLogo from '@/components/PSmallLogo';
+import { usePlaylistStore } from '@/store/playlistStore';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import {
   getLibraryItemsForReorder,
   getSystemItemsForReorder,
-} from '../utils/componentHelpers/sidebarNavReorder';
-import { useLuckyMixAvailable } from '../hooks/useLuckyMixAvailable';
-import { usePerfProbeFlags } from '../utils/perf/perfFlags';
-import { useSidebarNewReleasesUnread } from '../hooks/useSidebarNewReleasesUnread';
-import { useSidebarNavDnd } from '../hooks/useSidebarNavDnd';
-import { useSidebarLibraryDropdown } from '../hooks/useSidebarLibraryDropdown';
-import { useSidebarScrollVisible } from '../hooks/useSidebarScrollVisible';
-import { isOfflineSidebarNavAllowed } from '../utils/offline/offlineNavPolicy';
-import { useOfflineBrowseContext } from '../hooks/useOfflineBrowseContext';
-import { offlineBrowseNavFlags } from '../utils/offline/offlineBrowseContext';
-import { useSidebarPerfProbe } from '../hooks/useSidebarPerfProbe';
-import SidebarPerfProbeModal from './sidebar/SidebarPerfProbeModal';
-import SidebarNavBody from './sidebar/SidebarNavBody';
+} from '@/features/sidebar/utils/sidebarNavReorder';
+import { useLuckyMixAvailable } from '@/hooks/useLuckyMixAvailable';
+import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { useSidebarNewReleasesUnread } from '@/features/sidebar/hooks/useSidebarNewReleasesUnread';
+import { useSidebarNavDnd } from '@/features/sidebar/hooks/useSidebarNavDnd';
+import { useSidebarLibraryDropdown } from '@/features/sidebar/hooks/useSidebarLibraryDropdown';
+import { useSidebarScrollVisible } from '@/features/sidebar/hooks/useSidebarScrollVisible';
+import { isOfflineSidebarNavAllowed } from '@/utils/offline/offlineNavPolicy';
+import { useOfflineBrowseContext } from '@/hooks/useOfflineBrowseContext';
+import { offlineBrowseNavFlags } from '@/utils/offline/offlineBrowseContext';
+import { useSidebarPerfProbe } from '@/features/sidebar/hooks/useSidebarPerfProbe';
+import SidebarPerfProbeModal from '@/features/sidebar/components/SidebarPerfProbeModal';
+import SidebarNavBody from '@/features/sidebar/components/SidebarNavBody';
 
 
 export default function Sidebar({

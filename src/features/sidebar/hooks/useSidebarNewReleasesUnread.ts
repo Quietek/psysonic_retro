@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getAlbumList } from '../api/subsonicLibrary';
-import { isActiveServerReachable } from '../utils/network/activeServerReachability';
+import { getAlbumList } from '@/api/subsonicLibrary';
+import { isActiveServerReachable } from '@/utils/network/activeServerReachability';
 import {
   NEW_RELEASES_RESET_DELAY_MS,
   NEW_RELEASES_SEEN_MAX_IDS,
@@ -8,7 +8,7 @@ import {
   NEW_RELEASES_UNREAD_SAMPLE_SIZE,
   NEW_RELEASES_UNREAD_STORAGE_PREFIX,
   mergeSeenNewReleaseIdsCap,
-} from '../utils/componentHelpers/sidebarHelpers';
+} from '@/features/sidebar/utils/sidebarHelpers';
 
 interface Args {
   serverId: string;

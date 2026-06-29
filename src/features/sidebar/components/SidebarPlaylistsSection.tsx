@@ -2,12 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, Folder, PlayCircle, Sparkles } from 'lucide-react';
-import { displayPlaylistName, isSmartPlaylistName } from '../../utils/componentHelpers/sidebarHelpers';
-import { useAuthStore } from '../../store/authStore';
-import { usePlayerStore } from '../../store/playerStore';
-import { usePlaylistStore } from '../../store/playlistStore';
-import { EMPTY_SERVER_FOLDERS, usePlaylistFolderStore } from '../../store/playlistFolderStore';
-import { groupPlaylistsByFolder } from '../../utils/playlist/playlistFolders';
+import { displayPlaylistName, isSmartPlaylistName } from '@/features/sidebar/utils/sidebarHelpers';
+import { useAuthStore } from '@/store/authStore';
+import { usePlayerStore } from '@/store/playerStore';
+import { usePlaylistStore } from '@/store/playlistStore';
+import { EMPTY_SERVER_FOLDERS, usePlaylistFolderStore } from '@/store/playlistFolderStore';
+import { groupPlaylistsByFolder } from '@/utils/playlist/playlistFolders';
 
 interface SidebarPlaylist {
   id: string;

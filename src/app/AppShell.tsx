@@ -5,7 +5,7 @@ import { navigatePathWithAlbumReturnTo, shouldSkipMainScrollResetOnRouteChange }
 import { getCurrentWebview } from '@tauri-apps/api/webview';
 import { PanelRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '@/features/sidebar';
 import PlayerBar from '../components/PlayerBar';
 import BottomNav from '../components/BottomNav';
 import { useIsMobile } from '../hooks/useIsMobile';

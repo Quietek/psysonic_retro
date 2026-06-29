@@ -1,4 +1,4 @@
-import PerfCoverThreadsControl from './PerfCoverThreadsControl';
+import PerfCoverThreadsControl from '@/features/sidebar/components/perfProbe/PerfCoverThreadsControl';
 
 export default function SidebarPerfProbeTuningTab() {
   return (

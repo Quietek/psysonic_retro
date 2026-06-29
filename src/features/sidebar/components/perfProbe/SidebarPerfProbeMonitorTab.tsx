@@ -1,17 +1,17 @@
 import { useMemo, useRef } from 'react';
-import { isPerfLivePollWaitingForCpu, usePerfLiveSnapshot } from '../../../utils/perf/perfLiveStore';
-import { usePerfLiveIncludeThreadGroups } from '../../../utils/perf/perfLivePollSettings';
+import { isPerfLivePollWaitingForCpu, usePerfLiveSnapshot } from '@/utils/perf/perfLiveStore';
+import { usePerfLiveIncludeThreadGroups } from '@/utils/perf/perfLivePollSettings';
 import {
   togglePerfLiveOverlayPin,
   togglePipelineOverlayPin,
   usePerfLiveOverlayPins,
   usePipelineOverlayPinned,
   type PerfLiveOverlayPinId,
-} from '../../../utils/perf/perfOverlayPins';
-import PerfProbeMetricCard, { PerfProbeMetricSection } from './PerfProbeMetricCard';
-import PerfOverlayAppearanceControls from './PerfOverlayAppearanceControls';
-import PerfOverlayModeControls from './PerfOverlayModeControls';
-import PerfLivePollControls from './PerfLivePollControls';
+} from '@/utils/perf/perfOverlayPins';
+import PerfProbeMetricCard, { PerfProbeMetricSection } from '@/features/sidebar/components/perfProbe/PerfProbeMetricCard';
+import PerfOverlayAppearanceControls from '@/features/sidebar/components/perfProbe/PerfOverlayAppearanceControls';
+import PerfOverlayModeControls from '@/features/sidebar/components/perfProbe/PerfOverlayModeControls';
+import PerfLivePollControls from '@/features/sidebar/components/perfProbe/PerfLivePollControls';
 
 function memoryBarPct(rssKb: number, maxKb: number): number {
   if (maxKb <= 0) return 0;

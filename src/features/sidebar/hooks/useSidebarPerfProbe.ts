@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { acquirePerfLivePoll, patchPerfLiveAnalysis } from '../utils/perf/perfLiveStore';
-import { setPerfProbeTelemetryActive } from '../utils/perf/perfTelemetry';
-import { useAnalysisPerfLast } from '../utils/perf/analysisPerfStore';
-import { useAnalysisPerfListener } from './useAnalysisPerfListener';
-import { useCoverPerfListener, useCoverUiThroughputPoll } from './useCoverPerfListener';
+import { acquirePerfLivePoll, patchPerfLiveAnalysis } from '@/utils/perf/perfLiveStore';
+import { setPerfProbeTelemetryActive } from '@/utils/perf/perfTelemetry';
+import { useAnalysisPerfLast } from '@/utils/perf/analysisPerfStore';
+import { useAnalysisPerfListener } from '@/hooks/useAnalysisPerfListener';
+import { useCoverPerfListener, useCoverUiThroughputPoll } from '@/hooks/useCoverPerfListener';
 import {
   getPerfProbeFlags,
   subscribePerfProbeFlags,
-} from '../utils/perf/perfFlags';
-import { hasAnyLiveMetricPollNeed, usePerfLiveOverlayPins } from '../utils/perf/perfOverlayPins';
+} from '@/utils/perf/perfFlags';
+import { hasAnyLiveMetricPollNeed, usePerfLiveOverlayPins } from '@/utils/perf/perfOverlayPins';
 import { useSyncExternalStore } from 'react';
 
 interface Result {

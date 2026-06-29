@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { applySidebarReorderById, resolveStartRoute } from './sidebarNavReorder';
-import { DEFAULT_SIDEBAR_ITEMS, type SidebarItemConfig } from '../../store/sidebarStore';
+import { applySidebarReorderById, resolveStartRoute } from '@/features/sidebar/utils/sidebarNavReorder';
+import { DEFAULT_SIDEBAR_ITEMS, type SidebarItemConfig } from '@/features/sidebar/store/sidebarStore';
 
 const hide = (items: SidebarItemConfig[], ...ids: string[]): SidebarItemConfig[] =>
   items.map(i => (ids.includes(i.id) ? { ...i, visible: false } : i));

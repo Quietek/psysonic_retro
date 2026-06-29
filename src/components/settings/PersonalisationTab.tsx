@@ -7,7 +7,7 @@ import { useHomeStore } from '../../store/homeStore';
 import { usePlayerBarLayoutStore } from '../../store/playerBarLayoutStore';
 import { usePlaylistLayoutStore } from '../../store/playlistLayoutStore';
 import { useQueueToolbarStore } from '../../store/queueToolbarStore';
-import { useSidebarStore } from '../../store/sidebarStore';
+import { useSidebarStore } from '@/features/sidebar';
 import SettingsSubSection from '../SettingsSubSection';
 import { SettingsGroup } from './SettingsGroup';
 import { SettingsToggle } from './SettingsToggle';

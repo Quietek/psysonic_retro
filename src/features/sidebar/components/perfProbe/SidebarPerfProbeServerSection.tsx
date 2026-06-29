@@ -1,16 +1,16 @@
-import { useAuthStore } from '../../../store/authStore';
-import type { NavidromeAdminRole } from '../../../hooks/useNavidromeAdminRole';
-import { isNavidromeServer, formatServerSoftware } from '../../../utils/server/subsonicServerIdentity';
-import { FEATURE_AUDIOMUSE_SIMILAR_TRACKS, OP_SIMILAR_TRACKS } from '../../../serverCapabilities/catalog';
+import { useAuthStore } from '@/store/authStore';
+import type { NavidromeAdminRole } from '@/hooks/useNavidromeAdminRole';
+import { isNavidromeServer, formatServerSoftware } from '@/utils/server/subsonicServerIdentity';
+import { FEATURE_AUDIOMUSE_SIMILAR_TRACKS, OP_SIMILAR_TRACKS } from '@/serverCapabilities/catalog';
 import {
   isFeatureActiveForServer,
   resolveCallRoutesForServer,
   resolveFeatureForServer,
-} from '../../../serverCapabilities/storeView';
-import type { CapabilityStatus, FeatureTrust, ResolvedCapability } from '../../../serverCapabilities/types';
-import { PerfProbeMetricSection } from './PerfProbeMetricCard';
-import PerfProbeDetailList, { type PerfProbeDetailRow } from './PerfProbeDetailList';
-import PerfProbeStatusBadge, { type PerfProbeBadgeTone } from './PerfProbeStatusBadge';
+} from '@/serverCapabilities/storeView';
+import type { CapabilityStatus, FeatureTrust, ResolvedCapability } from '@/serverCapabilities/types';
+import { PerfProbeMetricSection } from '@/features/sidebar/components/perfProbe/PerfProbeMetricCard';
+import PerfProbeDetailList, { type PerfProbeDetailRow } from '@/features/sidebar/components/perfProbe/PerfProbeDetailList';
+import PerfProbeStatusBadge, { type PerfProbeBadgeTone } from '@/features/sidebar/components/perfProbe/PerfProbeStatusBadge';
 
 function detectionBadge(status: CapabilityStatus): { tone: PerfProbeBadgeTone; label: string } {
   switch (status) {

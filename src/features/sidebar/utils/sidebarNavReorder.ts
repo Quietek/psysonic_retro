@@ -1,6 +1,6 @@
-import { ALL_NAV_ITEMS } from '../../config/navItems';
-import { CONSERVED_SIDEBAR_NAV_IDS, type SidebarItemConfig } from '../../store/sidebarStore';
-import { applyListReorderById, type ListReorderDropTarget } from './listReorder';
+import { ALL_NAV_ITEMS } from '@/config/navItems';
+import { CONSERVED_SIDEBAR_NAV_IDS, type SidebarItemConfig } from '@/features/sidebar/store/sidebarStore';
+import { applyListReorderById, type ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
 
 export type SidebarNavSection = 'library' | 'system';
 

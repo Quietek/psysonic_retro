@@ -1,10 +1,10 @@
 import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../store/authStore';
-import { useSidebarStore, SidebarItemConfig, CONSERVED_SIDEBAR_NAV_IDS } from '../../store/sidebarStore';
+import { useSidebarStore, SidebarItemConfig, CONSERVED_SIDEBAR_NAV_IDS } from '@/features/sidebar';
 import { useLuckyMixAvailable } from '../../hooks/useLuckyMixAvailable';
 import { ALL_NAV_ITEMS } from '../../config/navItems';
-import { applySidebarReorderById } from '../../utils/componentHelpers/sidebarNavReorder';
+import { applySidebarReorderById } from '@/features/sidebar';
 import { useListReorderDnd } from '../../hooks/useListReorderDnd';
 import type { ListReorderDropTarget } from '../../utils/componentHelpers/listReorder';
 import { ReorderGripHandle } from './ReorderGripHandle';

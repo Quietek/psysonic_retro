@@ -2,13 +2,13 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AudioLines, ChevronRight, HardDriveDownload, Settings } from 'lucide-react';
-import type { SidebarItemConfig } from '../../store/sidebarStore';
-import { ALL_NAV_ITEMS } from '../../config/navItems';
-import WhatsNewBanner from '../WhatsNewBanner';
-import ThemeUpdateBanner from '../ThemeUpdateBanner';
-import SidebarLibraryPicker from './SidebarLibraryPicker';
-import SidebarPlaylistsSection from './SidebarPlaylistsSection';
-import SidebarActiveJobs from './SidebarActiveJobs';
+import type { SidebarItemConfig } from '@/features/sidebar/store/sidebarStore';
+import { ALL_NAV_ITEMS } from '@/config/navItems';
+import WhatsNewBanner from '@/components/WhatsNewBanner';
+import ThemeUpdateBanner from '@/components/ThemeUpdateBanner';
+import SidebarLibraryPicker from '@/features/sidebar/components/SidebarLibraryPicker';
+import SidebarPlaylistsSection from '@/features/sidebar/components/SidebarPlaylistsSection';
+import SidebarActiveJobs from '@/features/sidebar/components/SidebarActiveJobs';
 
 interface NavDndState {
   section: 'library' | 'system';

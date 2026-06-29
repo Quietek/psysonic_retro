@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { Activity, Network, ScrollText, SlidersHorizontal, Wrench, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
-import SidebarPerfProbeMonitorTab from './perfProbe/SidebarPerfProbeMonitorTab';
-import SidebarPerfProbeTogglesTab from './perfProbe/SidebarPerfProbeTogglesTab';
-import SidebarPerfProbeTuningTab from './perfProbe/SidebarPerfProbeTuningTab';
-import SidebarPerfProbeLogsTab from './perfProbe/SidebarPerfProbeLogsTab';
-import SidebarPerfProbeConnectionsTab from './perfProbe/SidebarPerfProbeConnectionsTab';
-import { resetPerfProbeFlags, type PerfProbeFlags } from '../../utils/perf/perfFlags';
-import { clearPerfLiveOverlayPins } from '../../utils/perf/perfOverlayPins';
-import { resetPerfOverlayAppearance } from '../../utils/perf/perfOverlayAppearance';
-import { resetPerfOverlayMode } from '../../utils/perf/perfOverlayMode';
+import SidebarPerfProbeMonitorTab from '@/features/sidebar/components/perfProbe/SidebarPerfProbeMonitorTab';
+import SidebarPerfProbeTogglesTab from '@/features/sidebar/components/perfProbe/SidebarPerfProbeTogglesTab';
+import SidebarPerfProbeTuningTab from '@/features/sidebar/components/perfProbe/SidebarPerfProbeTuningTab';
+import SidebarPerfProbeLogsTab from '@/features/sidebar/components/perfProbe/SidebarPerfProbeLogsTab';
+import SidebarPerfProbeConnectionsTab from '@/features/sidebar/components/perfProbe/SidebarPerfProbeConnectionsTab';
+import { resetPerfProbeFlags, type PerfProbeFlags } from '@/utils/perf/perfFlags';
+import { clearPerfLiveOverlayPins } from '@/utils/perf/perfOverlayPins';
+import { resetPerfOverlayAppearance } from '@/utils/perf/perfOverlayAppearance';
+import { resetPerfOverlayMode } from '@/utils/perf/perfOverlayMode';
 
 type TabId = 'monitor' | 'connections' | 'toggles' | 'tuning' | 'logs';
 

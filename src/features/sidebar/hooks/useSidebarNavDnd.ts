@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import type { SidebarItemConfig } from '../store/sidebarStore';
+import type { SidebarItemConfig } from '@/features/sidebar/store/sidebarStore';
 import {
   applySidebarReorderById,
   isSidebarNavItemUserHideable,
   type SidebarNavDropTarget,
-} from '../utils/componentHelpers/sidebarNavReorder';
+} from '@/features/sidebar/utils/sidebarNavReorder';
 import {
   SIDEBAR_NAV_LONG_PRESS_MOVE_CANCEL_PX,
   SIDEBAR_NAV_LONG_PRESS_MS,
   isPointerOutsideAsideSidebar,
-} from '../utils/componentHelpers/sidebarHelpers';
+} from '@/features/sidebar/utils/sidebarHelpers';
 
 interface NavDndState {
   section: 'library' | 'system';

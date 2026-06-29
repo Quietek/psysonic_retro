@@ -1,13 +1,13 @@
-import { useAuthStore } from '../../../store/authStore';
-import { usePlayerStore } from '../../../store/playerStore';
-import { useConnectionStatus } from '../../../hooks/useConnectionStatus';
-import { useNavidromeAdminRole } from '../../../hooks/useNavidromeAdminRole';
-import { serverListDisplayLabel } from '../../../utils/server/serverDisplayName';
-import { findServerByIdOrIndexKey } from '../../../utils/server/serverLookup';
-import { PerfProbeMetricSection } from './PerfProbeMetricCard';
-import PerfProbeDetailList from './PerfProbeDetailList';
-import PerfProbeStatusBadge, { type PerfProbeBadgeTone } from './PerfProbeStatusBadge';
-import SidebarPerfProbeServerSection from './SidebarPerfProbeServerSection';
+import { useAuthStore } from '@/store/authStore';
+import { usePlayerStore } from '@/store/playerStore';
+import { useConnectionStatus } from '@/hooks/useConnectionStatus';
+import { useNavidromeAdminRole } from '@/hooks/useNavidromeAdminRole';
+import { serverListDisplayLabel } from '@/utils/server/serverDisplayName';
+import { findServerByIdOrIndexKey } from '@/utils/server/serverLookup';
+import { PerfProbeMetricSection } from '@/features/sidebar/components/perfProbe/PerfProbeMetricCard';
+import PerfProbeDetailList from '@/features/sidebar/components/perfProbe/PerfProbeDetailList';
+import PerfProbeStatusBadge, { type PerfProbeBadgeTone } from '@/features/sidebar/components/perfProbe/PerfProbeStatusBadge';
+import SidebarPerfProbeServerSection from '@/features/sidebar/components/perfProbe/SidebarPerfProbeServerSection';
 
 function connectionStatusBadge(status: string): { tone: PerfProbeBadgeTone; label: string } {
   switch (status) {
