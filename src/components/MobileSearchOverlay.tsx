@@ -10,7 +10,7 @@ import { X, Search, Disc3, Users, Music, Music2, Clock, ChevronRight } from 'luc
 import { usePlayerStore } from '../store/playerStore';
 import { useAuthStore } from '../store/authStore';
 import { useTranslation } from 'react-i18next';
-import { FETCH_QUEUE_BIAS_SEARCH_ARTIST_OVER_ALBUM } from './CachedImage';
+import { FETCH_QUEUE_BIAS_SEARCH_ARTIST_OVER_ALBUM } from '@/ui/CachedImage';
 import { AlbumCoverArtImage } from '../cover/AlbumCoverArtImage';
 import { ArtistCoverArtImage } from '../cover/ArtistCoverArtImage';
 import { CoverArtImage } from '../cover/CoverArtImage';

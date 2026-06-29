@@ -8,7 +8,7 @@ import { songToTrack } from '../../utils/playback/songToTrack';
 import { activateShareSearchServer } from '../../utils/share/enqueueShareSearchPayload';
 import { sharePayloadTotal, type ShareSearchMatch } from '../../utils/share/shareSearch';
 import type { ShareSearchPreviewState } from '../../hooks/useShareSearchPreview';
-import { FETCH_QUEUE_BIAS_SEARCH_ARTIST_OVER_ALBUM } from '../CachedImage';
+import { FETCH_QUEUE_BIAS_SEARCH_ARTIST_OVER_ALBUM } from '@/ui/CachedImage';
 import { AlbumCoverArtImage } from '../../cover/AlbumCoverArtImage';
 import { ArtistCoverArtImage } from '../../cover/ArtistCoverArtImage';
 import { COVER_DENSE_SEARCH_CSS_PX } from '../../cover/layoutSizes';

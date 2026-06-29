@@ -8,7 +8,7 @@ import { usePlayerStore } from '../../store/playerStore';
 import { queueSongStar, queueSongRating } from '../../store/pendingStarSync';
 import { useAlbumCoverRef, useArtistCoverRef } from '../../cover/useLibraryCoverRef';
 import { usePlaybackCoverArt } from '../../hooks/usePlaybackCoverArt';
-import { useCachedUrl } from '../CachedImage';
+import { useCachedUrl } from '@/ui/CachedImage';
 import { useArtistFanart } from '../../cover/useArtistFanart';
 import { backdropFromConfig } from '../../cover/artistBackdrop';
 import { useThemeStore } from '../../store/themeStore';

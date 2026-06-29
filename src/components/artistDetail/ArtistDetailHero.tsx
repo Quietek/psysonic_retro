@@ -15,7 +15,7 @@ import { ArtistHeroCover } from '../../cover/artistHero';
 import { useArtistBanner, useArtistFanart } from '../../cover/useArtistFanart';
 import { backdropFromConfig } from '../../cover/artistBackdrop';
 import { usePlaybackCoverArt } from '../../cover/usePlaybackCoverArt';
-import { useCachedUrl } from '../CachedImage';
+import { useCachedUrl } from '@/ui/CachedImage';
 import { useCoverLightboxSrc } from '../../cover/lightbox';
 import type { CoverArtRef } from '../../cover/types';
 import LastfmIcon from '../LastfmIcon';

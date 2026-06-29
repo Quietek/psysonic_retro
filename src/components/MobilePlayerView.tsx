@@ -14,7 +14,7 @@ import {
   Moon, Sunrise,
 } from 'lucide-react';
 import { usePlayerStore } from '../store/playerStore';
-import { useCachedUrl } from './CachedImage';
+import { useCachedUrl } from '@/ui/CachedImage';
 import { OpenArtistRefInline } from './OpenArtistRefInline';
 import { formatTrackTime } from '../utils/format/formatDuration';
 import { resolveQueueTrack } from '../utils/library/queueTrackView';

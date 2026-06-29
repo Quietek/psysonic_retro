@@ -9,7 +9,7 @@ import { usePlayerStore } from '../store/playerStore';
 import { useAuthStore } from '../store/authStore';
 import { usePlaybackServerId } from '../hooks/usePlaybackServerId';
 import { fetchBandsintownEvents, type BandsintownEvent } from '../api/bandsintown';
-import CachedImage from './CachedImage';
+import CachedImage from '@/ui/CachedImage';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { primaryTrackArtistRef } from '../utils/playback/trackArtistRefs';
 

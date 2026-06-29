@@ -10,7 +10,7 @@ import { useAlbumCoverRef } from '../cover/useLibraryCoverRef';
 import { useArtistBanner, useArtistFanart } from '../cover/useArtistFanart';
 import { useCoverArt } from '../cover/useCoverArt';
 import { useHeroBackdrop } from '../cover/useHeroBackdrop';
-import { useCachedUrl } from './CachedImage';
+import { useCachedUrl } from '@/ui/CachedImage';
 import { usePlayerStore } from '../store/playerStore';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '../hooks/useIsMobile';
