@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
-import type { SubsonicSong } from '../api/subsonicTypes';
-import { useSelectionStore } from '../store/selectionStore';
+import type { SubsonicSong } from '@/api/subsonicTypes';
+import { useSelectionStore } from '@/store/selectionStore';
 
 export interface FavoritesSelectionResult {
   toggleSelect: (id: string, idx: number, shift: boolean) => void;

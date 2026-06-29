@@ -1,14 +1,14 @@
 import { HardDrive } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import {
   useFavoritesOfflineStatus,
   type FavoritesOfflineSemaphore,
-} from '../../hooks/useFavoritesOfflineStatus';
+} from '@/features/favorites/hooks/useFavoritesOfflineStatus';
 import {
   disableFavoritesOfflineSync,
   scheduleFavoritesOfflineSync,
-} from '../../utils/offline/favoritesOfflineSync';
+} from '@/utils/offline/favoritesOfflineSync';
 
 function semaphoreTooltipKey(semaphore: FavoritesOfflineSemaphore): string {
   switch (semaphore) {

@@ -1,20 +1,20 @@
-import { queueSongStar, queueSongRating } from '../store/pendingStarSync';
+import { queueSongStar, queueSongRating } from '@/store/pendingStarSync';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useTracklistColumns, type ColDef } from '../utils/useTracklistColumns';
-import { TopFavoriteArtistsRow } from '../components/favorites/TopFavoriteArtists';
-import { RadioStationRow } from '../components/favorites/RadioFavorites';
-import FavoritesSongsSectionHeader from '../components/favorites/FavoritesSongsSectionHeader';
-import FavoritesSongsTracklist from '../components/favorites/FavoritesSongsTracklist';
-import { useFavoritesData } from '../hooks/useFavoritesData';
-import { useFavoritesSongFiltering } from '../hooks/useFavoritesSongFiltering';
-import { useFavoritesSelection } from '../hooks/useFavoritesSelection';
-import { useBulkPlPickerOutsideClick } from '../hooks/useBulkPlPickerOutsideClick';
-import AlbumRow from '../components/AlbumRow';
-import ArtistRow from '../components/ArtistRow';
-import { usePlayerStore } from '../store/playerStore';
+import { useTracklistColumns, type ColDef } from '@/utils/useTracklistColumns';
+import { TopFavoriteArtistsRow } from '@/features/favorites/components/TopFavoriteArtists';
+import { RadioStationRow } from '@/features/favorites/components/RadioFavorites';
+import FavoritesSongsSectionHeader from '@/features/favorites/components/FavoritesSongsSectionHeader';
+import FavoritesSongsTracklist from '@/features/favorites/components/FavoritesSongsTracklist';
+import { useFavoritesData } from '@/features/favorites/hooks/useFavoritesData';
+import { useFavoritesSongFiltering } from '@/features/favorites/hooks/useFavoritesSongFiltering';
+import { useFavoritesSelection } from '@/features/favorites/hooks/useFavoritesSelection';
+import { useBulkPlPickerOutsideClick } from '@/hooks/useBulkPlPickerOutsideClick';
+import AlbumRow from '@/components/AlbumRow';
+import ArtistRow from '@/components/ArtistRow';
+import { usePlayerStore } from '@/store/playerStore';
 import { useTranslation } from 'react-i18next';
-import { useSelectionStore } from '../store/selectionStore';
-import FavoritesOfflineHeader from '../components/favorites/FavoritesOfflineHeader';
+import { useSelectionStore } from '@/store/selectionStore';
+import FavoritesOfflineHeader from '@/features/favorites/components/FavoritesOfflineHeader';
 
 const FAV_COLUMNS: readonly ColDef[] = [
   { key: 'num',        i18nKey: null,              minWidth: 60,  defaultWidth: 60,  required: true  },

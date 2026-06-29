@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { ArrowDown, ArrowUp } from 'lucide-react';
-import type { SubsonicSong } from '../api/subsonicTypes';
-import { usePlayerStore } from '../store/playerStore';
+import type { SubsonicSong } from '@/api/subsonicTypes';
+import { usePlayerStore } from '@/store/playerStore';
 
 const CURRENT_YEAR = new Date().getFullYear();
 const MIN_YEAR = 1950;

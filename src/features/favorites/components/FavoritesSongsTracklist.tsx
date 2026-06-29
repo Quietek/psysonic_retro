@@ -1,22 +1,22 @@
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import FavoriteSongRow, { type FavoriteSongRowCallbacks } from './FavoriteSongRow';
-import { TracklistColumnPicker } from '../albumTrackList/TracklistColumnPicker';
+import FavoriteSongRow, { type FavoriteSongRowCallbacks } from '@/features/favorites/components/FavoriteSongRow';
+import { TracklistColumnPicker } from '@/components/albumTrackList/TracklistColumnPicker';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import type { ColDef } from '../../utils/useTracklistColumns';
-import type { SubsonicSong } from '../../api/subsonicTypes';
-import { usePlayerStore } from '../../store/playerStore';
-import { previewInputFromSong, usePreviewStore } from '../../store/previewStore';
-import { useSelectionStore } from '../../store/selectionStore';
-import { useThemeStore } from '../../store/themeStore';
-import { useDragDrop } from '../../contexts/DragDropContext';
-import { useOrbitSongRowBehavior } from '../../hooks/useOrbitSongRowBehavior';
-import { songToTrack } from '../../utils/playback/songToTrack';
-import { appendServerQuery } from '../../utils/navigation/detailServerScope';
-import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../../constants/appScroll';
-import { useElementClientHeightById } from '../../hooks/useResizeClientHeight';
-import { SORTABLE_COLUMNS } from '../../hooks/useFavoritesSongFiltering';
+import type { ColDef } from '@/utils/useTracklistColumns';
+import type { SubsonicSong } from '@/api/subsonicTypes';
+import { usePlayerStore } from '@/store/playerStore';
+import { previewInputFromSong, usePreviewStore } from '@/store/previewStore';
+import { useSelectionStore } from '@/store/selectionStore';
+import { useThemeStore } from '@/store/themeStore';
+import { useDragDrop } from '@/contexts/DragDropContext';
+import { useOrbitSongRowBehavior } from '@/hooks/useOrbitSongRowBehavior';
+import { songToTrack } from '@/utils/playback/songToTrack';
+import { appendServerQuery } from '@/utils/navigation/detailServerScope';
+import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
+import { useElementClientHeightById } from '@/hooks/useResizeClientHeight';
+import { SORTABLE_COLUMNS } from '@/features/favorites/hooks/useFavoritesSongFiltering';
 
 interface Props {
   visibleSongs: SubsonicSong[];

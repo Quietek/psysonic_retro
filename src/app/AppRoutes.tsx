@@ -16,7 +16,7 @@ const ArtistDetail = lazy(() => import('../pages/ArtistDetail'));
 const Composers = lazy(() => import('../pages/Composers'));
 const ComposerDetail = lazy(() => import('../pages/ComposerDetail'));
 const NewReleases = lazy(() => import('../pages/NewReleases'));
-const Favorites = lazy(() => import('../pages/Favorites'));
+const Favorites = lazy(() => import('@/features/favorites/pages/Favorites'));
 const RandomMix = lazy(() => import('../pages/RandomMix'));
 const RandomLanding = lazy(() => import('../pages/RandomLanding'));
 const AlbumDetail = lazy(() => import('../pages/AlbumDetail'));

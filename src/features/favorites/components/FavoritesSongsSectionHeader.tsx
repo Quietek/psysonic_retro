@@ -1,12 +1,12 @@
 import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListPlus, Play, SlidersHorizontal, X } from 'lucide-react';
-import type { SubsonicSong } from '../../api/subsonicTypes';
-import { usePlayerStore } from '../../store/playerStore';
-import { useSelectionStore } from '../../store/selectionStore';
-import { songToTrack } from '../../utils/playback/songToTrack';
-import { AddToPlaylistSubmenu } from '../ContextMenu';
-import GenreFilterBar from '../GenreFilterBar';
+import type { SubsonicSong } from '@/api/subsonicTypes';
+import { usePlayerStore } from '@/store/playerStore';
+import { useSelectionStore } from '@/store/selectionStore';
+import { songToTrack } from '@/utils/playback/songToTrack';
+import { AddToPlaylistSubmenu } from '@/components/ContextMenu';
+import GenreFilterBar from '@/components/GenreFilterBar';
 
 interface Props {
   visibleSongs: SubsonicSong[];

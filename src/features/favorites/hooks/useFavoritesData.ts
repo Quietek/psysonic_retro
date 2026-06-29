@@ -1,20 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getInternetRadioStations } from '../api/subsonicRadio';
-import { getStarred } from '../api/subsonicStarRating';
+import { getInternetRadioStations } from '@/api/subsonicRadio';
+import { getStarred } from '@/api/subsonicStarRating';
 import type {
   InternetRadioStation, SubsonicAlbum, SubsonicArtist, SubsonicSong,
-} from '../api/subsonicTypes';
-import { useAuthStore } from '../store/authStore';
-import { usePlayerStore } from '../store/playerStore';
-import type { TopFavoriteArtist } from '../components/favorites/TopFavoriteArtists';
-import { useConnectionStatus } from './useConnectionStatus';
-import { isActiveServerReachable } from '../utils/network/activeServerReachability';
-import { useOfflineBrowseContext } from './useOfflineBrowseContext';
-import { useOfflineBrowseReloadToken } from './useOfflineBrowseReloadToken';
+} from '@/api/subsonicTypes';
+import { useAuthStore } from '@/store/authStore';
+import { usePlayerStore } from '@/store/playerStore';
+import type { TopFavoriteArtist } from '@/features/favorites/components/TopFavoriteArtists';
+import { useConnectionStatus } from '@/hooks/useConnectionStatus';
+import { isActiveServerReachable } from '@/utils/network/activeServerReachability';
+import { useOfflineBrowseContext } from '@/hooks/useOfflineBrowseContext';
+import { useOfflineBrowseReloadToken } from '@/hooks/useOfflineBrowseReloadToken';
 import {
   loadStarredFromAllLibraryIndexes,
   loadStarredFromAllServersOnline,
-} from '../utils/offline/offlineStarredLoad';
+} from '@/utils/offline/offlineStarredLoad';
 
 export interface FavoritesDataResult {
   albums: SubsonicAlbum[];

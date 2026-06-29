@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AudioLines, ChevronRight, Play, Square, X } from 'lucide-react';
-import type { ColDef } from '../../utils/useTracklistColumns';
-import type { SubsonicSong } from '../../api/subsonicTypes';
-import { codecLabel } from '../../utils/componentHelpers/playlistDetailHelpers';
-import { formatLastSeen } from '../../utils/componentHelpers/userMgmtHelpers';
-import i18n from '../../i18n';
-import { formatTrackTime } from '../../utils/format/formatDuration';
-import StarRating from '../StarRating';
-import { OpenArtistRefInline } from '../OpenArtistRefInline';
-import { resolveTrackArtistRefs } from '../../utils/playback/trackArtistRefs';
+import type { ColDef } from '@/utils/useTracklistColumns';
+import type { SubsonicSong } from '@/api/subsonicTypes';
+import { codecLabel } from '@/utils/componentHelpers/playlistDetailHelpers';
+import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
+import i18n from '@/i18n';
+import { formatTrackTime } from '@/utils/format/formatDuration';
+import StarRating from '@/components/StarRating';
+import { OpenArtistRefInline } from '@/components/OpenArtistRefInline';
+import { resolveTrackArtistRefs } from '@/utils/playback/trackArtistRefs';
 
 export interface FavoriteSongRowCallbacks {
   activate: (song: SubsonicSong, index: number, e: React.MouseEvent) => void;
