@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { applyServerPlayQueue } from '../store/applyServerPlayQueue';
 import { useAuthStore } from '../store/authStore';
-import { useOrbitStore } from '../store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import { usePlayerStore } from '../store/playerStore';
 import {
   getPlaybackIdleSinceMs,

@@ -1,6 +1,6 @@
 import { getSong } from '../api/subsonicLibrary';
 import { invoke } from '@tauri-apps/api/core';
-import { estimateLivePosition } from '../api/orbit';
+import { estimateLivePosition } from '@/features/orbit';
 import { setDeferHotCachePrefetch } from '../utils/cache/hotCacheGate';
 import {
   getPlaybackCacheServerKey,
@@ -22,7 +22,7 @@ import {
   isReplayGainActive,
   loudnessGainDbForEngineBind,
 } from './loudnessGainCache';
-import { useOrbitStore } from './orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import {
   playbackSourceHintForResolvedUrl,
   recordEnginePlayUrl,

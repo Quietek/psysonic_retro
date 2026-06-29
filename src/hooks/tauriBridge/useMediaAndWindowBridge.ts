@@ -9,8 +9,8 @@ import { playbackReportStopped } from '../../store/playbackReportSession';
 import { getPlaybackProgressSnapshot } from '../../store/playbackProgress';
 import { usePlayerStore } from '../../store/playerStore';
 import { useAuthStore } from '../../store/authStore';
-import { useOrbitStore } from '../../store/orbitStore';
-import { endOrbitSession, leaveOrbitSession } from '../../utils/orbit';
+import { useOrbitStore } from '@/features/orbit';
+import { endOrbitSession, leaveOrbitSession } from '@/features/orbit';
 import {
   canRunShortcutActionInMiniWindow,
   executeRuntimeAction,

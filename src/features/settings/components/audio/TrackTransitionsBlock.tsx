@@ -1,7 +1,7 @@
 import React from 'react';
 import type { TFunction } from 'i18next';
 import { useAuthStore } from '@/store/authStore';
-import { useOrbitStore } from '@/store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import {
   AUTODJ_OVERLAP_CAP_MAX_SEC,
   AUTODJ_OVERLAP_CAP_MIN_SEC,

@@ -47,7 +47,7 @@ vi.mock('@/music-network', () => {
   };
 });
 
-vi.mock('@/utils/orbitBulkGuard', () => ({
+vi.mock('@/features/orbit', () => ({
   orbitBulkGuard: vi.fn(async () => true),
 }));
 

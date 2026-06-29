@@ -13,7 +13,7 @@ vi.mock('./fadeOut', () => ({
 }));
 
 import { resolveAlbumForActiveServer } from '@/features/offline';
-import { useOrbitStore } from '../../store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import { usePlayerStore } from '../../store/playerStore';
 import { playAlbum, playAlbumShuffled } from './playAlbum';
 import * as shuffleModule from './shuffleArray';

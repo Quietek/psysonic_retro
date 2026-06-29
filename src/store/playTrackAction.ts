@@ -2,7 +2,7 @@ import { playbackReportStart, playbackReportStopped } from './playbackReportSess
 import { invoke } from '@tauri-apps/api/core';
 import { getMusicNetworkRuntimeOrNull } from '../music-network';
 import { setDeferHotCachePrefetch } from '../utils/cache/hotCacheGate';
-import { orbitBulkGuard } from '../utils/orbitBulkGuard';
+import { orbitBulkGuard } from '@/features/orbit';
 import { sameQueueTrackId } from '../utils/playback/queueIdentity';
 import {
   computeAutodjManualBlendPlan,
@@ -53,7 +53,7 @@ import {
 import { refreshLoudnessForTrack } from './loudnessRefresh';
 import { fetchWaveformBins, refreshWaveformForTrack } from '@/store/waveformRefresh';
 import { deriveNormalizationSnapshot } from './normalizationSnapshot';
-import { useOrbitStore } from './orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import {
   playbackSourceHintForResolvedUrl,
   recordEnginePlayUrl,

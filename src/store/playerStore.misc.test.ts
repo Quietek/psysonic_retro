@@ -42,7 +42,7 @@ vi.mock('@/music-network', () => ({
   getMusicNetworkRuntimeOrNull: () => runtimeMock,
 }));
 
-vi.mock('@/utils/orbitBulkGuard', () => ({
+vi.mock('@/features/orbit', () => ({
   orbitBulkGuard: vi.fn(async () => true),
 }));
 

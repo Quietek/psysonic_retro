@@ -11,7 +11,7 @@ import { previewInputFromSong, usePreviewStore } from '@/store/previewStore';
 import { useSelectionStore } from '@/store/selectionStore';
 import { useThemeStore } from '@/store/themeStore';
 import { useDragDrop } from '@/contexts/DragDropContext';
-import { useOrbitSongRowBehavior } from '@/hooks/useOrbitSongRowBehavior';
+import { useOrbitSongRowBehavior } from '@/features/orbit';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { appendServerQuery } from '@/utils/navigation/detailServerScope';
 import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';

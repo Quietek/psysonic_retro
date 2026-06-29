@@ -25,7 +25,7 @@ import { _resetTimelineSessionHistoryForTest } from '@/store/timelineSessionHist
 import { usePlayerStore } from '@/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { usePreviewStore } from '@/store/previewStore';
-import { useOrbitStore } from '@/store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 
 const INITIAL_PLAYER_STATE = usePlayerStore.getState();
 const INITIAL_AUTH_STATE = useAuthStore.getState();

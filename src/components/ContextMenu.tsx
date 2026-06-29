@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { Track } from '../store/playerStoreTypes';
-import { useOrbitStore } from '../store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import { usePlayerStore } from '../store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useAuthStore } from '../store/authStore';

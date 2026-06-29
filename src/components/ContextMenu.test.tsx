@@ -30,7 +30,7 @@ vi.mock('@/api/subsonic', () => ({
 }));
 
 
-vi.mock('@/utils/orbitBulkGuard', () => ({
+vi.mock('@/features/orbit', () => ({
   orbitBulkGuard: vi.fn(async () => true),
 }));
 

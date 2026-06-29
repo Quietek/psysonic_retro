@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import { orbitBulkGuard } from '../utils/orbitBulkGuard';
+import { orbitBulkGuard } from '@/features/orbit';
 import { useAuthStore } from './authStore';
 import { setIsAudioPaused } from './engineState';
 import { prefetchLoudnessForEnqueuedTracks } from './loudnessPrefetch';

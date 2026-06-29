@@ -20,8 +20,7 @@ import SongInfoModal from '../components/SongInfoModal';
 import { DownloadFolderModal } from '@/features/offline';
 import GlobalConfirmModal from '../components/GlobalConfirmModal';
 import ThemeMigrationNotice from '../components/ThemeMigrationNotice';
-import OrbitAccountPicker from '../components/OrbitAccountPicker';
-import OrbitHelpModal from '../components/OrbitHelpModal';
+import { OrbitAccountPicker, OrbitHelpModal } from '@/features/orbit';
 import TooltipPortal from '@/ui/TooltipPortal';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import {
@@ -33,11 +32,10 @@ import MusicNetworkIndicator from '../components/MusicNetworkIndicator';
 import { OfflineBanner } from '@/features/offline';
 import AppUpdater from '../components/AppUpdater';
 import TitleBar from '../components/TitleBar';
-import OrbitSessionBar from '../components/OrbitSessionBar';
-import OrbitStartTrigger from '../components/OrbitStartTrigger';
-import { useOrbitHost } from '../hooks/useOrbitHost';
-import { useOrbitGuest } from '../hooks/useOrbitGuest';
-import { useOrbitBodyAttrs } from '../hooks/useOrbitBodyAttrs';
+import { OrbitSessionBar, OrbitStartTrigger } from '@/features/orbit';
+import { useOrbitHost } from '@/features/orbit';
+import { useOrbitGuest } from '@/features/orbit';
+import { useOrbitBodyAttrs } from '@/features/orbit';
 import { usePlatformShellSetup } from '../hooks/usePlatformShellSetup';
 import { useOfflineBrowseContext } from '@/features/offline';
 import { offlineBrowseNavFlags } from '@/features/offline';
@@ -67,7 +65,7 @@ import { useThemeStore } from '../store/themeStore';
 import { useFontStore } from '../store/fontStore';
 import { useEqStore } from '../store/eqStore';
 import { usePlaybackRateStore } from '../store/playbackRateStore';
-import { usePlaybackRateOrbitSync } from '../hooks/usePlaybackRateOrbitSync';
+import { usePlaybackRateOrbitSync } from '@/features/orbit';
 import { usePerfProbeFlags } from '../utils/perf/perfFlags';
 import {
   persistSidebarCollapsed,

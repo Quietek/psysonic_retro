@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { getMusicFolders } from '../api/subsonicLibrary';
 import { probeEntityRatingSupport } from '../api/subsonicStarRating';
 import { useAuthStore } from '../store/authStore';
-import { cleanupOrphanedOrbitPlaylists } from '../utils/orbit';
+import { cleanupOrphanedOrbitPlaylists } from '@/features/orbit';
 
 /**
  * Per-server one-shot probe run after login:

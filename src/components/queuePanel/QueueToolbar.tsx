@@ -9,7 +9,7 @@ import type {
   QueueToolbarButtonId,
 } from '../../store/queueToolbarStore';
 import { getTransitionMode, setTransitionMode } from '../../utils/playback/playbackTransition';
-import { useOrbitStore } from '../../store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 
 interface Props {
   queue: QueueItemRef[];

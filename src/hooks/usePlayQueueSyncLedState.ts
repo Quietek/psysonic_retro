@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { ConnectionStatus } from '../hooks/useConnectionStatus';
 import { pullPlayQueueFromActiveServer } from '../store/applyServerPlayQueue';
 import { useAuthStore } from '../store/authStore';
-import { useOrbitStore } from '../store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import { usePlayerStore } from '../store/playerStore';
 import { getPlaybackServerId, queueIsMultiServer } from '../utils/playback/playbackServer';
 import {

@@ -8,7 +8,7 @@ import { useAuthStore } from '../store/authStore';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { useOrbitSongRowBehavior } from '../hooks/useOrbitSongRowBehavior';
+import { useOrbitSongRowBehavior } from '@/features/orbit';
 import {
   fetchRandomMixSongsUntilFull,
   getMixMinRatingsConfigFromAuth,

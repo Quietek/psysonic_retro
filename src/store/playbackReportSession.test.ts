@@ -19,7 +19,7 @@ vi.mock('./playbackRateStore', () => ({
   },
 }));
 vi.mock('../utils/audio/playbackRateHelpers', () => ({ isPlaybackRateApplied: () => false }));
-vi.mock('../utils/orbit', () => ({ isOrbitPlaybackSyncActive: () => false }));
+vi.mock('@/features/orbit', () => ({ isOrbitPlaybackSyncActive: () => false }));
 
 import { reportNowPlaying, reportPlayback } from '../api/subsonicScrobble';
 import { isFeatureActiveForServer } from '../serverCapabilities/storeView';

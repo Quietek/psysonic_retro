@@ -1,7 +1,7 @@
 import { usePlayerStore } from '../../store/playerStore';
 import { resolveAlbumForActiveServer } from '@/features/offline';
 import { songToTrack } from './songToTrack';
-import { useOrbitStore } from '../../store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import { fadeOut } from './fadeOut';
 import { shouldAutodjInterruptBlend } from './autodjManualBlend';
 import type { Track } from '../../store/playerStoreTypes';

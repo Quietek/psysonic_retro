@@ -53,7 +53,7 @@ vi.mock('../playback/songToTrack', () => ({
   songToTrack: mocks.songToTrack,
 }));
 
-vi.mock('../orbitBulkGuard', () => ({
+vi.mock('@/features/orbit', () => ({
   orbitBulkGuard: mocks.orbitBulkGuard,
 }));
 

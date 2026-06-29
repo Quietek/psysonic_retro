@@ -11,7 +11,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { invoke } from '@tauri-apps/api/core';
 import { usePlayerStore } from '../store/playerStore';
 import { useAuthStore } from '../store/authStore';
-import { useOrbitSongRowBehavior } from '../hooks/useOrbitSongRowBehavior';
+import { useOrbitSongRowBehavior } from '@/features/orbit';
 import { useAlbumDetailData } from '../hooks/useAlbumDetailData';
 import { useAlbumOfflineState } from '../hooks/useAlbumOfflineState';
 import { useAlbumDetailSort } from '../hooks/useAlbumDetailSort';

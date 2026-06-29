@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '../store/playerStore';
 import { enqueueAndPlay } from '../utils/playback/playSong';
 import { useDragDrop } from '../contexts/DragDropContext';
-import { useOrbitSongRowBehavior } from '../hooks/useOrbitSongRowBehavior';
+import { useOrbitSongRowBehavior } from '@/features/orbit';
 import { formatTrackTime } from '../utils/format/formatDuration';
 import { resolveTrackArtistRefs } from '../utils/playback/trackArtistRefs';
 import { tooltipAttrs } from '@/ui/tooltipAttrs';

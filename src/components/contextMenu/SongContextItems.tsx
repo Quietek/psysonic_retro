@@ -10,7 +10,7 @@ import { useAuthStore } from '../../store/authStore';
 import { usePlaylistStore } from '../../store/playlistStore';
 import { songToTrack } from '../../utils/playback/songToTrack';
 import { showToast } from '../../utils/ui/toast';
-import { suggestOrbitTrack, hostEnqueueToOrbit, evaluateOrbitSuggestGate, OrbitSuggestBlockedError } from '../../utils/orbit';
+import { suggestOrbitTrack, hostEnqueueToOrbit, evaluateOrbitSuggestGate, OrbitSuggestBlockedError } from '@/features/orbit';
 import { renderPresetIcon } from '../settings/musicNetwork/presetIcon';
 import StarRating from '../StarRating';
 import { AddToPlaylistSubmenu } from './AddToPlaylistSubmenu';

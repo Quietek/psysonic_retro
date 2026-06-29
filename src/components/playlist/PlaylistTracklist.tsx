@@ -16,7 +16,7 @@ import { usePlayerStore } from '../../store/playerStore';
 import { previewInputFromSong, usePreviewStore } from '../../store/previewStore';
 import { useThemeStore } from '../../store/themeStore';
 import { useDragDrop } from '../../contexts/DragDropContext';
-import { useOrbitSongRowBehavior } from '../../hooks/useOrbitSongRowBehavior';
+import { useOrbitSongRowBehavior } from '@/features/orbit';
 import { songToTrack } from '../../utils/playback/songToTrack';
 import type { PlaylistSortKey, PlaylistSortDir } from '../../utils/playlist/playlistDisplayedSongs';
 import { AddToPlaylistSubmenu } from '../ContextMenu';

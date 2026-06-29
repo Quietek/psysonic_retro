@@ -12,7 +12,7 @@ import type { ServerProfile } from '../../store/authStoreTypes';
 import { usePlayerStore } from '../../store/playerStore';
 import { songToTrack } from '../playback/songToTrack';
 import type { Track } from '../../store/playerStoreTypes';
-import { orbitBulkGuard } from '../orbitBulkGuard';
+import { orbitBulkGuard } from '@/features/orbit';
 import { findServerIdForShareUrl } from './shareLink';
 import { connectBaseUrlForServer } from '../server/serverEndpoint';
 import { serverIndexKeyFromUrl } from '../server/serverIndexKey';

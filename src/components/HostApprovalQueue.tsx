@@ -3,14 +3,14 @@ import type { SubsonicSong } from '../api/subsonicTypes';
 import { useEffect, useMemo, useState } from 'react';
 import { Check, X, Inbox } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useOrbitStore } from '../store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import {
   approveOrbitSuggestion,
   declineOrbitSuggestion,
   suggestionKey,
-} from '../utils/orbit';
+} from '@/features/orbit';
 import { TrackCoverArtImage } from '../cover/TrackCoverArtImage';
-import { ORBIT_DEFAULT_SETTINGS } from '../api/orbit';
+import { ORBIT_DEFAULT_SETTINGS } from '@/features/orbit';
 
 const HOST_APPROVAL_COVER_CSS_PX = 36;
 

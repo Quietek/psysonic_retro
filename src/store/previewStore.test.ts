@@ -28,7 +28,7 @@ vi.mock('@/api/subsonic', () => ({
 
 import { usePreviewStore } from './previewStore';
 import { useAuthStore } from './authStore';
-import { useOrbitStore } from './orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import { usePlayerStore } from './playerStore';
 import './previewPlayerVolumeSync';
 import { onInvoke, invokeMock } from '@/test/mocks/tauri';

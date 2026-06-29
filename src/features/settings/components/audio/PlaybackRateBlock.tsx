@@ -19,9 +19,9 @@ import {
   type PlaybackStrategy,
 } from '@/utils/audio/playbackRateHelpers';
 import { usePlaybackRateStore } from '@/store/playbackRateStore';
-import { useOrbitStore } from '@/store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import { useAuthStore } from '@/store/authStore';
-import { isOrbitPlaybackSyncActive } from '@/utils/orbit';
+import { isOrbitPlaybackSyncActive } from '@/features/orbit';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';
 import { SettingsSubCard } from '@/features/settings/components/SettingsSubCard';
 

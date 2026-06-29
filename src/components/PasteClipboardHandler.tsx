@@ -16,9 +16,9 @@ import {
   findSessionPlaylistId,
   readOrbitState,
   OrbitJoinError,
-} from '../utils/orbit';
+} from '@/features/orbit';
 import { switchActiveServer } from '../utils/server/switchActiveServer';
-import { useOrbitAccountPickerStore } from '../store/orbitAccountPickerStore';
+import { useOrbitAccountPickerStore } from '@/features/orbit';
 import ConfirmModal from './ConfirmModal';
 
 const ORBIT_JOIN_ERROR_KEYS: Record<string, string> = {

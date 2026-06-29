@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import type { TFunction } from 'i18next';
 import { PlaybackRateControls } from '@/features/settings';
 import { usePlaybackRateStore } from '../../store/playbackRateStore';
-import { useOrbitStore } from '../../store/orbitStore';
+import { useOrbitStore } from '@/features/orbit';
 import {
   clampPlaybackPitch,
   clampPlaybackSpeed,
@@ -14,7 +14,7 @@ import {
   playbackSpeedStep,
   varispeedSpeedFromSemitones,
 } from '../../utils/audio/playbackRateHelpers';
-import { isOrbitPlaybackSyncActive } from '../../utils/orbit';
+import { isOrbitPlaybackSyncActive } from '@/features/orbit';
 import { usePlayerBarAnchoredPopover } from '../../hooks/usePlayerBarAnchoredPopover';
 
 const POPOVER_WIDTH = 320;

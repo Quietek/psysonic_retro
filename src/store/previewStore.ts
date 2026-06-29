@@ -5,7 +5,7 @@ import { create } from 'zustand';
 import { invoke } from '@tauri-apps/api/core';
 import { usePlayerStore } from './playerStore';
 import { useAuthStore } from './authStore';
-import { isOrbitPlaybackSyncActive } from '../utils/orbit';
+import { isOrbitPlaybackSyncActive } from '@/features/orbit';
 
 /** Minimal track info needed to surface the preview in the player bar UI. */
 export interface PreviewingTrack {
