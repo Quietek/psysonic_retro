@@ -5,7 +5,7 @@ import { ArrowLeft, Disc3, Play, ListPlus, Loader2 } from 'lucide-react';
 import AlbumCard from '../components/AlbumCard';
 import { LongPressWaveOverlay } from '../components/LongPressWaveOverlay';
 import InpageScrollSentinel from '../components/InpageScrollSentinel';
-import OverlayScrollArea from '../components/OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { VirtualCardGrid } from '../components/VirtualCardGrid';
 import { GENRE_DETAIL_INPAGE_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
 import { albumGridWarmCovers } from '../cover/layoutSizes';

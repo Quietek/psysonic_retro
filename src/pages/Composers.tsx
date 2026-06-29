@@ -24,7 +24,7 @@ import { ALL_SENTINEL, artistLetterBucket } from '../utils/componentHelpers/arti
 import { useLibraryIgnoredArticles } from '../hooks/useLibraryIgnoredArticles';
 import { usePerfProbeFlags } from '../utils/perf/perfFlags';
 import { VirtualCardGrid } from '../components/VirtualCardGrid';
-import OverlayScrollArea from '../components/OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { useVirtualizerScrollMargin } from '../hooks/useVirtualizerScrollMargin';
 import { useClientSliceInfiniteScroll } from '../hooks/useClientSliceInfiniteScroll';
 import { useInpageScrollViewport } from '../hooks/useInpageScrollViewport';

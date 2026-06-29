@@ -12,7 +12,7 @@ import { PanelLeft, PanelLeftClose, Trash2 } from 'lucide-react';
 import PsysonicLogo from './PsysonicLogo';
 import PSmallLogo from './PSmallLogo';
 import { usePlaylistStore } from '../store/playlistStore';
-import OverlayScrollArea from './OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import {
   getLibraryItemsForReorder,
   getSystemItemsForReorder,

@@ -29,7 +29,7 @@ import {
   primeAlbumCoversForDisplay,
 } from '../cover/warmDiskPeek';
 import { VirtualCardGrid } from '../components/VirtualCardGrid';
-import OverlayScrollArea from '../components/OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { RANDOM_ALBUMS_INPAGE_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
 import { useMainstageInpageHeaderTight } from '../hooks/useMainstageInpageHeaderTight';
 import { useInpageScrollViewport } from '../hooks/useInpageScrollViewport';

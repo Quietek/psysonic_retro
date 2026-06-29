@@ -14,7 +14,7 @@ import { useLyricsStore } from '../store/lyricsStore';
 import { songToTrack } from '../utils/playback/songToTrack';
 import { useRadioMetadata } from '../hooks/useRadioMetadata';
 import { useDragDrop } from '../contexts/DragDropContext';
-import OverlayScrollArea from '../components/OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import {
   useNpLayoutStore, NP_CARD_IDS,
   type NpCardId, type NpColumn,

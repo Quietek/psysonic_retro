@@ -22,7 +22,7 @@ import { Download, HardDriveDownload, ListPlus } from 'lucide-react';
 import SelectionToggleButton from '../components/SelectionToggleButton';
 import { albumGridWarmCovers } from '../cover/layoutSizes';
 import { VirtualCardGrid } from '../components/VirtualCardGrid';
-import OverlayScrollArea from '../components/OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { LOSSLESS_ALBUMS_INPAGE_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
 import { useInpageScrollSentinel } from '../hooks/useInpageScrollSentinel';
 import { useInpageScrollViewport } from '../hooks/useInpageScrollViewport';

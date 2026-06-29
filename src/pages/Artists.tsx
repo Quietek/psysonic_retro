@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { LayoutGrid, List, Images } from 'lucide-react';
 import SelectionToggleButton from '../components/SelectionToggleButton';
 import StarFilterButton from '../components/StarFilterButton';
-import OverlayScrollArea from '../components/OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { usePlayerStore } from '../store/playerStore';
 import { useAuthStore } from '../store/authStore';
 import { useTranslation } from 'react-i18next';

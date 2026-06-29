@@ -2,7 +2,7 @@ import React, { useEffect, useSyncExternalStore } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Play } from 'lucide-react';
 import type { TFunction } from 'i18next';
-import OverlayScrollArea from '../OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { usePlayerStore } from '../../store/playerStore';
 import { useLuckyMixStore } from '../../store/luckyMixStore';
 import type { QueueItemRef, PlayerState } from '../../store/playerStoreTypes';

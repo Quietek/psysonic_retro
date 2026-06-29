@@ -23,7 +23,7 @@ import ThemeMigrationNotice from '../components/ThemeMigrationNotice';
 import OrbitAccountPicker from '../components/OrbitAccountPicker';
 import OrbitHelpModal from '../components/OrbitHelpModal';
 import TooltipPortal from '@/ui/TooltipPortal';
-import OverlayScrollArea from '../components/OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import {
   APP_MAIN_SCROLL_VIEWPORT_ID,
   mainRouteInpageScrollViewportId,

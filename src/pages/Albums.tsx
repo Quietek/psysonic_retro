@@ -31,7 +31,7 @@ import { useMainstageInpageHeaderTight } from '../hooks/useMainstageInpageHeader
 import { useInpageScrollViewport } from '../hooks/useInpageScrollViewport';
 import InpageScrollSentinel from '../components/InpageScrollSentinel';
 import { VirtualCardGrid } from '../components/VirtualCardGrid';
-import OverlayScrollArea from '../components/OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { ALBUMS_INPAGE_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
 import { useAlbumBrowseFilters, useAlbumBrowseScrollSnapshotSync, type AlbumBrowseScrollSnapshot } from '../hooks/useAlbumBrowseFilters';

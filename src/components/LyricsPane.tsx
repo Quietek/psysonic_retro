@@ -8,7 +8,7 @@ import { useAuthStore } from '../store/authStore';
 import { useTranslation } from 'react-i18next';
 import type { Track } from '../store/playerStoreTypes';
 import { EaseScroller, targetForFraction } from '../utils/ui/easeScroll';
-import OverlayScrollArea from './OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 
 interface Props {
   currentTrack: Track | null;

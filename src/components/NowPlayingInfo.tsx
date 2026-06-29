@@ -10,7 +10,7 @@ import { useAuthStore } from '../store/authStore';
 import { usePlaybackServerId } from '../hooks/usePlaybackServerId';
 import { fetchBandsintownEvents, type BandsintownEvent } from '../api/bandsintown';
 import CachedImage from './CachedImage';
-import OverlayScrollArea from './OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { primaryTrackArtistRef } from '../utils/playback/trackArtistRefs';
 
 const TOUR_LIMIT = 5;

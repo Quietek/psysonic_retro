@@ -1,7 +1,7 @@
 import React from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import type { TFunction } from 'i18next';
-import OverlayScrollArea from '../OverlayScrollArea';
+import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import type { MiniSyncPayload, MiniTrackInfo } from '../../utils/miniPlayerBridge';
 
 // Stable initial rect so the virtualizer never re-initializes on re-render (an
