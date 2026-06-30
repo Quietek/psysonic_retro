@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Check, ChevronLeft, ChevronRight, Download, RefreshCw, Trash2, WifiOff } from 'lucide-react';
 import { open as openUrl } from '@tauri-apps/plugin-shell';
 import CoverLightbox from '@/ui/CoverLightbox';
-import { useThemeAnimationRisk } from '@/hooks/useThemeAnimationRisk';
+import { useThemeAnimationRisk } from '@/features/settings/hooks/useThemeAnimationRisk';
 import { AnimatedThemeBadge } from '@/features/settings/components/AnimatedThemeBadge';
 import CustomSelect from '@/ui/CustomSelect';
 import { formatRelativeTime } from '@/lib/format/relativeTime';

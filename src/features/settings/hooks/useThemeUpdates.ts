@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { isNewer } from '../utils/componentHelpers/appUpdaterHelpers';
-import { fetchRegistry, getCachedRegistry, type Registry, type RegistryTheme } from '../utils/themes/themeRegistry';
-import { useInstalledThemesStore } from '../store/installedThemesStore';
+import { isNewer } from '@/utils/componentHelpers/appUpdaterHelpers';
+import { fetchRegistry, getCachedRegistry, type Registry, type RegistryTheme } from '@/utils/themes/themeRegistry';
+import { useInstalledThemesStore } from '@/store/installedThemesStore';
 
 // Refresh the registry from source once per app launch (not just from the
 // cache). This surfaces newly published themes and updates without the user

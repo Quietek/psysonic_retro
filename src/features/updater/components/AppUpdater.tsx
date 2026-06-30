@@ -4,7 +4,7 @@ import { ArrowUpCircle, CheckCircle2, ChevronDown, Download, FolderOpen, Refresh
 import { useTranslation } from 'react-i18next';
 import { version as currentVersion } from '@/../package.json';
 import { formatBytes } from '@/lib/format/formatBytes';
-import { useAppUpdater } from '@/hooks/useAppUpdater';
+import { useAppUpdater } from '@/features/updater/hooks/useAppUpdater';
 import Modal from '@/components/Modal';
 import Changelog from '@/features/updater/components/Changelog';
 

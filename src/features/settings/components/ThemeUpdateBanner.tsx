@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Paintbrush, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/store/authStore';
-import { useThemeUpdates, themeUpdateSignature } from '@/hooks/useThemeUpdates';
+import { useThemeUpdates, themeUpdateSignature } from '@/features/settings/hooks/useThemeUpdates';
 
 interface Props {
   collapsed?: boolean;

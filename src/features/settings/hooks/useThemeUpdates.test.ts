@@ -1,14 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 
-vi.mock('../utils/themes/themeRegistry', () => ({
+vi.mock('@/utils/themes/themeRegistry', () => ({
   fetchRegistry: vi.fn(),
   getCachedRegistry: vi.fn(() => null),
 }));
 
-import { fetchRegistry, type Registry } from '../utils/themes/themeRegistry';
-import { useInstalledThemesStore, type InstalledTheme } from '../store/installedThemesStore';
-import { useThemeUpdates, themeUpdateSignature } from './useThemeUpdates';
+import { fetchRegistry, type Registry } from '@/utils/themes/themeRegistry';
+import { useInstalledThemesStore, type InstalledTheme } from '@/store/installedThemesStore';
+import { useThemeUpdates, themeUpdateSignature } from '@/features/settings/hooks/useThemeUpdates';
 
 const fetchRegistryMock = vi.mocked(fetchRegistry);
 
