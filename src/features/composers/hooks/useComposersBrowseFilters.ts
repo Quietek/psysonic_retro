@@ -7,9 +7,9 @@ import {
   type ComposerBrowseViewMode,
   isComposersBrowsePath,
   useComposerBrowseSessionStore,
-} from '../store/composerBrowseSessionStore';
-import { shouldRestoreComposerBrowseSession } from '../utils/navigation/albumDetailNavigation';
-import { useLiveSearchScopeStore } from '../store/liveSearchScopeStore';
+} from '@/features/composers/store/composerBrowseSessionStore';
+import { shouldRestoreComposerBrowseSession } from '@/utils/navigation/albumDetailNavigation';
+import { useLiveSearchScopeStore } from '@/store/liveSearchScopeStore';
 
 export type ComposerBrowseScrollSnapshot = {
   scrollTop: number;

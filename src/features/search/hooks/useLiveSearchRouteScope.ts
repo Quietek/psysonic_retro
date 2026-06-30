@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { isAlbumsBrowsePath, isNewReleasesBrowsePath } from '@/features/album';
 import { isArtistsBrowsePath } from '@/features/artist';
 import { isTracksBrowsePath } from '@/store/advancedSearchSessionStore';
-import { isComposersBrowsePath } from '@/store/composerBrowseSessionStore';
+import { isComposersBrowsePath } from '@/features/composers';
 import { useLiveSearchScopeStore } from '@/store/liveSearchScopeStore';
 
 /** Keep scope badge in sync with browse routes; clear field text when leaving browse. */
