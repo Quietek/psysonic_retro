@@ -22,7 +22,7 @@ import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   fetchGenreAlbumCount,
   fetchGenreTracksForPlayback,
-} from '../utils/library/genreBrowsePlayback';
+} from '@/features/playback/utils/playback/genreBrowsePlayback';
 import { lookupGenreAlbumCount } from '../utils/library/genreCatalogCountsCache';
 import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import {

@@ -13,7 +13,7 @@ import {
   fetchRandomMixSongsUntilFull,
   getMixMinRatingsConfigFromAuth,
 } from '../utils/mix/mixRatingFilter';
-import { fetchGenreCatalog } from '../utils/library/genreBrowsePlayback';
+import { fetchGenreCatalog } from '@/features/playback/utils/playback/genreBrowsePlayback';
 import { AUDIOBOOK_GENRES, filterRandomMixSongs } from '../utils/componentHelpers/randomMixHelpers';
 import RandomMixHeader from '../components/randomMix/RandomMixHeader';
 import RandomMixFiltersPanel from '../components/randomMix/RandomMixFiltersPanel';

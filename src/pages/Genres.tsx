@@ -7,7 +7,7 @@ import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
 import { subscribeLibrarySyncIdle } from '@/lib/api/library';
 import { useAuthStore } from '../store/authStore';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
-import { fetchGenreCatalog, filterGenresWithContent } from '../utils/library/genreBrowsePlayback';
+import { fetchGenreCatalog, filterGenresWithContent } from '@/features/playback/utils/playback/genreBrowsePlayback';
 import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import { peekGenreCatalogCache } from '../utils/library/genreCatalogCountsCache';
 import { resolveIndexKey } from '../utils/server/serverIndexKey';
