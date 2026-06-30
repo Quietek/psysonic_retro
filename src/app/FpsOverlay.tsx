@@ -1,38 +1,38 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
-import { analysisGetPipelineQueueStats, type AnalysisPipelineQueueStatsDto } from '../api/analysis';
-import { coverGetPipelineQueueStats, type CoverPipelineQueueStatsDto } from '../api/coverCache';
-import { coverEnsureQueueStats } from '../cover/ensureQueue';
-import { coverPeekQueueStats } from '../cover/peekQueue';
-import PerfOverlaySparkline from './perf/PerfOverlaySparkline';
-import { usePerfProbeFlags } from '../utils/perf/perfFlags';
+import { analysisGetPipelineQueueStats, type AnalysisPipelineQueueStatsDto } from '@/api/analysis';
+import { coverGetPipelineQueueStats, type CoverPipelineQueueStatsDto } from '@/api/coverCache';
+import { coverEnsureQueueStats } from '@/cover/ensureQueue';
+import { coverPeekQueueStats } from '@/cover/peekQueue';
+import PerfOverlaySparkline from '@/app/PerfOverlaySparkline';
+import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import {
   formatPerfMs,
   getAnalysisTracksPerMinute,
   useAnalysisPerfLast,
-} from '../utils/perf/analysisPerfStore';
-import { formatAnalysisPipelineQueueOverlay } from '../utils/perf/formatAnalysisQueueStats';
-import { formatCoverPipelineQueueOverlay } from '../utils/perf/formatCoverPipelineQueueOverlay';
+} from '@/utils/perf/analysisPerfStore';
+import { formatAnalysisPipelineQueueOverlay } from '@/utils/perf/formatAnalysisQueueStats';
+import { formatCoverPipelineQueueOverlay } from '@/utils/perf/formatCoverPipelineQueueOverlay';
 import {
   buildLiveOverlayItems,
   type LiveOverlayItem,
-} from '../utils/perf/formatLiveOverlayItems';
+} from '@/utils/perf/formatLiveOverlayItems';
 import {
   getPerfLiveHistorySamples,
-} from '../utils/perf/perfLiveHistory';
-import { usePerfLiveSnapshot } from '../utils/perf/perfLiveStore';
-import { usePerfLiveOverlayPins } from '../utils/perf/perfOverlayPins';
+} from '@/utils/perf/perfLiveHistory';
+import { usePerfLiveSnapshot } from '@/utils/perf/perfLiveStore';
+import { usePerfLiveOverlayPins } from '@/utils/perf/perfOverlayPins';
 import {
   perfOverlayCornerClass,
   usePerfOverlayAppearance,
-} from '../utils/perf/perfOverlayAppearance';
+} from '@/utils/perf/perfOverlayAppearance';
 import {
   resolveOverlayVisibility,
   usePerfOverlayMode,
-} from '../utils/perf/perfOverlayMode';
-import { useAnalysisPerfListener } from '../hooks/useAnalysisPerfListener';
-import { useCoverPerfListener } from '../hooks/useCoverPerfListener';
-import { getCoverCachedPerMinute, getCoverUiPerMinute } from '../utils/perf/coverPerfStore';
+} from '@/utils/perf/perfOverlayMode';
+import { useAnalysisPerfListener } from '@/hooks/useAnalysisPerfListener';
+import { useCoverPerfListener } from '@/hooks/useCoverPerfListener';
+import { getCoverCachedPerMinute, getCoverUiPerMinute } from '@/utils/perf/coverPerfStore';
 
 const SAMPLE_MS = 500;
 const TPM_REFRESH_MS = 500;

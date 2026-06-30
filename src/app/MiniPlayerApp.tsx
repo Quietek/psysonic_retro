@@ -3,7 +3,7 @@ import { DragDropProvider } from '@/lib/dnd/DragDropContext';
 import MiniPlayer from '@/features/miniPlayer';
 import GlobalConfirmModal from '../components/GlobalConfirmModal';
 import TooltipPortal from '@/ui/TooltipPortal';
-import FpsOverlay from '../components/FpsOverlay';
+import FpsOverlay from '@/app/FpsOverlay';
 import { useThemeStore } from '../store/themeStore';
 import { useFontStore } from '../store/fontStore';
 import { useKeybindingsStore } from '../store/keybindingsStore';

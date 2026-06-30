@@ -10,7 +10,7 @@ import PlayerBar from '@/features/playback/components/PlayerBar';
 import BottomNav from '../components/BottomNav';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { LiveSearch } from '@/features/search';
-import DevNetworkModeToggle from '../components/DevNetworkModeToggle';
+import DevNetworkModeToggle from '@/app/DevNetworkModeToggle';
 import { NowPlayingDropdown } from '@/features/nowPlaying';
 import QueuePanel from '@/features/queue';
 import AppRoutes from './AppRoutes';
@@ -27,11 +27,11 @@ import {
   APP_MAIN_SCROLL_VIEWPORT_ID,
   mainRouteInpageScrollViewportId,
 } from '../constants/appScroll';
-import ConnectionIndicator from '../components/ConnectionIndicator';
+import ConnectionIndicator from '@/app/ConnectionIndicator';
 import MusicNetworkIndicator from '../components/MusicNetworkIndicator';
 import { OfflineBanner } from '@/features/offline';
 import AppUpdater from '../components/AppUpdater';
-import TitleBar from '../components/TitleBar';
+import TitleBar from '@/app/TitleBar';
 import { OrbitSessionBar, OrbitStartTrigger } from '@/features/orbit';
 import { useOrbitHost } from '@/features/orbit';
 import { useOrbitGuest } from '@/features/orbit';
@@ -53,7 +53,7 @@ import { useLiveSearchRouteScope } from '@/features/search';
 import { useNowPlayingPrewarm } from '@/features/nowPlaying';
 import { useOfflineAutoNav } from '@/features/offline';
 import { useOfflineLibraryFilterSuspend } from '@/features/offline';
-import { AppShellQueueResizerSeam } from '../components/AppShellQueueResizerSeam';
+import { AppShellQueueResizerSeam } from '@/app/AppShellQueueResizerSeam';
 import { IS_LINUX, IS_MACOS } from '@/lib/util/platform';
 import { useConnectionStatus } from '../hooks/useConnectionStatus';
 import { useIdlePlayQueuePull } from '../hooks/useIdlePlayQueuePull';

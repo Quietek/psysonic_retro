@@ -4,13 +4,13 @@ import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Check, ChevronDown, RefreshCw } from 'lucide-react';
-import type { ConnectionStatus } from '../hooks/useConnectionStatus';
-import { usePlayQueueSyncLedState } from '../hooks/usePlayQueueSyncLedState';
-import type { ServerProfile } from '../store/authStoreTypes';
-import { useAuthStore } from '../store/authStore';
-import { switchActiveServer } from '../utils/server/switchActiveServer';
-import { showToast } from '../utils/ui/toast';
-import { serverListDisplayLabel } from '../utils/server/serverDisplayName';
+import type { ConnectionStatus } from '@/hooks/useConnectionStatus';
+import { usePlayQueueSyncLedState } from '@/hooks/usePlayQueueSyncLedState';
+import type { ServerProfile } from '@/store/authStoreTypes';
+import { useAuthStore } from '@/store/authStore';
+import { switchActiveServer } from '@/utils/server/switchActiveServer';
+import { showToast } from '@/utils/ui/toast';
+import { serverListDisplayLabel } from '@/utils/server/serverDisplayName';
 
 interface Props {
   status: ConnectionStatus;
