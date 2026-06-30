@@ -48,7 +48,7 @@ export type {
   ActionContext,
   CliContext,
   ShortcutActionMeta,
-} from '@/lib/shortcuts/shortcutTypes';
+} from '@/config/shortcutTypes';
 
 export {
   SHORTCUT_ACTION_REGISTRY,
