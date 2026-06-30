@@ -37,8 +37,8 @@ const LabelAlbums = lazy(() => import('@/features/album/pages/LabelAlbums'));
 const SearchBrowsePage = lazy(() => import('@/features/search/pages/SearchBrowsePage'));
 const FolderBrowser = lazy(() => import('@/features/folderBrowser/pages/FolderBrowser'));
 const InternetRadio = lazy(() => import('@/features/radio/pages/InternetRadio'));
-const Genres = lazy(() => import('../pages/Genres'));
-const GenreDetail = lazy(() => import('../pages/GenreDetail'));
+const Genres = lazy(() => import('@/features/genre/pages/Genres'));
+const GenreDetail = lazy(() => import('@/features/genre/pages/GenreDetail'));
 
 /**
  * Index route ("/") = Mainstage. When the user has hidden Mainstage from the

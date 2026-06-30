@@ -3,14 +3,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Tags } from 'lucide-react';
-import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
+import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { subscribeLibrarySyncIdle } from '@/lib/api/library';
-import { useAuthStore } from '../store/authStore';
-import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { useAuthStore } from '@/store/authStore';
+import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { fetchGenreCatalog, filterGenresWithContent } from '@/features/playback/utils/playback/genreBrowsePlayback';
 import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import { peekGenreCatalogCache } from '@/lib/library/genreCatalogCountsCache';
-import { resolveIndexKey } from '../utils/server/serverIndexKey';
+import { resolveIndexKey } from '@/utils/server/serverIndexKey';
 import { genreColor } from '@/lib/library/genreColor';
 
 const SCROLL_KEY = 'genres-scroll';

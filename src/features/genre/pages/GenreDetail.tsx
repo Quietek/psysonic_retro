@@ -3,21 +3,21 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Disc3, Play, ListPlus, Loader2 } from 'lucide-react';
 import { AlbumCard } from '@/features/album';
-import { LongPressWaveOverlay } from '../components/LongPressWaveOverlay';
-import InpageScrollSentinel from '../components/InpageScrollSentinel';
+import { LongPressWaveOverlay } from '@/components/LongPressWaveOverlay';
+import InpageScrollSentinel from '@/components/InpageScrollSentinel';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
-import { VirtualCardGrid } from '../components/VirtualCardGrid';
-import { GENRE_DETAIL_INPAGE_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
-import { albumGridWarmCovers } from '../cover/layoutSizes';
+import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { GENRE_DETAIL_INPAGE_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
+import { albumGridWarmCovers } from '@/cover/layoutSizes';
 import { useAlbumBrowseScrollSnapshotSync, type AlbumBrowseScrollSnapshot } from '@/features/album';
 import { useGenreAlbumBrowse } from '@/features/album';
 import { useAlbumBrowseScrollRestore } from '@/features/album';
-import { useGenreDetailBrowse } from '../hooks/useGenreDetailBrowse';
-import { useInpageScrollViewport } from '../hooks/useInpageScrollViewport';
+import { useGenreDetailBrowse } from '@/features/genre/hooks/useGenreDetailBrowse';
+import { useInpageScrollViewport } from '@/hooks/useInpageScrollViewport';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
-import { useMainstageInpageHeaderTight } from '../hooks/useMainstageInpageHeaderTight';
-import { useAuthStore } from '../store/authStore';
-import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { useMainstageInpageHeaderTight } from '@/hooks/useMainstageInpageHeaderTight';
+import { useAuthStore } from '@/store/authStore';
+import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   fetchGenreAlbumCount,
@@ -28,8 +28,8 @@ import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import {
   readAlbumBrowseRestore,
   readAlbumDetailReturnTo,
-} from '../utils/navigation/albumDetailNavigation';
-import { usePerfProbeFlags } from '../utils/perf/perfFlags';
+} from '@/utils/navigation/albumDetailNavigation';
+import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { runBulkEnqueue, runBulkPlayAll, runBulkShuffle } from '@/features/playback/utils/playback/runBulkPlay';
 
 export default function GenreDetail() {

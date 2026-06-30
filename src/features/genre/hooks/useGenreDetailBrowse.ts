@@ -1,6 +1,6 @@
 import { useEffect, useRef, type RefObject } from 'react';
 import { useLocation, useNavigationType } from 'react-router-dom';
-import { GENRE_DETAIL_INPAGE_SCROLL_VIEWPORT_ID, readInpageScrollTop } from '../constants/appScroll';
+import { GENRE_DETAIL_INPAGE_SCROLL_VIEWPORT_ID, readInpageScrollTop } from '@/constants/appScroll';
 import {
   DEFAULT_ALBUM_BROWSE_RETURN_FILTERS,
   albumBrowseSortForServer,
@@ -12,7 +12,7 @@ import {
   stashGenreDetailReturnFilters,
   useAlbumBrowseSessionStore,
 } from '@/features/album';
-import { shouldRestoreAlbumBrowseSession } from '../utils/navigation/albumDetailNavigation';
+import { shouldRestoreAlbumBrowseSession } from '@/utils/navigation/albumDetailNavigation';
 import type { AlbumBrowseScrollSnapshot } from '@/features/album';
 
 /** Genre detail: locked genre filter + leave/restore session (same contract as All Albums). */
