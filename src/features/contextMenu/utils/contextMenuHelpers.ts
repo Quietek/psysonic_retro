@@ -1,4 +1,4 @@
-import { useConfirmModalStore } from '../../store/confirmModalStore';
+import { useConfirmModalStore } from '@/store/confirmModalStore';
 
 /** Psysonic smart playlists (Navidrome); not valid targets for manual add-to-playlist. */
 export const SMART_PLAYLIST_PREFIX = 'psy-smart-';

@@ -2,7 +2,7 @@ import { Star } from 'lucide-react';
 import type { TFunction } from 'i18next';
 import type { Track } from '@/lib/media/trackTypes';
 
-export type { DurationMode } from '../../store/authStoreTypes';
+export type { DurationMode } from '@/store/authStoreTypes';
 
 export function formatQueueReplayGainParts(track: Track, t: TFunction): string[] {
   const parts: string[] = [];

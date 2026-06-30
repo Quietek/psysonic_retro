@@ -14,7 +14,7 @@ import {
   syncAllPinnedPlaylists,
   syncPinnedArtistIfNeeded,
 } from '@/features/offline/utils/pinnedOfflineSync';
-import { SMART_PREFIX } from '@/utils/componentHelpers/playlistDetailHelpers';
+import { SMART_PREFIX } from '@/lib/format/playlistDetailHelpers';
 
 const getPlaylistMock = vi.fn();
 const getAlbumForServerMock = vi.fn();

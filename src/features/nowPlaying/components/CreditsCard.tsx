@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ContributorRow } from '@/utils/componentHelpers/nowPlayingHelpers';
+import type { ContributorRow } from '@/features/nowPlaying/utils/nowPlayingHelpers';
 
 interface CreditsCardProps { rows: ContributorRow[]; }
 

@@ -18,7 +18,7 @@ import {
 } from '@/features/offline/utils/offlineLibraryHelpers';
 import { librarySqlServerId } from '@/api/coverCache';
 import { resolveIndexKey, serverIndexKeyForProfile } from '@/lib/server/serverIndexKey';
-import { isSmartPlaylistName } from '@/utils/componentHelpers/playlistDetailHelpers';
+import { isSmartPlaylistName } from '@/lib/format/playlistDetailHelpers';
 import {
   enqueueOfflinePin,
   registerOfflinePinExecutor,

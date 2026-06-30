@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ListMusic, Plus } from 'lucide-react';
 import { usePlaylistStore } from '@/features/playlist';
 import { showToast } from '@/lib/dom/toast';
-import { isSmartPlaylistName } from '@/utils/componentHelpers/contextMenuHelpers';
+import { isSmartPlaylistName } from '@/features/contextMenu/utils/contextMenuHelpers';
 
 interface SingleProps {
   playlist: { id: string; name: string };

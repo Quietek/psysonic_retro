@@ -6,7 +6,7 @@ import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import type { QueueItemRef } from '@/lib/media/trackTypes';
 import type { QueueDisplayMode } from '@/store/authStoreTypes';
-import type { DurationMode } from '@/utils/componentHelpers/queuePanelHelpers';
+import type { DurationMode } from '@/features/queue/utils/queuePanelHelpers';
 import { formatLongDuration } from '@/lib/format/formatDuration';
 import { formatClockTime } from '@/lib/format/formatClockTime';
 import { resolveQueueTrack } from '@/features/playback/store/queueTrackView';

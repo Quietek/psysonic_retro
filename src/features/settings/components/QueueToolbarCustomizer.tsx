@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Blend, Infinity as InfinityIcon, ListMusic, MoveRight, Share2, Shuffle, Trash2, Waves } from 'lucide-react';
 import { useQueueToolbarStore, QueueToolbarButtonId } from '@/store/queueToolbarStore';
 import { useListReorderDnd } from '@/lib/hooks/useListReorderDnd';
-import { applyListReorderById, type ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
+import { applyListReorderById, type ListReorderDropTarget } from '@/lib/util/listReorder';
 import { ReorderGripHandle } from '@/features/settings/components/ReorderGripHandle';
 
 const QUEUE_TOOLBAR_BUTTON_ICONS: Record<QueueToolbarButtonId, typeof Shuffle | null> = {

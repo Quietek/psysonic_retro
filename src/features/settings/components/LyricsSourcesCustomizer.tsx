@@ -4,7 +4,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useAuthStore } from '@/store/authStore';
 import type { LyricsSourceId } from '@/store/authStoreTypes';
 import { useListReorderDnd } from '@/lib/hooks/useListReorderDnd';
-import { applyListReorderById, type ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
+import { applyListReorderById, type ListReorderDropTarget } from '@/lib/util/listReorder';
 import { ReorderGripHandle } from '@/features/settings/components/ReorderGripHandle';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';
 

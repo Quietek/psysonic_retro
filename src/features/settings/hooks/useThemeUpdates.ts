@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { isNewer } from '@/utils/componentHelpers/appUpdaterHelpers';
+import { isNewer } from '@/lib/util/appUpdaterHelpers';
 import { fetchRegistry, getCachedRegistry, type Registry, type RegistryTheme } from '@/lib/themes/themeRegistry';
 import { useInstalledThemesStore } from '@/store/installedThemesStore';
 

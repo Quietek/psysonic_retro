@@ -24,7 +24,7 @@ import {
 
 import {
   buildContributorRows,
-} from '@/utils/componentHelpers/nowPlayingHelpers';
+} from '@/features/nowPlaying/utils/nowPlayingHelpers';
 import NpCardWrap from '@/features/nowPlaying/components/NpCardWrap';
 import NpColumnEl from '@/features/nowPlaying/components/NpColumnEl';
 import RadioView from '@/features/nowPlaying/components/RadioView';

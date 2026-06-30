@@ -16,7 +16,7 @@ import {
 } from '@/lib/themes/themeRegistry';
 import { installThemeFromRegistry } from '@/lib/themes/installThemeFromRegistry';
 import { uninstallTheme } from '@/lib/themes/uninstallTheme';
-import { isNewer } from '@/utils/componentHelpers/appUpdaterHelpers';
+import { isNewer } from '@/lib/util/appUpdaterHelpers';
 
 type ModeFilter = 'all' | 'dark' | 'light';
 type SortMode = 'newest' | 'name';

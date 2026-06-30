@@ -7,7 +7,7 @@ import type { PlaybackSourceKind } from '@/features/playback/utils/playback/reso
 import {
   formatQueueReplayGainParts,
   renderStars,
-} from '@/utils/componentHelpers/queuePanelHelpers';
+} from '@/features/queue/utils/queuePanelHelpers';
 import { loudnessGainPlaceholderUntilCacheDb } from '@/features/playback/utils/audio/loudnessPlaceholder';
 import { effectiveLoudnessPreAnalysisAttenuationDb } from '@/lib/audio/loudnessPreAnalysisSlider';
 import { formatQueueBpmTech, formatQueueMoodLabels } from '@/lib/library/trackEnrichment';

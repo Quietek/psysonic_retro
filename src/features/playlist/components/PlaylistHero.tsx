@@ -13,7 +13,7 @@ import { useThemeStore } from '@/store/themeStore';
 import { usePlaylistLayoutStore, type PlaylistLayoutItemId } from '@/features/playlist/store/playlistLayoutStore';
 import {
   displayPlaylistName, formatSize, isSmartPlaylistName, totalDurationLabel,
-} from '@/utils/componentHelpers/playlistDetailHelpers';
+} from '@/lib/format/playlistDetailHelpers';
 import type { CoverArtId } from '@/cover/types';
 import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { PLAYLIST_MAIN_COVER_CSS_PX } from '@/features/playlist/hooks/usePlaylistCovers';

@@ -2,7 +2,8 @@ import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { useTranslation } from 'react-i18next';
 import { ExternalLink } from 'lucide-react';
 import type { SubsonicArtistInfo } from '@/lib/api/subsonicTypes';
-import { isRealArtistImage, sanitizeHtml } from '@/utils/componentHelpers/nowPlayingHelpers';
+import { isRealArtistImage } from '@/cover/isRealArtistImage';
+import { sanitizeHtml } from '@/features/nowPlaying/utils/nowPlayingHelpers';
 import CachedImage from '@/ui/CachedImage';
 
 export interface ArtistCardTab {

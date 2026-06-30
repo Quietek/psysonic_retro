@@ -70,7 +70,7 @@ import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import {
   persistSidebarCollapsed,
   readInitialSidebarCollapsed,
-} from '../utils/componentHelpers/appShellHelpers';
+} from '@/app/appShellHelpers';
 
 /**
  * The main webview's persistent layout: titlebar (Linux + macOS) + sidebar +

@@ -1,4 +1,4 @@
-import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../../constants/appScroll';
+import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 
 export const SIDEBAR_COLLAPSED_STORAGE_KEY = 'psysonic_sidebar_collapsed';
 

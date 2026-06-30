@@ -9,7 +9,7 @@ import type { PinSource } from '@/store/localPlaybackStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';
 import { useOfflineStore } from '@/features/offline/store/offlineStore';
 import { usePlaylistStore } from '@/features/playlist';
-import { isSmartPlaylistName } from '@/utils/componentHelpers/playlistDetailHelpers';
+import { isSmartPlaylistName } from '@/lib/format/playlistDetailHelpers';
 import { getMediaDir } from '@/lib/media/mediaDir';
 import {
   isActiveServerReachable,

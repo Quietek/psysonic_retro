@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useArtistLayoutStore, type ArtistSectionConfig, type ArtistSectionId } from '@/features/artist';
 import { useListReorderDnd } from '@/lib/hooks/useListReorderDnd';
-import { applyListReorderById, type ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
+import { applyListReorderById, type ListReorderDropTarget } from '@/lib/util/listReorder';
 import { ReorderGripHandle } from '@/features/settings/components/ReorderGripHandle';
 
 const ARTIST_SECTION_LABEL_KEYS: Record<ArtistSectionId, string> = {

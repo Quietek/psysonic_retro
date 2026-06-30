@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isWithinModerationWindow, WINGET_MODERATION_DELAY_MS } from './appUpdaterHelpers';
+import { isWithinModerationWindow, WINGET_MODERATION_DELAY_MS } from '@/lib/util/appUpdaterHelpers';
 
 describe('isWithinModerationWindow', () => {
   const published = '2026-06-27T00:00:00Z';

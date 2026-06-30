@@ -8,7 +8,7 @@ import { showToast } from '@/lib/dom/toast';
 import {
   confirmAddAllDuplicates,
   isSmartPlaylistName,
-} from '@/utils/componentHelpers/contextMenuHelpers';
+} from '@/features/contextMenu/utils/contextMenuHelpers';
 
 interface Props {
   songIds: string[];

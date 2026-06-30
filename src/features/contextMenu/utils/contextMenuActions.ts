@@ -1,17 +1,17 @@
 import { join } from '@tauri-apps/api/path';
 import { invoke } from '@tauri-apps/api/core';
 import { getSimilarSongs2, fetchSimilarTracksRouted, getTopSongs } from '@/lib/api/subsonicArtists';
-import { filterSongsForLuckyMixRatings, getMixMinRatingsConfigFromAuth } from '../mix/mixRatingFilter';
+import { filterSongsForLuckyMixRatings, getMixMinRatingsConfigFromAuth } from '@/utils/mix/mixRatingFilter';
 import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import type { Track } from '@/lib/media/trackTypes';
 import { resolveQueueTrack } from '@/features/playback/store/queueTrackView';
 import { useZipDownloadStore } from '@/features/offline';
 import { useDownloadModalStore } from '@/features/offline';
-import type { EntityShareKind } from '../share/shareLink';
-import { copyEntityShareLink } from '../share/copyEntityShareLink';
-import { sanitizeFilename, shuffleArray } from './contextMenuHelpers';
+import type { EntityShareKind } from '@/utils/share/shareLink';
+import { copyEntityShareLink } from '@/utils/share/copyEntityShareLink';
+import { sanitizeFilename, shuffleArray } from '@/features/contextMenu/utils/contextMenuHelpers';
 import { songToTrack } from '@/lib/media/songToTrack';
 import { showToast } from '@/lib/dom/toast';
 

@@ -12,7 +12,7 @@ import {
   downloadAlbum as downloadAlbumAction,
   startInstantMix as startInstantMixAction,
   startRadio as startRadioAction,
-} from '@/utils/componentHelpers/contextMenuActions';
+} from '@/features/contextMenu/utils/contextMenuActions';
 import { useContextMenuKeyboardNav } from '@/features/contextMenu/hooks/useContextMenuKeyboardNav';
 import { useContextMenuRating } from '@/features/contextMenu/hooks/useContextMenuRating';
 import { usePlaybackLibraryNavigate } from '@/features/playback/hooks/usePlaybackLibraryNavigate';
