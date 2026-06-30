@@ -11,7 +11,7 @@ import { useAuthStore } from '../store/authStore';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
 import { useTranslation } from 'react-i18next';
 import { copyTextToClipboard } from '../utils/server/serverMagicString';
-import { showToast } from '../utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 import { formatLastSeen } from '../utils/componentHelpers/userMgmtHelpers';
 import { libraryIsReady } from '@/lib/library/libraryReady';

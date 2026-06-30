@@ -1,12 +1,12 @@
 import { useState, type CSSProperties } from 'react';
 import { ChevronRight } from 'lucide-react';
-import { setPerfProbeFlag, type PerfProbeFlags } from '@/utils/perf/perfFlags';
-import type { PerfToggleEngineLeaf, PerfToggleLeaf, PerfToggleNode } from '@/utils/perf/perfProbeToggleTree';
+import { setPerfProbeFlag, type PerfProbeFlags } from '@/lib/perf/perfFlags';
+import type { PerfToggleEngineLeaf, PerfToggleLeaf, PerfToggleNode } from '@/lib/perf/perfProbeToggleTree';
 import {
   isPerfToggleEngineLeaf,
   isPerfToggleGroup,
   PERF_PROBE_TOGGLE_TREE,
-} from '@/utils/perf/perfProbeToggleTree';
+} from '@/lib/perf/perfProbeToggleTree';
 
 interface EngineProps {
   hotCacheEnabled: boolean;

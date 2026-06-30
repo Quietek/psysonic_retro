@@ -57,7 +57,7 @@ import {
 } from '@/lib/library/browseTextSearch';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { MOOD_GROUP_IDS } from '@/config/moodGroups';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { useSongBrowseList, type SongBrowseListRestore } from '@/features/search/hooks/useSongBrowseList';
 import TracksPageChrome from '@/features/search/components/TracksPageChrome';
 import SongBrowseSection from '@/features/search/components/SongBrowseSection';

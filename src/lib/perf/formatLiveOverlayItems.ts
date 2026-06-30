@@ -1,4 +1,4 @@
-import type { PerfLiveSnapshot } from './perfLiveStore';
+import type { PerfLiveSnapshot } from '@/lib/perf/perfLiveStore';
 
 export type LiveOverlayItemKind = 'cpu' | 'memory' | 'rate' | 'analysis' | 'cover';
 

@@ -4,7 +4,7 @@ import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useDeviceSyncStore, type DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
 import { useDeviceSyncJobStore } from '@/features/deviceSync/store/deviceSyncJobStore';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { trackToSyncInfo, uuid } from '@/features/deviceSync/utils/deviceSyncHelpers';
 import { fetchTracksForSource } from '@/features/playback/utils/playback/fetchTracksForSource';
 

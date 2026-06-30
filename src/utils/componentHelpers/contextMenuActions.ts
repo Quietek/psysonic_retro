@@ -13,7 +13,7 @@ import type { EntityShareKind } from '../share/shareLink';
 import { copyEntityShareLink } from '../share/copyEntityShareLink';
 import { sanitizeFilename, shuffleArray } from './contextMenuHelpers';
 import { songToTrack } from '@/lib/media/songToTrack';
-import { showToast } from '../ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 export async function copyShareLink(
   kind: EntityShareKind,

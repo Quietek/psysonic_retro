@@ -10,7 +10,7 @@ import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { SongRail } from '@/features/home';
 import { playSongNow } from '@/features/playback/utils/playback/playSong';
 import { ndListSongs, ndInvalidateSongsCache } from '@/lib/api/navidromeBrowse';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { useNavigateToAlbum } from '@/features/album';
 import { useNavigateToArtist } from '@/features/artist';
 import { OpenArtistRefInline } from '@/features/artist';

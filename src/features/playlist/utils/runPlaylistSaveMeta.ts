@@ -1,7 +1,7 @@
 import type { TFunction } from 'i18next';
 import { getPlaylist, updatePlaylistMeta, uploadPlaylistCoverArt } from '@/lib/api/subsonicPlaylists';
 import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 export interface RunPlaylistSaveMetaDeps {
   id: string;

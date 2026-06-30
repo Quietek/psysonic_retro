@@ -15,9 +15,9 @@ import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from 'react-i18next';
 import { copyEntityShareLink } from '@/utils/share/copyEntityShareLink';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { sanitizeHtml } from '@/lib/util/sanitizeHtml';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { albumGridWarmCovers } from '@/cover/layoutSizes';
 import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 

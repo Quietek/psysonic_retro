@@ -6,7 +6,7 @@ import {
   defaultSmartFilters, displayPlaylistName, isSmartPlaylistName,
   parseSmartRulesToFilters, type SmartFilters,
 } from '@/features/playlist/utils/playlistsSmart';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 export interface RunPlaylistsOpenSmartEditorDeps {
   pl: SubsonicPlaylist;

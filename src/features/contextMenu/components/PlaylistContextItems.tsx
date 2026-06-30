@@ -64,7 +64,7 @@ export default function PlaylistContextItems(props: ContextMenuItemsProps) {
                 <>
               <div className="context-menu-divider" />
               <div className="context-menu-item" style={{ color: 'var(--danger)' }} onClick={() => handleAction(async () => {
-                const { showToast } = await import('@/utils/ui/toast');
+                const { showToast } = await import('@/lib/dom/toast');
                 const { deletePlaylist } = await import('@/lib/api/subsonicPlaylists');
                 const { removeId } = usePlaylistStore.getState();
                 try {
@@ -112,7 +112,7 @@ export default function PlaylistContextItems(props: ContextMenuItemsProps) {
               )}
               {offlinePolicy.canEditPlaylist && (
               <div className="context-menu-item" style={{ color: 'var(--danger)' }} onClick={() => handleAction(async () => {
-                const { showToast } = await import('@/utils/ui/toast');
+                const { showToast } = await import('@/lib/dom/toast');
                 const { deletePlaylist } = await import('@/lib/api/subsonicPlaylists');
                 const { removeId } = usePlaylistStore.getState();
                 const deletedIds: string[] = [];

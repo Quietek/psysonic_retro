@@ -35,11 +35,11 @@ import {
 } from '@/cover/ref';
 import { useAlbumCoverRef } from '@/cover/useLibraryCoverRef';
 import { useTranslation } from 'react-i18next';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { useSelectionStore } from '@/store/selectionStore';
 import { sanitizeFilename } from '@/features/album/utils/albumDetailHelpers';
 import { albumArtistDisplayName, deriveAlbumHeaderArtistRefs } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { albumGridWarmCovers } from '@/cover/layoutSizes';
 import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import LosslessModeBanner from '@/ui/LosslessModeBanner';

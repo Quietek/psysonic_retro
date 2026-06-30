@@ -21,7 +21,7 @@ import { usePlaybackDelayPress } from '@/features/playback/hooks/usePlaybackDela
 import PlaybackDelayModal from '@/features/playback/components/PlaybackDelayModal';
 import { usePlaybackScheduleRemaining } from '@/features/playback/utils/playbackScheduleFormat';
 import { usePreviewStore } from '@/features/playback/store/previewStore';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { coerceOpenArtistRefs } from '@/lib/api/openArtistRefs';
 import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 import { PlayerTrackInfo } from '@/features/playback/components/playerBar/PlayerTrackInfo';

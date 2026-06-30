@@ -1,8 +1,8 @@
 import { useSyncExternalStore } from 'react';
-import { clearPerfLiveHistory } from './perfLiveHistory';
-import { perfLiveCpuSnapshotSupported } from './perfLiveCpuSnapshot';
-import { getPerfOverlayMode } from './perfOverlayMode';
-import { getPerfProbeFlags, setPerfProbeFlag, subscribePerfProbeFlags } from './perfFlags';
+import { clearPerfLiveHistory } from '@/lib/perf/perfLiveHistory';
+import { perfLiveCpuSnapshotSupported } from '@/lib/perf/perfLiveCpuSnapshot';
+import { getPerfOverlayMode } from '@/lib/perf/perfOverlayMode';
+import { getPerfProbeFlags, setPerfProbeFlag, subscribePerfProbeFlags } from '@/lib/perf/perfFlags';
 
 const STORAGE_KEY = 'psysonic_perf_overlay_pins_v1';
 

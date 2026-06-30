@@ -1,7 +1,7 @@
-import type { CoverPipelineQueueStatsDto } from '../../api/coverCache';
-import type { CoverEnsureQueueStats } from '../../cover/ensureQueue';
-import type { CoverPeekQueueStats } from '../../cover/peekQueue';
-import { formatAnalysisTierQueue } from './formatAnalysisQueueStats';
+import type { CoverPipelineQueueStatsDto } from '@/api/coverCache';
+import type { CoverEnsureQueueStats } from '@/cover/ensureQueue';
+import type { CoverPeekQueueStats } from '@/cover/peekQueue';
+import { formatAnalysisTierQueue } from '@/lib/perf/formatAnalysisQueueStats';
 
 export type CoverPipelineOverlayInput = {
   rust: CoverPipelineQueueStatsDto;

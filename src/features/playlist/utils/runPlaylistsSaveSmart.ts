@@ -7,7 +7,7 @@ import {
   buildSmartRulesPayload, defaultSmartFilters, SMART_PREFIX,
   type PendingSmartPlaylist, type SmartFilters,
 } from '@/features/playlist/utils/playlistsSmart';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 export interface RunPlaylistsSaveSmartDeps {
   isNavidromeServer: boolean;

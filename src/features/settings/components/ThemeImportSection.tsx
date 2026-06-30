@@ -5,7 +5,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { open } from '@tauri-apps/plugin-dialog';
 import { useInstalledThemesStore } from '@/store/installedThemesStore';
 import { validateThemePackage, type ValidatedTheme } from '@/lib/themes/validateThemePackage';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import ConfirmModal from '@/components/ConfirmModal';
 
 /**

@@ -7,7 +7,7 @@ import i18n from '@/lib/i18n';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { usePreviewStore } from '@/features/playback/store/previewStore';
 import { useLyricsStore } from '../store/lyricsStore';
-import { showToast } from '../utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import type { ActionContext, ShortcutSlot, ShortcutActionMeta } from '@/config/shortcutTypes';
 
 let cliPremuteVolume: number | null = null;

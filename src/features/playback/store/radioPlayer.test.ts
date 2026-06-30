@@ -15,7 +15,7 @@ const hoisted = vi.hoisted(() => {
   };
 });
 
-vi.mock('@/utils/ui/toast', () => ({ showToast: hoisted.showToastMock }));
+vi.mock('@/lib/dom/toast', () => ({ showToast: hoisted.showToastMock }));
 vi.mock('@/features/playback/store/playerStore', () => ({
   usePlayerStore: {
     getState: hoisted.playerStateGet,

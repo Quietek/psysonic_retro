@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import type { TFunction } from 'i18next';
 import { ndUpdateUser, type NdUser } from '@/lib/api/navidromeAdmin';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import {
   copyTextToClipboard,
   encodeServerMagicString,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { sanitizeLogLine } from './sanitizeLogLine';
+import { sanitizeLogLine } from '@/lib/perf/sanitizeLogLine';
 
 describe('sanitizeLogLine', () => {
   it('redacts Subsonic wire-auth query params', () => {

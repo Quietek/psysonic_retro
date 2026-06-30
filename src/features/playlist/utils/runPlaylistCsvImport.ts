@@ -3,7 +3,7 @@ import { open as openDialog } from '@tauri-apps/plugin-dialog';
 import { readTextFile } from '@tauri-apps/plugin-fs';
 import { search } from '@/lib/api/subsonicSearch';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { parseSpotifyCsv, type SpotifyCsvTrack } from '@/features/playlist/utils/spotifyCsvImport';
 import {
   cleanTrackTitle,

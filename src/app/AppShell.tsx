@@ -66,7 +66,7 @@ import { useFontStore } from '../store/fontStore';
 import { useEqStore } from '../store/eqStore';
 import { usePlaybackRateStore } from '@/features/playback/store/playbackRateStore';
 import { usePlaybackRateOrbitSync } from '@/features/orbit';
-import { usePerfProbeFlags } from '../utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import {
   persistSidebarCollapsed,
   readInitialSidebarCollapsed,

@@ -29,7 +29,7 @@ import {
   readAlbumBrowseRestore,
   readAlbumDetailReturnTo,
 } from '@/utils/navigation/albumDetailNavigation';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { runBulkEnqueue, runBulkPlayAll, runBulkShuffle } from '@/features/playback/utils/playback/runBulkPlay';
 
 export default function GenreDetail() {

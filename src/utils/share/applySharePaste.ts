@@ -8,7 +8,7 @@ import { useAuthStore } from '../../store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { navigateToAlbumDetail } from '../navigation/albumDetailNavigation';
 import { findServerIdForShareUrl, type EntitySharePayloadV1 } from './shareLink';
-import { showToast } from '../ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 const RESOLVE_QUEUE_CHUNK = 12;
 

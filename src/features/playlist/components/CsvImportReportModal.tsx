@@ -2,7 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { Download, X } from 'lucide-react';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import type { SpotifyCsvTrack } from '@/features/playlist/utils/spotifyCsvImport';
 
 interface CsvReportModalProps {

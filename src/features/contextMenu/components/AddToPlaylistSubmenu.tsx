@@ -4,7 +4,7 @@ import { ListMusic, Plus } from 'lucide-react';
 import { getPlaylist, updatePlaylist } from '@/lib/api/subsonicPlaylists';
 import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistStore } from '@/features/playlist';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import {
   confirmAddAllDuplicates,
   isSmartPlaylistName,

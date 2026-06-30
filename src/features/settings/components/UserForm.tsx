@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Shield, Wand2 } from 'lucide-react';
 import { ndUpdateUser, type NdLibrary, type NdUser } from '@/lib/api/navidromeAdmin';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import {
   copyTextToClipboard,
   encodeServerMagicString,

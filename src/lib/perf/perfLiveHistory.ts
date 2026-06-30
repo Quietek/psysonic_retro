@@ -2,8 +2,8 @@ import { useSyncExternalStore } from 'react';
 import {
   isLiveHistoryPin,
   liveOverlayItemValue,
-} from './formatLiveOverlayItems';
-import type { PerfLiveSnapshot } from './perfLiveStore';
+} from '@/lib/perf/formatLiveOverlayItems';
+import type { PerfLiveSnapshot } from '@/lib/perf/perfLiveStore';
 
 const HISTORY_MS = 60_000;
 const EMPTY_VALUES: readonly number[] = [];

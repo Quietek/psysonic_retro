@@ -9,7 +9,7 @@ import { useAuthStore } from '@/store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { coverServerScopeForServerId } from '@/cover/serverScope';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { GRID_COVER_WARM_LIMIT } from '@/cover/layoutSizes';
 import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import { OfflineLibraryDiskStat } from '@/features/offline/components/OfflineLibraryDiskStat';
@@ -32,7 +32,7 @@ import {
   type OfflineCoverQuadCell,
   type OfflineLibraryCard,
 } from '@/features/offline/utils/offlineLibraryHelpers';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { shuffleArray } from '@/lib/util/shuffleArray';
 import { getMediaDir } from '@/lib/media/mediaDir';
 import { canonicalQueueServerKey, resolveIndexKey } from '@/utils/server/serverIndexKey';

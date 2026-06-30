@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { describe, expect, it, beforeEach } from 'vitest';
-import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../../constants/appScroll';
-import { resolveIntersectionScrollRoot } from './resolveIntersectionScrollRoot';
+import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
+import { resolveIntersectionScrollRoot } from '@/lib/dom/resolveIntersectionScrollRoot';
 
 describe('resolveIntersectionScrollRoot', () => {
   beforeEach(() => {

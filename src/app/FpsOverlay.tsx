@@ -5,34 +5,34 @@ import { coverGetPipelineQueueStats, type CoverPipelineQueueStatsDto } from '@/a
 import { coverEnsureQueueStats } from '@/cover/ensureQueue';
 import { coverPeekQueueStats } from '@/cover/peekQueue';
 import PerfOverlaySparkline from '@/app/PerfOverlaySparkline';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import {
   formatPerfMs,
   getAnalysisTracksPerMinute,
   useAnalysisPerfLast,
-} from '@/utils/perf/analysisPerfStore';
-import { formatAnalysisPipelineQueueOverlay } from '@/utils/perf/formatAnalysisQueueStats';
-import { formatCoverPipelineQueueOverlay } from '@/utils/perf/formatCoverPipelineQueueOverlay';
+} from '@/lib/perf/analysisPerfStore';
+import { formatAnalysisPipelineQueueOverlay } from '@/lib/perf/formatAnalysisQueueStats';
+import { formatCoverPipelineQueueOverlay } from '@/lib/perf/formatCoverPipelineQueueOverlay';
 import {
   buildLiveOverlayItems,
   type LiveOverlayItem,
-} from '@/utils/perf/formatLiveOverlayItems';
+} from '@/lib/perf/formatLiveOverlayItems';
 import {
   getPerfLiveHistorySamples,
-} from '@/utils/perf/perfLiveHistory';
-import { usePerfLiveSnapshot } from '@/utils/perf/perfLiveStore';
-import { usePerfLiveOverlayPins } from '@/utils/perf/perfOverlayPins';
+} from '@/lib/perf/perfLiveHistory';
+import { usePerfLiveSnapshot } from '@/lib/perf/perfLiveStore';
+import { usePerfLiveOverlayPins } from '@/lib/perf/perfOverlayPins';
 import {
   perfOverlayCornerClass,
   usePerfOverlayAppearance,
-} from '@/utils/perf/perfOverlayAppearance';
+} from '@/lib/perf/perfOverlayAppearance';
 import {
   resolveOverlayVisibility,
   usePerfOverlayMode,
-} from '@/utils/perf/perfOverlayMode';
+} from '@/lib/perf/perfOverlayMode';
 import { useAnalysisPerfListener } from '@/hooks/useAnalysisPerfListener';
 import { useCoverPerfListener } from '@/cover/useCoverPerfListener';
-import { getCoverCachedPerMinute, getCoverUiPerMinute } from '@/utils/perf/coverPerfStore';
+import { getCoverCachedPerMinute, getCoverUiPerMinute } from '@/lib/perf/coverPerfStore';
 
 const SAMPLE_MS = 500;
 const TPM_REFRESH_MS = 500;

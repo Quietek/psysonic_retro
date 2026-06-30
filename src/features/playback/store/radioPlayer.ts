@@ -1,4 +1,4 @@
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 
 /**

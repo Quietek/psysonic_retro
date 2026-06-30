@@ -10,7 +10,7 @@ import { pushQueueUndoFromGetter } from '@/features/playback/store/queueUndo';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useLuckyMixStore } from '@/features/randomMix/store/luckyMixStore';
 import { isLuckyMixAvailable } from '@/features/randomMix/hooks/useLuckyMixAvailable';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import {
   bindQueueServerForPlayback,
   playbackServerDiffersFromActive,

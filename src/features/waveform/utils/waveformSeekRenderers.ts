@@ -1,5 +1,5 @@
 import type { SeekbarStyle } from '@/store/authStoreTypes';
-import { bumpPerfCounter } from '@/utils/perf/perfTelemetry';
+import { bumpPerfCounter } from '@/lib/perf/perfTelemetry';
 import { AnimState, makeAnimState } from '@/features/waveform/utils/waveformSeekHelpers';
 import {
   drawBar, drawLineDot, drawNeon, drawSegmented, drawThick, drawWaveform,

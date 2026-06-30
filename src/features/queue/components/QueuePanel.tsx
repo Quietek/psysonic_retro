@@ -15,7 +15,7 @@ import { useAuthStore } from '@/store/authStore';
 import { encodeSharePayload } from '@/utils/share/shareLink';
 import { serverShareBaseUrl } from '@/utils/server/serverEndpoint';
 import { copyTextToClipboard } from '@/utils/server/serverMagicString';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { useThemeStore } from '@/store/themeStore';
 import { useLyricsStore } from '@/store/lyricsStore';
 import { LyricsPane } from '@/features/lyrics';

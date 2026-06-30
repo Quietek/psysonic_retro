@@ -9,7 +9,7 @@ import type { Track } from '@/lib/media/trackTypes';
 import { useAuthStore } from '@/store/authStore';
 import { usePlaylistStore } from '@/features/playlist';
 import { songToTrack } from '@/lib/media/songToTrack';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { suggestOrbitTrack, hostEnqueueToOrbit, evaluateOrbitSuggestGate, OrbitSuggestBlockedError } from '@/features/orbit';
 import { renderPresetIcon } from '@/music-network';
 import StarRating from '@/ui/StarRating';
@@ -179,7 +179,7 @@ export default function SongContextItems(props: ContextMenuItemsProps) {
               {offlinePolicy.canEditPlaylist && playlistId && playlistSongIndex !== undefined && (
                 <div className="context-menu-item" style={{ color: 'var(--danger)' }} onClick={() => handleAction(async () => {
                   const { updatePlaylist } = await import('@/lib/api/subsonicPlaylists');
-                  const { showToast } = await import('@/utils/ui/toast');
+                  const { showToast } = await import('@/lib/dom/toast');
                   const touchPlaylist = usePlaylistStore.getState().touchPlaylist;
                   try {
                     const serverId = resolveMediaServerId();

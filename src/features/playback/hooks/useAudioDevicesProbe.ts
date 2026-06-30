@@ -5,7 +5,7 @@ import type { TFunction } from 'i18next';
 import { useAuthStore } from '@/store/authStore';
 import { IS_MACOS } from '@/lib/util/platform';
 import { sortAudioDeviceIds } from '@/features/playback/utils/audio/audioDeviceLabels';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 interface UseAudioDevicesProbeResult {
   audioDevices: string[];

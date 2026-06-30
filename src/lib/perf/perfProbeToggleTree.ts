@@ -1,4 +1,4 @@
-import type { PerfProbeFlags } from './perfFlags';
+import type { PerfProbeFlags } from '@/lib/perf/perfFlags';
 
 export type PerfToggleLeaf = {
   id: string;

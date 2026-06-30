@@ -1,4 +1,4 @@
-import { perfLiveCpuSnapshotSupported } from '@/utils/perf/perfLiveCpuSnapshot';
+import { perfLiveCpuSnapshotSupported } from '@/lib/perf/perfLiveCpuSnapshot';
 import {
   PERF_LIVE_POLL_MS_MAX,
   PERF_LIVE_POLL_MS_MIN,
@@ -7,7 +7,7 @@ import {
   setPerfLivePollIntervalMs,
   usePerfLiveIncludeThreadGroups,
   usePerfLivePollIntervalMs,
-} from '@/utils/perf/perfLivePollSettings';
+} from '@/lib/perf/perfLivePollSettings';
 
 export default function PerfLivePollControls() {
   const pollMs = usePerfLivePollIntervalMs();

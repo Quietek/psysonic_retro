@@ -11,7 +11,7 @@ import {
   subscribeIdleQueuePullSuspended,
 } from '@/features/playback/store/queuePlaybackIdle';
 import { clearQueueHandoffPending, isQueueHandoffPending } from '@/features/playback/store/queueSyncUiState';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 export function usePlayQueueSyncLedState(status: ConnectionStatus) {
   const { t } = useTranslation();

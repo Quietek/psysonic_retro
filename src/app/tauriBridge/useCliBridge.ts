@@ -8,7 +8,7 @@ import { search as subsonicSearch } from '@/lib/api/subsonicSearch';
 import { filterSongsForLuckyMixRatings, getMixMinRatingsConfigFromAuth } from '@/utils/mix/mixRatingFilter';
 import { shuffleArray } from '@/lib/util/shuffleArray';
 import { songToTrack } from '@/lib/media/songToTrack';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { switchActiveServer } from '@/utils/server/switchActiveServer';
 import i18n from '@/lib/i18n';
 import { usePlayerStore } from '@/features/playback/store/playerStore';

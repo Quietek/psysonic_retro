@@ -2,7 +2,7 @@ import {
   PERF_OVERLAY_MODE_OPTIONS,
   setPerfOverlayMode,
   usePerfOverlayMode,
-} from '@/utils/perf/perfOverlayMode';
+} from '@/lib/perf/perfOverlayMode';
 
 export default function PerfOverlayModeControls() {
   const mode = usePerfOverlayMode();

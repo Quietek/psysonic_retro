@@ -3,7 +3,7 @@ import type { TFunction } from 'i18next';
 import { deletePlaylist, getPlaylist, updatePlaylist } from '@/lib/api/subsonicPlaylists';
 import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistStore } from '@/features/playlist/store/playlistStore';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 export interface RunPlaylistDeleteDeps {
   e: React.MouseEvent;

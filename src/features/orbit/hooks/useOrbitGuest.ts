@@ -14,7 +14,7 @@ import {
   forgetPendingSuggestion,
   resetPendingResendState,
 } from '@/features/orbit/utils/orbit';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import i18n from '@/lib/i18n';
 import { estimateLivePosition, type OrbitState } from '@/features/orbit/api/orbit';
 import { pushOrbitEvent } from '@/features/orbit/utils/orbitDiag';

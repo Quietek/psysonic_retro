@@ -36,7 +36,7 @@ import { ArtistCoverArtImage } from '@/cover/ArtistCoverArtImage';
 import { CoverArtImage } from '@/cover/CoverArtImage';
 import { COVER_DENSE_SEARCH_CSS_PX } from '@/cover/layoutSizes';
 import { albumCoverRef } from '@/cover/ref';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { useShareSearch } from '@/features/search/hooks/useShareSearch';
 import ShareSearchResults from '@/features/search/components/ShareSearchResults';
 import {

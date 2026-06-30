@@ -6,7 +6,7 @@ import { ChevronLeft } from 'lucide-react';
 import AlbumCard from '@/features/album/components/AlbumCard';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/store/authStore';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { albumGridWarmCovers } from '@/cover/layoutSizes';
 import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 

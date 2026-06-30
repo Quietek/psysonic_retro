@@ -11,7 +11,7 @@ import {
 } from '@/features/orbit/utils/orbit';
 import { switchActiveServer } from '@/utils/server/switchActiveServer';
 import { useOrbitAccountPickerStore } from '@/features/orbit/store/orbitAccountPickerStore';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 interface Props {
   onClose: () => void;

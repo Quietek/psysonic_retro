@@ -1,7 +1,7 @@
 import { queueSongRating } from '@/features/playback/store/pendingStarSync';
 import i18n from '@/lib/i18n';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { showToast } from '../utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { playByOpaqueId } from '@/features/playback/utils/playback/playByOpaqueId';
 import type { ActionContext, CliContext } from '@/config/shortcutTypes';
 import {

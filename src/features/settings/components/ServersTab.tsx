@@ -28,7 +28,7 @@ import {
   runIndexKeyRemigration,
 } from '@/utils/server/serverUrlRemigration';
 import { useConfirmModalStore } from '@/store/confirmModalStore';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { FEATURE_AUDIOMUSE_SIMILAR_TRACKS } from '@/serverCapabilities/catalog';
 import { isFeatureActiveForServer, resolveFeatureForServer } from '@/serverCapabilities/storeView';
 import type { ResolvedCapability } from '@/serverCapabilities/types';

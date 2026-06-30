@@ -9,7 +9,7 @@ import { usePlayQueueSyncLedState } from '@/app/hooks/usePlayQueueSyncLedState';
 import type { ServerProfile } from '@/store/authStoreTypes';
 import { useAuthStore } from '@/store/authStore';
 import { switchActiveServer } from '@/utils/server/switchActiveServer';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { serverListDisplayLabel } from '@/utils/server/serverDisplayName';
 
 interface Props {

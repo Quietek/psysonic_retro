@@ -9,7 +9,7 @@
  * Pure-math helpers live in `dynamicColors.test.ts`.
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { extractCoverColors } from './dynamicColors';
+import { extractCoverColors } from '@/lib/dom/dynamicColors';
 
 type ImageBehavior = 'load' | 'error';
 

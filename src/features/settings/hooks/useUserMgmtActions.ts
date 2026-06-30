@@ -8,7 +8,7 @@ import {
   type NdLibrary,
   type NdUser,
 } from '@/lib/api/navidromeAdmin';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import {
   copyTextToClipboard,
   encodeServerMagicString,

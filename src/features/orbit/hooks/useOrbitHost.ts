@@ -19,7 +19,7 @@ import {
   type OrbitState,
   type OrbitQueueItem,
 } from '@/features/orbit/api/orbit';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import i18n from '@/lib/i18n';
 import { pushOrbitEvent } from '@/features/orbit/utils/orbitDiag';
 import { useOrbitOutboxHeartbeat } from '@/features/orbit/hooks/useOrbitOutboxHeartbeat';

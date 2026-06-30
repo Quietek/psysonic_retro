@@ -16,8 +16,8 @@ import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from '@/store/authStore';
 import type { LoggingMode } from '@/store/authStoreTypes';
 import CustomSelect from '@/ui/CustomSelect';
-import { filterLogLines } from '@/utils/perf/filterLogLines';
-import { sanitizeLogLine } from '@/utils/perf/sanitizeLogLine';
+import { filterLogLines } from '@/lib/perf/filterLogLines';
+import { sanitizeLogLine } from '@/lib/perf/sanitizeLogLine';
 
 function formatLogLinesText(lines: RuntimeLogLine[]): string {
   return lines.map(line => line.text).join('\n');

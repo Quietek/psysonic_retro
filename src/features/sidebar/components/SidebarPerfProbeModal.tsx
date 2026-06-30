@@ -6,10 +6,10 @@ import SidebarPerfProbeTogglesTab from '@/features/sidebar/components/perfProbe/
 import SidebarPerfProbeTuningTab from '@/features/sidebar/components/perfProbe/SidebarPerfProbeTuningTab';
 import SidebarPerfProbeLogsTab from '@/features/sidebar/components/perfProbe/SidebarPerfProbeLogsTab';
 import SidebarPerfProbeConnectionsTab from '@/features/sidebar/components/perfProbe/SidebarPerfProbeConnectionsTab';
-import { resetPerfProbeFlags, type PerfProbeFlags } from '@/utils/perf/perfFlags';
-import { clearPerfLiveOverlayPins } from '@/utils/perf/perfOverlayPins';
-import { resetPerfOverlayAppearance } from '@/utils/perf/perfOverlayAppearance';
-import { resetPerfOverlayMode } from '@/utils/perf/perfOverlayMode';
+import { resetPerfProbeFlags, type PerfProbeFlags } from '@/lib/perf/perfFlags';
+import { clearPerfLiveOverlayPins } from '@/lib/perf/perfOverlayPins';
+import { resetPerfOverlayAppearance } from '@/lib/perf/perfOverlayAppearance';
+import { resetPerfOverlayMode } from '@/lib/perf/perfOverlayMode';
 
 type TabId = 'monitor' | 'connections' | 'toggles' | 'tuning' | 'logs';
 

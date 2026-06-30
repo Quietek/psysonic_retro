@@ -6,7 +6,7 @@ import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { copyEntityShareLink } from '@/utils/share/copyEntityShareLink';
 import { invalidateCoverArt } from '@/utils/imageCache';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 export interface RunArtistEntityRatingDeps {
   artist: SubsonicArtist | null;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatCoverPipelineQueueOverlay } from './formatCoverPipelineQueueOverlay';
+import { formatCoverPipelineQueueOverlay } from '@/lib/perf/formatCoverPipelineQueueOverlay';
 
 describe('formatCoverPipelineQueueOverlay', () => {
   it('formats ensure tiers, rust pools, and optional peek backlog', () => {

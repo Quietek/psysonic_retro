@@ -1,4 +1,4 @@
-import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../../constants/appScroll';
+import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 
 /**
  * Scroll container for `IntersectionObserver` priority scoring on cover art.

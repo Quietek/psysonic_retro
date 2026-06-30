@@ -10,7 +10,7 @@ import {
   pickBackupExportPath,
   pickBackupImportPath,
 } from '@/features/settings/utils/backup';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 type BackupMode = 'full' | 'library' | 'config';
 type BackupAction = 'export' | 'import';

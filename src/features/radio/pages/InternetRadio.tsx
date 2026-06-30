@@ -7,13 +7,13 @@ import { setRadioVolume } from '@/features/playback/store/radioPlayer';
 import { fadeOut } from '@/features/playback/utils/playback/fadeOut';
 import { invalidateCoverArt } from '@/utils/imageCache';
 import { useTranslation } from 'react-i18next';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import RadioToolbar from '@/features/radio/components/RadioToolbar';
 import AlphabetFilterBar from '@/features/radio/components/AlphabetFilterBar';
 import RadioCard from '@/features/radio/components/RadioCard';
 import RadioEditModal from '@/features/radio/components/RadioEditModal';
 import RadioDirectoryModal from '@/features/radio/components/RadioDirectoryModal';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import { useNavidromeAdminRole, canManageNavidromeRadio } from '@/hooks/useNavidromeAdminRole';
 

@@ -17,8 +17,8 @@ import {
   playListenSessionOpen,
 } from '@/features/playback/store/playListenSession';
 import { appendTimelineLeaveTrack } from '@/features/playback/store/timelineSessionHistory';
-import { getPerfProbeFlags } from '@/utils/perf/perfFlags';
-import { bumpPerfCounter } from '@/utils/perf/perfTelemetry';
+import { getPerfProbeFlags } from '@/lib/perf/perfFlags';
+import { bumpPerfCounter } from '@/lib/perf/perfTelemetry';
 import {
   getPlaybackCacheServerKey,
   getPlaybackIndexKey,
@@ -29,7 +29,7 @@ import {
 import { resolvePlaybackUrl } from '@/features/playback/utils/playback/resolvePlaybackUrl';
 import { resolveReplayGainDb } from '@/features/playback/utils/audio/resolveReplayGainDb';
 import { audioPlayHiResBlendArgs } from '@/lib/audio/hiResCrossfadeResample';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { useAuthStore } from '@/store/authStore';
 import { getPlayGeneration, setIsAudioPaused } from '@/features/playback/store/engineState';
 import {

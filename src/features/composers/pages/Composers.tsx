@@ -22,7 +22,7 @@ import { readComposerBrowseRestore } from '@/utils/navigation/albumDetailNavigat
 import { filterArtistsWithRoleAlbumCredits } from '@/lib/library/composerBrowse';
 import { ALL_SENTINEL, artistLetterBucket } from '@/features/artist';
 import { useLibraryIgnoredArticles } from '@/lib/library/hooks/useLibraryIgnoredArticles';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { useVirtualizerScrollMargin } from '@/lib/hooks/useVirtualizerScrollMargin';

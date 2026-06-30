@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Share2 } from 'lucide-react';
 import SettingsSubSection from '@/features/settings/components/SettingsSubSection';
 import { SettingsGroup } from '@/features/settings/components/SettingsGroup';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { useAuthStore } from '@/store/authStore';
 import {
   errorI18nKey,

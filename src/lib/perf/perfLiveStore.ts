@@ -1,15 +1,15 @@
 import { useSyncExternalStore } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { clearPerfLiveHistory, syncPerfLiveHistoryFromPoll } from './perfLiveHistory';
-import { getAnalysisTracksPerMinute } from './analysisPerfStore';
-import { getCoverCachedPerMinute, getCoverUiPerMinute, getCoverPerfState } from './coverPerfStore';
-import { perfLiveCpuSnapshotSupported } from './perfLiveCpuSnapshot';
-import { getPerfLiveOverlayPins } from './perfOverlayPins';
+import { clearPerfLiveHistory, syncPerfLiveHistoryFromPoll } from '@/lib/perf/perfLiveHistory';
+import { getAnalysisTracksPerMinute } from '@/lib/perf/analysisPerfStore';
+import { getCoverCachedPerMinute, getCoverUiPerMinute, getCoverPerfState } from '@/lib/perf/coverPerfStore';
+import { perfLiveCpuSnapshotSupported } from '@/lib/perf/perfLiveCpuSnapshot';
+import { getPerfLiveOverlayPins } from '@/lib/perf/perfOverlayPins';
 import {
   buildPerfCpuSnapshotRequest,
   getPerfLivePollIntervalMs,
   registerPerfLivePollScheduleBump,
-} from './perfLivePollSettings';
+} from '@/lib/perf/perfLivePollSettings';
 
 export type PerfProcessMemory = {
   label: string;

@@ -7,7 +7,7 @@ import { useLyrics, type WordLyricsLine } from '@/features/lyrics/hooks/useLyric
 import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from 'react-i18next';
 import type { Track } from '@/lib/media/trackTypes';
-import { EaseScroller, targetForFraction } from '@/utils/ui/easeScroll';
+import { EaseScroller, targetForFraction } from '@/lib/dom/easeScroll';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 
 interface Props {

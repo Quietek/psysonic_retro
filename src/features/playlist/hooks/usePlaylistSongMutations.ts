@@ -1,7 +1,7 @@
 import type React from 'react';
 import type { TFunction } from 'i18next';
 import type { SubsonicPlaylist, SubsonicSong } from '@/lib/api/subsonicTypes';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 export interface PlaylistSongMutationsDeps {
   songs: SubsonicSong[];

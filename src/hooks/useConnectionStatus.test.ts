@@ -13,7 +13,7 @@ vi.mock('@/lib/api/subsonic', () => ({
   scheduleInstantMixProbeForServer: vi.fn(),
 }));
 
-vi.mock('@/utils/perf/perfFlags', () => ({
+vi.mock('@/lib/perf/perfFlags', () => ({
   usePerfProbeFlags: () => ({ disableBackgroundPolling: false }),
 }));
 

@@ -22,7 +22,7 @@ import type {
   ComposerShareSearchPayload,
   QueueableShareSearchPayload,
 } from './shareSearch';
-import { showToast } from '../ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 const RESOLVE_QUEUE_CHUNK = 12;
 

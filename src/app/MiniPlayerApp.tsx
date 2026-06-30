@@ -7,7 +7,7 @@ import FpsOverlay from '@/app/FpsOverlay';
 import { useThemeStore } from '../store/themeStore';
 import { useFontStore } from '../store/fontStore';
 import { useKeybindingsStore } from '../store/keybindingsStore';
-import { usePerfProbeFlags } from '../utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import i18n from '@/lib/i18n';
 
 /**

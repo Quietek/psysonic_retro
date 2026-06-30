@@ -7,7 +7,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from '@/store/authStore';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { useOfflineJobStore, cancelledDownloads } from '@/features/offline/store/offlineJobStore';
 import { useLocalPlaybackStore, type PinSource } from '@/store/localPlaybackStore';
 import { getMediaDir } from '@/lib/media/mediaDir';

@@ -7,7 +7,7 @@ import { uninstallTheme } from '@/lib/themes/uninstallTheme';
 import { installThemeFromRegistry } from '@/lib/themes/installThemeFromRegistry';
 import { useThemeUpdates } from '@/features/settings/hooks/useThemeUpdates';
 import { useThemeAnimationRisk } from '@/features/settings/hooks/useThemeAnimationRisk';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { AnimatedThemeBadge } from '@/features/settings/components/AnimatedThemeBadge';
 import { FIXED_THEMES } from '@/lib/themes/fixedThemes';
 

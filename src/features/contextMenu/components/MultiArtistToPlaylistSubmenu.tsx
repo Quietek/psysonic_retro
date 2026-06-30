@@ -5,7 +5,7 @@ import { resolveAlbum, resolveArtist, resolveMediaServerId, resolvePlaylist } fr
 import { getPlaylists } from '@/lib/api/subsonicPlaylists';
 import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistStore } from '@/features/playlist';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import {
   confirmAddAllDuplicates,
   isSmartPlaylistName,

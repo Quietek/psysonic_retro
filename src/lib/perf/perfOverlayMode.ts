@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import type { PerfProbeFlags } from './perfFlags';
+import type { PerfProbeFlags } from '@/lib/perf/perfFlags';
 
 export type PerfOverlayMode = 'off' | 'fps' | 'pinned';
 

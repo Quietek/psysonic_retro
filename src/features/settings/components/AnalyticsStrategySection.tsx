@@ -23,7 +23,7 @@ import { libraryGetTracksBatch, type LibraryTrackDto, type TrackRefDto } from '@
 import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
 import { serverListDisplayLabel } from '@/utils/server/serverDisplayName';
 import { serverIndexKeyForProfile } from '@/utils/server/serverIndexKey';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import {
   ANALYTICS_STRATEGIES,
   ADVANCED_PARALLELISM_MAX,

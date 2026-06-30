@@ -3,7 +3,7 @@ import {
   getAnalysisTracksPerMinute,
   recordAnalysisTrackPerf,
   resetAnalysisPerfStateForTest,
-} from './analysisPerfStore';
+} from '@/lib/perf/analysisPerfStore';
 
 beforeEach(() => {
   resetAnalysisPerfStateForTest();

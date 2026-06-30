@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { CustomHeaderEntry, CustomHeadersApplyTo, ServerProfile } from '@/store/authStoreTypes';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import {
   DEFAULT_CUSTOM_HEADERS_APPLY_TO,
   serverCustomHeadersFromForm,

@@ -18,7 +18,7 @@ import {
   getSystemItemsForReorder,
 } from '@/features/sidebar/utils/sidebarNavReorder';
 import { useLuckyMixAvailable } from '@/features/randomMix';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { useSidebarNewReleasesUnread } from '@/features/sidebar/hooks/useSidebarNewReleasesUnread';
 import { useSidebarNavDnd } from '@/features/sidebar/hooks/useSidebarNavDnd';
 import { useSidebarLibraryDropdown } from '@/features/sidebar/hooks/useSidebarLibraryDropdown';

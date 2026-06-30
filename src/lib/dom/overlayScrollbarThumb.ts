@@ -1,5 +1,5 @@
 import type { PointerEvent as ReactPointerEvent } from 'react';
-import { computeOverlayScrollbarThumbMeta } from './overlayScrollbarMetrics';
+import { computeOverlayScrollbarThumbMeta } from '@/lib/dom/overlayScrollbarMetrics';
 
 /**
  * Drag the overlay scrollbar thumb (native bar is hidden). Maps pointer delta

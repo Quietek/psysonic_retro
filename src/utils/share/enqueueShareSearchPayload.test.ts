@@ -57,7 +57,7 @@ vi.mock('@/features/orbit', () => ({
   orbitBulkGuard: mocks.orbitBulkGuard,
 }));
 
-vi.mock('../ui/toast', () => ({
+vi.mock('@/lib/dom/toast', () => ({
   showToast: mocks.showToast,
 }));
 

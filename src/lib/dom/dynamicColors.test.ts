@@ -6,7 +6,7 @@ import {
   rgbToHsl,
   hslToRgb,
   ensureContrast,
-} from './dynamicColors';
+} from '@/lib/dom/dynamicColors';
 
 // ─── srgbToLinear ─────────────────────────────────────────────────────────────
 

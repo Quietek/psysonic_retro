@@ -7,7 +7,7 @@ import { decodeSharePayloadFromText } from '../utils/share/shareLink';
 import { decodeServerMagicStringFromText } from '../utils/server/serverMagicString';
 import { applySharePastePayload, applySharePasteQueue } from '../utils/share/applySharePaste';
 import { shareQueueServerContext } from '../utils/share/shareServerOriginLabel';
-import { showToast } from '../utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { useShareQueuePreview } from '@/features/search';
 import { ShareQueuePreviewModal } from '@/features/search';
 import {

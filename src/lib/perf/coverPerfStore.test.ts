@@ -6,7 +6,7 @@ import {
   recordCoverProgress,
   recordCoverUiTotal,
   resetCoverPerfStateForTest,
-} from './coverPerfStore';
+} from '@/lib/perf/coverPerfStore';
 
 beforeEach(() => {
   resetCoverPerfStateForTest();

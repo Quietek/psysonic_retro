@@ -6,7 +6,7 @@ import { useWordLyricsSync } from '@/features/lyrics';
 import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';
 import type { LrcLine } from '@/features/lyrics';
 import type { Track } from '@/lib/media/trackTypes';
-import { EaseScroller, targetForFraction } from '@/utils/ui/easeScroll';
+import { EaseScroller, targetForFraction } from '@/lib/dom/easeScroll';
 
 // Fullscreen synced lyrics.
 // Full-screen scrollable list. The active line auto-scrolls following the

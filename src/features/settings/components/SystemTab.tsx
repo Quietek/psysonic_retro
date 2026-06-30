@@ -10,7 +10,7 @@ import i18n from '@/lib/i18n';
 import { useAuthStore } from '@/store/authStore';
 import type { ClockFormat, LinuxWaylandTextRenderProfile, LoggingMode } from '@/store/authStoreTypes';
 import { IS_LINUX } from '@/lib/util/platform';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { AboutPsysonicBrandHeader } from '@/features/settings/components/AboutPsysonicLol';
 import CustomSelect from '@/ui/CustomSelect';
 import LicensesPanel from '@/features/settings/components/LicensesPanel';

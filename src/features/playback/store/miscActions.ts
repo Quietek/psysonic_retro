@@ -1,7 +1,7 @@
 import { applyServerPlayQueue } from '@/features/playback/store/applyServerPlayQueue';
 import { invoke } from '@tauri-apps/api/core';
 import i18n from '@/lib/i18n';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { useAuthStore } from '@/store/authStore';
 import {
   bumpPlayGeneration,

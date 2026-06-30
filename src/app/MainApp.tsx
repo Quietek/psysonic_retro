@@ -3,7 +3,7 @@ import '@/features/playback/store/playbackEngineBridgeRegister'; // installs the
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { invoke } from '@tauri-apps/api/core';
-import { showToast } from '../utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { WindowVisibilityProvider } from '@/lib/hooks/useWindowVisibility';
 import { DragDropProvider } from '@/lib/dnd/DragDropContext';
 import PasteClipboardHandler from '../components/PasteClipboardHandler';

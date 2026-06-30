@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   formatAnalysisPipelineQueueOverlay,
   formatAnalysisTierQueue,
-} from './formatAnalysisQueueStats';
+} from '@/lib/perf/formatAnalysisQueueStats';
 
 describe('formatAnalysisQueueStats', () => {
   it('formats tier queue as total(high,middle,low)', () => {

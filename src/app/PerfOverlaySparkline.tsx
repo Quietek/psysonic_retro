@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
-import type { PerfLiveSample } from '@/utils/perf/perfLiveHistory';
-import { PERF_LIVE_HISTORY_MS } from '@/utils/perf/perfLiveHistory';
+import type { PerfLiveSample } from '@/lib/perf/perfLiveHistory';
+import { PERF_LIVE_HISTORY_MS } from '@/lib/perf/perfLiveHistory';
 
 type SparklineKind = 'cpu' | 'memory';
 

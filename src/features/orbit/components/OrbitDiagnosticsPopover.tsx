@@ -4,7 +4,7 @@ import { Copy, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { computeOrbitDriftMs } from '@/features/orbit/utils/orbit';
 import {
   clearOrbitEvents,

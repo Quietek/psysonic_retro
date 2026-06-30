@@ -11,11 +11,11 @@ vi.mock('@/api/network', () => ({
 }));
 
 // showToast mocked so we can assert two-LAN validation surfaced the error.
-vi.mock('@/utils/ui/toast', () => ({
+vi.mock('@/lib/dom/toast', () => ({
   showToast: vi.fn(),
 }));
 
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 
 describe('AddServerForm — dual-address behaviour', () => {
   beforeEach(() => {

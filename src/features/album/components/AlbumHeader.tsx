@@ -12,7 +12,7 @@ import { useAlbumDetailBack } from '@/features/album/hooks/useAlbumDetailBack';
 import { useThemeStore } from '@/store/themeStore';
 import StarRating from '@/ui/StarRating';
 import { copyEntityShareLink } from '@/utils/share/copyEntityShareLink';
-import { showToast } from '@/utils/ui/toast';
+import { showToast } from '@/lib/dom/toast';
 import { isAlbumRecentlyAdded } from '@/features/album/utils/albumRecency';
 import { formatLongDuration } from '@/lib/format/formatDuration';
 import { formatMb } from '@/lib/format/formatBytes';

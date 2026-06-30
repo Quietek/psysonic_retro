@@ -15,7 +15,7 @@ import {
   subscribeConnectionStatus,
   type ConnectionStatus,
 } from '../utils/network/activeServerReachability';
-import { usePerfProbeFlags } from '../utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import {
   isDevOfflineBrowseForced,
   useDevOfflineBrowseStore,

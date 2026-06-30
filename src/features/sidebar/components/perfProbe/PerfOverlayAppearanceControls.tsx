@@ -3,7 +3,7 @@ import {
   setPerfOverlayCorner,
   setPerfOverlayOpacity,
   usePerfOverlayAppearance,
-} from '@/utils/perf/perfOverlayAppearance';
+} from '@/lib/perf/perfOverlayAppearance';
 
 export default function PerfOverlayAppearanceControls() {
   const { corner, opacity } = usePerfOverlayAppearance();

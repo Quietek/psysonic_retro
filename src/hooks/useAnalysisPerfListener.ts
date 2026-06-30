@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
-import { recordAnalysisTrackPerf } from '../utils/perf/analysisPerfStore';
+import { recordAnalysisTrackPerf } from '@/lib/perf/analysisPerfStore';
 
 type AnalysisTrackPerfPayload = {
   trackId: string;

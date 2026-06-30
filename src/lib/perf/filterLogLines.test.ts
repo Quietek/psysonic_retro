@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { filterLogLines, parseLogFilter } from './filterLogLines';
+import { filterLogLines, parseLogFilter } from '@/lib/perf/filterLogLines';
 
 const L = (text: string) => ({ text });
 const lines = [

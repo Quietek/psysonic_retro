@@ -1,13 +1,13 @@
 import { useMemo, useRef } from 'react';
-import { isPerfLivePollWaitingForCpu, usePerfLiveSnapshot } from '@/utils/perf/perfLiveStore';
-import { usePerfLiveIncludeThreadGroups } from '@/utils/perf/perfLivePollSettings';
+import { isPerfLivePollWaitingForCpu, usePerfLiveSnapshot } from '@/lib/perf/perfLiveStore';
+import { usePerfLiveIncludeThreadGroups } from '@/lib/perf/perfLivePollSettings';
 import {
   togglePerfLiveOverlayPin,
   togglePipelineOverlayPin,
   usePerfLiveOverlayPins,
   usePipelineOverlayPinned,
   type PerfLiveOverlayPinId,
-} from '@/utils/perf/perfOverlayPins';
+} from '@/lib/perf/perfOverlayPins';
 import PerfProbeMetricCard, { PerfProbeMetricSection } from '@/features/sidebar/components/perfProbe/PerfProbeMetricCard';
 import PerfOverlayAppearanceControls from '@/features/sidebar/components/perfProbe/PerfOverlayAppearanceControls';
 import PerfOverlayModeControls from '@/features/sidebar/components/perfProbe/PerfOverlayModeControls';

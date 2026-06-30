@@ -11,7 +11,7 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { APP_MAIN_SCROLL_VIEWPORT_ID, ARTISTS_INPAGE_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useElementClientHeightById, useElementClientHeightForElement } from '@/lib/hooks/useResizeClientHeight';
 import { useVirtualizerScrollMargin } from '@/lib/hooks/useVirtualizerScrollMargin';
-import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import {
   ALL_SENTINEL,
   ALPHABET,
