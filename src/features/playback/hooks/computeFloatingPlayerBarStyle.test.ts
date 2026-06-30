@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { computeFloatingPlayerBarStyle } from './computeFloatingPlayerBarStyle';
+import { computeFloatingPlayerBarStyle } from '@/features/playback/hooks/computeFloatingPlayerBarStyle';
 
 describe('computeFloatingPlayerBarStyle', () => {
   it('centers in the main column and shrink-wraps instead of stretching', () => {

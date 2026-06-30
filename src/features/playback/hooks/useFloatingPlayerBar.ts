@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { computeFloatingPlayerBarStyle } from './computeFloatingPlayerBarStyle';
+import { computeFloatingPlayerBarStyle } from '@/features/playback/hooks/computeFloatingPlayerBarStyle';
 
 /** Computes the floating player-bar position based on the current sidebar +
  *  queue panel widths. Returns an inline-style object (left/right/width); only

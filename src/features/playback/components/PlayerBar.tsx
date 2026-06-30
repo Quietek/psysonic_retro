@@ -30,7 +30,7 @@ import { PlayerSeekbarSection } from '@/features/playback/components/playerBar/P
 import { PlayerPlaybackRate } from '@/features/playback/components/playerBar/PlayerPlaybackRate';
 import { PlayerVolume } from '@/features/playback/components/playerBar/PlayerVolume';
 import { PlayerOverflowMenu } from '@/features/playback/components/playerBar/PlayerOverflowMenu';
-import { useFloatingPlayerBar } from '@/hooks/useFloatingPlayerBar';
+import { useFloatingPlayerBar } from '@/features/playback/hooks/useFloatingPlayerBar';
 import { useUtilityOverflowMenu } from '@/hooks/useUtilityOverflowMenu';
 import {
   usePlayerBarLayoutStore,
