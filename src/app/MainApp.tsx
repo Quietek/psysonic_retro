@@ -1,4 +1,5 @@
 import { initAudioListeners } from '../store/initAudioListeners';
+import '../store/playbackEngineBridgeRegister'; // installs the playback-engine bridge at boot
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { invoke } from '@tauri-apps/api/core';
