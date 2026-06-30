@@ -1,7 +1,7 @@
 import { usePlayerStore } from '../../store/playerStore';
 import { resolveAlbumForActiveServer } from '@/store/mediaResolver';
 import { songToTrack } from './songToTrack';
-import { useOrbitStore } from '@/features/orbit';
+import { orbitSnapshot } from '@/store/orbitRuntime';
 import { fadeOut } from './fadeOut';
 import { shouldAutodjInterruptBlend } from './autodjManualBlend';
 import type { Track } from '../../store/playerStoreTypes';
@@ -27,7 +27,7 @@ async function startAlbumPlayback(tracks: Track[]): Promise<void> {
   // playerStore bulk-gate also routes replaces into enqueue). Skip the
   // fadeOut entirely — the current track keeps playing, the album goes
   // onto the end of the queue after the user confirms the bulk dialog.
-  const orbitRole = useOrbitStore.getState().role;
+  const orbitRole = orbitSnapshot().role;
   if (orbitRole === 'host' || orbitRole === 'guest') {
     usePlayerStore.getState().enqueue(tracks);
     return;

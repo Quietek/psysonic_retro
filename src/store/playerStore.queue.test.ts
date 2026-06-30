@@ -26,7 +26,8 @@ vi.mock('@/lib/api/subsonic', async () => {
 
 // `enqueue` / `enqueueAt` call `orbitBulkGuard` for multi-track inserts when
 // the caller hasn't pre-confirmed. Force the guard to short-circuit through.
-vi.mock('@/features/orbit/utils/orbitBulkGuard', () => ({
+vi.mock('@/store/orbitRuntime', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/store/orbitRuntime')>()),
   orbitBulkGuard: vi.fn(async () => true),
 }));
 

@@ -9,7 +9,7 @@ import {
   isInfiniteQueueFetching,
   setInfiniteQueueFetching,
 } from './infiniteQueueState';
-import { isInOrbitSession } from '@/features/orbit';
+import { isInOrbitSession } from '@/store/orbitRuntime';
 import type { PlayerState, QueueItemRef, Track } from './playerStoreTypes';
 import { toQueueItemRefs } from '../utils/library/queueItemRef';
 import { resolveQueueTrack } from '../utils/library/queueTrackView';

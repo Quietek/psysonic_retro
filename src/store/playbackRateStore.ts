@@ -14,7 +14,7 @@ import {
   shouldRestartPlaybackForRateChange,
   type PlaybackRateSnapshot,
 } from '../utils/audio/playbackRateRestart';
-import { isOrbitPlaybackSyncActive } from '@/features/orbit';
+import { isOrbitPlaybackSyncActive } from '@/store/orbitRuntime';
 
 interface PlaybackRateState extends PlaybackRateSnapshot {
   /** UI-only: smaller slider steps (Advanced). Not sent to the engine. */

@@ -2,7 +2,7 @@ import { playbackReportStart, playbackReportStopped } from './playbackReportSess
 import { invoke } from '@tauri-apps/api/core';
 import { getMusicNetworkRuntimeOrNull } from '../music-network';
 import { setDeferHotCachePrefetch } from '../utils/cache/hotCacheGate';
-import { orbitBulkGuard } from '@/features/orbit';
+import { orbitBulkGuard, orbitSnapshot } from '@/store/orbitRuntime';
 import { sameQueueTrackId } from '../utils/playback/queueIdentity';
 import {
   computeAutodjManualBlendPlan,
@@ -53,7 +53,6 @@ import {
 import { refreshLoudnessForTrack } from './loudnessRefresh';
 import { fetchWaveformBins, refreshWaveformForTrack } from '@/store/waveformRefresh';
 import { deriveNormalizationSnapshot } from './normalizationSnapshot';
-import { useOrbitStore } from '@/features/orbit';
 import {
   playbackSourceHintForResolvedUrl,
   recordEnginePlayUrl,
@@ -135,7 +134,7 @@ export function runPlayTrack(
         // suggestions mid-listen. Append instead — the dialog's
         // "Add them all" copy already matches that semantic. Outside
         // Orbit, proceed as a normal replace.
-        const role = useOrbitStore.getState().role;
+        const role = orbitSnapshot().role;
         if (role === 'host' || role === 'guest') {
           get().enqueue(queue, true);
         } else {
@@ -157,7 +156,7 @@ export function runPlayTrack(
   // their own show" path. `useOrbitGuest`'s `syncToHost` is also a
   // guest-only call site, so it's never intercepted here.
   if (!_orbitConfirmed && queue && queue.length === 1) {
-    const orbitRole = useOrbitStore.getState().role;
+    const orbitRole = orbitSnapshot().role;
     if (orbitRole === 'host') {
       const currentItems = get().queueItems;
       const currentTrackId = currentItems[get().queueIndex]?.trackId;

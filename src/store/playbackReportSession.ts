@@ -3,7 +3,7 @@ import type { PlaybackReportState } from '@/lib/api/subsonicTypes';
 import { FEATURE_PLAYBACK_REPORT } from '../serverCapabilities/catalog';
 import { isFeatureActiveForServer } from '../serverCapabilities/storeView';
 import { isPlaybackRateApplied } from '../utils/audio/playbackRateHelpers';
-import { isOrbitPlaybackSyncActive } from '@/features/orbit';
+import { isOrbitPlaybackSyncActive } from '@/store/orbitRuntime';
 import { useAuthStore } from './authStore';
 import { getPlaybackProgressSnapshot } from './playbackProgress';
 import { usePlaybackRateStore } from './playbackRateStore';

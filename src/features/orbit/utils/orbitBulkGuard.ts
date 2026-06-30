@@ -1,6 +1,7 @@
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
 import { useConfirmModalStore } from '@/store/confirmModalStore';
 import i18n from '@/lib/i18n';
+import { registerOrbitRuntime } from '@/store/orbitRuntime';
 
 /**
  * Ask the user before dropping many tracks into the shared Orbit queue.
@@ -9,8 +10,8 @@ import i18n from '@/lib/i18n';
  * when the user accepted the confirm dialog. Returns `false` only when an
  * active-Orbit user explicitly cancelled.
  *
- * Lives in its own module so `playerStore` can use it without pulling the
- * full `utils/orbit.ts` (which itself imports `playerStore` — circular).
+ * The audio core reaches this (and the orbit session snapshot) through the
+ * neutral `@/store/orbitRuntime` seam, not by importing the orbit feature.
  */
 export async function orbitBulkGuard(count: number): Promise<boolean> {
   const role = useOrbitStore.getState().role;
@@ -24,3 +25,14 @@ export async function orbitBulkGuard(count: number): Promise<boolean> {
     cancelLabel: i18n.t('orbit.bulkConfirmNo'),
   });
 }
+
+// Install the orbit runtime into the core seam at module init. The
+// @/features/orbit barrel re-exports this module, so the topbar's barrel import
+// evaluates it at boot — before any Orbit session can start.
+registerOrbitRuntime({
+  getSnapshot: () => {
+    const o = useOrbitStore.getState();
+    return { role: o.role, phase: o.phase, state: o.state };
+  },
+  bulkGuard: orbitBulkGuard,
+});

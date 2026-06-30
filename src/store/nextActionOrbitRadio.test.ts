@@ -9,7 +9,10 @@ const { inOrbit, getSimilarSongs2, getTopSongs } = vi.hoisted(() => ({
 
 vi.mock('@/lib/api/subsonicArtists', () => ({ getSimilarSongs2, getTopSongs }));
 vi.mock('@tauri-apps/api/core', () => ({ invoke: vi.fn(() => Promise.resolve()) }));
-vi.mock('@/features/orbit', () => ({ isInOrbitSession: () => inOrbit.value }));
+vi.mock('@/store/orbitRuntime', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/store/orbitRuntime')>()),
+  isInOrbitSession: () => inOrbit.value,
+}));
 vi.mock('./authStore', () => ({
   useAuthStore: { getState: () => ({ infiniteQueueEnabled: false }) },
 }));

@@ -1,6 +1,6 @@
 import { getSong } from '@/lib/api/subsonicLibrary';
 import { invoke } from '@tauri-apps/api/core';
-import { estimateLivePosition } from '@/features/orbit';
+import { estimateLivePosition, orbitSnapshot } from '@/store/orbitRuntime';
 import { setDeferHotCachePrefetch } from '../utils/cache/hotCacheGate';
 import {
   getPlaybackCacheServerKey,
@@ -22,7 +22,6 @@ import {
   isReplayGainActive,
   loudnessGainDbForEngineBind,
 } from './loudnessGainCache';
-import { useOrbitStore } from '@/features/orbit';
 import {
   playbackSourceHintForResolvedUrl,
   recordEnginePlayUrl,
@@ -73,7 +72,7 @@ export function runResume(set: SetState, get: GetState): void {
   // them back at the stale local position while the host is already
   // two songs ahead. Covers PlayerBar, media keys, MPRIS — everything
   // that funnels through resume().
-  const orbit = useOrbitStore.getState();
+  const orbit = orbitSnapshot();
   const hostState = orbit.state;
   if (orbit.role === 'guest' && hostState?.isPlaying && hostState.currentTrack) {
     const trackId = hostState.currentTrack.trackId;
