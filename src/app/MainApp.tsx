@@ -21,14 +21,14 @@ import { initResumeIncompleteOfflinePins, scheduleResumeIncompleteOfflinePins } 
 import { runLegacyOfflineFileMigration } from '@/features/offline';
 import { reconcileLibraryTierForServer } from '@/features/offline';
 import { initMiniPlayerBridgeOnMain } from '@/features/miniPlayer';
-import { runAdvancedModeMigration } from '../utils/migrations/advancedModeMigration';
+import { runAdvancedModeMigration } from '@/app/migrations/advancedModeMigration';
 import { bootstrapAllIndexedServers } from '@/lib/library/librarySession';
 import { hydrateQueueFromIndex } from '@/features/playback/store/queueRestore';
 import { useLibraryAnalysisBackfill } from '@/lib/library/hooks/useLibraryAnalysisBackfill';
 import { useCoverArtPrefetch } from '../cover/useCoverArtPrefetch';
 import { useLibraryCoverBackfill } from '@/cover/useLibraryCoverBackfill';
 import { useCoverRevalidateScheduler } from '../cover/useCoverRevalidateScheduler';
-import { runCoverIdbUpgradeMigration } from '../utils/migrations/coverIdbUpgradeMigration';
+import { runCoverIdbUpgradeMigration } from '@/app/migrations/coverIdbUpgradeMigration';
 import { useMigrationOrchestrator } from '@/app/hooks/useMigrationOrchestrator';
 import { IS_WINDOWS } from '@/lib/util/platform';
 import TauriEventBridge from './TauriEventBridge';

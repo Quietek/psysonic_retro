@@ -1,8 +1,8 @@
-import { COVER_ART_TIERS } from '../../cover/tiers';
+import { COVER_ART_TIERS } from '@/cover/tiers';
 import { COVER_ART_REGISTERED_SIZES } from '@/cover/coverArtRegisteredSizes';
-import { invalidateCacheKey } from '../imageCache';
-import { STORE_NAME } from '../imageCache/constants';
-import { openDB } from '../imageCache/idbStore';
+import { invalidateCacheKey } from '@/utils/imageCache';
+import { STORE_NAME } from '@/utils/imageCache/constants';
+import { openDB } from '@/utils/imageCache/idbStore';
 
 const MIGRATION_FLAG = 'psysonic_cover_tier_idb_cleared_v1';
 
