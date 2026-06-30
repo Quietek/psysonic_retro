@@ -19,7 +19,7 @@ import { renderPresetIcon, useEnrichmentPrimaryIcon, useEnrichmentPrimaryLabel }
 import {
   usePlayerBarLayoutStore,
   type PlayerBarLayoutItemId,
-} from '@/store/playerBarLayoutStore';
+} from '@/features/playback/store/playerBarLayoutStore';
 import { useOfflineBrowseContext } from '@/features/offline';
 import { offlineActionPolicy } from '@/features/offline';
 

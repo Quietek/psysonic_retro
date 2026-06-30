@@ -5,7 +5,7 @@ import {
   ListMusic, Inbox, Sliders, LogOut,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useHelpModalStore } from '@/store/helpModalStore';
+import { useHelpModalStore } from '@/features/orbit/store/helpModalStore';
 import { SettingsSubSection } from '@/features/settings';
 
 /**

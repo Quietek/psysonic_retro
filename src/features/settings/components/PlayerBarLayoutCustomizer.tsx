@@ -5,7 +5,7 @@ import LastfmIcon from '@/ui/LastfmIcon';
 import {
   usePlayerBarLayoutStore,
   type PlayerBarLayoutItemId,
-} from '@/store/playerBarLayoutStore';
+} from '@/features/playback/store/playerBarLayoutStore';
 
 const PLAYER_BAR_LAYOUT_LABEL_KEYS: Record<PlayerBarLayoutItemId, string> = {
   starRating: 'settings.playerBarStarRating',

@@ -4,7 +4,7 @@ import { Orbit as OrbitIcon, Plus, LogIn, HelpCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
 import { useAuthStore } from '@/store/authStore';
-import { useHelpModalStore } from '@/store/helpModalStore';
+import { useHelpModalStore } from '@/features/orbit/store/helpModalStore';
 import OrbitStartModal from '@/features/orbit/components/OrbitStartModal';
 import OrbitJoinModal from '@/features/orbit/components/OrbitJoinModal';
 import OrbitWordmark from '@/features/orbit/components/OrbitWordmark';

@@ -8,7 +8,7 @@ import { PlayerPlaybackRateMenuSection } from '@/features/playback/components/pl
 import {
   usePlayerBarLayoutStore,
   type PlayerBarLayoutItemId,
-} from '@/store/playerBarLayoutStore';
+} from '@/features/playback/store/playerBarLayoutStore';
 
 interface Props {
   utilityMenuRef: React.RefObject<HTMLDivElement | null>;

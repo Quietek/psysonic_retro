@@ -2,7 +2,7 @@ import { describe, expect, it, beforeEach } from 'vitest';
 import {
   DEFAULT_PLAYER_BAR_LAYOUT_ITEMS,
   usePlayerBarLayoutStore,
-} from './playerBarLayoutStore';
+} from '@/features/playback/store/playerBarLayoutStore';
 
 describe('playerBarLayoutStore', () => {
   beforeEach(() => {

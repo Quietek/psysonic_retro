@@ -35,7 +35,7 @@ import { useUtilityOverflowMenu } from '@/features/playback/hooks/useUtilityOver
 import {
   usePlayerBarLayoutStore,
   type PlayerBarLayoutItemId,
-} from '@/store/playerBarLayoutStore';
+} from '@/features/playback/store/playerBarLayoutStore';
 
 export default function PlayerBar() {
   const { t } = useTranslation();

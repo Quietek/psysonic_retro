@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { X, RefreshCw, Shuffle, Settings2, Share2, HelpCircle, Activity } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
-import { useHelpModalStore } from '@/store/helpModalStore';
+import { useHelpModalStore } from '@/features/orbit/store/helpModalStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   endOrbitSession,

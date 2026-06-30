@@ -4,7 +4,7 @@ import { useArtistLayoutStore } from '@/features/artist';
 import { useAuthStore } from '@/store/authStore';
 import type { QueueDisplayMode } from '@/store/authStoreTypes';
 import { useHomeStore } from '@/features/home';
-import { usePlayerBarLayoutStore } from '@/store/playerBarLayoutStore';
+import { usePlayerBarLayoutStore } from '@/features/playback/store/playerBarLayoutStore';
 import { usePlaylistLayoutStore } from '@/features/playlist';
 import { useQueueToolbarStore } from '@/store/queueToolbarStore';
 import { useSidebarStore } from '@/features/sidebar';

@@ -1,6 +1,6 @@
 import { librarySetPlaybackHint, type PlaybackHint } from '@/lib/api/library';
-import { useAuthStore } from './authStore';
-import { useLibraryIndexStore } from './libraryIndexStore';
+import { useAuthStore } from '@/store/authStore';
+import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 
 /**
  * Bridge from the audio lifecycle to the Rust library scheduler's
