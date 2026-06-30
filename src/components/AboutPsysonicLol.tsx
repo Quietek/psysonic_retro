@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useId, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import { open as openUrl } from '@tauri-apps/plugin-shell';
-import PsysonicLogo from './PsysonicLogo';
+import PsysonicLogo from '@/ui/PsysonicLogo';
 
 const TAPS_TO_REVEAL_HINT = 10;
 const TARGET_CLICKS_IN_WINDOW = 100;

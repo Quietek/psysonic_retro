@@ -9,8 +9,8 @@ import { useSidebarStore } from '@/features/sidebar/store/sidebarStore';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PanelLeft, PanelLeftClose, Trash2 } from 'lucide-react';
-import PsysonicLogo from '@/components/PsysonicLogo';
-import PSmallLogo from '@/components/PSmallLogo';
+import PsysonicLogo from '@/ui/PsysonicLogo';
+import PSmallLogo from '@/ui/PSmallLogo';
 import { usePlaylistStore } from '@/features/playlist';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import {

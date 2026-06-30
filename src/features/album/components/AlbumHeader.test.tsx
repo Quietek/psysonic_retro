@@ -18,7 +18,7 @@ vi.mock('@/cover/lightbox', () => ({ useCoverLightboxSrc: () => ({ open: vi.fn()
 vi.mock('@/features/album/hooks/useAlbumDetailBack', () => ({ useAlbumDetailBack: () => vi.fn() }));
 vi.mock('@/lib/hooks/useIsMobile', () => ({ useIsMobile: () => false }));
 vi.mock('@/store/themeStore', () => ({ useThemeStore: () => false }));
-vi.mock('@/components/StarRating', () => ({ default: () => null }));
+vi.mock('@/ui/StarRating', () => ({ default: () => null }));
 vi.mock('@/features/artist', () => ({ OpenArtistRefInline: () => null }));
 vi.mock('@/cover/CoverArtImage', () => ({ CoverArtImage: () => null }));
 

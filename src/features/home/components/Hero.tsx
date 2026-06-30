@@ -21,7 +21,7 @@ import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '@/util
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { playAlbum, playAlbumShuffled } from '@/features/playback/utils/playback/playAlbum';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
-import { LongPressWaveOverlay } from '@/components/LongPressWaveOverlay';
+import { LongPressWaveOverlay } from '@/ui/LongPressWaveOverlay';
 import { albumArtistDisplayName, deriveAlbumArtistRefs } from '@/features/album';
 
 const INTERVAL_MS = 10000;

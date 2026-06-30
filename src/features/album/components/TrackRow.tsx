@@ -9,7 +9,7 @@ import { songToTrack } from '@/lib/media/songToTrack';
 import { useSelectionStore } from '@/store/selectionStore';
 import { useThemeStore } from '@/store/themeStore';
 import { previewInputFromSong, usePreviewStore } from '@/features/playback/store/previewStore';
-import StarRating from '@/components/StarRating';
+import StarRating from '@/ui/StarRating';
 import { codecLabel, type ColKey } from '@/features/album/utils/albumTrackListHelpers';
 import { formatLongDuration } from '@/lib/format/formatDuration';
 import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';

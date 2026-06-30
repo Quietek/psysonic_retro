@@ -22,7 +22,7 @@ import { useRangeSelection } from '@/lib/hooks/useRangeSelection';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { useMainstageInpageHeaderTight } from '@/hooks/useMainstageInpageHeaderTight';
 import { albumGridWarmCovers } from '@/cover/layoutSizes';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { NEW_RELEASES_INPAGE_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useAsyncInpagePagination } from '@/hooks/useAsyncInpagePagination';

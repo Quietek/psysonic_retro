@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from '@/test/helpers/renderWithProviders';
-import CoverLightbox from './CoverLightbox';
+import CoverLightbox from '@/ui/CoverLightbox';
 
 describe('CoverLightbox', () => {
   it('renders the cover image with the supplied src and alt', () => {

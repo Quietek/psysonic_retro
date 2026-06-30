@@ -41,7 +41,7 @@ import { sanitizeFilename } from '@/features/album/utils/albumDetailHelpers';
 import { albumArtistDisplayName, deriveAlbumHeaderArtistRefs } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { albumGridWarmCovers } from '@/cover/layoutSizes';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import LosslessModeBanner from '@/components/LosslessModeBanner';
 import { isLosslessSuffix } from '@/lib/library/losslessFormats';
 import { isLosslessMode } from '@/lib/library/losslessMode';

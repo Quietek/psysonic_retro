@@ -1,5 +1,5 @@
 import { Globe, Radio, Server, Music2, Headphones } from 'lucide-react';
-import LastfmIcon from '../../LastfmIcon';
+import LastfmIcon from '@/ui/LastfmIcon';
 import type { PresetIcon } from '../../../music-network';
 
 /**

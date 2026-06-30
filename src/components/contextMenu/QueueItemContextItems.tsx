@@ -5,7 +5,7 @@ import { getMusicNetworkRuntime, useEnrichmentPrimary } from '../../music-networ
 import type { Track } from '@/lib/media/trackTypes';
 import { useAuthStore } from '../../store/authStore';
 import { renderPresetIcon } from '../settings/musicNetwork/presetIcon';
-import StarRating from '../StarRating';
+import StarRating from '@/ui/StarRating';
 import { AddToPlaylistSubmenu } from './AddToPlaylistSubmenu';
 import type { ContextMenuItemsProps } from './contextMenuItemTypes';
 

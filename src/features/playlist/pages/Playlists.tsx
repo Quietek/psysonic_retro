@@ -26,7 +26,7 @@ import PlaylistsSmartEditor from '@/features/playlist/components/PlaylistsSmartE
 import PlaylistsHeader from '@/features/playlist/components/PlaylistsHeader';
 import PlaylistCard from '@/features/playlist/components/PlaylistCard';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import { useOfflineBrowseContext } from '@/features/offline';
 import { offlineActionPolicy } from '@/features/offline';
 import { Info } from 'lucide-react';

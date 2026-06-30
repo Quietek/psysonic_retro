@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Radio, Heart, ChevronRight, ListMusic, Star, Share2 } from 'lucide-react';
 import { star, unstar } from '@/lib/api/subsonicStarRating';
 import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
-import StarRating from '../StarRating';
+import StarRating from '@/ui/StarRating';
 import { ArtistToPlaylistSubmenu } from './AlbumArtistToPlaylistSubmenu';
 import { MultiArtistToPlaylistSubmenu } from './MultiArtistToPlaylistSubmenu';
 import type { ContextMenuItemsProps } from './contextMenuItemTypes';

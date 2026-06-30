@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { GRID_COVER_WARM_LIMIT } from '../cover/layoutSizes';
-import { useWarmGridCovers } from '../hooks/useWarmGridCovers';
+import { GRID_COVER_WARM_LIMIT } from '@/cover/layoutSizes';
+import { useWarmGridCovers } from '@/hooks/useWarmGridCovers';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
+import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useElementClientHeightById } from '@/lib/hooks/useResizeClientHeight';
-import { useCardGridMetrics } from '../hooks/useCardGridMetrics';
+import { useCardGridMetrics } from '@/hooks/useCardGridMetrics';
 import { useRemeasureGridVirtualizer } from '@/lib/hooks/useRemeasureGridVirtualizer';
 import { useVirtualizerScrollMargin } from '@/lib/hooks/useVirtualizerScrollMargin';
-import type { CardGridRowHeightVariant } from '../utils/cardGridLayout';
+import type { CardGridRowHeightVariant } from '@/utils/cardGridLayout';
 
 export type VirtualCardGridProps<T> = {
   items: readonly T[];

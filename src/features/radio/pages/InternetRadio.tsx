@@ -14,7 +14,7 @@ import RadioCard from '@/features/radio/components/RadioCard';
 import RadioEditModal from '@/features/radio/components/RadioEditModal';
 import RadioDirectoryModal from '@/features/radio/components/RadioDirectoryModal';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import { useNavidromeAdminRole, canManageNavidromeRadio } from '@/hooks/useNavidromeAdminRole';
 
 export default function InternetRadio() {

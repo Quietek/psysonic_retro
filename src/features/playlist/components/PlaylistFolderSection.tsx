@@ -5,7 +5,7 @@ import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistFolderStore } from '@/features/playlist/store/playlistFolderStore';
 import type { PlaylistFolder } from '@/features/playlist/utils/playlistFolders';
 import { useDragDrop } from '@/lib/dnd/DragDropContext';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 
 interface Props {
   serverId: string;

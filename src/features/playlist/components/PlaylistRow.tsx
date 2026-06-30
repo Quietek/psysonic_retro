@@ -7,7 +7,7 @@ import { codecLabel } from '@/utils/componentHelpers/playlistDetailHelpers';
 import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
 import i18n from '@/lib/i18n';
 import { formatTrackTime } from '@/lib/format/formatDuration';
-import StarRating from '@/components/StarRating';
+import StarRating from '@/ui/StarRating';
 import { PlaylistArtistCell } from '@/features/playlist/components/PlaylistArtistCell';
 
 export interface PlaylistRowCallbacks {

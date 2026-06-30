@@ -9,7 +9,7 @@ import { ArtistHeroCover } from '@/cover/artistHero';
 import { coverArtRef } from '@/cover/ref';
 import { useCoverLightboxSrc } from '@/cover/lightbox';
 import { ArrowLeft, Users, Heart, Feather, Share2 } from 'lucide-react';
-import WikipediaIcon from '@/components/WikipediaIcon';
+import WikipediaIcon from '@/ui/WikipediaIcon';
 import { open } from '@tauri-apps/plugin-shell';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
@@ -19,7 +19,7 @@ import { showToast } from '@/utils/ui/toast';
 import { sanitizeHtml } from '@/lib/util/sanitizeHtml';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { albumGridWarmCovers } from '@/cover/layoutSizes';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 
 export default function ComposerDetail() {
   const { t } = useTranslation();

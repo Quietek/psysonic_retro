@@ -7,7 +7,7 @@ import SettingsSubSection from '@/features/settings/components/SettingsSubSectio
 import { SettingsGroup } from '@/features/settings/components/SettingsGroup';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';
 import { SettingsSubCard, SettingsField } from '@/features/settings/components/SettingsSubCard';
-import StarRating from '@/components/StarRating';
+import StarRating from '@/ui/StarRating';
 import AnalyticsStrategySection from '@/features/settings/components/AnalyticsStrategySection';
 const AUDIOBOOK_GENRES_DISPLAY = ['Hörbuch', 'Hoerbuch', 'Hörspiel', 'Hoerspiel', 'Audiobook', 'Audio Book', 'Spoken Word', 'Spokenword', 'Podcast', 'Kapitel', 'Thriller', 'Krimi', 'Speech', 'Fantasy', 'Comedy', 'Literature'];
 

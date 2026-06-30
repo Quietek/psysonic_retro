@@ -28,7 +28,7 @@ import { albumGridWarmCovers, COVER_DENSE_GRID_MIN_CELL_CSS_PX } from '@/cover/l
 import {
   primeAlbumCoversForDisplay,
 } from '@/cover/warmDiskPeek';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { RANDOM_ALBUMS_INPAGE_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useMainstageInpageHeaderTight } from '@/hooks/useMainstageInpageHeaderTight';

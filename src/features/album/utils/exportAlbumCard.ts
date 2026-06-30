@@ -3,7 +3,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { coverArtRef } from '@/cover/ref';
 import { loadCoverBlobForExport } from '@/cover/integrations/export';
-import PsysonicLogo from '@/components/PsysonicLogo';
+import PsysonicLogo from '@/ui/PsysonicLogo';
 
 export type ExportFormat = 'story' | 'square' | 'twitter';
 export type ExportGridSize = 3 | 4 | 5;

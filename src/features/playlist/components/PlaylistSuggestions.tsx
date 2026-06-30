@@ -6,7 +6,7 @@ import type { ColDef } from '@/utils/useTracklistColumns';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { usePreviewStore } from '@/features/playback/store/previewStore';
-import StarRating from '@/components/StarRating';
+import StarRating from '@/ui/StarRating';
 import { PlaylistArtistCell } from '@/features/playlist/components/PlaylistArtistCell';
 import { useThemeStore } from '@/store/themeStore';
 import { usePlaylistLayoutStore } from '@/features/playlist/store/playlistLayoutStore';

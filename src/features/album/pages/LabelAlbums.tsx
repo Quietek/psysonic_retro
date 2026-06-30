@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/store/authStore';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { albumGridWarmCovers } from '@/cover/layoutSizes';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 
 export default function LabelAlbums() {
   const { t } = useTranslation();

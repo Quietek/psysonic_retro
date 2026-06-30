@@ -18,9 +18,9 @@ import { usePlaybackCoverArt } from '@/cover/usePlaybackCoverArt';
 import { useCachedUrl } from '@/ui/CachedImage';
 import { useCoverLightboxSrc } from '@/cover/lightbox';
 import type { CoverArtRef } from '@/cover/types';
-import LastfmIcon from '@/components/LastfmIcon';
-import WikipediaIcon from '@/components/WikipediaIcon';
-import StarRating from '@/components/StarRating';
+import LastfmIcon from '@/ui/LastfmIcon';
+import WikipediaIcon from '@/ui/WikipediaIcon';
+import StarRating from '@/ui/StarRating';
 import { tooltipAttrs } from '@/ui/tooltipAttrs';
 import { offlineActionPolicy, type OfflineActionPolicy } from '@/features/offline';
 

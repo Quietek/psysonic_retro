@@ -23,7 +23,7 @@ import { filterArtistsWithRoleAlbumCredits } from '@/lib/library/composerBrowse'
 import { ALL_SENTINEL, artistLetterBucket } from '@/features/artist';
 import { useLibraryIgnoredArticles } from '@/hooks/useLibraryIgnoredArticles';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { useVirtualizerScrollMargin } from '@/lib/hooks/useVirtualizerScrollMargin';
 import { useClientSliceInfiniteScroll } from '@/hooks/useClientSliceInfiniteScroll';

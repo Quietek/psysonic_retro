@@ -21,7 +21,7 @@ import { join } from '@tauri-apps/api/path';
 import { Download, HardDriveDownload, ListPlus } from 'lucide-react';
 import SelectionToggleButton from '@/ui/SelectionToggleButton';
 import { albumGridWarmCovers } from '@/cover/layoutSizes';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { LOSSLESS_ALBUMS_INPAGE_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useInpageScrollSentinel } from '@/hooks/useInpageScrollSentinel';

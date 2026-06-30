@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus } from 'lucide-react';
-import StarRating from '@/components/StarRating';
+import StarRating from '@/ui/StarRating';
 import CustomSelect from '@/ui/CustomSelect';
 import {
   LIMIT_MAX, YEAR_MAX, YEAR_MIN, clampYear, defaultSmartFilters,

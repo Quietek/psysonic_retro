@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { useAlbumDetailBack } from '@/features/album/hooks/useAlbumDetailBack';
 import { useThemeStore } from '@/store/themeStore';
-import StarRating from '@/components/StarRating';
+import StarRating from '@/ui/StarRating';
 import { copyEntityShareLink } from '@/utils/share/copyEntityShareLink';
 import { showToast } from '@/utils/ui/toast';
 import { isAlbumRecentlyAdded } from '@/features/album/utils/albumRecency';

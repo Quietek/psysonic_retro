@@ -30,7 +30,7 @@ import { useRangeSelection } from '@/lib/hooks/useRangeSelection';
 import { useMainstageInpageHeaderTight } from '@/hooks/useMainstageInpageHeaderTight';
 import { useInpageScrollViewport } from '@/hooks/useInpageScrollViewport';
 import InpageScrollSentinel from '@/ui/InpageScrollSentinel';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { ALBUMS_INPAGE_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';

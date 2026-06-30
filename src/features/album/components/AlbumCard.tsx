@@ -18,7 +18,7 @@ import { acquireUrl } from '@/utils/imageCache/urlPool';
 import { OpenArtistRefInline } from '@/features/artist';
 import { fetchAlbumTracks, playAlbum, playAlbumShuffled } from '@/features/playback/utils/playback/playAlbum';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
-import { LongPressWaveOverlay } from '@/components/LongPressWaveOverlay';
+import { LongPressWaveOverlay } from '@/ui/LongPressWaveOverlay';
 import { useDragDrop } from '@/lib/dnd/DragDropContext';
 import { isAlbumRecentlyAdded } from '@/features/album/utils/albumRecency';
 import { albumArtistDisplayName, deriveAlbumArtistRefs } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';

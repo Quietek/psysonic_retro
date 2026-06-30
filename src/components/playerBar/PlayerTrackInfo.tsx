@@ -12,7 +12,7 @@ import { useAlbumCoverRef } from '../../cover/useLibraryCoverRef';
 import { usePlaybackTrackCoverRef } from '../../cover/useLibraryCoverRef';
 import MarqueeText from '@/ui/MarqueeText';
 import { OpenArtistRefInline } from '@/features/artist';
-import StarRating from '../StarRating';
+import StarRating from '@/ui/StarRating';
 import { PlaybackBufferingOverlay } from '../playback/PlaybackBufferingOverlay';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useEnrichmentPrimaryLabel } from '../../hooks/useEnrichmentPrimaryLabel';

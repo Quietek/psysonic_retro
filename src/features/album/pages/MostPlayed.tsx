@@ -11,7 +11,7 @@ import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { ArtistCoverArtImage } from '@/cover/ArtistCoverArtImage';
 import { playAlbum, playAlbumShuffled } from '@/features/playback/utils/playback/playAlbum';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
-import { LongPressWaveOverlay } from '@/components/LongPressWaveOverlay';
+import { LongPressWaveOverlay } from '@/ui/LongPressWaveOverlay';
 import { useTranslation } from 'react-i18next';
 import { albumArtistDisplayName } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';
 

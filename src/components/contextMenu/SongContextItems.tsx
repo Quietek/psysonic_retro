@@ -12,7 +12,7 @@ import { songToTrack } from '@/lib/media/songToTrack';
 import { showToast } from '../../utils/ui/toast';
 import { suggestOrbitTrack, hostEnqueueToOrbit, evaluateOrbitSuggestGate, OrbitSuggestBlockedError } from '@/features/orbit';
 import { renderPresetIcon } from '../settings/musicNetwork/presetIcon';
-import StarRating from '../StarRating';
+import StarRating from '@/ui/StarRating';
 import { AddToPlaylistSubmenu } from './AddToPlaylistSubmenu';
 import type { ContextMenuItemsProps } from './contextMenuItemTypes';
 

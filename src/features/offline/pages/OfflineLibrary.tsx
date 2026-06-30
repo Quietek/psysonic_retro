@@ -11,7 +11,7 @@ import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { coverServerScopeForServerId } from '@/cover/serverScope';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { GRID_COVER_WARM_LIMIT } from '@/cover/layoutSizes';
-import { VirtualCardGrid } from '@/components/VirtualCardGrid';
+import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import { OfflineLibraryDiskStat } from '@/features/offline/components/OfflineLibraryDiskStat';
 import {
   buildOfflineCacheQueueTracks,
