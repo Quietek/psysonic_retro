@@ -1,5 +1,5 @@
-import { libraryGetTracksBatch, type TrackRefDto } from '../../api/library';
-import { getSongForServer } from '../../api/subsonicLibrary';
+import { libraryGetTracksBatch, type TrackRefDto } from '@/lib/api/library';
+import { getSongForServer } from '@/lib/api/subsonicLibrary';
 import { usePlayerStore } from '../../store/playerStore';
 import type { QueueItemRef, Track } from '../../store/playerStoreTypes';
 import { songToTrack } from '../playback/songToTrack';

@@ -1,7 +1,7 @@
 import {
   buildCoverArtUrl,
   buildCoverArtUrlForServer,
-} from '../api/subsonicStreamUrl';
+} from '@/lib/api/subsonicStreamUrl';
 import { getPlaybackServerId } from '../utils/playback/playbackServer';
 import { useAuthStore } from '../store/authStore';
 import { connectBaseUrlForServer } from '../utils/server/serverEndpoint';

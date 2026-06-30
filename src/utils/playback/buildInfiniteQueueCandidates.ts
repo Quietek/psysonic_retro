@@ -1,5 +1,5 @@
 import { getSimilarSongs2, getTopSongs } from '@/features/artist';
-import { getRandomSongs } from '../../api/subsonicLibrary';
+import { getRandomSongs } from '@/lib/api/subsonicLibrary';
 import type { Track } from '../../store/playerStoreTypes';
 import {
   enrichSongsForMixRatingFilter,

@@ -18,7 +18,7 @@ vi.mock('../utils/media/mediaDir', () => ({
   getMediaDir: () => '/media',
 }));
 
-vi.mock('../api/subsonicStreamUrl', () => ({
+vi.mock('@/lib/api/subsonicStreamUrl', () => ({
   buildStreamUrlForServer: (_sid: string, id: string) => `https://mock/stream/${id}`,
 }));
 

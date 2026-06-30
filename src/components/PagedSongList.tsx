@@ -1,4 +1,4 @@
-import type { SubsonicSong } from '../api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import React, { useRef } from 'react';
 import SongRow, { SongListHeader } from './SongRow';
 import { useInpageScrollSentinel } from '../hooks/useInpageScrollSentinel';

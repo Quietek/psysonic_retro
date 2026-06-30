@@ -1,5 +1,5 @@
 import type { QueueItemRef } from '../../store/playerStoreTypes';
-import type { PlaySessionRecentTrack } from '../../api/library';
+import type { PlaySessionRecentTrack } from '@/lib/api/library';
 import type { TimelinePlayedRef } from '../../store/timelineSessionHistory';
 import type { Track } from '../../store/playerStoreTypes';
 

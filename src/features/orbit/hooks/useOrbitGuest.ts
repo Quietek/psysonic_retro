@@ -1,4 +1,4 @@
-import { getSong } from '@/api/subsonicLibrary';
+import { getSong } from '@/lib/api/subsonicLibrary';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { useEffect, useRef } from 'react';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';

@@ -1,7 +1,7 @@
 import { resolveMediaServerId, resolvePlaylist } from '@/features/offline';
-import { getGenres } from '@/api/subsonicGenres';
-import { filterSongsToActiveLibrary } from '@/api/subsonicLibrary';
-import type { SubsonicPlaylist, SubsonicGenre } from '@/api/subsonicTypes';
+import { getGenres } from '@/lib/api/subsonicGenres';
+import { filterSongsToActiveLibrary } from '@/lib/api/subsonicLibrary';
+import type { SubsonicPlaylist, SubsonicGenre } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { usePlayerStore } from '@/store/playerStore';

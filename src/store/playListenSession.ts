@@ -4,7 +4,7 @@ import { usePreviewStore } from './previewStore';
 import {
   libraryRecordPlaySession,
   type PlaySessionEndReason,
-} from '../api/library';
+} from '@/lib/api/library';
 import { libraryIsReady } from '../utils/library/libraryReady';
 import { getPlaybackServerId } from '../utils/playback/playbackServer';
 import { emitPlaySessionRecorded } from './playSessionRecorded';

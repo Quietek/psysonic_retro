@@ -7,7 +7,7 @@ import {
   ndUpdateUser,
   type NdLibrary,
   type NdUser,
-} from '@/api/navidromeAdmin';
+} from '@/lib/api/navidromeAdmin';
 import { showToast } from '@/utils/ui/toast';
 import {
   copyTextToClipboard,

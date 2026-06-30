@@ -1,4 +1,4 @@
-import { getSong } from '../../api/subsonicLibrary';
+import { getSong } from '@/lib/api/subsonicLibrary';
 import { resolveAlbumForActiveServer } from '@/features/offline';
 import { songToTrack } from './songToTrack';
 import { playAlbum } from './playAlbum';

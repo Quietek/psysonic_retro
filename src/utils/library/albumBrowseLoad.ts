@@ -22,8 +22,8 @@ import { albumBrowseHasServerFilters, countGenresFromAlbums, filterAlbumsByCompi
 import { runLocalAlbumBrowse } from './albumBrowseLocal';
 import { fetchAlbumBrowseNetwork } from './albumBrowseNetwork';
 import { fetchStarredAlbumBrowse } from './albumBrowseStarredFetch';
-import { libraryGetGenreAlbumCounts } from '../../api/library';
-import { libraryScopeForServer } from '../../api/subsonicClient';
+import { libraryGetGenreAlbumCounts } from '@/lib/api/library';
+import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import { libraryIsReady } from './libraryReady';
 import type {
   AlbumBrowseFetchCallbacks,

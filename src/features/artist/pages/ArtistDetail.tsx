@@ -1,6 +1,6 @@
 import { useCoverArt } from '@/cover/useCoverArt';
 import { useArtistCoverRef } from '@/cover/useLibraryCoverRef';
-import type { SubsonicArtist, SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicArtist, SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { useEffect, useState, Fragment, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { AlbumCard } from '@/features/album';

@@ -1,4 +1,4 @@
-import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '../api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
 
 /** Session cache so leaving Mainstage and returning does not refetch + reshuffle everything. */
 export type HomeFeedSnapshot = {

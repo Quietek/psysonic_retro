@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { useOfflineJobStore } from '@/features/offline/store/offlineJobStore';
 import { FAVORITES_OFFLINE_JOB_ID } from '@/features/offline/utils/favoritesOfflineConstants';
@@ -20,11 +20,11 @@ vi.mock('@/utils/network/activeServerReachability', () => ({
   isActiveServerReachable: () => isActiveServerReachableMock(),
 }));
 
-vi.mock('@/api/subsonicStarRating', () => ({
+vi.mock('@/lib/api/subsonicStarRating', () => ({
   getStarredForServer: (serverId: string) => getStarredForServerMock(serverId),
 }));
 
-vi.mock('@/api/subsonicLibrary', () => ({
+vi.mock('@/lib/api/subsonicLibrary', () => ({
   getAlbumForServer: vi.fn(async () => ({ songs: [] })),
 }));
 

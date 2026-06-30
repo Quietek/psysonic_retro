@@ -1,4 +1,4 @@
-import { getSong } from '@/api/subsonicLibrary';
+import { getSong } from '@/lib/api/subsonicLibrary';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { useEffect, useRef, useState } from 'react';
 import { X, RefreshCw, Shuffle, Settings2, Share2, HelpCircle, Activity } from 'lucide-react';

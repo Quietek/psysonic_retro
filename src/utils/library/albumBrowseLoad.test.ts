@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { SubsonicAlbum } from '../../api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import {
   albumBrowseHasGenreFilter,
   albumBrowseHasServerFilters,

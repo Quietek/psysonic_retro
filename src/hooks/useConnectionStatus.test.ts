@@ -7,7 +7,7 @@ import {
   type PickReachableResult,
 } from '@/utils/server/serverEndpoint';
 
-vi.mock('@/api/subsonic', () => ({
+vi.mock('@/lib/api/subsonic', () => ({
   pingWithCredentials: vi.fn(),
   pingWithCredentialsForProfile: vi.fn(),
   scheduleInstantMixProbeForServer: vi.fn(),
@@ -17,7 +17,7 @@ vi.mock('@/utils/perf/perfFlags', () => ({
   usePerfProbeFlags: () => ({ disableBackgroundPolling: false }),
 }));
 
-import { pingWithCredentialsForProfile } from '@/api/subsonic';
+import { pingWithCredentialsForProfile } from '@/lib/api/subsonic';
 import { useDevOfflineBrowseStore } from '@/features/offline';
 import { resetActiveServerConnectionSnapshot, setConnectionStatus } from '@/utils/network/activeServerReachability';
 import { useConnectionStatus } from './useConnectionStatus';

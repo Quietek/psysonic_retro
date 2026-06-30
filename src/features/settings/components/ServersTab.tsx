@@ -7,12 +7,12 @@ import { useAuthStore } from '@/store/authStore';
 import { formatServerSoftware, isNavidromeAudiomuseSoftwareEligible, type InstantMixProbeResult, type SubsonicServerIdentity } from '@/utils/server/subsonicServerIdentity';
 import { buildCapabilityContext } from '@/serverCapabilities/context';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
-import { libraryDeleteServerData, librarySyncClearSession } from '@/api/library';
+import { libraryDeleteServerData, librarySyncClearSession } from '@/lib/api/library';
 import { bootstrapIndexedServer } from '@/utils/library/librarySession';
 import { useLibraryIndexSync } from '@/hooks/useLibraryIndexSync';
 import ServerLibraryIndexControls from '@/features/settings/components/ServerLibraryIndexControls';
 import type { ServerProfile } from '@/store/authStoreTypes';
-import { pingWithCredentialsForProfile, scheduleInstantMixProbeForServer } from '@/api/subsonic';
+import { pingWithCredentialsForProfile, scheduleInstantMixProbeForServer } from '@/lib/api/subsonic';
 import {
   clearServerHttpContext,
   syncServerHttpContextForProfile,

@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import type {
   SubsonicAlbum, SubsonicArtist, SubsonicPlaylist,
-} from '@/api/subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 import type { DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
 import type { SourceTab } from '@/features/deviceSync/utils/deviceSyncHelpers';
 import BrowserRow from '@/features/deviceSync/components/BrowserRow';

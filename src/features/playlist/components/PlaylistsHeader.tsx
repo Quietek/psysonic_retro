@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CheckSquare2, Plus, Sparkles, Trash2 } from 'lucide-react';
-import type { SubsonicPlaylist } from '@/api/subsonicTypes';
+import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import {
   defaultSmartFilters, type SmartFilters,
 } from '@/features/playlist/utils/playlistsSmart';

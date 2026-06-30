@@ -1,8 +1,8 @@
 import type { TFunction } from 'i18next';
 import { open as openDialog } from '@tauri-apps/plugin-dialog';
 import { readTextFile } from '@tauri-apps/plugin-fs';
-import { search } from '@/api/subsonicSearch';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import { search } from '@/lib/api/subsonicSearch';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { showToast } from '@/utils/ui/toast';
 import { parseSpotifyCsv, type SpotifyCsvTrack } from '@/features/playlist/utils/spotifyCsvImport';
 import {

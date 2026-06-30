@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { screen } from '@testing-library/react';
 import { renderWithProviders } from '@/test/helpers/renderWithProviders';
 import { PlaylistArtistCell } from '@/features/playlist/components/PlaylistArtistCell';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 function song(overrides: Partial<SubsonicSong>): SubsonicSong {
   return {

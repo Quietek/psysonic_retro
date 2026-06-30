@@ -10,7 +10,7 @@ import {
   subscribeLibrarySyncIdle,
   subscribeLibrarySyncProgress,
   type SyncStateDto,
-} from '../api/library';
+} from '@/lib/api/library';
 import {
   bootstrapAllIndexedServers,
   bootstrapIndexedServer,

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export type AlbumSortKey = 'natural' | 'title' | 'artist' | 'album' | 'favorite' | 'rating' | 'duration' | 'playCount' | 'lastPlayed' | 'bpm';
 

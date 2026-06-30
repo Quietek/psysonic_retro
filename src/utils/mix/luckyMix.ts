@@ -1,6 +1,6 @@
 import { fetchSimilarTracksRouted } from '@/features/artist';
-import { filterSongsToActiveLibrary, getRandomSongs } from '../../api/subsonicLibrary';
-import type { SubsonicAlbum, SubsonicSong } from '../../api/subsonicTypes';
+import { filterSongsToActiveLibrary, getRandomSongs } from '@/lib/api/subsonicLibrary';
+import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { QueueItemRef } from '../../store/playerStoreTypes';
 import { songToTrack } from '../playback/songToTrack';
 import { invoke } from '@tauri-apps/api/core';

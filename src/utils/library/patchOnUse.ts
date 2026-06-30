@@ -1,4 +1,4 @@
-import { libraryPatchTrack } from '../../api/library';
+import { libraryPatchTrack } from '@/lib/api/library';
 import { useLibraryIndexStore } from '../../store/libraryIndexStore';
 
 type TrackPatch = {

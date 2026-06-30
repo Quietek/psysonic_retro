@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach } from 'vitest';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import {
   DEFAULT_ALBUM_BROWSE_RETURN_FILTERS,
   DEFAULT_ALBUM_BROWSE_SORT,

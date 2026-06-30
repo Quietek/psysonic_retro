@@ -1,4 +1,4 @@
-import type { SubsonicGenre } from '../../api/subsonicTypes';
+import type { SubsonicGenre } from '@/lib/api/subsonicTypes';
 import { resolveServerIdForIndexKey } from '../server/serverLookup';
 
 /** Fresh hits skip SQLite entirely. */

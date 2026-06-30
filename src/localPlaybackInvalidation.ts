@@ -1,6 +1,6 @@
 import { listen } from '@tauri-apps/api/event';
 import { invoke } from '@tauri-apps/api/core';
-import { libraryGetTrack } from './api/library';
+import { libraryGetTrack } from '@/lib/api/library';
 import { useAuthStore } from './store/authStore';
 import { useLocalPlaybackStore } from './store/localPlaybackStore';
 import { layoutFingerprintFromLibraryTrack } from './utils/media/mediaLayout';

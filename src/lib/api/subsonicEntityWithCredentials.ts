@@ -1,5 +1,5 @@
-import { apiWithCredentials, type ServerHttpHeaderProfile } from './subsonicClient';
-import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from './subsonicTypes';
+import { apiWithCredentials, type ServerHttpHeaderProfile } from '@/lib/api/subsonicClient';
+import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export async function getSongWithCredentials(
   serverUrl: string,

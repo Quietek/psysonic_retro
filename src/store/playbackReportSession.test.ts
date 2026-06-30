@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('../api/subsonicScrobble', () => ({
+vi.mock('@/lib/api/subsonicScrobble', () => ({
   reportPlayback: vi.fn(() => Promise.resolve()),
   reportNowPlaying: vi.fn(() => Promise.resolve()),
 }));
@@ -21,7 +21,7 @@ vi.mock('./playbackRateStore', () => ({
 vi.mock('../utils/audio/playbackRateHelpers', () => ({ isPlaybackRateApplied: () => false }));
 vi.mock('@/features/orbit', () => ({ isOrbitPlaybackSyncActive: () => false }));
 
-import { reportNowPlaying, reportPlayback } from '../api/subsonicScrobble';
+import { reportNowPlaying, reportPlayback } from '@/lib/api/subsonicScrobble';
 import { isFeatureActiveForServer } from '../serverCapabilities/storeView';
 import { useAuthStore } from './authStore';
 import {

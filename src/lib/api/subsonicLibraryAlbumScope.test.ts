@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { SubsonicAlbum } from './subsonicTypes';
-import { filterAlbumsByScopedAlbumIds } from './subsonicLibrary';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
+import { filterAlbumsByScopedAlbumIds } from '@/lib/api/subsonicLibrary';
 
 const album = (id: string): SubsonicAlbum => ({
   id,

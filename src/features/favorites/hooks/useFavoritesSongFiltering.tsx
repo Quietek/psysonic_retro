@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { ArrowDown, ArrowUp } from 'lucide-react';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '@/store/playerStore';
 
 const CURRENT_YEAR = new Date().getFullYear();

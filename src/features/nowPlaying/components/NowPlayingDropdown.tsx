@@ -1,6 +1,6 @@
 import { TrackCoverArtImage } from '@/cover/TrackCoverArtImage';
-import { getNowPlaying } from '@/api/subsonicScrobble';
-import type { SubsonicNowPlaying } from '@/api/subsonicTypes';
+import { getNowPlaying } from '@/lib/api/subsonicScrobble';
+import type { SubsonicNowPlaying } from '@/lib/api/subsonicTypes';
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { PlayCircle, Pause, User, Radio, RefreshCw } from 'lucide-react';

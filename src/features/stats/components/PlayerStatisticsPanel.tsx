@@ -7,7 +7,7 @@ import {
   libraryGetPlayerStatsYearSummary,
   type PlaySessionYearBounds,
   type PlaySessionYearSummary,
-} from '@/api/library';
+} from '@/lib/api/library';
 import { usePlayerStatsLiveRefresh } from '@/features/stats/hooks/usePlayerStatsLiveRefresh';
 import { usePlayerStatsRecordingEnabled } from '@/features/stats/hooks/usePlayerStatsRecordingEnabled';
 import PlayerStatsHeatmap from '@/features/stats/components/PlayerStatsHeatmap';

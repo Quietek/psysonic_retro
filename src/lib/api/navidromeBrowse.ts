@@ -1,8 +1,8 @@
-import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from './subsonicTypes';
-import { parseItemGenres } from '../utils/library/genreTags';
+import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
+import { parseItemGenres } from '@/utils/library/genreTags';
 import { invoke } from '@tauri-apps/api/core';
-import { useAuthStore } from '../store/authStore';
-import { ndLogin } from './navidromeAdmin';
+import { useAuthStore } from '@/store/authStore';
+import { ndLogin } from '@/lib/api/navidromeAdmin';
 /** Server-keyed Bearer token cache. Cheap to keep — Navidrome tokens are long-lived. */
 let cachedToken: { serverUrl: string; token: string } | null = null;
 

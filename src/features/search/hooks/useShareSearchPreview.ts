@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import {
   resolveShareSearchAlbum,
   resolveShareSearchArtist,

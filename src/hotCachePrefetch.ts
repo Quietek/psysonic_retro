@@ -1,4 +1,4 @@
-import { buildStreamUrlForServer } from './api/subsonicStreamUrl';
+import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
 import { getPlaybackCacheServerKey } from './utils/playback/playbackServer';
 import type { QueueItemRef } from './store/playerStoreTypes';
 import { resolveQueueTrack } from './utils/library/queueTrackView';

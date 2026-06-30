@@ -1,8 +1,8 @@
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from '@/store/authStore';
 import { shouldAttemptSubsonicForServer } from '@/utils/network/subsonicNetworkGuard';
-import { api, apiForServer } from '@/api/subsonicClient';
-import type { SubsonicPlaylist, SubsonicSong } from '@/api/subsonicTypes';
+import { api, apiForServer } from '@/lib/api/subsonicClient';
+import type { SubsonicPlaylist, SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export async function getPlaylists(includeOrbit = false): Promise<SubsonicPlaylist[]> {
   const data = await api<{ playlists: { playlist: SubsonicPlaylist[] } }>('getPlaylists.view', { _t: Date.now() });

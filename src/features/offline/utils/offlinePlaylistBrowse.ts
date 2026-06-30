@@ -1,5 +1,5 @@
-import { libraryGetTracksBatchChunked } from '@/api/library';
-import type { SubsonicPlaylist, SubsonicSong } from '@/api/subsonicTypes';
+import { libraryGetTracksBatchChunked } from '@/lib/api/library';
+import type { SubsonicPlaylist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import type { PinnedGroup } from '@/store/localPlaybackStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';

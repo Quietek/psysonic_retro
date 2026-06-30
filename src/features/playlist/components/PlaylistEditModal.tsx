@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Camera, Loader2, X } from 'lucide-react';
-import type { SubsonicPlaylist } from '@/api/subsonicTypes';
+import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import type { CoverArtId } from '@/cover/types';
 import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { PLAYLIST_MAIN_COVER_CSS_PX } from '@/features/playlist/hooks/usePlaylistCovers';

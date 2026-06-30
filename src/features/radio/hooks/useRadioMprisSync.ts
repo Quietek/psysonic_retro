@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import type { InternetRadioStation } from '@/api/subsonicTypes';
+import type { InternetRadioStation } from '@/lib/api/subsonicTypes';
 import type { RadioMetadata } from '@/features/radio/hooks/useRadioMetadata';
 
 /**

@@ -5,7 +5,7 @@ import {
   ArrowLeft, Camera, Check, HardDriveDownload, Heart,
   Loader2, Play, Radio, Share2, Shuffle, Users,
 } from 'lucide-react';
-import type { SubsonicAlbum, SubsonicArtist, SubsonicArtistInfo } from '@/api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicArtist, SubsonicArtistInfo } from '@/lib/api/subsonicTypes';
 import { useOfflineStore } from '@/features/offline';
 import { useAuthStore } from '@/store/authStore';
 import { useThemeStore } from '@/store/themeStore';

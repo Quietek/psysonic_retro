@@ -1,5 +1,5 @@
 import { coverCachePeekBatch } from '../api/coverCache';
-import type { SubsonicAlbum } from '../api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { coverEnsureQueued, ensureArtistBackdropQueued } from './ensureQueue';
 import { getDiskSrcForGrid, rememberGridDiskSrc } from './diskSrcLookup';
 import { albumCoverRef, artistCoverRef } from './ref';

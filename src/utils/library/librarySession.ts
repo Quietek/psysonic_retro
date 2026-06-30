@@ -1,7 +1,7 @@
 import {
   libraryGetStatus,
   librarySyncBindSession,
-} from '../../api/library';
+} from '@/lib/api/library';
 import { enqueueLibrarySync, queueInitialSyncIfNeeded } from './librarySyncQueue';
 import type { ServerProfile } from '../../store/authStoreTypes';
 import { useAuthStore } from '../../store/authStore';

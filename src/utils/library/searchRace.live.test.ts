@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { SearchResults } from '../../api/subsonicTypes';
+import type { SearchResults } from '@/lib/api/subsonicTypes';
 import { raceLiveSearch, type LiveSearchRaceSettled } from './searchRace';
 
 const empty: SearchResults = { artists: [], albums: [], songs: [] };

@@ -1,5 +1,5 @@
-import { api, libraryFilterParams } from './subsonicClient';
-import type { SubsonicAlbum, SubsonicGenre, SubsonicSong } from './subsonicTypes';
+import { api, libraryFilterParams } from '@/lib/api/subsonicClient';
+import type { SubsonicAlbum, SubsonicGenre, SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export async function getGenres(): Promise<SubsonicGenre[]> {
   const data = await api<{ genres: { genre: SubsonicGenre | SubsonicGenre[] } }>('getGenres.view', {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useDragDrop } from '@/contexts/DragDropContext';
 import { runPlaylistReorderDrop } from '@/features/playlist/utils/runPlaylistReorderDrop';
 

@@ -3,11 +3,11 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { resetAuthStore } from '@/test/helpers/storeReset';
 import { useAuthStore } from '@/store/authStore';
 
-vi.mock('@/api/navidromeAdmin', () => ({
+vi.mock('@/lib/api/navidromeAdmin', () => ({
   ndLogin: vi.fn(),
 }));
 
-import { ndLogin } from '@/api/navidromeAdmin';
+import { ndLogin } from '@/lib/api/navidromeAdmin';
 import { useNavidromeAdminRole, canManageNavidromeRadio } from './useNavidromeAdminRole';
 
 beforeEach(() => {

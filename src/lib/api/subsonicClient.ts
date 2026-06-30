@@ -1,11 +1,11 @@
 import axios from 'axios';
 import md5 from 'md5';
-import { version } from '../../package.json';
-import { useAuthStore } from '../store/authStore';
-import type { ServerProfile } from '../store/authStoreTypes';
-import { connectBaseUrlForServer } from '../utils/server/serverEndpoint';
-import { headersForServerRequest } from '../utils/server/serverHttpHeaders';
-import { findServerByIdOrIndexKey, resolveServerIdForIndexKey } from '../utils/server/serverLookup';
+import { version } from '@/../package.json';
+import { useAuthStore } from '@/store/authStore';
+import type { ServerProfile } from '@/store/authStoreTypes';
+import { connectBaseUrlForServer } from '@/utils/server/serverEndpoint';
+import { headersForServerRequest } from '@/utils/server/serverHttpHeaders';
+import { findServerByIdOrIndexKey, resolveServerIdForIndexKey } from '@/utils/server/serverLookup';
 
 export const SUBSONIC_CLIENT = `psysonic/${version}`;
 

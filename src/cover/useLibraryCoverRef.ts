@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type Dispatch, type SetStateAction } from 'react';
-import type { SubsonicSong } from '../api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '../store/authStore';
 import { usePlayerStore } from '../store/playerStore';
 import {

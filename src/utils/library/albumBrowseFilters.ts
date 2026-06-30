@@ -1,5 +1,5 @@
-import type { SubsonicAlbum } from '../../api/subsonicTypes';
-import type { LibraryFilterClause } from '../../api/library';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
+import type { LibraryFilterClause } from '@/lib/api/library';
 import { albumIsCompilation, type AlbumCompFilter } from './albumCompilation';
 import { albumYearFilterClauses, type AlbumYearBounds } from './albumYearFilter';
 import type { AlbumBrowseQuery, GenreFilterOption } from './albumBrowseTypes';

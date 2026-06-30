@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExternalLink, Play, TrendingUp } from 'lucide-react';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { formatTrackTime } from '@/utils/format/formatDuration';
 
 interface TopSongsCardProps {

@@ -1,5 +1,5 @@
 import type { ServerProfile } from '../../store/authStoreTypes';
-import { scheduleInstantMixProbeForServer } from '../../api/subsonic';
+import { scheduleInstantMixProbeForServer } from '@/lib/api/subsonic';
 import {
   coverTrafficBeginServerSwitch,
   coverTrafficEndServerSwitch,

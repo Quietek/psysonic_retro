@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo, useSyncExternalStore } from 'react';
 import { useAuthStore } from '../store/authStore';
-import { scheduleInstantMixProbeForServer } from '../api/subsonic';
+import { scheduleInstantMixProbeForServer } from '@/lib/api/subsonic';
 import { serverListDisplayLabel } from '../utils/server/serverDisplayName';
 import {
   ensureConnectUrlResolved,

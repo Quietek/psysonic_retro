@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Disc3, ExternalLink, Star } from 'lucide-react';
-import type { SubsonicAlbum, SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { formatTotalDuration } from '@/utils/componentHelpers/nowPlayingHelpers';
 import { formatTrackTime } from '@/utils/format/formatDuration';
 

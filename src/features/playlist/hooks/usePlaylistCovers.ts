@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { CoverArtId, CoverArtRef } from '@/cover/types';
 import { coverPrefetchRegister } from '@/cover/prefetchRegistry';
 import { resolveAlbumCoverRefFromLibrary } from '@/cover/resolveEntryLibrary';

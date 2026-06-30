@@ -1,7 +1,7 @@
-import { searchSongsPaged } from '../api/subsonicSearch';
-import type { SubsonicSong } from '../api/subsonicTypes';
+import { searchSongsPaged } from '@/lib/api/subsonicSearch';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ndListSongs } from '../api/navidromeBrowse';
+import { ndListSongs } from '@/lib/api/navidromeBrowse';
 import { runLocalSongBrowse } from '../utils/library/advancedSearchLocal';
 import {
   BROWSE_TEXT_DEBOUNCE_NETWORK_MS,

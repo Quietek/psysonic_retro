@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { previewInputFromSong, usePreviewStore } from '@/store/previewStore';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export function usePlaylistPreview(): {
   startPreview: (song: SubsonicSong) => void;

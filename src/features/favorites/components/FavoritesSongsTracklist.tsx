@@ -5,7 +5,7 @@ import { TracklistColumnPicker } from '@/components/albumTrackList/TracklistColu
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import type { ColDef } from '@/utils/useTracklistColumns';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '@/store/playerStore';
 import { previewInputFromSong, usePreviewStore } from '@/store/previewStore';
 import { useSelectionStore } from '@/store/selectionStore';

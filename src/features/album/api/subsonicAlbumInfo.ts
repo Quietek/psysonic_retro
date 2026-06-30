@@ -1,5 +1,5 @@
-import { api } from '@/api/subsonicClient';
-import type { AlbumInfo } from '@/api/subsonicTypes';
+import { api } from '@/lib/api/subsonicClient';
+import type { AlbumInfo } from '@/lib/api/subsonicTypes';
 
 export async function getAlbumInfo2(albumId: string): Promise<AlbumInfo | null> {
   try {

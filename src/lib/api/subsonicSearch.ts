@@ -1,11 +1,11 @@
-import { api, libraryFilterParams } from './subsonicClient';
-import { searchQueryIsFtsSafe } from '../utils/library/searchQueryFtsSafe';
+import { api, libraryFilterParams } from '@/lib/api/subsonicClient';
+import { searchQueryIsFtsSafe } from '@/utils/library/searchQueryFtsSafe';
 import type {
   SearchResults,
   SubsonicAlbum,
   SubsonicArtist,
   SubsonicSong,
-} from './subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 
 /**
  * search3 sometimes returns duplicate or junk artist rows with **zero** albums (e.g. Navidrome indexing).

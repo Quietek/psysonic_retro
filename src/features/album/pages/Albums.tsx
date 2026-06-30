@@ -1,4 +1,4 @@
-import { buildDownloadUrl } from '@/api/subsonicStreamUrl';
+import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
 import { resolveAlbum } from '@/features/offline';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react';

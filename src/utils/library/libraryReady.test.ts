@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { SyncStateDto } from '../../api/library';
+import type { SyncStateDto } from '@/lib/api/library';
 import { libraryStatusIsReady, syncIngestDisplayCount } from './libraryReady';
 
 const status = (over: Partial<SyncStateDto>): SyncStateDto => ({

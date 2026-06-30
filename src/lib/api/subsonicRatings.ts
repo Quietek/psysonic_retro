@@ -1,6 +1,6 @@
 import { getArtist } from '@/features/artist';
-import { getAlbum } from './subsonicLibrary';
-import { shouldAttemptSubsonicForActiveServer } from '../utils/network/subsonicNetworkGuard';
+import { getAlbum } from '@/lib/api/subsonicLibrary';
+import { shouldAttemptSubsonicForActiveServer } from '@/utils/network/subsonicNetworkGuard';
 
 const MIX_RATING_PREFETCH_CONCURRENCY = 8;
 const RATING_CACHE_TTL = 7 * 60 * 1000; // 7 minutes

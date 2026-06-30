@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { Track } from '@/store/playerStoreTypes';
 import { usePlayerStore } from '@/store/playerStore';
 import { songToTrack } from '@/utils/playback/songToTrack';

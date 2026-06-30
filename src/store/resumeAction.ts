@@ -1,4 +1,4 @@
-import { getSong } from '../api/subsonicLibrary';
+import { getSong } from '@/lib/api/subsonicLibrary';
 import { invoke } from '@tauri-apps/api/core';
 import { estimateLivePosition } from '@/features/orbit';
 import { setDeferHotCachePrefetch } from '../utils/cache/hotCacheGate';

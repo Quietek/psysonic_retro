@@ -2,7 +2,7 @@ import { join } from '@tauri-apps/api/path';
 import { invoke } from '@tauri-apps/api/core';
 import { getSimilarSongs2, fetchSimilarTracksRouted, getTopSongs } from '@/features/artist';
 import { filterSongsForLuckyMixRatings, getMixMinRatingsConfigFromAuth } from '../mix/mixRatingFilter';
-import { buildDownloadUrl } from '../../api/subsonicStreamUrl';
+import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
 import { useAuthStore } from '../../store/authStore';
 import { usePlayerStore } from '../../store/playerStore';
 import type { Track } from '../../store/playerStoreTypes';

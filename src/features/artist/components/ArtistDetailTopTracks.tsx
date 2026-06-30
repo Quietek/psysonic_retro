@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AudioLines, ChevronRight, Play, Square } from 'lucide-react';
-import type { SubsonicAlbum, SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '@/store/playerStore';
 import { previewInputFromSong, usePreviewStore } from '@/store/previewStore';
 import { useOrbitSongRowBehavior } from '@/features/orbit';

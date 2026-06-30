@@ -1,7 +1,7 @@
-import { getGenres, getAlbumsByGenre } from '@/api/subsonicGenres';
-import { search, searchSongsPaged } from '@/api/subsonicSearch';
-import { getRandomSongs } from '@/api/subsonicLibrary';
-import type { SubsonicGenre, SubsonicArtist, SubsonicAlbum, SubsonicSong } from '@/api/subsonicTypes';
+import { getGenres, getAlbumsByGenre } from '@/lib/api/subsonicGenres';
+import { search, searchSongsPaged } from '@/lib/api/subsonicSearch';
+import { getRandomSongs } from '@/lib/api/subsonicLibrary';
+import type { SubsonicGenre, SubsonicArtist, SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useNavigationType, useSearchParams } from 'react-router-dom';
 import { SlidersVertical, Search, X } from 'lucide-react';

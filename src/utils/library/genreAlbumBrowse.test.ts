@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { fetchGenreAlbumPage, fetchGenreAlbumTotal } from './genreAlbumBrowse';
 
-vi.mock('../../api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryListAlbumsByGenre: vi.fn(),
 }));
 
-vi.mock('../../api/subsonicGenres', () => ({
+vi.mock('@/lib/api/subsonicGenres', () => ({
   getAlbumsByGenre: vi.fn(),
 }));
 
-vi.mock('../../api/subsonicClient', () => ({
+vi.mock('@/lib/api/subsonicClient', () => ({
   libraryScopeForServer: vi.fn(() => 'lib-a'),
 }));
 
@@ -17,8 +17,8 @@ vi.mock('./libraryReady', () => ({
   libraryIsReady: vi.fn(),
 }));
 
-import { libraryListAlbumsByGenre } from '../../api/library';
-import { getAlbumsByGenre } from '../../api/subsonicGenres';
+import { libraryListAlbumsByGenre } from '@/lib/api/library';
+import { getAlbumsByGenre } from '@/lib/api/subsonicGenres';
 import { libraryIsReady } from './libraryReady';
 
 describe('genreAlbumBrowse', () => {

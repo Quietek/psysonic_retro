@@ -1,7 +1,7 @@
 import { Cast, Heart, Maximize2, Music } from 'lucide-react';
 import type { TFunction } from 'i18next';
 import { queueSongRating } from '../../store/pendingStarSync';
-import type { InternetRadioStation, SubsonicOpenArtistRef } from '../../api/subsonicTypes';
+import type { InternetRadioStation, SubsonicOpenArtistRef } from '@/lib/api/subsonicTypes';
 import type { PlayerState, Track } from '../../store/playerStoreTypes';
 import type { RadioMetadata } from '@/features/radio';
 import type { PreviewingTrack } from '../../store/previewStore';

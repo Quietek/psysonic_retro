@@ -5,7 +5,7 @@ import {
   Camera, ChevronLeft, Download, FileUp, Globe, HardDriveDownload, ListPlus,
   Loader2, Lock, Pencil, Play, Search, Shuffle, Sparkles, Trash2,
 } from 'lucide-react';
-import type { SubsonicPlaylist, SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicPlaylist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { ZipDownload } from '@/features/offline';
 import type { AlbumOfflineStatus } from '@/features/album';
 import { dequeueOfflinePin } from '@/features/offline';

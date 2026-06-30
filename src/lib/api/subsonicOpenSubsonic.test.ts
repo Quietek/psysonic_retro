@@ -4,7 +4,7 @@ import {
   fetchOpenSubsonicExtensionsWithCredentials,
   hasOpenSubsonicExtension,
   parseOpenSubsonicExtensions,
-} from './subsonicOpenSubsonic';
+} from '@/lib/api/subsonicOpenSubsonic';
 
 vi.mock('axios');
 

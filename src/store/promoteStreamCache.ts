@@ -1,4 +1,4 @@
-import { buildStreamUrlForServer } from '../api/subsonicStreamUrl';
+import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
 import type { Track } from './playerStoreTypes';
 import { invoke } from '@tauri-apps/api/core';
 import { useHotCacheStore } from './hotCacheStore';

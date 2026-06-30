@@ -1,4 +1,4 @@
-import type { SubsonicAlbum } from '../../api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import type { AlbumYearBounds } from './albumYearFilter';
 import type { AlbumCompFilter } from './albumCompilation';
 import type { AlbumBrowseSort } from './albumBrowseSort';

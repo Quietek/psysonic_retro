@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { libraryGetStatus } from '../api/library';
+import { libraryGetStatus } from '@/lib/api/library';
 
 /**
  * Server `ignoredArticles` (Navidrome `getArtists` watermark) for the active

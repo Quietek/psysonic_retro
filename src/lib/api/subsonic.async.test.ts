@@ -20,17 +20,17 @@ vi.mock('axios', () => ({
   default: { get: vi.fn() },
 }));
 
-vi.mock('../utils/network/subsonicNetworkGuard', () => ({
+vi.mock('@/utils/network/subsonicNetworkGuard', () => ({
   shouldAttemptSubsonicForActiveServer: () => true,
   shouldAttemptSubsonicForServer: () => true,
 }));
 
 import axios from 'axios';
-import { pingWithCredentials, pingWithCredentialsForProfile, ping } from './subsonic';
+import { pingWithCredentials, pingWithCredentialsForProfile, ping } from '@/lib/api/subsonic';
 import { getAlbumInfo2 } from '@/features/album';
-import { getStarred } from './subsonicStarRating';
-import { search } from './subsonicSearch';
-import { getAlbum, getMusicDirectory, getMusicFolders, getMusicIndexes, getRandomSongs, getSong } from './subsonicLibrary';
+import { getStarred } from '@/lib/api/subsonicStarRating';
+import { search } from '@/lib/api/subsonicSearch';
+import { getAlbum, getMusicDirectory, getMusicFolders, getMusicIndexes, getRandomSongs, getSong } from '@/lib/api/subsonicLibrary';
 import { getArtists, getTopSongs } from '@/features/artist';
 import { useAuthStore } from '@/store/authStore';
 import { resetAuthStore } from '@/test/helpers/storeReset';

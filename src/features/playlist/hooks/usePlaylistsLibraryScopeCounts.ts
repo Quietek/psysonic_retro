@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { filterSongsToActiveLibrary } from '@/api/subsonicLibrary';
+import { filterSongsToActiveLibrary } from '@/lib/api/subsonicLibrary';
 import { getPlaylist } from '@/features/playlist/api/subsonicPlaylists';
-import type { SubsonicPlaylist } from '@/api/subsonicTypes';
+import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { useOfflineBrowseContext } from '@/features/offline';
 
 export interface PlaylistsLibraryScopeCountsResult {

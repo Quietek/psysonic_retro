@@ -10,7 +10,7 @@ import { useLiveSearchScopeStore } from '@/store/liveSearchScopeStore';
 // function mis-flagged as a hook). Smoke-test that the recent-search path still
 // applies the term to the live-search store. Heavy collaborators are stubbed.
 vi.mock('@/features/search/hooks/useShareSearch', () => ({ useShareSearch: () => ({ shareMatch: null }) }));
-vi.mock('@/api/subsonicSearch', () => ({
+vi.mock('@/lib/api/subsonicSearch', () => ({
   search: vi.fn(() => Promise.resolve({ artists: [], albums: [], songs: [] })),
 }));
 vi.mock('@/cover/AlbumCoverArtImage', () => ({ AlbumCoverArtImage: () => null }));

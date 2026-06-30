@@ -1,5 +1,5 @@
-import { search } from '@/api/subsonicSearch';
-import type { SearchResults, SubsonicArtist } from '@/api/subsonicTypes';
+import { search } from '@/lib/api/subsonicSearch';
+import type { SearchResults, SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { useLiveSearchScopeStore } from '@/store/liveSearchScopeStore';
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';

@@ -1,19 +1,19 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/api/subsonicClient', () => ({
+vi.mock('@/lib/api/subsonicClient', () => ({
   api: vi.fn(),
   apiForServer: vi.fn(),
   libraryFilterParams: () => ({}),
   libraryFilterParamsForServer: () => ({}),
 }));
 
-vi.mock('@/api/subsonicLibrary', () => ({
+vi.mock('@/lib/api/subsonicLibrary', () => ({
   filterSongsToActiveLibrary: async (songs: unknown[]) => songs,
   filterSongsToServerLibrary: async (songs: unknown[]) => songs,
   similarSongsRequestCount: (count: number) => count,
 }));
 
-import { api } from '@/api/subsonicClient';
+import { api } from '@/lib/api/subsonicClient';
 import { fetchSimilarTracksRouted } from '@/features/artist/api/subsonicArtists';
 import { useAuthStore } from '@/store/authStore';
 

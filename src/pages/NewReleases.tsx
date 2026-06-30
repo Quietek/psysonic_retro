@@ -1,8 +1,8 @@
-import { buildDownloadUrl } from '../api/subsonicStreamUrl';
-import { getAlbumsByGenre } from '../api/subsonicGenres';
-import { getAlbumList } from '../api/subsonicLibrary';
+import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
+import { getAlbumsByGenre } from '@/lib/api/subsonicGenres';
+import { getAlbumList } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum } from '@/features/offline';
-import type { SubsonicAlbum } from '../api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { dedupeById } from '../utils/dedupeById';
 import { useEffect, useLayoutEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { Download, HardDriveDownload } from 'lucide-react';

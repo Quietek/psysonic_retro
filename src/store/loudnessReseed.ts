@@ -1,4 +1,4 @@
-import { buildStreamUrl } from '../api/subsonicStreamUrl';
+import { buildStreamUrl } from '@/lib/api/subsonicStreamUrl';
 import { invoke } from '@tauri-apps/api/core';
 import { getPlaybackIndexKey } from '../utils/playback/playbackServer';
 import { useAuthStore } from './authStore';

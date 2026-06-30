@@ -1,6 +1,6 @@
-import { getSongForServer } from '@/api/subsonicLibrary';
+import { getSongForServer } from '@/lib/api/subsonicLibrary';
 import { getArtistInfoForServer } from '@/features/artist';
-import type { SubsonicArtistInfo, SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicArtistInfo, SubsonicSong } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Info } from 'lucide-react';

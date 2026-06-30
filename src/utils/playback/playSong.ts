@@ -1,4 +1,4 @@
-import type { SubsonicSong } from '../../api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { songToTrack } from './songToTrack';
 import { usePlayerStore } from '../../store/playerStore';
 import { fadeOut } from './fadeOut';

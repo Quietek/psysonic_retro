@@ -1,5 +1,5 @@
-import { getAlbumList } from '@/api/subsonicLibrary';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import { getAlbumList } from '@/lib/api/subsonicLibrary';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';

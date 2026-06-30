@@ -1,5 +1,5 @@
-import { getMusicFolders, getMusicDirectory, getMusicIndexes } from '../api/subsonicLibrary';
-import type { SubsonicDirectoryEntry, SubsonicArtist } from '../api/subsonicTypes';
+import { getMusicFolders, getMusicDirectory, getMusicIndexes } from '@/lib/api/subsonicLibrary';
+import type { SubsonicDirectoryEntry, SubsonicArtist } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { usePlayerStore } from '../store/playerStore';
 import { useTranslation } from 'react-i18next';

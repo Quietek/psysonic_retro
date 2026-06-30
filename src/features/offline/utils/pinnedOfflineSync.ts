@@ -1,8 +1,8 @@
-import { libraryGetTracksByAlbum, subscribeLibrarySyncIdle } from '@/api/library';
-import { getAlbumForServer, filterSongsToServerLibrary } from '@/api/subsonicLibrary';
+import { libraryGetTracksByAlbum, subscribeLibrarySyncIdle } from '@/lib/api/library';
+import { getAlbumForServer, filterSongsToServerLibrary } from '@/lib/api/subsonicLibrary';
 import { getPlaylistForServer } from '@/features/playlist';
 import { getArtistForServer } from '@/features/artist';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from '@/store/authStore';
 import type { PinSource } from '@/store/localPlaybackStore';

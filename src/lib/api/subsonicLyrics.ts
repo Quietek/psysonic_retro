@@ -1,5 +1,5 @@
-import { api } from './subsonicClient';
-import type { SubsonicStructuredLyrics } from './subsonicTypes';
+import { api } from '@/lib/api/subsonicClient';
+import type { SubsonicStructuredLyrics } from '@/lib/api/subsonicTypes';
 
 /**
  * Fetches structured lyrics from the server's embedded tags via the

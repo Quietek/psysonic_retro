@@ -1,4 +1,4 @@
-import type { SubsonicAlbum, SubsonicOpenArtistRef, SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicOpenArtistRef, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { coerceOpenArtistRefs } from '@/features/artist';
 
 function nonEmpty(refs: SubsonicOpenArtistRef[]): refs is SubsonicOpenArtistRef[] {

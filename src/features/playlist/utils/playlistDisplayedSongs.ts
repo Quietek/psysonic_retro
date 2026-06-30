@@ -1,4 +1,4 @@
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export type PlaylistSortKey = 'natural' | 'position' | 'title' | 'artist' | 'album' | 'favorite' | 'rating' | 'duration' | 'playCount' | 'lastPlayed' | 'bpm';
 export type PlaylistSortDir = 'asc' | 'desc';

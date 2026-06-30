@@ -1,9 +1,9 @@
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import {
   shouldAttemptSubsonicForActiveServer,
   shouldAttemptSubsonicForServer,
-} from '../utils/network/subsonicNetworkGuard';
-import { api, apiForServer, libraryFilterParams, libraryFilterParamsForServer } from './subsonicClient';
+} from '@/utils/network/subsonicNetworkGuard';
+import { api, apiForServer, libraryFilterParams, libraryFilterParamsForServer } from '@/lib/api/subsonicClient';
 import type {
   RandomSongsFilters,
   SubsonicAlbum,
@@ -11,7 +11,7 @@ import type {
   SubsonicDirectoryEntry,
   SubsonicMusicFolder,
   SubsonicSong,
-} from './subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 
 export async function getMusicDirectory(id: string): Promise<SubsonicDirectory> {
   const data = await api<{ directory: { id: string; parent?: string; name: string; child?: SubsonicDirectoryEntry | SubsonicDirectoryEntry[] } }>(

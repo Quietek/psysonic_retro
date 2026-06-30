@@ -1,5 +1,5 @@
-import { pingWithCredentialsForProfile } from '../../api/subsonic';
-import type { PingWithCredentialsResult } from '../../api/subsonicTypes';
+import { pingWithCredentialsForProfile } from '@/lib/api/subsonic';
+import type { PingWithCredentialsResult } from '@/lib/api/subsonicTypes';
 import type { ServerProfile } from '../../store/authStoreTypes';
 import { serverProfileBaseUrl } from './serverBaseUrl';
 

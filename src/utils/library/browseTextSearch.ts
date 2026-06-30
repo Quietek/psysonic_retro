@@ -1,11 +1,11 @@
 /**
  * Browse-page text search — local index vs network race (LiveSearch / SearchBrowsePage pattern).
  */
-import { getStarred } from '../../api/subsonicStarRating';
-import { search, searchSongsPaged } from '../../api/subsonicSearch';
-import type { SearchResults, SubsonicAlbum, SubsonicArtist, SubsonicSong } from '../../api/subsonicTypes';
-import { libraryAdvancedSearch, libraryGetArtistLosslessBrowse, libraryListLosslessAlbums } from '../../api/library';
-import { libraryScopeForServer } from '../../api/subsonicClient';
+import { getStarred } from '@/lib/api/subsonicStarRating';
+import { search, searchSongsPaged } from '@/lib/api/subsonicSearch';
+import type { SearchResults, SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
+import { libraryAdvancedSearch, libraryGetArtistLosslessBrowse, libraryListLosslessAlbums } from '@/lib/api/library';
+import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import {
   LIVE_SEARCH_DEBOUNCE_NETWORK_MS,
   LIVE_SEARCH_DEBOUNCE_RACE_MS,

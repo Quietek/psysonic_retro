@@ -1,5 +1,5 @@
-import { api, apiForServer } from './subsonicClient';
-import type { SubsonicSong } from './subsonicTypes';
+import { api, apiForServer } from '@/lib/api/subsonicClient';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export type PlayQueueResult = { current?: string; position?: number; songs: SubsonicSong[] };
 

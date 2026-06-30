@@ -1,5 +1,5 @@
-import { getSong } from '@/api/subsonicLibrary';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import { getSong } from '@/lib/api/subsonicLibrary';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useEffect, useMemo, useState } from 'react';
 import { Radio, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

@@ -1,7 +1,7 @@
 import { getArtist, getArtistInfo } from '@/features/artist';
-import { filterAlbumsToActiveLibrary } from '../api/subsonicLibrary';
+import { filterAlbumsToActiveLibrary } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum, resolveMediaServerId } from '@/features/offline';
-import type { SubsonicAlbum } from '../api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '../utils/playback/songToTrack';
 import { shuffleArray } from '../utils/playback/shuffleArray';
 import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';

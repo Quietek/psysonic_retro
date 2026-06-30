@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { filterSearchArtistsWithNoAlbums } from './subsonicSearch';
-import type { SubsonicArtist } from './subsonicTypes';
+import { filterSearchArtistsWithNoAlbums } from '@/lib/api/subsonicSearch';
+import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 
 describe('filterSearchArtistsWithNoAlbums', () => {
   it('removes artists with albumCount 0', () => {

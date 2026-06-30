@@ -13,8 +13,8 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('@/api/subsonic', async () => {
-  const actual = await vi.importActual<typeof import('@/api/subsonic')>('@/api/subsonic');
+vi.mock('@/lib/api/subsonic', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/api/subsonic')>('@/lib/api/subsonic');
   return {
     ...actual,
     savePlayQueue: vi.fn(async () => undefined),

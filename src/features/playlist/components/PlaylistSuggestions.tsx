@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Heart, Play, Plus, RefreshCw, Square } from 'lucide-react';
 import type { ColDef } from '@/utils/useTracklistColumns';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '@/store/playerStore';
 import { usePreviewStore } from '@/store/previewStore';
 import StarRating from '@/components/StarRating';

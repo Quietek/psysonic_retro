@@ -18,7 +18,7 @@ const runtimeMock = {
   syncLovedTracks: vi.fn(async () => ({})),
 };
 
-vi.mock('@/api/subsonic', () => ({
+vi.mock('@/lib/api/subsonic', () => ({
   savePlayQueue: vi.fn(async () => undefined),
   getPlayQueue: vi.fn(async () => ({ songs: [], current: undefined, position: 0 })),
   buildStreamUrl: vi.fn((id: string) => `https://mock/stream/${id}`),

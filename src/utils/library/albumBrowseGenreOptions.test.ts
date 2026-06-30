@@ -6,7 +6,7 @@ const libraryIsReady = vi.fn();
 const libraryScopeForServer = vi.fn();
 const runLocalAlbumBrowse = vi.fn();
 
-vi.mock('../../api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryGetGenreAlbumCounts: (...args: unknown[]) => libraryGetGenreAlbumCounts(...args),
 }));
 
@@ -14,7 +14,7 @@ vi.mock('./libraryReady', () => ({
   libraryIsReady: (...args: unknown[]) => libraryIsReady(...args),
 }));
 
-vi.mock('../../api/subsonicClient', () => ({
+vi.mock('@/lib/api/subsonicClient', () => ({
   libraryScopeForServer: (...args: unknown[]) => libraryScopeForServer(...args),
 }));
 

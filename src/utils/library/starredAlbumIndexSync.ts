@@ -1,6 +1,6 @@
-import { libraryReconcileAlbumStars } from '../../api/library';
-import { getStarred } from '../../api/subsonicStarRating';
-import type { SubsonicAlbum } from '../../api/subsonicTypes';
+import { libraryReconcileAlbumStars } from '@/lib/api/library';
+import { getStarred } from '@/lib/api/subsonicStarRating';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import {
   invalidateStarredAlbumBrowseCache,
   setStarredAlbumBrowseCache,

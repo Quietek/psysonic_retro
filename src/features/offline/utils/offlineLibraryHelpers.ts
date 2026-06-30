@@ -1,6 +1,6 @@
-import type { LibraryTrackDto } from '@/api/library';
-import { libraryGetTrack, libraryGetTracksBatchChunked } from '@/api/library';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { LibraryTrackDto } from '@/lib/api/library';
+import { libraryGetTrack, libraryGetTracksBatchChunked } from '@/lib/api/library';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { CoverServerScope } from '@/cover/types';
 import { useAuthStore } from '@/store/authStore';
 import type { LocalPlaybackEntry, PinnedGroup, PinSource } from '@/store/localPlaybackStore';

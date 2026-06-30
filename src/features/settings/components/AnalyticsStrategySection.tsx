@@ -19,8 +19,8 @@ import {
   libraryAnalysisProgress,
   type LibraryAnalysisProgressDto,
 } from '@/api/analysis';
-import { libraryGetTracksBatch, type LibraryTrackDto, type TrackRefDto } from '@/api/library';
-import { buildStreamUrlForServer } from '@/api/subsonicStreamUrl';
+import { libraryGetTracksBatch, type LibraryTrackDto, type TrackRefDto } from '@/lib/api/library';
+import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
 import { serverListDisplayLabel } from '@/utils/server/serverDisplayName';
 import { serverIndexKeyForProfile } from '@/utils/server/serverIndexKey';
 import { showToast } from '@/utils/ui/toast';

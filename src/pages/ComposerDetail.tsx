@@ -1,9 +1,9 @@
-import { star, unstar } from '../api/subsonicStarRating';
+import { star, unstar } from '@/lib/api/subsonicStarRating';
 import { getArtist, getArtistInfo } from '@/features/artist';
-import type { SubsonicArtist, SubsonicAlbum, SubsonicArtistInfo } from '../api/subsonicTypes';
+import type { SubsonicArtist, SubsonicAlbum, SubsonicArtistInfo } from '@/lib/api/subsonicTypes';
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ndListAlbumsByArtistRole } from '../api/navidromeBrowse';
+import { ndListAlbumsByArtistRole } from '@/lib/api/navidromeBrowse';
 import { AlbumCard } from '@/features/album';
 import { ArtistHeroCover } from '../cover/artistHero';
 import { coverArtRef } from '../cover/ref';

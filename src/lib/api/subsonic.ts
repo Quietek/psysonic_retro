@@ -1,30 +1,30 @@
 import axios from 'axios';
 import md5 from 'md5';
-import { useAuthStore } from '../store/authStore';
-import type { ServerProfile } from '../store/authStoreTypes';
-import { headersForServerRequest } from '../utils/server/serverHttpHeaders';
-import { findServerByIdOrIndexKey } from '../utils/server/serverLookup';
+import { useAuthStore } from '@/store/authStore';
+import type { ServerProfile } from '@/store/authStoreTypes';
+import { headersForServerRequest } from '@/utils/server/serverHttpHeaders';
+import { findServerByIdOrIndexKey } from '@/utils/server/serverLookup';
 import {
   type InstantMixProbeResult,
   type SubsonicServerIdentity,
-} from '../utils/server/subsonicServerIdentity';
-import { fetchOpenSubsonicExtensionsWithCredentials } from './subsonicOpenSubsonic';
-import { buildCapabilityContext } from '../serverCapabilities/context';
+} from '@/utils/server/subsonicServerIdentity';
+import { fetchOpenSubsonicExtensionsWithCredentials } from '@/lib/api/subsonicOpenSubsonic';
+import { buildCapabilityContext } from '@/serverCapabilities/context';
 import {
   PROBE_LEGACY_INSTANT_MIX,
   PROBE_OPENSUBSONIC_EXTENSIONS,
   SERVER_CAPABILITY_CATALOG,
   SONIC_SIMILARITY_EXTENSION,
-} from '../serverCapabilities/catalog';
-import { neededProbeIds } from '../serverCapabilities/resolve';
+} from '@/serverCapabilities/catalog';
+import { neededProbeIds } from '@/serverCapabilities/resolve';
 import {
   SUBSONIC_CLIENT,
   api,
   apiWithCredentials,
   secureRandomSalt,
   type ServerHttpHeaderProfile,
-} from './subsonicClient';
-import type { PingWithCredentialsResult, SubsonicSong } from './subsonicTypes';
+} from '@/lib/api/subsonicClient';
+import type { PingWithCredentialsResult, SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export async function ping(): Promise<boolean> {
   try {

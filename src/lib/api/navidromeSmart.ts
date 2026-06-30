@@ -1,6 +1,6 @@
 import { invoke } from '@tauri-apps/api/core';
-import { useAuthStore } from '../store/authStore';
-import { ndLogin } from './navidromeAdmin';
+import { useAuthStore } from '@/store/authStore';
+import { ndLogin } from '@/lib/api/navidromeAdmin';
 
 export type SmartRuleOperator =
   | 'is'

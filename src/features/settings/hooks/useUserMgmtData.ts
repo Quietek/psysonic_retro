@@ -5,7 +5,7 @@ import {
   ndListUsers,
   type NdLibrary,
   type NdUser,
-} from '@/api/navidromeAdmin';
+} from '@/lib/api/navidromeAdmin';
 
 interface UseUserMgmtDataResult {
   users: NdUser[];

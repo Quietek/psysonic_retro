@@ -1,4 +1,4 @@
-import { getAlbumForServer } from '@/api/subsonicLibrary';
+import { getAlbumForServer } from '@/lib/api/subsonicLibrary';
 import { getArtistForServer } from '@/features/artist';
 import { getPlaylistForServer } from '@/features/playlist';
 import type {
@@ -6,7 +6,7 @@ import type {
   SubsonicArtist,
   SubsonicPlaylist,
   SubsonicSong,
-} from '@/api/subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { shouldAttemptSubsonicForServer } from '@/utils/network/subsonicNetworkGuard';
 import { isOfflineBrowseActive } from '@/features/offline/utils/offlineBrowseMode';

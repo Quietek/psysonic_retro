@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { invoke } from '@tauri-apps/api/core';
 import { useRadioMprisSync } from '@/features/radio/hooks/useRadioMprisSync';
 import type { RadioMetadata } from '@/features/radio/hooks/useRadioMetadata';
-import type { InternetRadioStation } from '@/api/subsonicTypes';
+import type { InternetRadioStation } from '@/lib/api/subsonicTypes';
 
 vi.mock('@tauri-apps/api/core', () => ({ invoke: vi.fn(async () => undefined) }));
 const invokeMock = vi.mocked(invoke);

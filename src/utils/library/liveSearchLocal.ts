@@ -3,11 +3,11 @@
  * Uses column-scoped `library_live_search` FTS — not Advanced Search.
  * Falls back to search3 when the index isn't ready (caller orchestrates).
  */
-import type { SearchResults } from '../../api/subsonicTypes';
-import { search } from '../../api/subsonicSearch';
-import { libraryScopeForServer } from '../../api/subsonicClient';
-import { libraryLiveSearch } from '../../api/library';
-import { filterSearchArtistsWithNoAlbums } from '../../api/subsonicSearch';
+import type { SearchResults } from '@/lib/api/subsonicTypes';
+import { search } from '@/lib/api/subsonicSearch';
+import { libraryScopeForServer } from '@/lib/api/subsonicClient';
+import { libraryLiveSearch } from '@/lib/api/library';
+import { filterSearchArtistsWithNoAlbums } from '@/lib/api/subsonicSearch';
 import {
   albumToAlbum,
   artistToArtist,

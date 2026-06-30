@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';
 import { useOfflineJobStore } from '@/features/offline/store/offlineJobStore';
@@ -33,7 +33,7 @@ vi.mock('@/features/playlist/api/subsonicPlaylists', () => ({
   getPlaylistForServer: (serverId: string, id: string) => getPlaylistMock(serverId, id),
 }));
 
-vi.mock('@/api/subsonicLibrary', () => ({
+vi.mock('@/lib/api/subsonicLibrary', () => ({
   getAlbumForServer: (serverId: string, id: string) => getAlbumForServerMock(serverId, id),
   filterSongsToServerLibrary: (songs: SubsonicSong[]) => filterSongsMock(songs),
 }));
@@ -42,7 +42,7 @@ vi.mock('@/features/artist', () => ({
   getArtistForServer: (serverId: string, artistId: string) => getArtistForServerMock(serverId, artistId),
 }));
 
-vi.mock('@/api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryGetTracksByAlbum: vi.fn(async () => []),
   subscribeLibrarySyncIdle: vi.fn(async () => () => {}),
 }));

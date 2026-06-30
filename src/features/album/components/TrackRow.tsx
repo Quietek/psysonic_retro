@@ -3,7 +3,7 @@ import { AudioLines, ChevronRight, Heart, Play, Square } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import type { ColDef } from '@/utils/useTracklistColumns';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { Track } from '@/store/playerStoreTypes';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { useSelectionStore } from '@/store/selectionStore';

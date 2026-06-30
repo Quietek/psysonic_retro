@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { LibraryTrackDto } from '@/api/library';
+import type { LibraryTrackDto } from '@/lib/api/library';
 import { useAuthStore } from '@/store/authStore';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';
@@ -13,7 +13,7 @@ const { libraryGetTracksBatchChunkedMock } = vi.hoisted(() => ({
   libraryGetTracksBatchChunkedMock: vi.fn(async (): Promise<LibraryTrackDto[]> => []),
 }));
 
-vi.mock('@/api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryGetTracksBatchChunked: libraryGetTracksBatchChunkedMock,
   libraryGetTracksByAlbum: vi.fn(async () => []),
   libraryAdvancedSearch: vi.fn(async () => ({ albums: [], artists: [], tracks: [] })),

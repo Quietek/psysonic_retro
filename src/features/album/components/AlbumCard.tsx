@@ -1,4 +1,4 @@
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import React, { memo, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNavigateToAlbum } from '@/features/album/hooks/useNavigateToAlbum';

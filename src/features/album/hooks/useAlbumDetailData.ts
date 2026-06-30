@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import {
   loadAlbumFromLibraryIndex,

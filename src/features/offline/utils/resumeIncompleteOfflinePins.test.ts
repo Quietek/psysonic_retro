@@ -23,7 +23,7 @@ vi.mock('@/features/offline/utils/offlineMediaResolve', () => ({
     resolveAlbumForServerMock(serverId, albumId),
 }));
 
-vi.mock('@/api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryGetTracksBatchChunked: vi.fn(async () => []),
   LIBRARY_TRACKS_BATCH_LIMIT: 100,
 }));

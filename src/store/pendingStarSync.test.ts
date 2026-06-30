@@ -3,7 +3,7 @@ import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 const starMock = vi.fn();
 const unstarMock = vi.fn();
 const setRatingMock = vi.fn();
-vi.mock('../api/subsonicStarRating', () => ({
+vi.mock('@/lib/api/subsonicStarRating', () => ({
   star: (...a: unknown[]) => starMock(...a),
   unstar: (...a: unknown[]) => unstarMock(...a),
   setRating: (...a: unknown[]) => setRatingMock(...a),

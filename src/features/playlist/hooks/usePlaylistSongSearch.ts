@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type React from 'react';
-import { search } from '@/api/subsonicSearch';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import { search } from '@/lib/api/subsonicSearch';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export interface PlaylistSongSearchResult {
   searchResults: SubsonicSong[];

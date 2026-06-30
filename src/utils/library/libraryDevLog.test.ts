@@ -6,7 +6,7 @@ import {
   ingestStallHint,
   normalizeIngestMetrics,
 } from './libraryDevLog';
-import type { SyncStateDto } from '../../api/library';
+import type { SyncStateDto } from '@/lib/api/library';
 
 describe('libraryDevLog', () => {
   it('decodeCapabilityFlags maps known bits', () => {

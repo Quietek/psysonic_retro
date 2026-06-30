@@ -1,4 +1,4 @@
-import type { SubsonicAlbum } from '../api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 
 export type BecauseYouLikeAnchor = { id: string; name: string };
 

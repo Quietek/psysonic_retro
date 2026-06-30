@@ -1,5 +1,5 @@
-import { getLyricsBySongId } from '../api/subsonicLyrics';
-import type { SubsonicStructuredLyrics } from '../api/subsonicTypes';
+import { getLyricsBySongId } from '@/lib/api/subsonicLyrics';
+import type { SubsonicStructuredLyrics } from '@/lib/api/subsonicTypes';
 import type { Track } from '../store/playerStoreTypes';
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';

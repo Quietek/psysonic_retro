@@ -1,12 +1,12 @@
-import { getSong } from '../api/subsonicLibrary';
-import { libraryGetFacts } from '../api/library';
-import type { SubsonicSong } from '../api/subsonicTypes';
+import { getSong } from '@/lib/api/subsonicLibrary';
+import { libraryGetFacts } from '@/lib/api/library';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 import { usePlayerStore } from '../store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
-import { ndGetSongPath } from '../api/navidromeAdmin';
+import { ndGetSongPath } from '@/lib/api/navidromeAdmin';
 import { useAuthStore } from '../store/authStore';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
 import { useTranslation } from 'react-i18next';

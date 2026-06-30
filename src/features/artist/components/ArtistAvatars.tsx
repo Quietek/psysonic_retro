@@ -1,5 +1,5 @@
 import React from 'react';
-import type { SubsonicArtist } from '@/api/subsonicTypes';
+import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { ArtistCoverArtImage } from '@/cover/ArtistCoverArtImage';
 import {
   COVER_DENSE_ARTIST_LIST_CSS_PX,

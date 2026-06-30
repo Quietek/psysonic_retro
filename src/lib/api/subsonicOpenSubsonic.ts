@@ -1,4 +1,4 @@
-import { apiWithCredentials, type ServerHttpHeaderProfile } from './subsonicClient';
+import { apiWithCredentials, type ServerHttpHeaderProfile } from '@/lib/api/subsonicClient';
 
 export interface OpenSubsonicExtension {
   name: string;

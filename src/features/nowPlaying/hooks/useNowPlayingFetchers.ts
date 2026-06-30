@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getArtistInfoForServer } from '@/features/artist';
-import type { SubsonicAlbum, SubsonicArtistInfo, SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicArtistInfo, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { resolveNpAlbum, resolveNpDiscography, resolveNpSongMeta, resolveNpTopSongs } from '@/features/nowPlaying/utils/nowPlayingMetadataResolve';
 import { fetchBandsintownEvents, type BandsintownEvent } from '@/api/bandsintown';
 import type { ArtistStats, TrackStats } from '@/music-network';

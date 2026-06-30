@@ -13,7 +13,7 @@
  * Mocks `savePlayQueue` at the module boundary so we can assert the exact
  * args passed to the Subsonic API call.
  */
-import { savePlayQueue } from '@/api/subsonicPlayQueue';
+import { savePlayQueue } from '@/lib/api/subsonicPlayQueue';
 import { initAudioListeners } from './initAudioListeners';
 import { flushPlayQueuePosition } from './queueSync';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -21,25 +21,25 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 // Explicit (non-spread) mock map — the `...actual` spread pattern lets the
 // real `savePlayQueue` leak through to `playerStore.ts`'s relative import.
 // Listing every export the store uses keeps the override stable.
-vi.mock('@/api/subsonic', () => ({
+vi.mock('@/lib/api/subsonic', () => ({
   pingWithCredentials: vi.fn(async () => ({ ok: true })),
   pingWithCredentialsForProfile: vi.fn(async () => ({ ok: true })),
   scheduleInstantMixProbeForServer: vi.fn(),
 }));
-vi.mock('@/api/subsonicPlayQueue', () => ({
+vi.mock('@/lib/api/subsonicPlayQueue', () => ({
   savePlayQueue: vi.fn(async () => undefined),
   getPlayQueue: vi.fn(async () => ({ songs: [], current: undefined, position: 0 })),
 }));
 vi.mock('@/utils/network/activeServerReachability', () => ({
   isActiveServerReachable: () => true,
 }));
-vi.mock('@/api/subsonicStreamUrl', () => ({
+vi.mock('@/lib/api/subsonicStreamUrl', () => ({
   buildStreamUrl: vi.fn((id: string) => `https://mock/stream/${id}`),
   buildCoverArtUrl: vi.fn((id: string) => `https://mock/cover/${id}`),
   buildDownloadUrl: vi.fn((id: string) => `https://mock/download/${id}`),
   coverArtCacheKey: vi.fn((id: string, size = 256) => `mock:cover:${id}:${size}`),
 }));
-vi.mock('@/api/subsonicLibrary', () => ({
+vi.mock('@/lib/api/subsonicLibrary', () => ({
   getSong: vi.fn(async () => null),
   getRandomSongs: vi.fn(async () => []),
 }));
@@ -50,7 +50,7 @@ vi.mock('@/features/artist', () => ({
 vi.mock('@/features/album', () => ({
   getAlbumInfo2: vi.fn(async () => null),
 }));
-vi.mock('@/api/subsonicScrobble', () => ({
+vi.mock('@/lib/api/subsonicScrobble', () => ({
   reportNowPlaying: vi.fn(async () => undefined),
   scrobbleSong: vi.fn(async () => undefined),
 }));
@@ -66,7 +66,7 @@ vi.mock('@/utils/playback/playbackServer', () => ({
     cacheKey: `mock:cover:${id}:${size}`,
   }),
 }));
-vi.mock('@/api/subsonicStarRating', () => ({
+vi.mock('@/lib/api/subsonicStarRating', () => ({
   setRating: vi.fn(async () => undefined),
   probeEntityRatingSupport: vi.fn(async () => 'track_only'),
 }));

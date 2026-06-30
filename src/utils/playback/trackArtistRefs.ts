@@ -1,4 +1,4 @@
-import type { SubsonicOpenArtistRef } from '../../api/subsonicTypes';
+import type { SubsonicOpenArtistRef } from '@/lib/api/subsonicTypes';
 import type { Track } from '../../store/playerStoreTypes';
 import { coerceOpenArtistRefs } from '@/features/artist';
 

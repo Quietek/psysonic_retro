@@ -1,9 +1,9 @@
-import { libraryAdvancedSearch, libraryGetTracksByAlbum } from '@/api/library';
+import { libraryAdvancedSearch, libraryGetTracksByAlbum } from '@/lib/api/library';
 import type {
   SubsonicAlbum,
   SubsonicArtist,
   SubsonicSong,
-} from '@/api/subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 import {
   albumToAlbum,
   artistToArtist,

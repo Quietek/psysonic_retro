@@ -3,7 +3,7 @@
  * Search one-liner: `search [surface] path=… winner=…` or `source=…`
  * Ring buffer: `window.__PSYSONIC_LIBRARY_DEBUG__`
  */
-import type { SyncStateDto } from '../../api/library';
+import type { SyncStateDto } from '@/lib/api/library';
 import { syncIngestDisplayCount } from './libraryReady';
 
 const PREFIX = '[psysonic][library]';

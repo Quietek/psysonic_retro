@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Play, ChevronRight, FolderTree, ListMusic, Trash2 } from 'lucide-react';
-import type { SubsonicPlaylist } from '../../api/subsonicTypes';
+import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistStore } from '@/features/playlist';
 import { MultiPlaylistToPlaylistSubmenu, SinglePlaylistToPlaylistSubmenu } from './PlaylistToPlaylistSubmenus';
 import MoveToFolderSubmenu from './MoveToFolderSubmenu';

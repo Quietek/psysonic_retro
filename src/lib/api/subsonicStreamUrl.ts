@@ -1,11 +1,11 @@
 import md5 from 'md5';
-import { coverStorageKeyFromRef } from '../cover/storageKeys';
-import { coverEntryToRef, resolveAlbumCoverEntry } from '../cover/resolveEntry';
-import type { CoverArtTier } from '../cover/types';
-import { useAuthStore } from '../store/authStore';
-import { connectBaseUrlForServer } from '../utils/server/serverEndpoint';
-import { findServerByIdOrIndexKey } from '../utils/server/serverLookup';
-import { restBaseFromUrl, SUBSONIC_CLIENT, secureRandomSalt } from './subsonicClient';
+import { coverStorageKeyFromRef } from '@/cover/storageKeys';
+import { coverEntryToRef, resolveAlbumCoverEntry } from '@/cover/resolveEntry';
+import type { CoverArtTier } from '@/cover/types';
+import { useAuthStore } from '@/store/authStore';
+import { connectBaseUrlForServer } from '@/utils/server/serverEndpoint';
+import { findServerByIdOrIndexKey } from '@/utils/server/serverLookup';
+import { restBaseFromUrl, SUBSONIC_CLIENT, secureRandomSalt } from '@/lib/api/subsonicClient';
 
 function coverArtQueryParams(username: string, password: string, id: string, size: number): URLSearchParams {
   const salt = secureRandomSalt();

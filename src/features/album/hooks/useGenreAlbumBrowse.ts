@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { dedupeById } from '@/utils/dedupeById';
 import type { AlbumBrowseSort } from '@/utils/library/albumBrowseSort';
 import {

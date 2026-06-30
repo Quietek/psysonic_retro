@@ -1,4 +1,4 @@
-import { getPlayQueueForServer, type PlayQueueResult } from '../api/subsonicPlayQueue';
+import { getPlayQueueForServer, type PlayQueueResult } from '@/lib/api/subsonicPlayQueue';
 import { songToTrack } from '../utils/playback/songToTrack';
 import { bindQueueServerId } from '../utils/playback/playbackServer';
 import { resolveServerIdForIndexKey } from '../utils/server/serverLookup';

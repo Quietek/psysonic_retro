@@ -3,10 +3,10 @@ import {
   getAlbumWithCredentials,
   getArtistWithCredentials,
   getSongWithCredentials,
-} from '../../api/subsonicEntityWithCredentials';
-import { getSong } from '../../api/subsonicLibrary';
+} from '@/lib/api/subsonicEntityWithCredentials';
+import { getSong } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum, resolveArtist } from '@/features/offline';
-import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '../../api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '../../store/authStore';
 import type { ServerProfile } from '../../store/authStoreTypes';
 import { usePlayerStore } from '../../store/playerStore';

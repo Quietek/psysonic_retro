@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { useAuthStore } from '../store/authStore';
-import { usePlayerStore } from '../store/playerStore';
-import { reportNowPlaying, scrobbleSong } from './subsonicScrobble';
-import { shouldAttemptSubsonicForServer } from '../utils/network/subsonicNetworkGuard';
+import { useAuthStore } from '@/store/authStore';
+import { usePlayerStore } from '@/store/playerStore';
+import { reportNowPlaying, scrobbleSong } from '@/lib/api/subsonicScrobble';
+import { shouldAttemptSubsonicForServer } from '@/utils/network/subsonicNetworkGuard';
 
 const { apiForServerMock } = vi.hoisted(() => ({
   apiForServerMock: vi.fn(async () => ({})),
 }));
 
-vi.mock('./subsonicClient', () => ({
+vi.mock('@/lib/api/subsonicClient', () => ({
   api: vi.fn(),
   apiForServer: apiForServerMock,
 }));
-vi.mock('../utils/network/subsonicNetworkGuard', () => ({
+vi.mock('@/utils/network/subsonicNetworkGuard', () => ({
   shouldAttemptSubsonicForServer: vi.fn(() => true),
 }));
 

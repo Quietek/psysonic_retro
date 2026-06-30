@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Disc3, ExternalLink, Music } from 'lucide-react';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { COVER_DENSE_RAIL_CELL_CSS_PX } from '@/cover/layoutSizes';
 

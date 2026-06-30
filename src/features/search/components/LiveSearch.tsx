@@ -1,5 +1,5 @@
-import { subscribeLibrarySyncIdle, subscribeLibrarySyncProgress } from '@/api/library';
-import type { SearchResults, SubsonicArtist } from '@/api/subsonicTypes';
+import { subscribeLibrarySyncIdle, subscribeLibrarySyncProgress } from '@/lib/api/library';
+import type { SearchResults, SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import {
   LIVE_SEARCH_DEBOUNCE_NETWORK_MS,
@@ -30,7 +30,7 @@ import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { useTranslation } from 'react-i18next';
 import { albumArtistDisplayName } from '@/features/album';
 import { FETCH_QUEUE_BIAS_SEARCH_ARTIST_OVER_ALBUM } from '@/ui/CachedImage';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { ArtistCoverArtImage } from '@/cover/ArtistCoverArtImage';
 import { CoverArtImage } from '@/cover/CoverArtImage';

@@ -1,6 +1,6 @@
 import { RefreshCw, ShieldCheck, WifiOff, Zap } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { SyncStateDto } from '@/api/library';
+import type { SyncStateDto } from '@/lib/api/library';
 import {
   libraryStatusDisplayTrackCount,
   libraryStatusIsReady,

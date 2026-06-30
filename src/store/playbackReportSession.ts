@@ -1,5 +1,5 @@
-import { reportNowPlaying, reportPlayback } from '../api/subsonicScrobble';
-import type { PlaybackReportState } from '../api/subsonicTypes';
+import { reportNowPlaying, reportPlayback } from '@/lib/api/subsonicScrobble';
+import type { PlaybackReportState } from '@/lib/api/subsonicTypes';
 import { FEATURE_PLAYBACK_REPORT } from '../serverCapabilities/catalog';
 import { isFeatureActiveForServer } from '../serverCapabilities/storeView';
 import { isPlaybackRateApplied } from '../utils/audio/playbackRateHelpers';

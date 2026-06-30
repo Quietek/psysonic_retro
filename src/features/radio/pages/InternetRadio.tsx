@@ -1,5 +1,5 @@
 import { getInternetRadioStations, createInternetRadioStation, updateInternetRadioStation, deleteInternetRadioStation, uploadRadioCoverArt, deleteRadioCoverArt } from '@/features/radio/api/subsonicRadio';
-import { type InternetRadioStation } from '@/api/subsonicTypes';
+import { type InternetRadioStation } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Plus, Search } from 'lucide-react';
 import { usePlayerStore } from '@/store/playerStore';

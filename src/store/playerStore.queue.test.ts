@@ -11,11 +11,11 @@
  */
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-// `playerStore` pulls `savePlayQueue` from `@/api/subsonic`, which talks to a
+// `playerStore` pulls `savePlayQueue` from `@/lib/api/subsonic`, which talks to a
 // real server. Override only what the queue path touches; everything else
 // stays as the actual module so unrelated imports don't break.
-vi.mock('@/api/subsonic', async () => {
-  const actual = await vi.importActual<typeof import('@/api/subsonic')>('@/api/subsonic');
+vi.mock('@/lib/api/subsonic', async () => {
+  const actual = await vi.importActual<typeof import('@/lib/api/subsonic')>('@/lib/api/subsonic');
   return {
     ...actual,
     savePlayQueue: vi.fn(async () => undefined),

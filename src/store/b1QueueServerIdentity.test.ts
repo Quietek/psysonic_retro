@@ -29,10 +29,10 @@ import {
   type QueueUndoSnapshot,
 } from '@/store/queueUndo';
 import type { PlayerState, QueueItemRef, Track } from '@/store/playerStoreTypes';
-import { savePlayQueue } from '@/api/subsonicPlayQueue';
+import { savePlayQueue } from '@/lib/api/subsonicPlayQueue';
 import { _resetQueueSyncForTest, flushPlayQueuePosition } from '@/store/queueSync';
 
-vi.mock('@/api/subsonicPlayQueue', () => ({
+vi.mock('@/lib/api/subsonicPlayQueue', () => ({
   savePlayQueue: vi.fn(async () => undefined),
   getPlayQueue: vi.fn(async () => ({ songs: [], current: undefined, position: 0 })),
 }));

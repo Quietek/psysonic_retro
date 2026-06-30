@@ -32,11 +32,11 @@ const libraryAdvancedSearchMock = vi.fn();
 const libraryGetTracksByAlbumMock = vi.fn();
 const libraryGetTracksBatchChunkedMock = vi.fn();
 
-vi.mock('@/api/subsonicLibrary', () => ({
+vi.mock('@/lib/api/subsonicLibrary', () => ({
   getAlbumForServer: (...args: unknown[]) => getAlbumForServerMock(...args),
 }));
 
-vi.mock('@/api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryAdvancedSearch: (...args: unknown[]) => libraryAdvancedSearchMock(...args),
   libraryGetTracksByAlbum: (...args: unknown[]) => libraryGetTracksByAlbumMock(...args),
   libraryGetTracksBatchChunked: (...args: unknown[]) => libraryGetTracksBatchChunkedMock(...args),

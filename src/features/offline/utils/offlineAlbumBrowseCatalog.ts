@@ -1,4 +1,4 @@
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import type { AlbumBrowseQuery } from '@/utils/library/albumBrowseTypes';
 import { isOfflineBrowseActive } from '@/features/offline/utils/offlineBrowseMode';
 import {

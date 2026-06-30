@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('./subsonicOpenSubsonic', () => ({
+vi.mock('@/lib/api/subsonicOpenSubsonic', () => ({
   fetchOpenSubsonicExtensionsWithCredentials: vi.fn(),
 }));
 
-import { fetchOpenSubsonicExtensionsWithCredentials } from './subsonicOpenSubsonic';
-import { scheduleInstantMixProbeForServer } from './subsonic';
-import { useAuthStore } from '../store/authStore';
-import type { SubsonicServerIdentity } from '../utils/server/subsonicServerIdentity';
+import { fetchOpenSubsonicExtensionsWithCredentials } from '@/lib/api/subsonicOpenSubsonic';
+import { scheduleInstantMixProbeForServer } from '@/lib/api/subsonic';
+import { useAuthStore } from '@/store/authStore';
+import type { SubsonicServerIdentity } from '@/utils/server/subsonicServerIdentity';
 
 const fetchMock = vi.mocked(fetchOpenSubsonicExtensionsWithCredentials);
 const SID = 'srv-probe';

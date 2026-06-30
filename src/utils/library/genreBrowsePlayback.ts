@@ -1,10 +1,10 @@
 /**
  * Genre-detail bulk play/shuffle against the local library index.
  */
-import { libraryAdvancedSearch, libraryGetGenreAlbumCounts, type LibrarySortClause } from '../../api/library';
-import { fetchAllSongsByGenre, getGenres } from '../../api/subsonicGenres';
-import type { SubsonicGenre } from '../../api/subsonicTypes';
-import { libraryScopeForServer } from '../../api/subsonicClient';
+import { libraryAdvancedSearch, libraryGetGenreAlbumCounts, type LibrarySortClause } from '@/lib/api/library';
+import { fetchAllSongsByGenre, getGenres } from '@/lib/api/subsonicGenres';
+import type { SubsonicGenre } from '@/lib/api/subsonicTypes';
+import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import type { Track } from '../../store/playerStoreTypes';
 import { songToTrack } from '../playback/songToTrack';
 import { shuffleArray } from '../playback/shuffleArray';

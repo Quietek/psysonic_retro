@@ -1,4 +1,4 @@
-import { scrobbleSong } from '../api/subsonicScrobble';
+import { scrobbleSong } from '@/lib/api/subsonicScrobble';
 import type { Track } from './playerStoreTypes';
 import {
   playbackReportPlaying,

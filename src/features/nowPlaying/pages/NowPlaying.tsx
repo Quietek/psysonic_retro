@@ -2,7 +2,7 @@ import { useCoverArt } from '@/cover/useCoverArt';
 import { albumCoverRef } from '@/cover/ref';
 import { usePlaybackTrackCoverRef } from '@/cover/useLibraryCoverRef';
 import { coverArtIdFromRadio } from '@/cover/ids';
-import type { SubsonicArtistInfo, SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicArtistInfo, SubsonicSong } from '@/lib/api/subsonicTypes';
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { usePlaybackLibraryNavigate } from '@/hooks/usePlaybackLibraryNavigate';
 import { usePlaybackServerId } from '@/hooks/usePlaybackServerId';

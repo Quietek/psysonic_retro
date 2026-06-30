@@ -1,5 +1,5 @@
-import { search } from '@/api/subsonicSearch';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import { search } from '@/lib/api/subsonicSearch';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';

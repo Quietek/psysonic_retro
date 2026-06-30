@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { onInvoke } from '@/test/mocks/tauri';
-import type { SearchResults } from '../../api/subsonicTypes';
+import type { SearchResults } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import {
   liveSearchQueryRejected,

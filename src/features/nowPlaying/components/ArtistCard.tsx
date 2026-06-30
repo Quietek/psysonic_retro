@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExternalLink } from 'lucide-react';
-import type { SubsonicArtistInfo } from '@/api/subsonicTypes';
+import type { SubsonicArtistInfo } from '@/lib/api/subsonicTypes';
 import { isRealArtistImage, sanitizeHtml } from '@/utils/componentHelpers/nowPlayingHelpers';
 import CachedImage from '@/ui/CachedImage';
 

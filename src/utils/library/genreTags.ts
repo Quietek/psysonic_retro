@@ -1,4 +1,4 @@
-import type { SubsonicAlbum, SubsonicItemGenre, SubsonicSong } from '../../api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicItemGenre, SubsonicSong } from '@/lib/api/subsonicTypes';
 
 const GENRE_SEPARATORS = [';', '/', ','] as const;
 

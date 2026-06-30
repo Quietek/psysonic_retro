@@ -1,5 +1,5 @@
-import { buildStreamUrl } from '../api/subsonicStreamUrl';
-import type { SubsonicSong } from '../api/subsonicTypes';
+import { buildStreamUrl } from '@/lib/api/subsonicStreamUrl';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { TrackPreviewLocation } from './authStoreTypes';
 import { create } from 'zustand';
 import { invoke } from '@tauri-apps/api/core';

@@ -1,5 +1,5 @@
 import type { TFunction } from 'i18next';
-import type { TrackFactDto } from '../../api/library';
+import type { TrackFactDto } from '@/lib/api/library';
 import {
   distinctOximediaMoodTagIds,
   topDistinctOximediaMoodTagIds,

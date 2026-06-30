@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import type { AlbumBrowseSort } from '@/utils/library/browseTextSearch';
 
 export const DEFAULT_ALBUM_BROWSE_SORT: AlbumBrowseSort = 'alphabeticalByName';

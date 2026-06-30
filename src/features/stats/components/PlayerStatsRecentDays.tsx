@@ -6,7 +6,7 @@ import {
   libraryGetPlayerStatsRecentDays,
   type PlaySessionDayDetail,
   type PlaySessionRecentDay,
-} from '@/api/library';
+} from '@/lib/api/library';
 import { formatPlayerStatsListeningTotal } from '@/utils/format/formatHumanDuration';
 import {
   formatPlayerStatsDayLabel,

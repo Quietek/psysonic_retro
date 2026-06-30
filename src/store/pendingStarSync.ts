@@ -1,4 +1,4 @@
-import { setRating, star, unstar } from '../api/subsonicStarRating';
+import { setRating, star, unstar } from '@/lib/api/subsonicStarRating';
 import { usePlayerStore } from './playerStore';
 import { patchCachedTrack } from '../utils/library/queueTrackResolver';
 

@@ -5,7 +5,7 @@ import { coverIndexKeyFromRef, coverStorageKeyFromRef } from '../cover/storageKe
 import { connectBaseUrlForServer } from '../utils/server/serverEndpoint';
 import { serverIndexKeyForProfile } from '../utils/server/serverIndexKey';
 import { getPlaybackServerId } from '../utils/playback/playbackServer';
-import { restBaseFromUrl } from './subsonicClient';
+import { restBaseFromUrl } from '@/lib/api/subsonicClient';
 import type { CoverArtRef, CoverArtTier } from '../cover/types';
 
 /** Library SQLite `track.server_id` uses host index keys, not auth profile UUIDs. */

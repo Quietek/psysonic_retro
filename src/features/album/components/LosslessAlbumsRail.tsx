@@ -1,7 +1,7 @@
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ndListLosslessAlbumsPage } from '@/api/navidromeBrowse';
+import { ndListLosslessAlbumsPage } from '@/lib/api/navidromeBrowse';
 import AlbumRow from '@/features/album/components/AlbumRow';
 import { useAuthStore } from '@/store/authStore';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';

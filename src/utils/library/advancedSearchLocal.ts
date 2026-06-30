@@ -19,10 +19,10 @@ import {
   type LibraryEntityType,
   type LibraryFilterClause,
   type LibraryTrackDto,
-} from '../../api/library';
-import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '../../api/subsonicTypes';
-import { search } from '../../api/subsonicSearch';
-import { libraryScopeForServer } from '../../api/subsonicClient';
+} from '@/lib/api/library';
+import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
+import { search } from '@/lib/api/subsonicSearch';
+import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import { fetchAlbumBrowseNetwork } from './albumBrowseNetwork';
 import type { AlbumBrowseQuery } from './albumBrowseTypes';
 import { resolveAlbumYearBounds } from './albumYearFilter';

@@ -1,7 +1,7 @@
 import type React from 'react';
 import { getPlaylist } from '@/features/playlist/api/subsonicPlaylists';
-import { filterSongsToActiveLibrary } from '@/api/subsonicLibrary';
-import type { SubsonicPlaylist, SubsonicSong } from '@/api/subsonicTypes';
+import { filterSongsToActiveLibrary } from '@/lib/api/subsonicLibrary';
+import type { SubsonicPlaylist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { usePlaylistStore } from '@/features/playlist/store/playlistStore';
 import { isOfflineBrowseActive } from '@/features/offline';

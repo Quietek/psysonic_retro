@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import type React from 'react';
 import { getPlaylist } from '@/features/playlist';
-import type { SubsonicPlaylist } from '../api/subsonicTypes';
+import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistStore } from '@/features/playlist';
 import type { PendingSmartPlaylist } from '@/features/playlist';
 

@@ -11,10 +11,10 @@
  */
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { SubsonicArtistInfo, SubsonicSong, SubsonicAlbum, SubsonicArtist } from '@/api/subsonicTypes';
+import type { SubsonicArtistInfo, SubsonicSong, SubsonicAlbum, SubsonicArtist } from '@/lib/api/subsonicTypes';
 
 vi.mock('@/features/artist');
-vi.mock('@/api/subsonicLibrary');
+vi.mock('@/lib/api/subsonicLibrary');
 vi.mock('@/api/bandsintown');
 vi.mock('@/utils/network/subsonicNetworkGuard', () => ({
   shouldAttemptSubsonicForServer: vi.fn(() => true),
@@ -22,7 +22,7 @@ vi.mock('@/utils/network/subsonicNetworkGuard', () => ({
 
 import { shouldAttemptSubsonicForServer } from '@/utils/network/subsonicNetworkGuard';
 import { getArtistForServer, getArtistInfoForServer, getTopSongsForServer } from '@/features/artist';
-import { getAlbumForServer, getSongForServer } from '@/api/subsonicLibrary';
+import { getAlbumForServer, getSongForServer } from '@/lib/api/subsonicLibrary';
 import { fetchBandsintownEvents } from '@/api/bandsintown';
 import { useNowPlayingFetchers, type NowPlayingFetchersDeps } from '@/features/nowPlaying/hooks/useNowPlayingFetchers';
 

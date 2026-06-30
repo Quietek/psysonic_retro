@@ -1,4 +1,4 @@
-import { star, unstar } from '@/api/subsonicStarRating';
+import { star, unstar } from '@/lib/api/subsonicStarRating';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { emit } from '@tauri-apps/api/event';

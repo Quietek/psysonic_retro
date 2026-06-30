@@ -5,7 +5,7 @@ import {
   libraryGetPlaybackHint,
   subscribeLibrarySyncIdle,
   subscribeLibrarySyncProgress,
-} from '../../api/library';
+} from '@/lib/api/library';
 import {
   activeIngestStrategy,
   ingestParallelismNote,

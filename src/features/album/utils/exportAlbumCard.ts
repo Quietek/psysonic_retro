@@ -1,4 +1,4 @@
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { coverArtRef } from '@/cover/ref';

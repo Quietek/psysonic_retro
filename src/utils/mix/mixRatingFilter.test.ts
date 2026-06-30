@@ -1,15 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { SubsonicSong } from '../../api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '../../store/playerStore';
 import { resetPlayerStore } from '../../test/helpers/storeReset';
 
-vi.mock('../../api/subsonicRatings', () => ({
+vi.mock('@/lib/api/subsonicRatings', () => ({
   prefetchArtistUserRatings: vi.fn(),
   prefetchAlbumUserRatings: vi.fn(),
   parseSubsonicEntityStarRating: vi.fn(),
 }));
 
-import { prefetchArtistUserRatings, prefetchAlbumUserRatings } from '../../api/subsonicRatings';
+import { prefetchArtistUserRatings, prefetchAlbumUserRatings } from '@/lib/api/subsonicRatings';
 import {
   enrichSongsForMixRatingFilter,
   filterTopArtistsForMixRatings,

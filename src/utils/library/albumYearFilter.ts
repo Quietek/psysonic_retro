@@ -1,4 +1,4 @@
-import type { LibraryFilterClause } from '../../api/library';
+import type { LibraryFilterClause } from '@/lib/api/library';
 
 export const ALBUM_YEAR_MIN = 1900;
 export const ALBUM_YEAR_MAX = new Date().getFullYear();

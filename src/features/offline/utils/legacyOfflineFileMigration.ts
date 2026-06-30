@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import { libraryGetTracksBatch } from '@/api/library';
+import { libraryGetTracksBatch } from '@/lib/api/library';
 import { useAuthStore } from '@/store/authStore';
 import { useOfflineStore, type OfflineAlbumMeta } from '@/features/offline/store/offlineStore';
 import { useLocalPlaybackStore, type LocalPlaybackEntry, type PinSource } from '@/store/localPlaybackStore';

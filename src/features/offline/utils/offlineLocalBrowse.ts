@@ -1,6 +1,6 @@
-import type { LibraryTrackDto } from '@/api/library';
-import { libraryAdvancedSearch, libraryGetTracksBatchChunked, libraryGetTracksByAlbum } from '@/api/library';
-import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/api/subsonicTypes';
+import type { LibraryTrackDto } from '@/lib/api/library';
+import { libraryAdvancedSearch, libraryGetTracksBatchChunked, libraryGetTracksByAlbum } from '@/lib/api/library';
+import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import type { LocalPlaybackEntry } from '@/store/localPlaybackStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';

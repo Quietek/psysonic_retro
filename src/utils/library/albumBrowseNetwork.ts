@@ -1,6 +1,6 @@
-import { getAlbumList } from '../../api/subsonicLibrary';
-import { getAlbumsByGenre } from '../../api/subsonicGenres';
-import type { SubsonicAlbum } from '../../api/subsonicTypes';
+import { getAlbumList } from '@/lib/api/subsonicLibrary';
+import { getAlbumsByGenre } from '@/lib/api/subsonicGenres';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { dedupeById } from '../dedupeById';
 import {
   filterAlbumsByCompilation,

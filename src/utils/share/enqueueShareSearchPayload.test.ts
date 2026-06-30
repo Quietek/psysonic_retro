@@ -22,7 +22,7 @@ const mocks = vi.hoisted(() => ({
   songToTrack: vi.fn(),
 }));
 
-vi.mock('../../api/subsonicLibrary', () => ({
+vi.mock('@/lib/api/subsonicLibrary', () => ({
   getAlbum: mocks.getAlbum,
   getSong: mocks.getSong,
 }));
@@ -31,7 +31,7 @@ vi.mock('@/features/artist', () => ({
   getArtist: mocks.getArtist,
 }));
 
-vi.mock('../../api/subsonicEntityWithCredentials', () => ({
+vi.mock('@/lib/api/subsonicEntityWithCredentials', () => ({
   getAlbumWithCredentials: mocks.getAlbumWithCredentials,
   getArtistWithCredentials: mocks.getArtistWithCredentials,
   getSongWithCredentials: mocks.getSongWithCredentials,

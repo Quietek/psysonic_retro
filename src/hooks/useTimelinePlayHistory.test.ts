@@ -8,7 +8,7 @@ import {
   ensureTimelineBootstrap,
 } from './useTimelinePlayHistory';
 
-vi.mock('../api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryGetRecentPlaySessions: vi.fn(async () => []),
   TIMELINE_HISTORY_BOOTSTRAP_LIMIT: 50,
 }));
@@ -22,7 +22,7 @@ vi.mock('../utils/library/queueTrackResolver', async importOriginal => {
   return { ...actual, seedQueueResolver: vi.fn() };
 });
 
-import { libraryGetRecentPlaySessions } from '../api/library';
+import { libraryGetRecentPlaySessions } from '@/lib/api/library';
 import { timelineBootstrapIndexReady } from '../utils/queue/timelineBootstrapReady';
 
 describe('ensureTimelineBootstrap', () => {

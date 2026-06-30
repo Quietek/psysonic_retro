@@ -21,7 +21,7 @@ import {
   secureRandomSalt,
   SUBSONIC_CLIENT,
   type ServerHttpHeaderProfile,
-} from '../../api/subsonicClient';
+} from '@/lib/api/subsonicClient';
 import type { ServerProfile } from '../../store/authStoreTypes';
 import { allNormalizedAddresses } from './serverEndpoint';
 import { headersForServerRequest } from './serverHttpHeaders';

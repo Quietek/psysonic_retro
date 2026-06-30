@@ -1,11 +1,11 @@
-import { getStarredForServer } from '@/api/subsonicStarRating';
-import { libraryAdvancedSearch } from '@/api/library';
+import { getStarredForServer } from '@/lib/api/subsonicStarRating';
+import { libraryAdvancedSearch } from '@/lib/api/library';
 import type {
   StarredResults,
   SubsonicAlbum,
   SubsonicArtist,
   SubsonicSong,
-} from '@/api/subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 import { isActiveServerReachable } from '@/utils/network/activeServerReachability';
 import {
   albumToAlbum,

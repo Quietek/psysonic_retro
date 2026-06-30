@@ -1,5 +1,5 @@
-import type { LibraryTrackDto } from '../../api/library';
-import type { SubsonicAlbum } from '../../api/subsonicTypes';
+import type { LibraryTrackDto } from '@/lib/api/library';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 
 export type AlbumCompFilter = 'all' | 'only' | 'hide';
 

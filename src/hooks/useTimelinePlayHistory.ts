@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useSyncExternalStore } from 'react';
-import { libraryGetRecentPlaySessions, type PlaySessionRecentTrack } from '../api/library';
+import { libraryGetRecentPlaySessions, type PlaySessionRecentTrack } from '@/lib/api/library';
 import { seedQueueResolver, resolveBatch } from '../utils/library/queueTrackResolver';
 import {
   applyTimelineBootstrap,

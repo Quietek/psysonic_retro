@@ -6,7 +6,7 @@ import { resetAuthStore } from '@/test/helpers/storeReset';
 import { useAuthStore } from '@/store/authStore';
 import { encodeServerMagicString } from '@/utils/server/serverMagicString';
 
-vi.mock('@/api/subsonic', () => ({
+vi.mock('@/lib/api/subsonic', () => ({
   pingWithCredentialsForProfile: vi.fn(async () => ({
     ok: true,
     type: 'navidrome',
@@ -20,7 +20,7 @@ vi.mock('@/utils/server/syncServerHttpContext', () => ({
   syncServerHttpContextForProfile: vi.fn(async () => undefined),
 }));
 
-import { pingWithCredentialsForProfile } from '@/api/subsonic';
+import { pingWithCredentialsForProfile } from '@/lib/api/subsonic';
 
 beforeEach(() => {
   resetAuthStore();

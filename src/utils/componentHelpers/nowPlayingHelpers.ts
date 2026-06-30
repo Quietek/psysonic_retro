@@ -1,4 +1,4 @@
-import type { SubsonicSong } from '../../api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { sanitizeHtml as sanitizeHtmlBase } from '../sanitizeHtml';
 
 export function formatTime(s: number): string {

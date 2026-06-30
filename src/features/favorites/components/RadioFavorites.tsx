@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Cast, ChevronLeft, ChevronRight, Heart, X } from 'lucide-react';
-import type { InternetRadioStation } from '@/api/subsonicTypes';
+import type { InternetRadioStation } from '@/lib/api/subsonicTypes';
 import { CoverArtImage } from '@/cover/CoverArtImage';
 import { albumCoverRef } from '@/cover/ref';
 import { coverArtIdFromRadio } from '@/cover/ids';

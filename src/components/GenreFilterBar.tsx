@@ -1,4 +1,4 @@
-import { getGenres } from '../api/subsonicGenres';
+import { getGenres } from '@/lib/api/subsonicGenres';
 import type { GenreFilterOption } from '../utils/library/albumBrowseLoad';
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';

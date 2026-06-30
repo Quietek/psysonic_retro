@@ -1,6 +1,6 @@
 import { AlbumCoverArtImage } from '../../cover/AlbumCoverArtImage';
-import { getRandomSongs } from '../../api/subsonicLibrary';
-import type { SubsonicSong } from '../../api/subsonicTypes';
+import { getRandomSongs } from '@/lib/api/subsonicLibrary';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '../../utils/playback/songToTrack';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Play, ListPlus, RefreshCw, Sparkles } from 'lucide-react';
@@ -9,7 +9,7 @@ import { useAuthStore } from '../../store/authStore';
 import { usePlayerStore } from '../../store/playerStore';
 import SongRail from '../SongRail';
 import { playSongNow } from '../../utils/playback/playSong';
-import { ndListSongs, ndInvalidateSongsCache } from '../../api/navidromeBrowse';
+import { ndListSongs, ndInvalidateSongsCache } from '@/lib/api/navidromeBrowse';
 import { usePerfProbeFlags } from '../../utils/perf/perfFlags';
 import { useNavigateToAlbum } from '@/features/album';
 import { useNavigateToArtist } from '@/features/artist';

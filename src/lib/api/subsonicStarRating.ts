@@ -1,19 +1,19 @@
-import { api, apiForServer, libraryFilterParams, libraryFilterParamsForServer } from './subsonicClient';
-import { invalidateEntityUserRatingCaches } from './subsonicRatings';
-import { useAuthStore } from '../store/authStore';
-import { patchLibraryTrackOnUse, type StarPatchMeta } from '../utils/library/patchOnUse';
-import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { api, apiForServer, libraryFilterParams, libraryFilterParamsForServer } from '@/lib/api/subsonicClient';
+import { invalidateEntityUserRatingCaches } from '@/lib/api/subsonicRatings';
+import { useAuthStore } from '@/store/authStore';
+import { patchLibraryTrackOnUse, type StarPatchMeta } from '@/utils/library/patchOnUse';
+import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import {
   invalidateStarredAlbumBrowse,
   refreshStarredAlbumIndexFromServer,
-} from '../utils/library/starredAlbumIndexSync';
+} from '@/utils/library/starredAlbumIndexSync';
 import type {
   EntityRatingSupportLevel,
   StarredResults,
   SubsonicAlbum,
   SubsonicArtist,
   SubsonicSong,
-} from './subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 
 function parseStarred2Response(data: {
   starred2?: {
@@ -122,7 +122,7 @@ export async function setRating(id: string, rating: number): Promise<void> {
   // mix paths already pull `subsonicRatings` (e.g. mixRatingFilter), so a
   // dynamic import would not split chunks and only triggered INEFFECTIVE_DYNAMIC_IMPORT.
   // Navidrome browse stays lazy to keep this module free of that dependency when unused.
-  void import('./navidromeBrowse').then(m => m.ndInvalidateSongsCache()).catch(() => {});
+  void import('@/lib/api/navidromeBrowse').then(m => m.ndInvalidateSongsCache()).catch(() => {});
   invalidateEntityUserRatingCaches(id);
 }
 

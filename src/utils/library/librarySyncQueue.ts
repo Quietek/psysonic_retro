@@ -4,7 +4,7 @@ import {
   librarySyncVerifyIntegrity,
   subscribeLibrarySyncIdle,
   type LibrarySyncIdlePayload,
-} from '../../api/library';
+} from '@/lib/api/library';
 import type { UnlistenFn } from '@tauri-apps/api/event';
 import { libraryDevEnabled, logLibrarySync } from './libraryDevLog';
 import { invalidateGenreCatalogCache } from './genreCatalogCountsCache';

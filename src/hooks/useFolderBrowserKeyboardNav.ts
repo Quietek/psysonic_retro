@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import type { SubsonicDirectoryEntry } from '../api/subsonicTypes';
+import type { SubsonicDirectoryEntry } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '../store/playerStore';
 import {
   entryToTrack, folderBrowserHasKeyModifiers, isFolderBrowserArrowKey,

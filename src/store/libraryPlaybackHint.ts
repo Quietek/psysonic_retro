@@ -1,4 +1,4 @@
-import { librarySetPlaybackHint, type PlaybackHint } from '../api/library';
+import { librarySetPlaybackHint, type PlaybackHint } from '@/lib/api/library';
 import { useAuthStore } from './authStore';
 import { useLibraryIndexStore } from './libraryIndexStore';
 

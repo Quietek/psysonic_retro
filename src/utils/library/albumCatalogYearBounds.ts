@@ -1,4 +1,4 @@
-import { libraryGetCatalogYearBounds } from '../../api/library';
+import { libraryGetCatalogYearBounds } from '@/lib/api/library';
 import { ALBUM_YEAR_MAX, ALBUM_YEAR_MIN, type AlbumCatalogYearRange } from './albumYearFilter';
 import { libraryIsReady } from './libraryReady';
 

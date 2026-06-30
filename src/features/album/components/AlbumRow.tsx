@@ -1,4 +1,4 @@
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import React, { useRef, useState, useEffect, useLayoutEffect, useMemo } from 'react';
 import AlbumCard from '@/features/album/components/AlbumCard';
 import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';

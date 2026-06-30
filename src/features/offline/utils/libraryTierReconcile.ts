@@ -1,6 +1,6 @@
-import { libraryUpsertSongsFromApi } from '@/api/library';
+import { libraryUpsertSongsFromApi } from '@/lib/api/library';
 import { librarySqlServerId } from '@/api/coverCache';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from '@/store/authStore';
 import type { LocalPlaybackEntry, PinSource } from '@/store/localPlaybackStore';

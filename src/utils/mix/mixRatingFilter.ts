@@ -1,6 +1,6 @@
-import { parseSubsonicEntityStarRating, prefetchAlbumUserRatings, prefetchArtistUserRatings } from '../../api/subsonicRatings';
-import { getRandomSongs } from '../../api/subsonicLibrary';
-import type { SubsonicAlbum, SubsonicSong } from '../../api/subsonicTypes';
+import { parseSubsonicEntityStarRating, prefetchAlbumUserRatings, prefetchArtistUserRatings } from '@/lib/api/subsonicRatings';
+import { getRandomSongs } from '@/lib/api/subsonicLibrary';
+import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '../../store/authStore';
 import { usePlayerStore } from '../../store/playerStore';
 

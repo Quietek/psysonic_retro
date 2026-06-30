@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Check, ListPlus, X } from 'lucide-react';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '@/store/playerStore';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { formatTrackTime } from '@/utils/format/formatDuration';

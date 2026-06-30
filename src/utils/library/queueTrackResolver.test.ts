@@ -2,9 +2,9 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { onInvoke } from '@/test/mocks/tauri';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { usePlayerStore } from '@/store/playerStore';
-import type { TrackRefDto } from '@/api/library';
+import type { TrackRefDto } from '@/lib/api/library';
 import type { QueueItemRef } from '@/store/playerStoreTypes';
-import * as subsonic from '@/api/subsonicLibrary';
+import * as subsonic from '@/lib/api/subsonicLibrary';
 import {
   resolveBatch,
   resolveVisibleRange,

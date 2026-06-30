@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import * as offlineMediaResolve from '@/features/offline';
 import { fetchArtistDetailTracks, runArtistDetailPlayTopSong } from '@/features/artist/utils/runArtistDetailPlay';
 

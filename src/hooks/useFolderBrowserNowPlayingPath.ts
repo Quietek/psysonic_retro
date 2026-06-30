@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getMusicDirectory, getMusicIndexes } from '../api/subsonicLibrary';
-import type { SubsonicDirectoryEntry } from '../api/subsonicTypes';
+import { getMusicDirectory, getMusicIndexes } from '@/lib/api/subsonicLibrary';
+import type { SubsonicDirectoryEntry } from '@/lib/api/subsonicTypes';
 import type { Track } from '../store/playerStoreTypes';
 import type { Column, NavPos } from '../utils/componentHelpers/folderBrowserHelpers';
 

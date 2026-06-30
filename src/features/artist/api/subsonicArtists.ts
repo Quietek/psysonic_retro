@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/store/authStore';
-import { api, apiForServer, libraryFilterParams, libraryFilterParamsForServer } from '@/api/subsonicClient';
-import { filterSongsToServerLibrary } from '@/api/subsonicLibrary';
-import { filterSongsToActiveLibrary, similarSongsRequestCount } from '@/api/subsonicLibrary';
+import { api, apiForServer, libraryFilterParams, libraryFilterParamsForServer } from '@/lib/api/subsonicClient';
+import { filterSongsToServerLibrary } from '@/lib/api/subsonicLibrary';
+import { filterSongsToActiveLibrary, similarSongsRequestCount } from '@/lib/api/subsonicLibrary';
 import {
   FEATURE_AUDIOMUSE_SIMILAR_TRACKS,
   OP_SIMILAR_TRACKS,
@@ -12,7 +12,7 @@ import type {
   SubsonicArtist,
   SubsonicArtistInfo,
   SubsonicSong,
-} from '@/api/subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 
 export async function getArtists(): Promise<SubsonicArtist[]> {
   type ArtistIndexEntry = { artist?: SubsonicArtist | SubsonicArtist[] };

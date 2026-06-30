@@ -8,7 +8,7 @@ import {
 } from '@/features/radio/api/subsonicRadio';
 import {
   type InternetRadioStation, type RadioBrowserStation, RADIO_PAGE_SIZE,
-} from '@/api/subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 import { showToast } from '@/utils/ui/toast';
 
 interface RadioDirectoryModalProps {

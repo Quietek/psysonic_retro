@@ -17,10 +17,10 @@ import {
   buildStreamUrl,
   coverArtCacheKey,
   coverArtCacheKeyForServer,
-} from './subsonicStreamUrl';
+} from '@/lib/api/subsonicStreamUrl';
 import { beforeEach, describe, expect, it } from 'vitest';
-import { parseSubsonicEntityStarRating } from './subsonicRatings';
-import { getClient, libraryFilterParams, libraryScopeForServer } from './subsonicClient';
+import { parseSubsonicEntityStarRating } from '@/lib/api/subsonicRatings';
+import { getClient, libraryFilterParams, libraryScopeForServer } from '@/lib/api/subsonicClient';
 import { useAuthStore } from '@/store/authStore';
 import { resetAuthStore } from '@/test/helpers/storeReset';
 

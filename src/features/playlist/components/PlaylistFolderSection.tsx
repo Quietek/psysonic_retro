@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, Folder, Pencil, Trash2 } from 'lucide-react';
-import type { SubsonicPlaylist } from '@/api/subsonicTypes';
+import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistFolderStore } from '@/features/playlist/store/playlistFolderStore';
 import type { PlaylistFolder } from '@/features/playlist/utils/playlistFolders';
 import { useDragDrop } from '@/contexts/DragDropContext';

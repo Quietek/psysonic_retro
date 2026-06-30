@@ -1,8 +1,8 @@
-import { libraryUpsertSongsFromApi } from '@/api/library';
-import { buildStreamUrl } from '@/api/subsonicStreamUrl';
-import { getAlbum } from '@/api/subsonicLibrary';
+import { libraryUpsertSongsFromApi } from '@/lib/api/library';
+import { buildStreamUrl } from '@/lib/api/subsonicStreamUrl';
+import { getAlbum } from '@/lib/api/subsonicLibrary';
 import { getArtist } from '@/features/artist';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { invoke } from '@tauri-apps/api/core';

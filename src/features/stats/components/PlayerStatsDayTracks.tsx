@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import type { PlaySessionDayDetail } from '@/api/library';
+import type { PlaySessionDayDetail } from '@/lib/api/library';
 import { formatPlayerStatsListenedSec } from '@/utils/format/formatHumanDuration';
 
 type Props = {

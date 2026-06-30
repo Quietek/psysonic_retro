@@ -1,5 +1,5 @@
-import type { SubsonicAlbum } from '../../api/subsonicTypes';
-import type { LibrarySortClause } from '../../api/library';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
+import type { LibrarySortClause } from '@/lib/api/library';
 
 export type AlbumBrowseSort = 'alphabeticalByName' | 'alphabeticalByArtist' | 'byArtistThenYear';
 

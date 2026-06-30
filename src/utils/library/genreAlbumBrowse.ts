@@ -1,6 +1,6 @@
-import { getAlbumsByGenre } from '../../api/subsonicGenres';
-import { libraryListAlbumsByGenre } from '../../api/library';
-import { libraryScopeForServer } from '../../api/subsonicClient';
+import { getAlbumsByGenre } from '@/lib/api/subsonicGenres';
+import { libraryListAlbumsByGenre } from '@/lib/api/library';
+import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import { albumToAlbum } from './advancedSearchLocal';
 import { albumSortClauses, sortSubsonicAlbums, type AlbumBrowseSort } from './albumBrowseSort';
 import type { AlbumBrowsePageResult } from './albumBrowseTypes';

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import type React from 'react';
-import { getRandomSongs } from '@/api/subsonicLibrary';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import { getRandomSongs } from '@/lib/api/subsonicLibrary';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export interface PlaylistSuggestionsResult {
   suggestions: SubsonicSong[];

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { SubsonicPlaylist } from '@/api/subsonicTypes';
+import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { EMPTY_SERVER_FOLDERS, usePlaylistFolderStore } from '@/features/playlist/store/playlistFolderStore';
 import { groupPlaylistsByFolder } from '@/features/playlist/utils/playlistFolders';
 import { useDragDrop } from '@/contexts/DragDropContext';

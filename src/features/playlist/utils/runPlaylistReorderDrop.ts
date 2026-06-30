@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 export interface RunPlaylistReorderDropDeps {
   e: Event;

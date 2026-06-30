@@ -1,6 +1,6 @@
 import React from 'react';
 import { queueSongStar, queueSongRating } from '@/store/pendingStarSync';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '@/store/playerStore';
 
 export interface PlaylistStarRatingDeps {

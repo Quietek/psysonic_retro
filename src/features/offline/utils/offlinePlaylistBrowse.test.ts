@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import * as libraryApi from '@/api/library';
+import * as libraryApi from '@/lib/api/library';
 import { useAuthStore } from '@/store/authStore';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';
@@ -10,7 +10,7 @@ import {
   playlistsOfflineBrowseEnabled,
 } from '@/features/offline/utils/offlinePlaylistBrowse';
 
-vi.mock('@/api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryGetTracksBatchChunked: vi.fn(),
 }));
 

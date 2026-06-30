@@ -1,5 +1,5 @@
 import type React from 'react';
-import type { SubsonicAlbum, SubsonicDirectoryEntry } from '../../api/subsonicTypes';
+import type { SubsonicAlbum, SubsonicDirectoryEntry } from '@/lib/api/subsonicTypes';
 import type { Track } from '../../store/playerStoreTypes';
 
 export type ColumnKind = 'roots' | 'indexes' | 'directory';

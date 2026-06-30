@@ -16,10 +16,10 @@
  * `artistInfo` (bio / similar) has no index source and stays network-only — it
  * is intentionally absent here.
  */
-import { libraryGetTrack, libraryGetTracksByAlbum } from '@/api/library';
+import { libraryGetTrack, libraryGetTracksByAlbum } from '@/lib/api/library';
 import { getArtistForServer, getTopSongsForServer } from '@/features/artist';
-import { getAlbumForServer, getSongForServer } from '@/api/subsonicLibrary';
-import type { SubsonicAlbum, SubsonicSong } from '@/api/subsonicTypes';
+import { getAlbumForServer, getSongForServer } from '@/lib/api/subsonicLibrary';
+import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { shouldAttemptSubsonicForServer } from '@/utils/network/subsonicNetworkGuard';
 import { loadAlbumFromLibraryIndex, loadArtistFromLibraryIndex } from '@/features/offline';
 import { trackToSong } from '@/utils/library/advancedSearchLocal';

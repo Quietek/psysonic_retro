@@ -1,4 +1,4 @@
-import type { SubsonicArtist } from '@/api/subsonicTypes';
+import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { useEffect, useRef, useState } from 'react';
 import {
   BROWSE_TEXT_DEBOUNCE_NETWORK_MS,

@@ -1,4 +1,4 @@
-import type { SubsonicSong } from '../api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '../utils/playback/songToTrack';
 import React, { memo } from 'react';
 import { useNavigateToAlbum } from '@/features/album';

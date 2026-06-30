@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { listen } from '@tauri-apps/api/event';
-import { libraryGetFacts, libraryGetTrack } from '../api/library';
+import { libraryGetFacts, libraryGetTrack } from '@/lib/api/library';
 import { usePlaybackServerId } from './usePlaybackServerId';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
 import {

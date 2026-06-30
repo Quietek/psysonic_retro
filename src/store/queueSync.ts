@@ -1,4 +1,4 @@
-import { savePlayQueue } from '../api/subsonicPlayQueue';
+import { savePlayQueue } from '@/lib/api/subsonicPlayQueue';
 import type { QueueItemRef, Track } from './playerStoreTypes';
 import { isSubsonicServerReachable } from '../utils/network/subsonicNetworkGuard';
 import {

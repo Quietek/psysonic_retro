@@ -1,6 +1,6 @@
-import { libraryGetTracksBatchChunked } from '@/api/library';
+import { libraryGetTracksBatchChunked } from '@/lib/api/library';
 import { getPlaylist } from '@/features/playlist';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import type { OfflineAlbumMeta } from '@/features/offline/store/offlineStore';
 import { useOfflineStore } from '@/features/offline/store/offlineStore';

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Music, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { ServerProfile } from '@/store/authStoreTypes';
 import { formatTrackTime } from '@/utils/format/formatDuration';
 import type { ShareQueuePreviewState } from '@/features/search/hooks/useShareQueuePreview';

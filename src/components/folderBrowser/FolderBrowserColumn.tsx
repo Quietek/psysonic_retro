@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronRight, Folder, FolderOpen, Music } from 'lucide-react';
-import type { SubsonicDirectoryEntry } from '../../api/subsonicTypes';
+import type { SubsonicDirectoryEntry } from '@/lib/api/subsonicTypes';
 import type { Track } from '../../store/playerStoreTypes';
 import {
   folderBrowserHasKeyModifiers, isFolderBrowserArrowKey,

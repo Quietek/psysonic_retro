@@ -1,5 +1,5 @@
 import { createPlaylist, deletePlaylist } from '@/features/playlist';
-import { getSong } from '@/api/subsonicLibrary';
+import { getSong } from '@/lib/api/subsonicLibrary';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { useAuthStore } from '@/store/authStore';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';

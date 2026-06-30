@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import {
   getDisplayedSongs,
   type DisplayedSongsOptions,

@@ -1,4 +1,4 @@
-import type { SubsonicSong } from '../../api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PagedSongList from '../PagedSongList';

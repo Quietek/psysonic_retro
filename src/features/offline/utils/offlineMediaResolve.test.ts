@@ -49,7 +49,7 @@ vi.mock('@/utils/network/subsonicNetworkGuard', () => ({
     shouldAttemptSubsonicForServerMock(serverId, trackId),
 }));
 
-vi.mock('@/api/subsonicLibrary', () => ({
+vi.mock('@/lib/api/subsonicLibrary', () => ({
   getAlbumForServer: (serverId: string, albumId: string) => getAlbumForServerMock(serverId, albumId),
 }));
 

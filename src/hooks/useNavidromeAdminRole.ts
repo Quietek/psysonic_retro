@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ndLogin } from '../api/navidromeAdmin';
+import { ndLogin } from '@/lib/api/navidromeAdmin';
 import { useAuthStore } from '../store/authStore';
 import { isNavidromeServer } from '../utils/server/subsonicServerIdentity';
 

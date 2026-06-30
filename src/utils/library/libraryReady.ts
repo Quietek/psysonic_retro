@@ -4,7 +4,7 @@
  * Spec §5.13.6 / §9.3 (`isReady()`): consumers only read from the local
  * index when it's enabled and synced enough for trustworthy results.
  */
-import { libraryGetStatus, type SyncStateDto } from '../../api/library';
+import { libraryGetStatus, type SyncStateDto } from '@/lib/api/library';
 import { useLibraryIndexStore } from '../../store/libraryIndexStore';
 
 /** Spec §9.3 — shared by Live Search, Advanced Search, browse, … */

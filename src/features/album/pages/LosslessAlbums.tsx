@@ -1,11 +1,11 @@
-import { buildDownloadUrl } from '@/api/subsonicStreamUrl';
+import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
 import { resolveAlbum } from '@/features/offline';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '@/utils/playback/songToTrack';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import AlbumCard from '@/features/album/components/AlbumCard';
 import { LOSSLESS_MODE_QUERY } from '@/utils/library/losslessMode';
-import { ndListLosslessAlbumsPage } from '@/api/navidromeBrowse';
+import { ndListLosslessAlbumsPage } from '@/lib/api/navidromeBrowse';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/store/authStore';
 import { useOfflineStore } from '@/features/offline';

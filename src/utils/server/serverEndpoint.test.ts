@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('../../api/subsonic', () => ({
+vi.mock('@/lib/api/subsonic', () => ({
   pingWithCredentials: vi.fn(),
   pingWithCredentialsForProfile: vi.fn(),
 }));
 
-import { pingWithCredentialsForProfile } from '../../api/subsonic';
+import { pingWithCredentialsForProfile } from '@/lib/api/subsonic';
 import {
   allNormalizedAddresses,
   ensureConnectUrlResolved,

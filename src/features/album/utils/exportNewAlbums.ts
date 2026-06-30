@@ -1,7 +1,7 @@
-import { getAlbumList } from '@/api/subsonicLibrary';
+import { getAlbumList } from '@/lib/api/subsonicLibrary';
 import { coverArtRef } from '@/cover/ref';
 import { loadCoverBlobForExport } from '@/cover/integrations/export';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { albumArtistDisplayName } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';
 import { writeFile } from '@tauri-apps/plugin-fs';
 import { downloadDir, join } from '@tauri-apps/api/path';

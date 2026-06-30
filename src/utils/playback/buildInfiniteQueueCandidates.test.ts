@@ -7,7 +7,7 @@
  * order, the dedup contract against existingIds, and the autoAdded flag.
  */
 import { getSimilarSongs2, getTopSongs } from '@/features/artist';
-import { getRandomSongs } from '../../api/subsonicLibrary';
+import { getRandomSongs } from '@/lib/api/subsonicLibrary';
 import type { Track } from '../../store/playerStoreTypes';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -19,7 +19,7 @@ vi.mock('@/features/artist/api/subsonicArtists', () => ({
   getTopSongs: vi.fn(),
 }));
 
-vi.mock('../../api/subsonicLibrary', () => ({
+vi.mock('@/lib/api/subsonicLibrary', () => ({
   getRandomSongs: vi.fn(),
 }));
 

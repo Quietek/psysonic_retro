@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import type { SearchResults } from '../../api/subsonicTypes';
+import type { SearchResults } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '../../store/authStore';
 
 export function searchHitCounts(result: SearchResults): string {

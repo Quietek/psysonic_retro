@@ -1,4 +1,4 @@
-import type { LibraryTrackDto } from '../../api/library';
+import type { LibraryTrackDto } from '@/lib/api/library';
 
 const MAX_SEGMENT_LEN = 120;
 // eslint-disable-next-line no-control-regex -- intentional: strip C0/DEL control chars from path segments (mirrors Rust sanitize_path_segment)

@@ -1,5 +1,5 @@
 import { queueSongStar } from '../store/pendingStarSync';
-import type { SubsonicSong, SubsonicGenre } from '../api/subsonicTypes';
+import type { SubsonicSong, SubsonicGenre } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '../utils/playback/songToTrack';
 import React, { useEffect, useMemo, useState } from 'react';
 import { usePlayerStore } from '../store/playerStore';

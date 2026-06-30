@@ -6,11 +6,11 @@
  *
  * Drives the store through its public action surface with the real
  * Zustand instance, stubs the Tauri commands via `onInvoke`, and uses
- * `vi.mock('@/api/subsonic')` because `startPreview` calls `buildStreamUrl`.
+ * `vi.mock('@/lib/api/subsonic')` because `startPreview` calls `buildStreamUrl`.
  */
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-vi.mock('@/api/subsonic', () => ({
+vi.mock('@/lib/api/subsonic', () => ({
   savePlayQueue: vi.fn(async () => undefined),
   getPlayQueue: vi.fn(async () => ({ songs: [], current: undefined, position: 0 })),
   buildStreamUrl: vi.fn((id: string) => `https://mock/stream/${id}`),

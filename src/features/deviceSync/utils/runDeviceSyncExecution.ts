@@ -1,7 +1,7 @@
 import type { TFunction } from 'i18next';
 import { invoke } from '@tauri-apps/api/core';
-import { buildDownloadUrl } from '@/api/subsonicStreamUrl';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useDeviceSyncStore, type DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
 import { useDeviceSyncJobStore } from '@/features/deviceSync/store/deviceSyncJobStore';
 import { showToast } from '@/utils/ui/toast';
@@ -37,7 +37,7 @@ export async function runDeviceSyncSummaryPrompt(deps: RunDeviceSyncSummaryDeps)
   setPreSyncOpen(true);
 
   try {
-    const { getClient } = await import('@/api/subsonicClient');
+    const { getClient } = await import('@/lib/api/subsonicClient');
     const { baseUrl, params } = getClient();
     const payload = await invoke<SyncDelta>('calculate_sync_payload', {
       sources,

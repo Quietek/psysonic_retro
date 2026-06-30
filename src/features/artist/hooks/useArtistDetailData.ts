@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { search } from '@/api/subsonicSearch';
+import { search } from '@/lib/api/subsonicSearch';
 import { getArtist, getArtistForServer, getArtistInfo, getTopSongs } from '@/features/artist/api/subsonicArtists';
 import type {
   SubsonicAlbum, SubsonicArtist, SubsonicArtistInfo, SubsonicSong,
-} from '@/api/subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { useConnectionStatus } from '@/hooks/useConnectionStatus';
 import { loadArtistFromLibraryIndex } from '@/features/offline';

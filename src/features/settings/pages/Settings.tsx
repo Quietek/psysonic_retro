@@ -20,7 +20,7 @@ import { SystemTab } from '@/features/settings/components/SystemTab';
 import { searchSettings, type SettingsSearchHit } from '@/features/settings/components/settingsSearch';
 import { type Tab, resolveTab } from '@/features/settings/components/settingsTabs';
 import { UserManagementSection } from '@/features/settings/components/UserManagementSection';
-import { ndLogin } from '@/api/navidromeAdmin';
+import { ndLogin } from '@/lib/api/navidromeAdmin';
 import { type ServerMagicPayload } from '@/utils/server/serverMagicString';
 
 

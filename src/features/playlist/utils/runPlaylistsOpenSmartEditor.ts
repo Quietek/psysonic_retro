@@ -1,7 +1,7 @@
 import type React from 'react';
 import type { TFunction } from 'i18next';
-import { ndGetSmartPlaylist, ndListSmartPlaylists } from '@/api/navidromeSmart';
-import type { SubsonicGenre, SubsonicPlaylist } from '@/api/subsonicTypes';
+import { ndGetSmartPlaylist, ndListSmartPlaylists } from '@/lib/api/navidromeSmart';
+import type { SubsonicGenre, SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import {
   defaultSmartFilters, displayPlaylistName, isSmartPlaylistName,
   parseSmartRulesToFilters, type SmartFilters,

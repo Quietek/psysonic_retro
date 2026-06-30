@@ -3,7 +3,7 @@ import type { QueueItemRef } from './playerStoreTypes';
 
 const getPlayQueueForServerMock = vi.fn();
 
-vi.mock('../api/subsonicPlayQueue', () => ({
+vi.mock('@/lib/api/subsonicPlayQueue', () => ({
   getPlayQueueForServer: (...args: unknown[]) => getPlayQueueForServerMock(...args),
 }));
 

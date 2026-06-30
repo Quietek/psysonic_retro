@@ -1,4 +1,4 @@
-import type { SubsonicArtist } from '@/api/subsonicTypes';
+import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import React, { useMemo } from 'react';
 import { Users } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

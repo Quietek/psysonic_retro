@@ -4,7 +4,7 @@ import { Headphones, Heart, MicVocal, Music, Star } from 'lucide-react';
 import { CoverArtImage } from '@/cover/CoverArtImage';
 import type { CoverArtRef } from '@/cover/types';
 import type { ArtistStats, TrackStats } from '@/music-network';
-import type { SubsonicOpenArtistRef } from '@/api/subsonicTypes';
+import type { SubsonicOpenArtistRef } from '@/lib/api/subsonicTypes';
 import { OpenArtistRefInline } from '@/features/artist';
 import { formatTrackTime } from '@/utils/format/formatDuration';
 import { useEnrichmentPrimaryLabel } from '@/hooks/useEnrichmentPrimaryLabel';

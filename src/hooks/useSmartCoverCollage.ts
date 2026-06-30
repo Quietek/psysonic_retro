@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { filterSongsToActiveLibrary } from '../api/subsonicLibrary';
+import { filterSongsToActiveLibrary } from '@/lib/api/subsonicLibrary';
 import { getPlaylist } from '@/features/playlist';
-import type { SubsonicPlaylist } from '../api/subsonicTypes';
+import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { isSmartPlaylistName } from '@/features/playlist';
 
 /**

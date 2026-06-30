@@ -2,15 +2,15 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the apiWithCredentials surface — fetchServerFingerprint pulls
 // folders / user / license / indexes through it.
-vi.mock('../../api/subsonicClient', async importOriginal => {
-  const original = await importOriginal<typeof import('../../api/subsonicClient')>();
+vi.mock('@/lib/api/subsonicClient', async importOriginal => {
+  const original = await importOriginal<typeof import('@/lib/api/subsonicClient')>();
   return {
     ...original,
     apiWithCredentials: vi.fn(),
   };
 });
 
-import { apiWithCredentials } from '../../api/subsonicClient';
+import { apiWithCredentials } from '@/lib/api/subsonicClient';
 import {
   compareFingerprints,
   fetchServerFingerprint,

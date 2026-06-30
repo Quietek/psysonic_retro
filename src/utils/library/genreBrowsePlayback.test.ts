@@ -8,17 +8,17 @@ import {
   GENRE_PLAYBACK_QUEUE_CAP,
 } from './genreBrowsePlayback';
 
-vi.mock('../../api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryAdvancedSearch: vi.fn(),
   libraryGetGenreAlbumCounts: vi.fn(),
 }));
 
-vi.mock('../../api/subsonicGenres', () => ({
+vi.mock('@/lib/api/subsonicGenres', () => ({
   fetchAllSongsByGenre: vi.fn(),
   getGenres: vi.fn(),
 }));
 
-vi.mock('../../api/subsonicClient', () => ({
+vi.mock('@/lib/api/subsonicClient', () => ({
   libraryScopeForServer: vi.fn(() => 'music'),
 }));
 
@@ -34,8 +34,8 @@ vi.mock('./genreAlbumBrowse', async (importOriginal) => ({
   fetchGenreAlbumTotal: vi.fn(),
 }));
 
-import { libraryAdvancedSearch, libraryGetGenreAlbumCounts } from '../../api/library';
-import { fetchAllSongsByGenre, getGenres } from '../../api/subsonicGenres';
+import { libraryAdvancedSearch, libraryGetGenreAlbumCounts } from '@/lib/api/library';
+import { fetchAllSongsByGenre, getGenres } from '@/lib/api/subsonicGenres';
 import { fetchGenreAlbumTotal } from './genreAlbumBrowse';
 import { resetGenreCatalogCountsCacheForTests } from './genreCatalogCountsCache';
 import { libraryIsReady } from './libraryReady';

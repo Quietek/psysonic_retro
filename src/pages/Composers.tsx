@@ -1,7 +1,7 @@
-import type { SubsonicArtist } from '../api/subsonicTypes';
+import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ndListArtistsByRole } from '../api/navidromeBrowse';
+import { ndListArtistsByRole } from '@/lib/api/navidromeBrowse';
 import { LayoutGrid, List } from 'lucide-react';
 import StarFilterButton from '../components/StarFilterButton';
 import { usePlayerStore } from '../store/playerStore';

@@ -1,10 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { fetchAllSongsByGenre, getSongsByGenre } from './subsonicGenres';
-import type { SubsonicSong } from './subsonicTypes';
+import { fetchAllSongsByGenre, getSongsByGenre } from '@/lib/api/subsonicGenres';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 
 const { apiMock } = vi.hoisted(() => ({ apiMock: vi.fn() }));
 
-vi.mock('./subsonicClient', () => ({
+vi.mock('@/lib/api/subsonicClient', () => ({
   api: apiMock,
   libraryFilterParams: () => ({}),
 }));

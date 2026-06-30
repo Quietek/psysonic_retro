@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AudioLines, ChevronRight, Heart, Play, Square, Trash2 } from 'lucide-react';
 import type { ColDef } from '@/utils/useTracklistColumns';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { codecLabel } from '@/utils/componentHelpers/playlistDetailHelpers';
 import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
 import i18n from '@/i18n';

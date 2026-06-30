@@ -16,7 +16,7 @@ import {
   offlineTrackCount,
   type OfflineLibraryCard,
 } from '@/features/offline/utils/offlineLibraryHelpers';
-import * as libraryApi from '@/api/library';
+import * as libraryApi from '@/lib/api/library';
 import { coverStorageKey } from '@/cover/storageKeys';
 import { resolveCoverDisplayTier } from '@/cover/tiers';
 
@@ -24,8 +24,8 @@ vi.mock('@/utils/server/switchActiveServer', () => ({
   switchActiveServer: vi.fn(async () => true),
 }));
 
-vi.mock('@/api/library', async importOriginal => {
-  const actual = await importOriginal<typeof import('@/api/library')>();
+vi.mock('@/lib/api/library', async importOriginal => {
+  const actual = await importOriginal<typeof import('@/lib/api/library')>();
   const libraryGetTracksBatch = vi.fn();
   return {
     ...actual,

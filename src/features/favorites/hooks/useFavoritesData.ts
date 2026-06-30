@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getInternetRadioStations } from '@/features/radio';
-import { getStarred } from '@/api/subsonicStarRating';
+import { getStarred } from '@/lib/api/subsonicStarRating';
 import type {
   InternetRadioStation, SubsonicAlbum, SubsonicArtist, SubsonicSong,
-} from '@/api/subsonicTypes';
+} from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { usePlayerStore } from '@/store/playerStore';
 import type { TopFavoriteArtist } from '@/features/favorites/components/TopFavoriteArtists';

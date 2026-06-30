@@ -1,10 +1,10 @@
-import { libraryUpsertSongsFromApi } from '@/api/library';
+import { libraryUpsertSongsFromApi } from '@/lib/api/library';
 import { librarySqlServerId } from '@/api/coverCache';
-import { getAlbumForServer } from '@/api/subsonicLibrary';
+import { getAlbumForServer } from '@/lib/api/subsonicLibrary';
 import { getArtistForServer } from '@/features/artist';
-import { getStarredForServer } from '@/api/subsonicStarRating';
-import { buildStreamUrlForServer } from '@/api/subsonicStreamUrl';
-import type { SubsonicSong } from '@/api/subsonicTypes';
+import { getStarredForServer } from '@/lib/api/subsonicStarRating';
+import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { invoke } from '@tauri-apps/api/core';
 import i18n from '@/i18n';
 import { useAuthStore } from '@/store/authStore';

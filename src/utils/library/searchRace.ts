@@ -2,7 +2,7 @@
  * Parallel local vs network search — first successful backend wins.
  */
 
-import type { SearchResults } from '../../api/subsonicTypes';
+import type { SearchResults } from '@/lib/api/subsonicTypes';
 
 export type SearchRaceSource = 'local' | 'network';
 

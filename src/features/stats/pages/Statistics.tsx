@@ -1,6 +1,6 @@
 import { fetchStatisticsFormatSample, fetchStatisticsLibraryAggregates, fetchStatisticsOverview } from '@/features/stats/api/subsonicStatistics';
-import { getAlbumList } from '@/api/subsonicLibrary';
-import type { SubsonicAlbum, SubsonicGenre } from '@/api/subsonicTypes';
+import { getAlbumList } from '@/lib/api/subsonicLibrary';
+import type { SubsonicAlbum, SubsonicGenre } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Share2 } from 'lucide-react';

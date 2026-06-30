@@ -4,7 +4,7 @@ import {
   deriveAlbumArtistRefs,
   deriveAlbumHeaderArtistRefs,
 } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';
-import type { SubsonicAlbum } from '@/api/subsonicTypes';
+import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { makeSubsonicSong } from '@/test/helpers/factories';
 
 const baseAlbum = (): SubsonicAlbum => ({

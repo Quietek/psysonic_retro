@@ -1,6 +1,6 @@
-import { getSong } from '../../api/subsonicLibrary';
+import { getSong } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum, resolveArtist } from '@/features/offline';
-import type { SubsonicSong } from '../../api/subsonicTypes';
+import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '../playback/songToTrack';
 import type { Location, NavigateFunction } from 'react-router-dom';
 import type { TFunction } from 'i18next';

@@ -18,7 +18,7 @@ vi.mock('../api/migration', () => ({
   migrationRun: (mappings: unknown) => migrationRunMock(mappings),
 }));
 
-vi.mock('../api/library', () => ({
+vi.mock('@/lib/api/library', () => ({
   libraryGenreTagsInspect: () => libraryGenreTagsInspectMock(),
   libraryGenreTagsRun: () => libraryGenreTagsRunMock(),
 }));
