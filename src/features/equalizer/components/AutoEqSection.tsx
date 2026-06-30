@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Search, X, ChevronDown, ChevronUp } from 'lucide-react';
-import { useAutoEq } from '../../hooks/useAutoEq';
+import { useAutoEq } from '@/features/equalizer/hooks/useAutoEq';
 
 /** Collapsible AutoEQ search panel inside the Equalizer. Owns its own search
  * state via {@link useAutoEq}. */

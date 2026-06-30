@@ -2,11 +2,11 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Save, Trash2, RotateCcw } from 'lucide-react';
 import CustomSelect from '@/ui/CustomSelect';
-import { useEqStore, EQ_BANDS, BUILTIN_PRESETS } from '../store/eqStore';
-import { useThemeStore } from '../store/themeStore';
+import { useEqStore, EQ_BANDS, BUILTIN_PRESETS } from '@/store/eqStore';
+import { useThemeStore } from '@/store/themeStore';
 import { drawCurve } from '@/features/playback/utils/audio/eqCurve';
-import VerticalFader from './equalizer/VerticalFader';
-import AutoEqSection from './equalizer/AutoEqSection';
+import VerticalFader from '@/features/equalizer/components/VerticalFader';
+import AutoEqSection from '@/features/equalizer/components/AutoEqSection';
 
 export default function Equalizer() {
   const { t } = useTranslation();

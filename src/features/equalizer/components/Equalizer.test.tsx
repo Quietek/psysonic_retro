@@ -1,8 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { cleanup, screen } from '@testing-library/react';
-import { renderWithProviders } from '../test/helpers/renderWithProviders';
-import Equalizer from './Equalizer';
-import { useEqStore } from '../store/eqStore';
+import { renderWithProviders } from '@/test/helpers/renderWithProviders';
+import Equalizer from '@/features/equalizer/components/Equalizer';
+import { useEqStore } from '@/store/eqStore';
 
 const FLAT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 

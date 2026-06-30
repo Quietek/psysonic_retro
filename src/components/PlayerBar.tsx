@@ -12,7 +12,7 @@ import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useAuthStore } from '../store/authStore';
 import { useThemeStore } from '../store/themeStore';
-import Equalizer from './Equalizer';
+import { Equalizer } from '@/features/equalizer';
 import { useTranslation } from 'react-i18next';
 import { usePlaybackLibraryNavigate } from '../hooks/usePlaybackLibraryNavigate';
 import { useRadioMetadata } from '@/features/radio';

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { invoke } from '@tauri-apps/api/core';
-import { useEqStore } from '../store/eqStore';
+import { useEqStore } from '@/store/eqStore';
 import { parseFixedBandEqString, type AutoEqVariant, type AutoEqResult } from '@/features/playback/utils/audio/autoEqParse';
 
 /** AutoEQ search/apply state for the Equalizer. Loads the entries index lazily

@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Blend, Gauge, Sliders, Volume2, Waves } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
-import Equalizer from '@/components/Equalizer';
+import { Equalizer } from '@/features/equalizer';
 import SettingsSubSection from '@/features/settings/components/SettingsSubSection';
 import { SettingsGroup } from '@/features/settings/components/SettingsGroup';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';
