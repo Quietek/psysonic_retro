@@ -12,7 +12,7 @@ import { previewInputFromSong, usePreviewStore } from '@/features/playback/store
 import StarRating from '@/ui/StarRating';
 import { codecLabel, type ColKey } from '@/features/album/utils/albumTrackListHelpers';
 import { formatLongDuration } from '@/lib/format/formatDuration';
-import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
+import { formatLastSeen } from '@/lib/format/userMgmtHelpers';
 import i18n from '@/lib/i18n';
 import { offlineActionPolicy, type OfflineActionPolicy } from '@/features/offline';
 import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';

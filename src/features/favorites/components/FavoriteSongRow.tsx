@@ -4,7 +4,7 @@ import { AudioLines, ChevronRight, Play, Square, X } from 'lucide-react';
 import type { ColDef } from '@/hooks/useTracklistColumns';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { codecLabel } from '@/lib/format/playlistDetailHelpers';
-import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
+import { formatLastSeen } from '@/lib/format/userMgmtHelpers';
 import i18n from '@/lib/i18n';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 import StarRating from '@/ui/StarRating';

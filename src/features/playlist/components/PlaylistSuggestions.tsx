@@ -13,7 +13,7 @@ import { usePlaylistLayoutStore } from '@/features/playlist/store/playlistLayout
 import { songToTrack } from '@/lib/media/songToTrack';
 import { getQueueTracksView } from '@/features/playback/store/queueTrackView';
 import { codecLabel } from '@/lib/format/playlistDetailHelpers';
-import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
+import { formatLastSeen } from '@/lib/format/userMgmtHelpers';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 import i18n from '@/lib/i18n';
 

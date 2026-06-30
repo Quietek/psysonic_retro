@@ -29,7 +29,7 @@ let cache: Promise<LicensesData> | null = null;
 
 export function loadLicensesData(): Promise<LicensesData> {
   if (cache) return cache;
-  cache = import('../data/licenses.json')
+  cache = import('@/data/licenses.json')
     .then((mod) => (mod.default ?? mod) as LicensesData)
     .catch((e) => {
       cache = null;

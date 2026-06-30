@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { X, ExternalLink } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { open as openExternal } from '@tauri-apps/plugin-shell';
-import type { LicenseEntry } from '../utils/licensesData';
+import type { LicenseEntry } from '@/features/settings/utils/licensesData';
 
 interface Props {
   entry: LicenseEntry | null;

@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { copyTextToClipboard } from '@/lib/server/serverMagicString';
 import { showToast } from '@/lib/dom/toast';
 import { formatTrackTime } from '@/lib/format/formatDuration';
-import { formatLastSeen } from '../utils/componentHelpers/userMgmtHelpers';
+import { formatLastSeen } from '@/lib/format/userMgmtHelpers';
 import { libraryIsReady } from '@/lib/library/libraryReady';
 import {
   formatQueueMoodLabels,
