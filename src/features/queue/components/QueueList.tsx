@@ -4,7 +4,7 @@ import { Play } from 'lucide-react';
 import type { TFunction } from 'i18next';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { useLuckyMixStore } from '@/store/luckyMixStore';
+import { useLuckyMixStore } from '@/features/randomMix';
 import type { QueueItemRef } from '@/lib/media/trackTypes';
 import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import type { QueueDisplayMode } from '@/store/authStoreTypes';

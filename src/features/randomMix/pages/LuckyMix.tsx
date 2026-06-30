@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { buildAndPlayLuckyMix } from '../utils/mix/luckyMix';
+import { buildAndPlayLuckyMix } from '@/features/randomMix/utils/luckyMix';
 
 export default function LuckyMixPage() {
   const navigate = useNavigate();

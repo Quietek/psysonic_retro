@@ -5,7 +5,7 @@ import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import {
   filterSongsForLuckyMixRatings,
   type MixMinRatingsConfig,
-} from './mixRatingFilter';
+} from '@/utils/mix/mixRatingFilter';
 
 export interface TopArtist {
   id: string;

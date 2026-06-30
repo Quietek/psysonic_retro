@@ -20,7 +20,7 @@ import { useThemeStore } from '@/store/themeStore';
 import { useLyricsStore } from '@/store/lyricsStore';
 import LyricsPane from '@/components/LyricsPane';
 import { NowPlayingInfo } from '@/features/nowPlaying';
-import { useLuckyMixStore } from '@/store/luckyMixStore';
+import { useLuckyMixStore } from '@/features/randomMix';
 import { useQueueToolbarStore } from '@/store/queueToolbarStore';
 import { SavePlaylistModal } from '@/features/queue/components/SavePlaylistModal';
 import { LoadPlaylistModal } from '@/features/queue/components/LoadPlaylistModal';

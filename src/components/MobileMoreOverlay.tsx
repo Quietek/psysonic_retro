@@ -5,7 +5,7 @@ import { Settings, HardDriveDownload } from 'lucide-react';
 import { useSidebarStore } from '@/features/sidebar';
 import { useAuthStore } from '../store/authStore';
 import { ALL_NAV_ITEMS } from '../config/navItems';
-import { useLuckyMixAvailable } from '../hooks/useLuckyMixAvailable';
+import { useLuckyMixAvailable } from '@/features/randomMix';
 import { isOfflineSidebarNavAllowed } from '@/features/offline';
 import { useOfflineBrowseContext } from '@/features/offline';
 import { offlineBrowseNavFlags } from '@/features/offline';

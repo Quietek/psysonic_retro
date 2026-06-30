@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { filterRandomMixSongs } from './randomMixHelpers';
+import { filterRandomMixSongs } from '@/features/randomMix/utils/randomMixHelpers';
 
 function song(id: string): SubsonicSong {
   return {

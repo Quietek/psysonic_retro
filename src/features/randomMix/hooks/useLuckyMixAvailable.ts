@@ -1,4 +1,4 @@
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 
 /**
  * Whether "Lucky Mix" should be exposed as a navigable menu/card entry.

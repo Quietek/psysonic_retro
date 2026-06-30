@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { RANDOM_MIX_SIZE_OPTIONS } from '../../store/authStoreDefaults';
+import { RANDOM_MIX_SIZE_OPTIONS } from '@/store/authStoreDefaults';
 
 interface Props {
   isMobile: boolean;

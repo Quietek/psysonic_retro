@@ -4,21 +4,21 @@ import { songToTrack } from '@/lib/media/songToTrack';
 import React, { useEffect, useMemo, useState } from 'react';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { usePreviewStore } from '@/features/playback/store/previewStore';
-import { useAuthStore } from '../store/authStore';
-import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { useAuthStore } from '@/store/authStore';
+import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { useOrbitSongRowBehavior } from '@/features/orbit';
 import {
   fetchRandomMixSongsUntilFull,
   getMixMinRatingsConfigFromAuth,
-} from '../utils/mix/mixRatingFilter';
+} from '@/utils/mix/mixRatingFilter';
 import { fetchGenreCatalog } from '@/features/playback/utils/playback/genreBrowsePlayback';
-import { AUDIOBOOK_GENRES, filterRandomMixSongs } from '../utils/componentHelpers/randomMixHelpers';
-import RandomMixHeader from '../components/randomMix/RandomMixHeader';
-import RandomMixFiltersPanel from '../components/randomMix/RandomMixFiltersPanel';
-import RandomMixGenrePanel from '../components/randomMix/RandomMixGenrePanel';
-import RandomMixTrackRow from '../components/randomMix/RandomMixTrackRow';
+import { AUDIOBOOK_GENRES, filterRandomMixSongs } from '@/features/randomMix/utils/randomMixHelpers';
+import RandomMixHeader from '@/features/randomMix/components/RandomMixHeader';
+import RandomMixFiltersPanel from '@/features/randomMix/components/RandomMixFiltersPanel';
+import RandomMixGenrePanel from '@/features/randomMix/components/RandomMixGenrePanel';
+import RandomMixTrackRow from '@/features/randomMix/components/RandomMixTrackRow';
 
 export default function RandomMix() {
   const { t } = useTranslation();

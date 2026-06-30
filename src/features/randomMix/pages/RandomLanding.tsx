@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Shuffle, Dices, Sparkles } from 'lucide-react';
-import { useLuckyMixAvailable } from '../hooks/useLuckyMixAvailable';
+import { useLuckyMixAvailable } from '@/features/randomMix/hooks/useLuckyMixAvailable';
 
 interface MixCard {
   icon: React.ElementType;

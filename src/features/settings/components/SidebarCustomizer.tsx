@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/store/authStore';
 import { useSidebarStore, SidebarItemConfig, CONSERVED_SIDEBAR_NAV_IDS } from '@/features/sidebar';
-import { useLuckyMixAvailable } from '@/hooks/useLuckyMixAvailable';
+import { useLuckyMixAvailable } from '@/features/randomMix';
 import { ALL_NAV_ITEMS } from '@/config/navItems';
 import { applySidebarReorderById } from '@/features/sidebar';
 import { useListReorderDnd } from '@/hooks/useListReorderDnd';

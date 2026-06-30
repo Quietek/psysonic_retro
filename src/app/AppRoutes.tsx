@@ -4,7 +4,7 @@ import MobilePlayerView from '../components/MobilePlayerView';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { useSidebarStore } from '@/features/sidebar';
 import { useAuthStore } from '../store/authStore';
-import { useLuckyMixAvailable } from '../hooks/useLuckyMixAvailable';
+import { useLuckyMixAvailable } from '@/features/randomMix';
 import { resolveStartRoute } from '@/features/sidebar';
 
 // Route-level lazy loading: keeps the non-page graph (shell, player, stores) in
@@ -17,13 +17,13 @@ const Composers = lazy(() => import('@/features/composers/pages/Composers'));
 const ComposerDetail = lazy(() => import('@/features/composers/pages/ComposerDetail'));
 const NewReleases = lazy(() => import('@/features/album/pages/NewReleases'));
 const Favorites = lazy(() => import('@/features/favorites/pages/Favorites'));
-const RandomMix = lazy(() => import('../pages/RandomMix'));
-const RandomLanding = lazy(() => import('../pages/RandomLanding'));
+const RandomMix = lazy(() => import('@/features/randomMix/pages/RandomMix'));
+const RandomLanding = lazy(() => import('@/features/randomMix/pages/RandomLanding'));
 const AlbumDetail = lazy(() => import('@/features/album/pages/AlbumDetail'));
 const MostPlayed = lazy(() => import('@/features/album/pages/MostPlayed'));
 const LosslessAlbums = lazy(() => import('@/features/album/pages/LosslessAlbums'));
 const RandomAlbums = lazy(() => import('@/features/album/pages/RandomAlbums'));
-const LuckyMixPage = lazy(() => import('../pages/LuckyMix'));
+const LuckyMixPage = lazy(() => import('@/features/randomMix/pages/LuckyMix'));
 const Playlists = lazy(() => import('@/features/playlist/pages/Playlists'));
 const PlaylistDetail = lazy(() => import('@/features/playlist/pages/PlaylistDetail'));
 const NowPlayingPage = lazy(() => import('@/features/nowPlaying/pages/NowPlaying'));

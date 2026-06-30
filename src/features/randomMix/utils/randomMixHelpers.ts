@@ -1,5 +1,5 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { passesMixMinRatings, type MixMinRatingsConfig } from '../mix/mixRatingFilter';
+import { passesMixMinRatings, type MixMinRatingsConfig } from '@/utils/mix/mixRatingFilter';
 
 export const AUDIOBOOK_GENRES = [
   'hörbuch', 'hoerbuch', 'hörspiel', 'hoerspiel',

@@ -5,12 +5,12 @@ import type { QueueItemRef } from '@/lib/media/trackTypes';
 import { songToTrack } from '@/lib/media/songToTrack';
 import { invoke } from '@tauri-apps/api/core';
 import i18n from '@/lib/i18n';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { pushQueueUndoFromGetter } from '@/features/playback/store/queueUndo';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { useLuckyMixStore } from '../../store/luckyMixStore';
-import { isLuckyMixAvailable } from '../../hooks/useLuckyMixAvailable';
-import { showToast } from '../ui/toast';
+import { useLuckyMixStore } from '@/features/randomMix/store/luckyMixStore';
+import { isLuckyMixAvailable } from '@/features/randomMix/hooks/useLuckyMixAvailable';
+import { showToast } from '@/utils/ui/toast';
 import {
   bindQueueServerForPlayback,
   playbackServerDiffersFromActive,
@@ -21,7 +21,7 @@ import {
   filterSongsForLuckyMixRatings,
   filterTopArtistsForMixRatings,
   getMixMinRatingsConfigFromAuth,
-} from './mixRatingFilter';
+} from '@/utils/mix/mixRatingFilter';
 import {
   MIX_TARGET_SIZE,
   SEED_TARGET_SIZE,
@@ -33,7 +33,7 @@ import {
   pickSongsForArtist,
   pickSongsForAlbum,
   pickGoodRatedSongs,
-} from './luckyMixHelpers';
+} from '@/features/randomMix/utils/luckyMixHelpers';
 
 /**
  * Sentinel thrown inside the build loop when `useLuckyMixStore.cancelRequested`
