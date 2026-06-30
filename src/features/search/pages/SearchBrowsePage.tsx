@@ -7,10 +7,8 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import { useLocation, useNavigate, useNavigationType, useSearchParams } from 'react-router-dom';
 import { SlidersVertical, Search } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { AlbumRow } from '@/features/album';
-import { ArtistRow } from '@/features/artist';
-import PagedSongList from '@/features/search/components/PagedSongList';
 import AdvancedSearchFilterPanel from '@/features/search/components/AdvancedSearchFilterPanel';
+import AdvancedSearchResults from '@/features/search/components/AdvancedSearchResults';
 import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useAuthStore } from '@/store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
@@ -43,7 +41,6 @@ import {
   tryRunLocalAdvancedSearch,
 } from '@/lib/library/advancedSearchLocal';
 import { isLosslessSuffix } from '@/lib/library/losslessFormats';
-import { LOSSLESS_MODE_QUERY } from '@/lib/library/losslessMode';
 import { OXIMEDIA_MOOD_SEARCH_ENABLED } from '@/lib/library/trackEnrichment';
 import { raceSearchSources } from '@/lib/library/searchRace';
 import { logLibrarySearch } from '@/lib/library/libraryDevLog';
@@ -113,9 +110,6 @@ export default function SearchBrowsePage() {
       songs: results.songs.filter(s => isFav(s.id, s.starred)),
     };
   }, [results, starredOnly, starredOverrides]);
-  const total = filteredResults
-    ? filteredResults.artists.length + filteredResults.albums.length + filteredResults.songs.length
-    : 0;
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(() => restoreStash?.hasSearched ?? false);
   const [genreNote, setGenreNote] = useState(() => restoreStash?.genreNote ?? false);
@@ -911,98 +905,23 @@ export default function SearchBrowsePage() {
       )}
 
       {/* ── Results ───────────────────────────────────────────── */}
-      {showAdvancedPanel && !hasSearched ? (
-        <div className="empty-state" style={{ opacity: 0.6 }}>
-          {t('search.advancedEmpty')}
-        </div>
-      ) : loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '4rem' }}>
-          <div className="spinner" />
-        </div>
-      ) : total === 0 ? (
-        <div className="empty-state">
-          {basicSearchMode && query.trim()
-            ? t('search.noResults', { query })
-            : t('search.advancedNoResults')}
-        </div>
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-
-          {filteredResults && filteredResults.artists.length > 0 && (
-            <div data-advanced-search-artist-row>
-            <ArtistRow
-              title={
-                basicSearchMode
-                  ? t('search.artists')
-                  : `${t('search.artists')} (${filteredResults.artists.length})`
-              }
-              artists={filteredResults.artists}
-              artistLinkQuery={activeSearch?.losslessOnly ? LOSSLESS_MODE_QUERY : undefined}
-              restoreScrollLeft={
-                // React Compiler refs rule: ref read imperatively outside reactive rendering; not used to compute the render output.
-                // eslint-disable-next-line react-hooks/refs
-                artistRowScrollLeftRestoreRef.current > 0
-                  // React Compiler refs rule: ref read imperatively outside reactive rendering; not used to compute the render output.
-                  // eslint-disable-next-line react-hooks/refs
-                  ? artistRowScrollLeftRestoreRef.current
-                  : undefined
-              }
-              onScrollLeftSnapshot={(left) => {
-                artistRowScrollLeftRef.current = left;
-              }}
-            />
-            </div>
-          )}
-
-          {filteredResults && filteredResults.albums.length > 0 && (
-            <div data-advanced-search-album-row>
-            <AlbumRow
-              title={
-                basicSearchMode
-                  ? t('search.albums')
-                  : `${t('search.albums')} (${filteredResults.albums.length})`
-              }
-              albums={filteredResults.albums}
-              albumLinkQuery={activeSearch?.losslessOnly ? LOSSLESS_MODE_QUERY : undefined}
-              windowArtworkByViewport
-              initialArtworkBudget={12}
-              restoreScrollLeft={
-                // React Compiler refs rule: ref read imperatively outside reactive rendering; not used to compute the render output.
-                // eslint-disable-next-line react-hooks/refs
-                albumRowScrollLeftRestoreRef.current > 0
-                  // React Compiler refs rule: ref read imperatively outside reactive rendering; not used to compute the render output.
-                  // eslint-disable-next-line react-hooks/refs
-                  ? albumRowScrollLeftRestoreRef.current
-                  : undefined
-              }
-              onScrollLeftSnapshot={(left) => {
-                albumRowScrollLeftRef.current = left;
-              }}
-            />
-            </div>
-          )}
-
-          {filteredResults && filteredResults.songs.length > 0 && (
-            <section>
-              <h2 className="section-title" style={{ marginBottom: '0.75rem' }}>
-                {t('search.songs')}
-                {genreNote && (
-                  <span style={{ fontSize: 12, fontWeight: 400, color: 'var(--text-muted)', marginLeft: '0.75rem' }}>
-                    — {t('search.advancedGenreNote')}
-                  </span>
-                )}
-              </h2>
-              <PagedSongList
-                songs={filteredResults.songs}
-                hasMore={songsHasMore}
-                loadingMore={loadingMoreSongs}
-                onLoadMore={loadMoreSongs}
-                showBpm={!!(activeSearch?.bpmFrom || activeSearch?.bpmTo)}
-              />
-            </section>
-          )}
-        </div>
-      )}
+      <AdvancedSearchResults
+        showAdvancedPanel={showAdvancedPanel}
+        hasSearched={hasSearched}
+        loading={loading}
+        basicSearchMode={basicSearchMode}
+        query={query}
+        filteredResults={filteredResults}
+        activeSearch={activeSearch}
+        genreNote={genreNote}
+        songsHasMore={songsHasMore}
+        loadingMoreSongs={loadingMoreSongs}
+        loadMoreSongs={loadMoreSongs}
+        artistRowScrollLeftRestoreRef={artistRowScrollLeftRestoreRef}
+        artistRowScrollLeftRef={artistRowScrollLeftRef}
+        albumRowScrollLeftRestoreRef={albumRowScrollLeftRestoreRef}
+        albumRowScrollLeftRef={albumRowScrollLeftRef}
+      />
       </>
       )}
 
