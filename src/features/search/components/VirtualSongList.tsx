@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useSongBrowseList } from '../hooks/useSongBrowseList';
-import SongBrowseSection from './tracks/SongBrowseSection';
+import { useSongBrowseList } from '@/features/search/hooks/useSongBrowseList';
+import SongBrowseSection from '@/features/search/components/SongBrowseSection';
 
 interface Props {
   title?: string;

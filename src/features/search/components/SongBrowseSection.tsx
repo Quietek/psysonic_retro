@@ -1,7 +1,7 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import PagedSongList from '../PagedSongList';
+import PagedSongList from '@/features/search/components/PagedSongList';
 
 interface Props {
   title?: string;

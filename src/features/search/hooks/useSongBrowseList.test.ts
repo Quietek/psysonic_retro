@@ -2,9 +2,9 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { useSongBrowseList } from './useSongBrowseList';
-import { useAuthStore } from '../store/authStore';
-import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { useSongBrowseList } from '@/features/search/hooks/useSongBrowseList';
+import { useAuthStore } from '@/store/authStore';
+import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 
 vi.mock('@/lib/api/subsonicSearch', () => ({
   searchSongsPaged: vi.fn(async () => []),

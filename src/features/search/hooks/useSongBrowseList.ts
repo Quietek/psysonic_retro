@@ -12,8 +12,8 @@ import {
   runLocalBrowseSongPage,
   runNetworkBrowseSongPage,
 } from '@/lib/library/browseTextSearch';
-import { useAuthStore } from '../store/authStore';
-import { useLibraryIndexStore } from '../store/libraryIndexStore';
+import { useAuthStore } from '@/store/authStore';
+import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { useOfflineBrowseContext } from '@/features/offline';
 import { useOfflineBrowseReloadToken } from '@/features/offline';
 import {

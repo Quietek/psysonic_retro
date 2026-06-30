@@ -8,7 +8,7 @@ import { SlidersVertical, Search, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { AlbumRow } from '@/features/album';
 import { ArtistRow } from '@/features/artist';
-import PagedSongList from '@/components/PagedSongList';
+import PagedSongList from '@/features/search/components/PagedSongList';
 import CustomSelect from '@/ui/CustomSelect';
 import StarFilterButton from '@/ui/StarFilterButton';
 import { tooltipAttrs } from '@/ui/tooltipAttrs';
@@ -58,9 +58,9 @@ import {
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { MOOD_GROUP_IDS } from '@/config/moodGroups';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
-import { useSongBrowseList, type SongBrowseListRestore } from '@/hooks/useSongBrowseList';
-import TracksPageChrome from '@/components/tracks/TracksPageChrome';
-import SongBrowseSection from '@/components/tracks/SongBrowseSection';
+import { useSongBrowseList, type SongBrowseListRestore } from '@/features/search/hooks/useSongBrowseList';
+import TracksPageChrome from '@/features/search/components/TracksPageChrome';
+import SongBrowseSection from '@/features/search/components/SongBrowseSection';
 import {
   useLiveSearchScopeStore,
   useScopedBrowseSearchQuery,
