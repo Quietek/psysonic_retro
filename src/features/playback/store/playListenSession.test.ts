@@ -22,7 +22,7 @@ vi.mock('@/features/playback/utils/playback/playbackServer', () => ({
   getPlaybackServerId: vi.fn(() => 'server-1'),
 }));
 
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 
 const testTrack: Track = {
   id: 't1',

@@ -8,7 +8,7 @@ import type { ServerProfile } from '@/store/authStoreTypes';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { switchActiveServer } from '@/utils/server/switchActiveServer';
 import { sameQueueTrackId } from '@/features/playback/utils/playback/queueIdentity';
-import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
 import { findServerByIdOrIndexKey, resolveServerIdForIndexKey } from '@/utils/server/serverLookup';
 import {
   canonicalQueueServerKey,

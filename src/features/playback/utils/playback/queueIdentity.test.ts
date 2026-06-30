@@ -4,7 +4,7 @@
  * routing through the HTTP source) and the no-op detection in
  * `queuesStructuralEqual` that prevents unnecessary store rewrites.
  */
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { describe, expect, it } from 'vitest';
 import {
   normalizeAnalysisTrackId,

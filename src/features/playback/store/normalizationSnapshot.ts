@@ -1,4 +1,5 @@
-import type { PlayerState, Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
+import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import { useAuthStore } from '@/store/authStore';
 import { resolveReplayGainDb } from '@/features/playback/utils/audio/resolveReplayGainDb';
 /**

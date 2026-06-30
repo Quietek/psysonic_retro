@@ -10,7 +10,8 @@ import {
   setInfiniteQueueFetching,
 } from '@/features/playback/store/infiniteQueueState';
 import { isInOrbitSession } from '@/store/orbitRuntime';
-import type { PlayerState, QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
+import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import { toQueueItemRefs } from '@/features/playback/store/queueItemRef';
 import { resolveQueueTrack } from '@/features/playback/store/queueTrackView';
 import { seedQueueResolver } from '@/features/playback/store/queueTrackResolver';

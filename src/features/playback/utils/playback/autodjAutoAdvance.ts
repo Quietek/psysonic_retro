@@ -1,5 +1,5 @@
 import { DYNAMIC_OVERLAP_HARD_CAP_SEC, STANDARD_BLEND_SEC } from '@/utils/waveform/waveformSilence';
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 
 export type QueueRepeatMode = 'off' | 'all' | 'one';
 

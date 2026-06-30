@@ -1,5 +1,5 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { coerceOpenArtistRefs } from '@/lib/api/openArtistRefs';
 import { activeServerProfileId } from '@/features/playback/utils/playback/trackServerScope';
 

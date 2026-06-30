@@ -3,7 +3,7 @@ import { onInvoke } from '@/test/mocks/tauri';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import type { TrackRefDto } from '@/lib/api/library';
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import * as subsonic from '@/lib/api/subsonicLibrary';
 import {
   resolveBatch,

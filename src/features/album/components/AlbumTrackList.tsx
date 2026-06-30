@@ -1,5 +1,5 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import React, { useMemo, useState, useEffect } from 'react';
 import { useTracklistColumns } from '@/utils/useTracklistColumns';
 import { usePlayerStore } from '@/features/playback/store/playerStore';

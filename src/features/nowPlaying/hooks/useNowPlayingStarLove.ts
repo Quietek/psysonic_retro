@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import type { TrackStats } from '@/music-network';
 import { getMusicNetworkRuntime } from '@/music-network';
 

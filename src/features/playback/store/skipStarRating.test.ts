@@ -4,7 +4,7 @@
  * (pending-sync, F4) — its optimistic patch + retry behaviour is covered in
  * `pendingStarSync.test.ts`, so here we only assert the delegation + guards.
  */
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 const { queueSongRatingMock, recordSkipStarMock, playerStateGet } = vi.hoisted(() => {
   const playerState = {

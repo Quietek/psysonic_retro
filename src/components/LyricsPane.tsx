@@ -6,7 +6,7 @@ import type { LrcLine } from '../api/lrclib';
 import { useLyrics, type WordLyricsLine } from '../hooks/useLyrics';
 import { useAuthStore } from '../store/authStore';
 import { useTranslation } from 'react-i18next';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { EaseScroller, targetForFraction } from '../utils/ui/easeScroll';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 

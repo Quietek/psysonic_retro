@@ -1,4 +1,5 @@
-import type { PlayerState, QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
+import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 /** Hard cap on undo/redo depth — keeps memory bounded for very long sessions. */
 export const QUEUE_UNDO_MAX = 32;
 

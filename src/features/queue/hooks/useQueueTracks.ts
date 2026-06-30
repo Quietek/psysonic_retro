@@ -1,6 +1,6 @@
 import { useMemo, useSyncExternalStore } from 'react';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
 import { resolveQueueTrack } from '@/features/playback/store/queueTrackView';
 import {
   getQueueResolverVersion,

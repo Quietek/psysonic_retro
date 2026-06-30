@@ -1,4 +1,4 @@
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { useAuthStore } from '@/store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { getCachedTrack } from '@/features/playback/store/queueTrackResolver';

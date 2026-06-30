@@ -1,4 +1,4 @@
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import { create } from 'zustand';
 import type { HotCacheEntry } from '@/features/playback/store/hotCacheStoreTypes';
 import { useLocalPlaybackStore, type LocalPlaybackEntry } from '@/store/localPlaybackStore';

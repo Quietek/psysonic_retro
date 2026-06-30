@@ -1,4 +1,4 @@
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { shuffleArray } from '@/lib/util/shuffleArray';
 
 /**

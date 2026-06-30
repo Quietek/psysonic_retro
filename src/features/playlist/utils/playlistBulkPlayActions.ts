@@ -1,4 +1,4 @@
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 
 // No `touchPlaylist` here: playing/shuffling/enqueuing does not modify the
 // playlist. Touching it bumps `lastModified`, which is the playlist detail

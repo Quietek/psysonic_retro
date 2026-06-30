@@ -4,7 +4,8 @@ import { readInitialNetworkLovedCache, persistNetworkLovedCache } from '@/featur
 import { readInitialPlayerPrefs, persistPlayerPrefs } from '@/features/playback/store/playerPrefsStorage';
 import { createHydrationGatedStorage, createSafeJSONStorage } from '@/lib/util/safeStorage';
 import { emitPlaybackProgress } from '@/features/playback/store/playbackProgress';
-import type { PlayerState, QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
+import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import { toQueueItemRefs } from '@/features/playback/store/queueItemRef';
 import { canonicalQueueServerKey } from '@/utils/server/serverIndexKey';
 import { readInitialQueueVisibility } from '@/features/playback/store/queueVisibilityStorage';

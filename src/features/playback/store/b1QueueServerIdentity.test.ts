@@ -28,7 +28,8 @@ import {
   pushQueueUndoSnapshot,
   type QueueUndoSnapshot,
 } from '@/features/playback/store/queueUndo';
-import type { PlayerState, QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
+import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import { savePlayQueue } from '@/lib/api/subsonicPlayQueue';
 import { _resetQueueSyncForTest, flushPlayQueuePosition } from '@/features/playback/store/queueSync';
 

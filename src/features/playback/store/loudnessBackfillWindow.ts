@@ -1,4 +1,4 @@
-import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
 /**
  * After a bulk enqueue (queue replace, append-many, lucky-mix) the runtime
  * warms the loudness cache for the current track + the next N entries so

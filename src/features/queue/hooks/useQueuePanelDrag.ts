@@ -3,7 +3,7 @@ import { resolveAlbum, resolveMediaServerId } from '@/features/offline';
 import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { useDragDrop, registerQueueDragHitTest } from '@/lib/dnd/DragDropContext';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 
 /** Drag types that may be dropped into the queue panel. */
 const QUEUE_DROP_TYPES = new Set(['song', 'album', 'queue_reorder']);

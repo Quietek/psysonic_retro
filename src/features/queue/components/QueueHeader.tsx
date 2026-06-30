@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import type { QueueDisplayMode } from '@/store/authStoreTypes';
 import type { DurationMode } from '@/utils/componentHelpers/queuePanelHelpers';
 import { formatLongDuration } from '@/lib/format/formatDuration';

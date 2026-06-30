@@ -10,7 +10,7 @@ vi.mock('@/lib/api/subsonicStarRating', () => ({
 }));
 
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { queueSongStar, queueSongRating, _resetPendingStarSyncForTest } from '@/features/playback/store/pendingStarSync';
 import {
   getCachedTrack,

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import {
   autodjJsTriggerAtSec,
   computeAutodjJsOverlap,

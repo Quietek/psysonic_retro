@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import { canonicalQueueServerKey } from '@/utils/server/serverIndexKey';
 import { resolveBatch } from './queueTrackResolver';
 

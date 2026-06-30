@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { makeSubsonicSong } from '@/test/helpers/factories';
 import { onInvoke } from '@/test/mocks/tauri';
 import { resetOrbitStore, resetPlayerStore } from '@/test/helpers/storeReset';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 
 // Spread the real module so registerMediaResolver stays callable — the offline
 // barrel loads offlineMediaResolve transitively, which registers at module init.

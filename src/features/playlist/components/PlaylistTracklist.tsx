@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import type { ColDef } from '@/utils/useTracklistColumns';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { previewInputFromSong, usePreviewStore } from '@/features/playback/store/previewStore';
 import { useThemeStore } from '@/store/themeStore';

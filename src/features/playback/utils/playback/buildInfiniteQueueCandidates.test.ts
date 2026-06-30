@@ -8,7 +8,7 @@
  */
 import { getSimilarSongs2, getTopSongs } from '@/lib/api/subsonicArtists';
 import { getRandomSongs } from '@/lib/api/subsonicLibrary';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock only the artist Subsonic API submodule (the pre-move target was

@@ -1,6 +1,6 @@
 import { getLyricsBySongId } from '@/lib/api/subsonicLyrics';
 import type { SubsonicStructuredLyrics } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { invoke } from '@tauri-apps/api/core';

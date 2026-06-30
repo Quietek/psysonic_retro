@@ -1,4 +1,4 @@
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import type { TimelinePlayedRef } from '@/features/playback/store/timelineSessionHistory';
 
 export type TimelineDisplayRow =

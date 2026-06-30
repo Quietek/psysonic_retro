@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { primaryTrackArtistRef, resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 
 describe('resolveTrackArtistRefs', () => {

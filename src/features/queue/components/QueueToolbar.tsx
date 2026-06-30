@@ -3,7 +3,7 @@ import {
   Blend, Check, FolderOpen, Infinity as InfinityIcon, ListMusic, MoveRight, Save, Share2, Shuffle, Trash2, Waves,
 } from 'lucide-react';
 import type { TFunction } from 'i18next';
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import type {
   QueueToolbarButtonConfig,
   QueueToolbarButtonId,

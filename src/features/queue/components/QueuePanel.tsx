@@ -2,7 +2,7 @@ import { Play } from 'lucide-react';
 import { updatePlaylist } from '@/lib/api/subsonicPlaylists';
 import { resolvePlaylist, resolveMediaServerId } from '@/features/offline';
 import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { useState, useRef, useMemo } from 'react';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useOrbitStore } from '@/features/orbit';

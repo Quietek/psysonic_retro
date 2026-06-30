@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { enqueuePlaylistAll, playPlaylistAll, shufflePlaylistAll } from '@/features/playlist/utils/playlistBulkPlayActions';
 
 export interface PlaylistBulkPlayCallbacksDeps {

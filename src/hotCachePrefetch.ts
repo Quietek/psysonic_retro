@@ -1,6 +1,6 @@
 import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
 import { getPlaybackCacheServerKey } from '@/features/playback/utils/playback/playbackServer';
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import { resolveQueueTrack } from '@/features/playback/store/queueTrackView';
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from './store/authStore';

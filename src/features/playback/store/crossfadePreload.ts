@@ -6,7 +6,7 @@ import { findLocalPlaybackUrl } from '@/store/localPlaybackResolve';
 import { playbackCacheKeyForRef } from '@/features/playback/utils/playback/playbackServer';
 import { resolvePlaybackUrl } from '@/features/playback/utils/playback/resolvePlaybackUrl';
 import { resolveQueueTrack } from '@/features/playback/store/queueTrackView';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import {
   hasPlannedCrossfade,
   markPlannedCrossfade,

@@ -4,7 +4,7 @@
  * atSeconds > 0.05, the wantPlaying=false branch that issues audio_pause,
  * and the generation-mismatch bail-out.
  */
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 const hoisted = vi.hoisted(() => {
   const auth = {

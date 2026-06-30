@@ -5,7 +5,7 @@ import { useNavigateToArtist } from '@/features/artist';
 import { resolveAlbum, resolveMediaServerId, resolvePlaylist } from '@/features/offline';
 import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import { getMusicNetworkRuntime, useEnrichmentPrimary } from '../../music-network';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { useAuthStore } from '../../store/authStore';
 import { usePlaylistStore } from '@/features/playlist';
 import { songToTrack } from '@/features/playback/utils/playback/songToTrack';

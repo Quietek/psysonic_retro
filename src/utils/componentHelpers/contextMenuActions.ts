@@ -5,7 +5,7 @@ import { filterSongsForLuckyMixRatings, getMixMinRatingsConfigFromAuth } from '.
 import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
 import { useAuthStore } from '../../store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { resolveQueueTrack } from '@/features/playback/store/queueTrackView';
 import { useZipDownloadStore } from '@/features/offline';
 import { useDownloadModalStore } from '@/features/offline';

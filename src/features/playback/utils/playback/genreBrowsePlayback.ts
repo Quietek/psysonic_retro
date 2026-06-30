@@ -5,7 +5,7 @@ import { libraryAdvancedSearch, libraryGetGenreAlbumCounts, type LibrarySortClau
 import { fetchAllSongsByGenre, getGenres } from '@/lib/api/subsonicGenres';
 import type { SubsonicGenre } from '@/lib/api/subsonicTypes';
 import { libraryScopeForServer } from '@/lib/api/subsonicClient';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { shuffleArray } from '@/lib/util/shuffleArray';
 import { trackToSong } from '@/lib/library/advancedSearchLocal';

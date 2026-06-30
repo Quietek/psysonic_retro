@@ -4,7 +4,7 @@
  * guard, the window collection, and the no-sync-engine flag on each
  * refresh call.
  */
-import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 const hoisted = vi.hoisted(() => {
   const auth = { normalizationEngine: 'loudness' as 'off' | 'replaygain' | 'loudness' };

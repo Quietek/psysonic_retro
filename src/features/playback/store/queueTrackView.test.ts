@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
 import { seedQueueResolver, _resetQueueResolverForTest } from '@/features/playback/store/queueTrackResolver';
 import { resolveQueueTrack, getQueueTracksView } from './queueTrackView';
 

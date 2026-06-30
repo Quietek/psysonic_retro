@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
 import { useAuthStore } from '../store/authStore';
 import { HOT_CACHE_PROTECT_AFTER_CURRENT, type HotCacheEntry } from '@/features/playback/store/hotCacheStore';
 

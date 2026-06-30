@@ -4,7 +4,7 @@
  * = current track + next `LOUDNESS_BACKFILL_WINDOW_AHEAD` entries, with
  * duplicates collapsed.
  */
-import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
 import { describe, expect, it } from 'vitest';
 import {
   LOUDNESS_BACKFILL_WINDOW_AHEAD,

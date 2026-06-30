@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import {
   INTERRUPT_BLEND_PREP_FADE_SEC,
   isCrossfadeNextReady,

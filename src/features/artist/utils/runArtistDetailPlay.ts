@@ -1,7 +1,7 @@
 import type { TFunction } from 'i18next';
 import { getSimilarSongs2, getTopSongs } from '@/lib/api/subsonicArtists';
 import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { runBulkPlayAll, runBulkShuffle } from '@/features/playback/utils/playback/runBulkPlay';
 import { resolveAlbum, resolveMediaServerId } from '@/features/offline';

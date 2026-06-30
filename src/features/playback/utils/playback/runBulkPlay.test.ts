@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { runBulkEnqueue, runBulkPlayAll, runBulkShuffle } from '@/features/playback/utils/playback/runBulkPlay';
 
 function track(id: string): Track {

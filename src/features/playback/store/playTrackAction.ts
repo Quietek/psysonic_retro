@@ -57,7 +57,8 @@ import {
   playbackSourceHintForResolvedUrl,
   recordEnginePlayUrl,
 } from '@/features/playback/store/playbackUrlRouting';
-import type { PlayerState, Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
+import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import { toQueueItemRefs } from '@/features/playback/store/queueItemRef';
 import { getQueueTracksView, resolveQueueTrack } from '@/features/playback/store/queueTrackView';
 import { seedQueueResolver } from '@/features/playback/store/queueTrackResolver';

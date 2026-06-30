@@ -5,7 +5,7 @@
  * playback queue. Originally lived in `playerStore.ts`; extracted in M0 of
  * the frontend refactor (2026-05-12).
  */
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { describe, expect, it } from 'vitest';
 import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { makeSubsonicSong } from '@/test/helpers/factories';

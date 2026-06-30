@@ -5,7 +5,7 @@ import { useAuthStore } from '@/store/authStore';
 import { setTransitionMode, type TransitionMode } from '@/features/playback/utils/playback/playbackTransition';
 import { resolveQueueTrack } from '@/features/playback/store/queueTrackView';
 import type { SubsonicOpenArtistRef } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 
 export const MINI_WINDOW_LABEL = 'mini';
 

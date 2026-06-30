@@ -4,7 +4,8 @@
  * push, and (c) the scroll-top reader / consumer pair that QueuePanel uses
  * to restore list scroll position after an undo/redo commit.
  */
-import type { PlayerState, Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
+import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import { toQueueItemRefs } from '@/features/playback/store/queueItemRef';
 import { beforeEach, describe, expect, it } from 'vitest';
 import {

@@ -1,4 +1,4 @@
-import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/lib/media/trackTypes';
 import { getQueueTracksView } from '@/features/playback/store/queueTrackView';
 import { scheduleHotCachePrefetchForTrack } from '@/hotCachePrefetch';
 import { getPlaybackCacheServerKey } from '@/features/playback/utils/playback/playbackServer';

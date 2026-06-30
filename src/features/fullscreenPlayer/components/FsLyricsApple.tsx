@@ -5,7 +5,7 @@ import { useLyrics, type WordLyricsLine } from '@/hooks/useLyrics';
 import { useWordLyricsSync } from '@/hooks/useWordLyricsSync';
 import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';
 import type { LrcLine } from '@/api/lrclib';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 import { EaseScroller, targetForFraction } from '@/utils/ui/easeScroll';
 
 // Fullscreen synced lyrics.

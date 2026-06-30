@@ -1,6 +1,6 @@
 import { Star } from 'lucide-react';
 import type { TFunction } from 'i18next';
-import type { Track } from '@/features/playback/store/playerStoreTypes';
+import type { Track } from '@/lib/media/trackTypes';
 
 export type { DurationMode } from '../../store/authStoreTypes';
 

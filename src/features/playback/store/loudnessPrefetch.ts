@@ -1,4 +1,4 @@
-import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { QueueItemRef } from '@/lib/media/trackTypes';
 import { useAuthStore } from '@/store/authStore';
 import { collectLoudnessBackfillWindowTrackIds } from '@/features/playback/store/loudnessBackfillWindow';
 import { refreshLoudnessForTrack } from '@/features/playback/store/loudnessRefresh';
