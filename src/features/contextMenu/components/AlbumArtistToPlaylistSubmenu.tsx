@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { resolveAlbum, resolveArtist, resolveMediaServerId } from '@/features/offline';
-import { AddToPlaylistSubmenu } from './AddToPlaylistSubmenu';
+import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/AddToPlaylistSubmenu';
 
 interface AlbumProps {
   albumId: string;

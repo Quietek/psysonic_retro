@@ -19,7 +19,7 @@ import { useDragDrop } from '@/lib/dnd/DragDropContext';
 import { useOrbitSongRowBehavior } from '@/features/orbit';
 import { songToTrack } from '@/lib/media/songToTrack';
 import type { PlaylistSortKey, PlaylistSortDir } from '@/features/playlist/utils/playlistDisplayedSongs';
-import { AddToPlaylistSubmenu } from '@/components/ContextMenu';
+import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/ContextMenu';
 
 const PL_CENTERED = new Set(['favorite', 'rating', 'duration', 'playCount', 'bpm']);
 

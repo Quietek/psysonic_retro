@@ -2,7 +2,7 @@ import React from 'react';
 import { ListPlus, Search, X } from 'lucide-react';
 import type { TFunction } from 'i18next';
 import { useSelectionStore } from '@/store/selectionStore';
-import { AddToPlaylistSubmenu } from '@/components/ContextMenu';
+import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/ContextMenu';
 import { offlineActionPolicy, type OfflineActionPolicy } from '@/features/offline';
 
 interface Props {

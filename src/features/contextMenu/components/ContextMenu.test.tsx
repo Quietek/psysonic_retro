@@ -51,7 +51,7 @@ vi.mock('@/features/offline/hooks/useOfflineBrowseContext', () => ({
   }),
 }));
 
-import ContextMenu from './ContextMenu';
+import ContextMenu from '@/features/contextMenu/components/ContextMenu';
 import { renderWithProviders } from '@/test/helpers/renderWithProviders';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';

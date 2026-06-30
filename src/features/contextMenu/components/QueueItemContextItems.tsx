@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next';
 import { Play, Radio, Heart, ChevronRight, User, Disc3, ListMusic, Info, Sparkles, Star, Trash2, Share2 } from 'lucide-react';
 import { queueSongStar } from '@/features/playback/store/pendingStarSync';
-import { getMusicNetworkRuntime, useEnrichmentPrimary } from '../../music-network';
+import { getMusicNetworkRuntime, useEnrichmentPrimary } from '@/music-network';
 import type { Track } from '@/lib/media/trackTypes';
-import { useAuthStore } from '../../store/authStore';
-import { renderPresetIcon } from '../settings/musicNetwork/presetIcon';
+import { useAuthStore } from '@/store/authStore';
+import { renderPresetIcon } from '@/components/settings/musicNetwork/presetIcon';
 import StarRating from '@/ui/StarRating';
-import { AddToPlaylistSubmenu } from './AddToPlaylistSubmenu';
-import type { ContextMenuItemsProps } from './contextMenuItemTypes';
+import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/AddToPlaylistSubmenu';
+import type { ContextMenuItemsProps } from '@/features/contextMenu/components/contextMenuItemTypes';
 
 export default function QueueItemContextItems(props: ContextMenuItemsProps) {
   const {

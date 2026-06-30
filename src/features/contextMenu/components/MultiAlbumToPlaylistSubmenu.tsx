@@ -1,56 +1,42 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListMusic, Plus } from 'lucide-react';
-import { resolveAlbum, resolveArtist, resolveMediaServerId, resolvePlaylist } from '@/features/offline';
-import { getPlaylists } from '@/lib/api/subsonicPlaylists';
+import { resolveAlbum, resolveMediaServerId, resolvePlaylist } from '@/features/offline';
 import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistStore } from '@/features/playlist';
-import { showToast } from '../../utils/ui/toast';
+import { showToast } from '@/utils/ui/toast';
 import {
   confirmAddAllDuplicates,
   isSmartPlaylistName,
-} from '../../utils/componentHelpers/contextMenuHelpers';
+} from '@/utils/componentHelpers/contextMenuHelpers';
 
 interface Props {
-  artistIds: string[];
+  albumIds: string[];
   onDone: () => void;
   triggerId?: string;
 }
 
-export function MultiArtistToPlaylistSubmenu({ artistIds, onDone, triggerId: _triggerId }: Props) {
+export function MultiAlbumToPlaylistSubmenu({ albumIds, onDone, triggerId: _triggerId }: Props) {
   const { t } = useTranslation();
   const [resolvedIds, setResolvedIds] = useState<string[] | null>(null);
-  const [totalArtists, setTotalArtists] = useState(0);
+  const [totalAlbums, setTotalAlbums] = useState(0);
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
     // React Compiler set-state-in-effect rule: state set from a timer/animation callback.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTotalArtists(artistIds.length);
+    setTotalAlbums(albumIds.length);
     const loadingTimeout = setTimeout(() => setShowLoading(true), 300);
     (async () => {
-      const allSongs: string[] = [];
       const serverId = resolveMediaServerId();
-      if (!serverId) {
-        setResolvedIds([]);
-        return;
-      }
-      for (const artistId of artistIds) {
-        try {
-          const artistData = await resolveArtist(serverId, artistId);
-          if (!artistData) continue;
-          const albumSongs = await Promise.all(
-            artistData.albums.map(a => resolveAlbum(serverId, a.id).then(r => r?.songs ?? []).catch(() => [])),
-          );
-          allSongs.push(...albumSongs.flat().map(s => s.id));
-        } catch {
-          // Skip failed artists
-        }
-      }
-      setResolvedIds(allSongs);
+      const albumSongs = serverId
+        ? await Promise.all(albumIds.map(id => resolveAlbum(serverId, id).then(r => r?.songs ?? []).catch(() => [])))
+        : [];
+      const allSongs = albumSongs.flat();
+      setResolvedIds(allSongs.map(s => s.id));
     })().catch(() => setResolvedIds([]));
     return () => clearTimeout(loadingTimeout);
-  }, [artistIds]);
+  }, [albumIds]);
 
   const handleAddWithToast = async (pl: SubsonicPlaylist, songIds: string[]) => {
     const { updatePlaylist } = await import('@/lib/api/subsonicPlaylists');
@@ -99,30 +85,30 @@ export function MultiArtistToPlaylistSubmenu({ artistIds, onDone, triggerId: _tr
     onDone();
   };
 
-  // Custom AddToPlaylistSubmenu with toast notifications for multiple artists
+  // Custom AddToPlaylistSubmenu with toast notifications for multiple albums
   function MultiAddToPlaylistSubmenu({ songIds, onDone: innerOnDone }: { songIds: string[]; onDone: () => void }) {
     const subRef = useRef<HTMLDivElement>(null);
     const newNameRef = useRef<HTMLInputElement>(null);
-    const [playlists, setPlaylists] = useState<SubsonicPlaylist[]>([]);
     const [adding, setAdding] = useState<string | null>(null);
     const [creating, setCreating] = useState(false);
     const [newName, setNewName] = useState('');
     const [flipLeft, setFlipLeft] = useState(false);
     const [flipUp, setFlipUp] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const storePlaylists = usePlaylistStore((s) => s.playlists);
 
-    useEffect(() => {
-      getPlaylists().then((all) => {
-        setPlaylists(
-          all.filter(p => !isSmartPlaylistName(p.name)).sort((a, b) => a.name.localeCompare(b.name)),
-        );
-      }).catch(() => {});
-    }, []);
+    const playlists = useMemo(() => {
+      return [...storePlaylists]
+        .filter(p => !isSmartPlaylistName(p.name))
+        .sort((a, b) => a.name.localeCompare(b.name));
+    }, [storePlaylists]);
 
     useLayoutEffect(() => {
       if (subRef.current) {
         const rect = subRef.current.getBoundingClientRect();
         if (rect.right > window.innerWidth - 8) setFlipLeft(true);
         if (rect.bottom > window.innerHeight - 8) setFlipUp(true);
+        setVisible(true);
       }
     }, []);
 
@@ -156,7 +142,7 @@ export function MultiArtistToPlaylistSubmenu({ artistIds, onDone, triggerId: _tr
       : { left: '100%', right: 'auto', top: flipUp ? 'auto' : -4, bottom: flipUp ? 0 : 'auto' };
 
     return (
-      <div className="context-submenu" ref={subRef} style={subStyle}>
+      <div className="context-submenu" ref={subRef} style={{ ...subStyle, visibility: visible ? 'visible' : 'hidden' }}>
         {!creating ? (
           <div className="context-menu-item context-submenu-new" onClick={e => { e.stopPropagation(); setCreating(true); }}>
             <Plus size={13} /> {t('playlists.newPlaylist')}
@@ -206,7 +192,7 @@ export function MultiArtistToPlaylistSubmenu({ artistIds, onDone, triggerId: _tr
       <div className="context-submenu" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0.75rem', gap: '0.5rem', minWidth: 190 }}>
         <div className="spinner" style={{ width: 16, height: 16 }} />
         <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-          {t('playlists.loadingArtists', { count: totalArtists })}
+          {t('playlists.loadingAlbums', { count: totalAlbums })}
         </span>
       </div>
     );

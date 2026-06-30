@@ -1,10 +1,10 @@
 import React from 'react';
-import type { ContextMenuItemsProps } from './contextMenuItemTypes';
-import SongContextItems from './SongContextItems';
-import QueueItemContextItems from './QueueItemContextItems';
-import AlbumContextItems from './AlbumContextItems';
-import ArtistContextItems from './ArtistContextItems';
-import PlaylistContextItems from './PlaylistContextItems';
+import type { ContextMenuItemsProps } from '@/features/contextMenu/components/contextMenuItemTypes';
+import SongContextItems from '@/features/contextMenu/components/SongContextItems';
+import QueueItemContextItems from '@/features/contextMenu/components/QueueItemContextItems';
+import AlbumContextItems from '@/features/contextMenu/components/AlbumContextItems';
+import ArtistContextItems from '@/features/contextMenu/components/ArtistContextItems';
+import PlaylistContextItems from '@/features/contextMenu/components/PlaylistContextItems';
 
 export default function ContextMenuItems(props: ContextMenuItemsProps) {
   const { type } = props;

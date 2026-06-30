@@ -4,11 +4,11 @@ import { ListMusic, Plus } from 'lucide-react';
 import { getPlaylist, updatePlaylist } from '@/lib/api/subsonicPlaylists';
 import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
 import { usePlaylistStore } from '@/features/playlist';
-import { showToast } from '../../utils/ui/toast';
+import { showToast } from '@/utils/ui/toast';
 import {
   confirmAddAllDuplicates,
   isSmartPlaylistName,
-} from '../../utils/componentHelpers/contextMenuHelpers';
+} from '@/utils/componentHelpers/contextMenuHelpers';
 
 interface Props {
   songIds: string[];

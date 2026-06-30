@@ -3,9 +3,9 @@ import { Radio, Heart, ChevronRight, ListMusic, Star, Share2 } from 'lucide-reac
 import { star, unstar } from '@/lib/api/subsonicStarRating';
 import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import StarRating from '@/ui/StarRating';
-import { ArtistToPlaylistSubmenu } from './AlbumArtistToPlaylistSubmenu';
-import { MultiArtistToPlaylistSubmenu } from './MultiArtistToPlaylistSubmenu';
-import type { ContextMenuItemsProps } from './contextMenuItemTypes';
+import { ArtistToPlaylistSubmenu } from '@/features/contextMenu/components/AlbumArtistToPlaylistSubmenu';
+import { MultiArtistToPlaylistSubmenu } from '@/features/contextMenu/components/MultiArtistToPlaylistSubmenu';
+import type { ContextMenuItemsProps } from '@/features/contextMenu/components/contextMenuItemTypes';
 
 export default function ArtistContextItems(props: ContextMenuItemsProps) {
   const {

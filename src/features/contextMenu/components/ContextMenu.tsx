@@ -3,26 +3,26 @@ import type { Track } from '@/lib/media/trackTypes';
 import { useOrbitStore } from '@/features/orbit';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from 'react-i18next';
-import type { EntityShareKind } from '../utils/share/shareLink';
-import { AddToPlaylistSubmenu } from './contextMenu/AddToPlaylistSubmenu';
+import type { EntityShareKind } from '@/utils/share/shareLink';
+import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/AddToPlaylistSubmenu';
 import {
   copyShareLink as copyShareLinkAction,
   downloadAlbum as downloadAlbumAction,
   startInstantMix as startInstantMixAction,
   startRadio as startRadioAction,
-} from '../utils/componentHelpers/contextMenuActions';
-import { useContextMenuKeyboardNav } from '../hooks/useContextMenuKeyboardNav';
-import { useContextMenuRating } from '../hooks/useContextMenuRating';
-import { usePlaybackLibraryNavigate } from '../hooks/usePlaybackLibraryNavigate';
+} from '@/utils/componentHelpers/contextMenuActions';
+import { useContextMenuKeyboardNav } from '@/hooks/useContextMenuKeyboardNav';
+import { useContextMenuRating } from '@/hooks/useContextMenuRating';
+import { usePlaybackLibraryNavigate } from '@/hooks/usePlaybackLibraryNavigate';
 import { useNavigate } from 'react-router-dom';
 import { useOfflineBrowseContext } from '@/features/offline';
 import {
   offlineActionPolicy,
   type OfflineSurface,
 } from '@/features/offline';
-import ContextMenuItems from './contextMenu/ContextMenuItems';
+import ContextMenuItems from '@/features/contextMenu/components/ContextMenuItems';
 
 function contextMenuSurfaceForType(type: string | null): OfflineSurface {
   switch (type) {

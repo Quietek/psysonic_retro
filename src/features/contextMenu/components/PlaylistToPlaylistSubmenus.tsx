@@ -2,8 +2,8 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 're
 import { useTranslation } from 'react-i18next';
 import { ListMusic, Plus } from 'lucide-react';
 import { usePlaylistStore } from '@/features/playlist';
-import { showToast } from '../../utils/ui/toast';
-import { isSmartPlaylistName } from '../../utils/componentHelpers/contextMenuHelpers';
+import { showToast } from '@/utils/ui/toast';
+import { isSmartPlaylistName } from '@/utils/componentHelpers/contextMenuHelpers';
 
 interface SingleProps {
   playlist: { id: string; name: string };

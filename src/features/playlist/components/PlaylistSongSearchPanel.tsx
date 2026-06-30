@@ -7,7 +7,7 @@ import { songToTrack } from '@/lib/media/songToTrack';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { COVER_DENSE_SEARCH_CSS_PX } from '@/cover/layoutSizes';
-import { AddToPlaylistSubmenu } from '@/components/ContextMenu';
+import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/ContextMenu';
 
 function PlaylistSearchResultThumb({ albumId, coverArt }: { albumId: string; coverArt: string }) {
   return (

@@ -6,9 +6,9 @@ import { star, unstar } from '@/lib/api/subsonicStarRating';
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '@/lib/media/songToTrack';
 import StarRating from '@/ui/StarRating';
-import { AlbumToPlaylistSubmenu } from './AlbumArtistToPlaylistSubmenu';
-import { MultiAlbumToPlaylistSubmenu } from './MultiAlbumToPlaylistSubmenu';
-import type { ContextMenuItemsProps } from './contextMenuItemTypes';
+import { AlbumToPlaylistSubmenu } from '@/features/contextMenu/components/AlbumArtistToPlaylistSubmenu';
+import { MultiAlbumToPlaylistSubmenu } from '@/features/contextMenu/components/MultiAlbumToPlaylistSubmenu';
+import type { ContextMenuItemsProps } from '@/features/contextMenu/components/contextMenuItemTypes';
 
 export default function AlbumContextItems(props: ContextMenuItemsProps) {
   const {

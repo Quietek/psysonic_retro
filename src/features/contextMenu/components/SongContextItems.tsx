@@ -4,17 +4,17 @@ import { useNavigateToAlbum } from '@/features/album';
 import { useNavigateToArtist } from '@/features/artist';
 import { resolveAlbum, resolveMediaServerId, resolvePlaylist } from '@/features/offline';
 import { queueSongStar } from '@/features/playback/store/pendingStarSync';
-import { getMusicNetworkRuntime, useEnrichmentPrimary } from '../../music-network';
+import { getMusicNetworkRuntime, useEnrichmentPrimary } from '@/music-network';
 import type { Track } from '@/lib/media/trackTypes';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { usePlaylistStore } from '@/features/playlist';
 import { songToTrack } from '@/lib/media/songToTrack';
-import { showToast } from '../../utils/ui/toast';
+import { showToast } from '@/utils/ui/toast';
 import { suggestOrbitTrack, hostEnqueueToOrbit, evaluateOrbitSuggestGate, OrbitSuggestBlockedError } from '@/features/orbit';
-import { renderPresetIcon } from '../settings/musicNetwork/presetIcon';
+import { renderPresetIcon } from '@/components/settings/musicNetwork/presetIcon';
 import StarRating from '@/ui/StarRating';
-import { AddToPlaylistSubmenu } from './AddToPlaylistSubmenu';
-import type { ContextMenuItemsProps } from './contextMenuItemTypes';
+import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/AddToPlaylistSubmenu';
+import type { ContextMenuItemsProps } from '@/features/contextMenu/components/contextMenuItemTypes';
 
 export default function SongContextItems(props: ContextMenuItemsProps) {
   const {
@@ -179,7 +179,7 @@ export default function SongContextItems(props: ContextMenuItemsProps) {
               {offlinePolicy.canEditPlaylist && playlistId && playlistSongIndex !== undefined && (
                 <div className="context-menu-item" style={{ color: 'var(--danger)' }} onClick={() => handleAction(async () => {
                   const { updatePlaylist } = await import('@/lib/api/subsonicPlaylists');
-                  const { showToast } = await import('../../utils/ui/toast');
+                  const { showToast } = await import('@/utils/ui/toast');
                   const touchPlaylist = usePlaylistStore.getState().touchPlaylist;
                   try {
                     const serverId = resolveMediaServerId();

@@ -15,7 +15,7 @@ import { NowPlayingDropdown } from '@/features/nowPlaying';
 import QueuePanel from '@/features/queue';
 import AppRoutes from './AppRoutes';
 import FullscreenPlayer from '@/features/fullscreenPlayer';
-import ContextMenu from '../components/ContextMenu';
+import ContextMenu from '@/features/contextMenu/components/ContextMenu';
 import SongInfoModal from '../components/SongInfoModal';
 import { DownloadFolderModal } from '@/features/offline';
 import GlobalConfirmModal from '../components/GlobalConfirmModal';
@@ -30,7 +30,7 @@ import {
 import ConnectionIndicator from '@/app/ConnectionIndicator';
 import MusicNetworkIndicator from '../components/MusicNetworkIndicator';
 import { OfflineBanner } from '@/features/offline';
-import AppUpdater from '../components/AppUpdater';
+import AppUpdater from '@/features/updater/components/AppUpdater';
 import TitleBar from '@/app/TitleBar';
 import { OrbitSessionBar, OrbitStartTrigger } from '@/features/orbit';
 import { useOrbitHost } from '@/features/orbit';
