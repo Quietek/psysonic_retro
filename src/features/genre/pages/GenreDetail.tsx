@@ -13,9 +13,9 @@ import { useAlbumBrowseScrollSnapshotSync, type AlbumBrowseScrollSnapshot } from
 import { useGenreAlbumBrowse } from '@/features/album';
 import { useAlbumBrowseScrollRestore } from '@/features/album';
 import { useGenreDetailBrowse } from '@/features/genre/hooks/useGenreDetailBrowse';
-import { useInpageScrollViewport } from '@/hooks/useInpageScrollViewport';
+import { useInpageScrollViewport } from '@/lib/hooks/useInpageScrollViewport';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
-import { useMainstageInpageHeaderTight } from '@/hooks/useMainstageInpageHeaderTight';
+import { useMainstageInpageHeaderTight } from '@/lib/hooks/useMainstageInpageHeaderTight';
 import { useAuthStore } from '@/store/authStore';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';

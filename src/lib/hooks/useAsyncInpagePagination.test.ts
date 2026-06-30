@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { useAsyncInpagePagination } from './useAsyncInpagePagination';
+import { useAsyncInpagePagination } from '@/lib/hooks/useAsyncInpagePagination';
 
 describe('useAsyncInpagePagination', () => {
   it('blocks concurrent page requests', async () => {

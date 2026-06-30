@@ -45,7 +45,7 @@ import { usePrefetchReleaseNotes } from '../hooks/usePrefetchReleaseNotes';
 import { useTrayMenuI18n } from '../hooks/useTrayMenuI18n';
 import { useServerCapabilitiesProbe } from '../hooks/useServerCapabilitiesProbe';
 import { useQueueResizer } from '@/features/queue';
-import { useGlobalDndAndSelectionBlockers } from '../hooks/useGlobalDndAndSelectionBlockers';
+import { useGlobalDndAndSelectionBlockers } from '@/lib/hooks/useGlobalDndAndSelectionBlockers';
 import { useAppActivityTracking } from '../hooks/useAppActivityTracking';
 import { useMainScrollingIndicator } from '../hooks/useMainScrollingIndicator';
 import { useCoverNavigationPriority } from '../hooks/useCoverNavigationPriority';

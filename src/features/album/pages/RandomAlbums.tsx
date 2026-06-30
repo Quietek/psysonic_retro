@@ -31,8 +31,8 @@ import {
 import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { RANDOM_ALBUMS_INPAGE_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
-import { useMainstageInpageHeaderTight } from '@/hooks/useMainstageInpageHeaderTight';
-import { useInpageScrollViewport } from '@/hooks/useInpageScrollViewport';
+import { useMainstageInpageHeaderTight } from '@/lib/hooks/useMainstageInpageHeaderTight';
+import { useInpageScrollViewport } from '@/lib/hooks/useInpageScrollViewport';
 import { useAlbumGridBrowseFilters, type AlbumGridBrowseSnapshot } from '@/features/album/hooks/useAlbumGridBrowseFilters';
 import { useAlbumBrowseScrollRestore } from '@/features/album/hooks/useAlbumBrowseScrollRestore';
 import { useAlbumBrowseScrollSnapshotSync, type AlbumBrowseScrollSnapshot } from '@/features/album/hooks/useAlbumBrowseFilters';

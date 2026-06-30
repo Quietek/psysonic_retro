@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDragDrop } from '@/lib/dnd/DragDropContext';
-import type { ListReorderDropTarget } from '../utils/componentHelpers/listReorder';
+import type { ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
 
 interface Options {
   /** Payload discriminator the drag source emits, e.g. `'lyrics_source_reorder'`. */

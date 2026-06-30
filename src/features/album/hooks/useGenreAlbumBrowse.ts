@@ -7,8 +7,8 @@ import {
   GENRE_ALBUM_CATALOG_CHUNK,
   GENRE_ALBUM_FIRST_PAGE,
 } from '@/lib/library/genreAlbumBrowse';
-import { useClientSliceInfiniteScroll } from '@/hooks/useClientSliceInfiniteScroll';
-import { useInpageScrollSentinel } from '@/hooks/useInpageScrollSentinel';
+import { useClientSliceInfiniteScroll } from '@/lib/hooks/useClientSliceInfiniteScroll';
+import { useInpageScrollSentinel } from '@/lib/hooks/useInpageScrollSentinel';
 
 const CLIENT_SLICE_PAGE_SIZE = GENRE_ALBUM_FIRST_PAGE;
 

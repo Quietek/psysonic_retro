@@ -5,7 +5,7 @@ import { useSidebarStore, SidebarItemConfig, CONSERVED_SIDEBAR_NAV_IDS } from '@
 import { useLuckyMixAvailable } from '@/features/randomMix';
 import { ALL_NAV_ITEMS } from '@/config/navItems';
 import { applySidebarReorderById } from '@/features/sidebar';
-import { useListReorderDnd } from '@/hooks/useListReorderDnd';
+import { useListReorderDnd } from '@/lib/hooks/useListReorderDnd';
 import type { ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
 import { ReorderGripHandle } from '@/features/settings/components/ReorderGripHandle';
 import { SettingsGroup } from '@/features/settings/components/SettingsGroup';

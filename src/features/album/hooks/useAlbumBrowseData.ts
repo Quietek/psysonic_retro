@@ -37,9 +37,9 @@ import {
   mergeAlbumCatalogChunk,
 } from '@/features/album/utils/albumBrowseCatalogChunk';
 import { useOfflineBrowseContext } from '@/features/offline';
-import { useClientSliceInfiniteScroll } from '@/hooks/useClientSliceInfiniteScroll';
+import { useClientSliceInfiniteScroll } from '@/lib/hooks/useClientSliceInfiniteScroll';
 import { useDebouncedValue } from '@/lib/hooks/useDebouncedValue';
-import { useInpageScrollSentinel } from '@/hooks/useInpageScrollSentinel';
+import { useInpageScrollSentinel } from '@/lib/hooks/useInpageScrollSentinel';
 
 const PAGE_SIZE = 30;
 const CLIENT_SLICE_PAGE_SIZE = 60;

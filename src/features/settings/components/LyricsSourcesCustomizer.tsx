@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
 import { useAuthStore } from '@/store/authStore';
 import type { LyricsSourceId } from '@/store/authStoreTypes';
-import { useListReorderDnd } from '@/hooks/useListReorderDnd';
+import { useListReorderDnd } from '@/lib/hooks/useListReorderDnd';
 import { applyListReorderById, type ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
 import { ReorderGripHandle } from '@/features/settings/components/ReorderGripHandle';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';

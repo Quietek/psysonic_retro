@@ -37,7 +37,7 @@ import { serverIndexKeyForProfile } from '@/utils/server/serverIndexKey';
 import { switchActiveServer } from '@/utils/server/switchActiveServer';
 import { AddServerForm } from '@/features/settings/components/AddServerForm';
 import { ServerCapabilityHeaderBadge } from '@/features/settings/components/ServerCapabilityHeaderBadge';
-import { useListReorderDnd } from '@/hooks/useListReorderDnd';
+import { useListReorderDnd } from '@/lib/hooks/useListReorderDnd';
 import { applyListReorderById, type ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
 import { ReorderGripHandle } from '@/features/settings/components/ReorderGripHandle';
 import { tooltipAttrs } from '@/ui/tooltipAttrs';

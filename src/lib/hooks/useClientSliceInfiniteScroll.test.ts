@@ -1,8 +1,8 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { useClientSliceInfiniteScroll } from './useClientSliceInfiniteScroll';
+import { useClientSliceInfiniteScroll } from '@/lib/hooks/useClientSliceInfiniteScroll';
 
-vi.mock('./useInpageScrollSentinel', () => ({
+vi.mock('@/lib/hooks/useInpageScrollSentinel', () => ({
   useInpageScrollSentinel: () => vi.fn(),
 }));
 

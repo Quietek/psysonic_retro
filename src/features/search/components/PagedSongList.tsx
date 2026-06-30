@@ -1,7 +1,7 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import React, { useRef } from 'react';
 import SongRow, { SongListHeader } from '@/features/search/components/SongRow';
-import { useInpageScrollSentinel } from '@/hooks/useInpageScrollSentinel';
+import { useInpageScrollSentinel } from '@/lib/hooks/useInpageScrollSentinel';
 import InpageScrollSentinel from '@/ui/InpageScrollSentinel';
 
 interface Props {

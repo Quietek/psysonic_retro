@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { useAsyncInpagePagination } from './useAsyncInpagePagination';
-import { useInpageScrollSentinel } from './useInpageScrollSentinel';
+import { useAsyncInpagePagination } from '@/lib/hooks/useAsyncInpagePagination';
+import { useInpageScrollSentinel } from '@/lib/hooks/useInpageScrollSentinel';
 
 export type UseAsyncInpageScrollArgs = {
   pageSize: number;

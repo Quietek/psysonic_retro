@@ -2,7 +2,7 @@ import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Blend, Infinity as InfinityIcon, ListMusic, MoveRight, Share2, Shuffle, Trash2, Waves } from 'lucide-react';
 import { useQueueToolbarStore, QueueToolbarButtonId } from '@/store/queueToolbarStore';
-import { useListReorderDnd } from '@/hooks/useListReorderDnd';
+import { useListReorderDnd } from '@/lib/hooks/useListReorderDnd';
 import { applyListReorderById, type ListReorderDropTarget } from '@/utils/componentHelpers/listReorder';
 import { ReorderGripHandle } from '@/features/settings/components/ReorderGripHandle';
 

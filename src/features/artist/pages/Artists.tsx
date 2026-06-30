@@ -24,10 +24,10 @@ import { useArtistsFiltering } from '@/features/artist/hooks/useArtistsFiltering
 import { useLibraryIgnoredArticles } from '@/hooks/useLibraryIgnoredArticles';
 import { useArtistsBrowseCatalog } from '@/features/artist/hooks/useArtistsBrowseCatalog';
 import { useBrowseArtistTextSearch } from '@/features/artist/hooks/useBrowseArtistTextSearch';
-import { useMainstageInpageHeaderTight } from '@/hooks/useMainstageInpageHeaderTight';
-import { useClientSliceInfiniteScroll } from '@/hooks/useClientSliceInfiniteScroll';
-import { useInpageScrollSentinel } from '@/hooks/useInpageScrollSentinel';
-import { useInpageScrollViewport } from '@/hooks/useInpageScrollViewport';
+import { useMainstageInpageHeaderTight } from '@/lib/hooks/useMainstageInpageHeaderTight';
+import { useClientSliceInfiniteScroll } from '@/lib/hooks/useClientSliceInfiniteScroll';
+import { useInpageScrollSentinel } from '@/lib/hooks/useInpageScrollSentinel';
+import { useInpageScrollViewport } from '@/lib/hooks/useInpageScrollViewport';
 import { ArtistsGridView } from '@/features/artist/components/ArtistsGridView';
 import { ArtistsListView } from '@/features/artist/components/ArtistsListView';
 import InpageScrollSentinel from '@/ui/InpageScrollSentinel';

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { APP_MAIN_SCROLL_VIEWPORT_ID } from '../constants/appScroll';
-import { useInpageScrollSentinel } from './useInpageScrollSentinel';
+import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
+import { useInpageScrollSentinel } from '@/lib/hooks/useInpageScrollSentinel';
 
 export type UseClientSliceInfiniteScrollArgs = {
   pageSize: number;

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { useInpageScrollSentinel } from './useInpageScrollSentinel';
+import { useInpageScrollSentinel } from '@/lib/hooks/useInpageScrollSentinel';
 
 describe('useInpageScrollSentinel', () => {
   it('returns a callback ref function', () => {
