@@ -12,7 +12,7 @@ import { usePlaylistStore } from '@/features/playlist';
 import { useTranslation } from 'react-i18next';
 import { usePlaybackLibraryNavigate } from '@/features/playback/hooks/usePlaybackLibraryNavigate';
 import { useAuthStore } from '@/store/authStore';
-import { encodeSharePayload } from '@/utils/share/shareLink';
+import { encodeSharePayload } from '@/lib/share/shareLink';
 import { serverShareBaseUrl } from '@/lib/server/serverEndpoint';
 import { copyTextToClipboard } from '@/lib/server/serverMagicString';
 import { showToast } from '@/lib/dom/toast';

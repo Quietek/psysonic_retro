@@ -1,4 +1,4 @@
-import { decodeOrbitSharePayloadFromText, encodeSharePayload } from '@/utils/share/shareLink';
+import { decodeOrbitSharePayloadFromText, encodeSharePayload } from '@/lib/share/shareLink';
 
 export interface OrbitShareLink {
   /** Base URL of the Navidrome server (decoded). */

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { encodeSharePayload } from './shareLink';
-import { parseShareSearchText } from './shareSearch';
-import { shareServerOriginLabel } from './shareServerOriginLabel';
+import { encodeSharePayload } from '@/lib/share/shareLink';
+import { parseShareSearchText } from '@/lib/share/shareSearch';
+import { shareServerOriginLabel } from '@/lib/share/shareServerOriginLabel';
 
 const home = {
   id: 'home',

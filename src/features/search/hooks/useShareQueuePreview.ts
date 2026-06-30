@@ -3,8 +3,8 @@ import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import {
   resolveShareSearchPayload,
   type ShareSearchResolveResult,
-} from '@/utils/share/enqueueShareSearchPayload';
-import type { QueueableShareSearchPayload } from '@/utils/share/shareSearch';
+} from '@/features/share/enqueueShareSearchPayload';
+import type { QueueableShareSearchPayload } from '@/lib/share/shareSearch';
 
 export type ShareQueuePreviewState =
   | { status: 'idle' }

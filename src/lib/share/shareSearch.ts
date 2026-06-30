@@ -1,7 +1,7 @@
 import {
   decodeSharePayloadFromText,
   PSYSONIC_SHARE_PREFIX,
-} from './shareLink';
+} from '@/lib/share/shareLink';
 
 export type QueueableShareSearchPayload =
   | { srv: string; k: 'track'; id: string }

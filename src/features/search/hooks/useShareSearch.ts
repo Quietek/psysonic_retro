@@ -6,11 +6,11 @@ import { useAuthStore } from '@/store/authStore';
 import {
   activateShareSearchServer,
   enqueueShareSearchPayload,
-} from '@/utils/share/enqueueShareSearchPayload';
+} from '@/features/share/enqueueShareSearchPayload';
 import type { ServerProfile } from '@/store/authStoreTypes';
-import { findServerIdForShareUrl } from '@/utils/share/shareLink';
-import { shareServerOriginLabel } from '@/utils/share/shareServerOriginLabel';
-import { parseShareSearchText } from '@/utils/share/shareSearch';
+import { findServerIdForShareUrl } from '@/lib/share/shareLink';
+import { shareServerOriginLabel } from '@/lib/share/shareServerOriginLabel';
+import { parseShareSearchText } from '@/lib/share/shareSearch';
 import { serverIndexKeyFromUrl } from '@/lib/server/serverIndexKey';
 import { useShareSearchPreview } from '@/features/search/hooks/useShareSearchPreview';
 

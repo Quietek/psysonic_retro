@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { encodeServerMagicString } from '@/lib/server/serverMagicString';
-import { encodeSharePayload } from './shareLink';
-import { parseShareSearchText, sharePayloadTotal } from './shareSearch';
+import { encodeSharePayload } from '@/lib/share/shareLink';
+import { parseShareSearchText, sharePayloadTotal } from '@/lib/share/shareSearch';
 
 describe('share search parsing', () => {
   it('detects track share links as queueable', () => {

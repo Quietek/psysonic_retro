@@ -1,6 +1,6 @@
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { serverShareBaseUrl } from '@/lib/server/serverEndpoint';
-import { encodeSharePayload, type EntityShareKind } from './shareLink';
+import { encodeSharePayload, type EntityShareKind } from '@/lib/share/shareLink';
 import { copyTextToClipboard } from '@/lib/server/serverMagicString';
 
 /** Copies a track / album / artist / composer share link (`psysonic2-`) to the clipboard. */

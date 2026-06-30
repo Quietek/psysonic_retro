@@ -4,7 +4,7 @@ import { uploadArtistImage } from '@/lib/api/subsonicArtists';
 import { setRating, star, unstar } from '@/lib/api/subsonicStarRating';
 import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
-import { copyEntityShareLink } from '@/utils/share/copyEntityShareLink';
+import { copyEntityShareLink } from '@/lib/share/copyEntityShareLink';
 import { invalidateCoverArt } from '@/utils/imageCache';
 import { showToast } from '@/lib/dom/toast';
 

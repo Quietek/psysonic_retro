@@ -6,7 +6,7 @@ import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { ServerProfile } from '@/store/authStoreTypes';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 import type { ShareQueuePreviewState } from '@/features/search/hooks/useShareQueuePreview';
-import { sharePayloadTotal, type QueueableShareSearchPayload } from '@/utils/share/shareSearch';
+import { sharePayloadTotal, type QueueableShareSearchPayload } from '@/lib/share/shareSearch';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { COVER_DENSE_SEARCH_CSS_PX } from '@/cover/layoutSizes';

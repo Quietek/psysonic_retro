@@ -37,7 +37,7 @@ vi.mock('@/lib/api/subsonicEntityWithCredentials', () => ({
   getSongWithCredentials: mocks.getSongWithCredentials,
 }));
 
-vi.mock('../../store/authStore', () => ({
+vi.mock('@/store/authStore', () => ({
   useAuthStore: {
     getState: () => mocks.authState.current,
   },
@@ -67,7 +67,7 @@ import {
   resolveShareSearchAlbum,
   resolveShareSearchArtist,
   resolveShareSearchPayload,
-} from './enqueueShareSearchPayload';
+} from '@/features/share/enqueueShareSearchPayload';
 
 const sharedServer = {
   id: 'shared',

@@ -7,13 +7,13 @@ import {
 import { getSong } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum, resolveArtist } from '@/features/offline';
 import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
-import { useAuthStore } from '../../store/authStore';
-import type { ServerProfile } from '../../store/authStoreTypes';
+import { useAuthStore } from '@/store/authStore';
+import type { ServerProfile } from '@/store/authStoreTypes';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { songToTrack } from '@/lib/media/songToTrack';
 import type { Track } from '@/lib/media/trackTypes';
 import { orbitBulkGuard } from '@/features/orbit';
-import { findServerIdForShareUrl } from './shareLink';
+import { findServerIdForShareUrl } from '@/lib/share/shareLink';
 import { connectBaseUrlForServer } from '@/lib/server/serverEndpoint';
 import { serverIndexKeyFromUrl } from '@/lib/server/serverIndexKey';
 import type {
@@ -21,7 +21,7 @@ import type {
   ArtistShareSearchPayload,
   ComposerShareSearchPayload,
   QueueableShareSearchPayload,
-} from './shareSearch';
+} from '@/lib/share/shareSearch';
 import { showToast } from '@/lib/dom/toast';
 
 const RESOLVE_QUEUE_CHUNK = 12;

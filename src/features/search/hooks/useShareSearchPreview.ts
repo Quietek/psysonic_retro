@@ -4,8 +4,8 @@ import {
   resolveShareSearchAlbum,
   resolveShareSearchArtist,
   resolveShareSearchPayload,
-} from '@/utils/share/enqueueShareSearchPayload';
-import type { ShareSearchMatch } from '@/utils/share/shareSearch';
+} from '@/features/share/enqueueShareSearchPayload';
+import type { ShareSearchMatch } from '@/lib/share/shareSearch';
 
 export interface ShareSearchPreviewState {
   shareTrackSong: SubsonicSong | null;

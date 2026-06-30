@@ -4,10 +4,10 @@ import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { songToTrack } from '@/lib/media/songToTrack';
 import type { Location, NavigateFunction } from 'react-router-dom';
 import type { TFunction } from 'i18next';
-import { useAuthStore } from '../../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { navigateToAlbumDetail } from '@/lib/navigation/albumDetailNavigation';
-import { findServerIdForShareUrl, type EntitySharePayloadV1 } from './shareLink';
+import { findServerIdForShareUrl, type EntitySharePayloadV1 } from '@/lib/share/shareLink';
 import { showToast } from '@/lib/dom/toast';
 
 const RESOLVE_QUEUE_CHUNK = 12;

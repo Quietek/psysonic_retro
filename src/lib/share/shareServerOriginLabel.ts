@@ -1,8 +1,8 @@
-import type { ServerProfile } from '../../store/authStoreTypes';
+import type { ServerProfile } from '@/store/authStoreTypes';
 import { serverListDisplayLabel } from '@/lib/server/serverDisplayName';
 import { serverIndexKeyFromUrl } from '@/lib/server/serverIndexKey';
-import { findServerIdForShareUrl } from './shareLink';
-import type { ShareSearchMatch } from './shareSearch';
+import { findServerIdForShareUrl } from '@/lib/share/shareLink';
+import type { ShareSearchMatch } from '@/lib/share/shareSearch';
 
 /**
  * Display name for the share link's origin server when it differs from the

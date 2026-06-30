@@ -14,7 +14,7 @@ import { open } from '@tauri-apps/plugin-shell';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from 'react-i18next';
-import { copyEntityShareLink } from '@/utils/share/copyEntityShareLink';
+import { copyEntityShareLink } from '@/lib/share/copyEntityShareLink';
 import { showToast } from '@/lib/dom/toast';
 import { sanitizeHtml } from '@/lib/util/sanitizeHtml';
 import { usePerfProbeFlags } from '@/lib/perf/perfFlags';

@@ -5,7 +5,7 @@ import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from 'react-i18next';
-import type { EntityShareKind } from '@/utils/share/shareLink';
+import type { EntityShareKind } from '@/lib/share/shareLink';
 import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/AddToPlaylistSubmenu';
 import {
   copyShareLink as copyShareLinkAction,

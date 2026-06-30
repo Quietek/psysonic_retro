@@ -7,11 +7,11 @@
  * garbage to the clipboard.
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { copyEntityShareLink } from './copyEntityShareLink';
+import { copyEntityShareLink } from '@/lib/share/copyEntityShareLink';
 import {
   decodeSharePayloadFromText,
   PSYSONIC_SHARE_PREFIX,
-} from './shareLink';
+} from '@/lib/share/shareLink';
 import { useAuthStore } from '@/store/authStore';
 import { resetAuthStore } from '@/test/helpers/storeReset';
 

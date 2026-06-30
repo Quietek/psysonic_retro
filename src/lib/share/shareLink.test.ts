@@ -6,7 +6,7 @@ import {
   encodeSharePayload,
   findServerIdForShareUrl,
   normalizeShareServerUrl,
-} from './shareLink';
+} from '@/lib/share/shareLink';
 import { decodeServerMagicString, encodeServerMagicString, SERVER_MAGIC_STRING_PREFIX } from '@/lib/server/serverMagicString';
 import { makeServer } from '@/test/helpers/factories';
 
