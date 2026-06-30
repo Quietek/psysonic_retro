@@ -6,7 +6,7 @@ import {
   computeCardGridColumnCount,
   computeCellWidthPx,
   estimateRowHeightPx,
-} from '../utils/cardGridLayout';
+} from '@/lib/util/cardGridLayout';
 
 /**
  * ResizeObserver-driven column count (capped by Settings → Library) and

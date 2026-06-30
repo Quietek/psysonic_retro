@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { computeCardGridColumnCount, estimateRowHeightPx } from './cardGridLayout';
-import { LIBRARY_GRID_MAX_COLUMNS_MAX, LIBRARY_GRID_MAX_COLUMNS_MIN } from '../store/authStoreDefaults';
+import { computeCardGridColumnCount, estimateRowHeightPx } from '@/lib/util/cardGridLayout';
+import { LIBRARY_GRID_MAX_COLUMNS_MAX, LIBRARY_GRID_MAX_COLUMNS_MIN } from '@/store/authStoreDefaults';
 
 describe('estimateRowHeightPx', () => {
   describe('composer variant', () => {

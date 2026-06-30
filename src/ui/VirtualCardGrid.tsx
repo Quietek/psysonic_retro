@@ -7,7 +7,7 @@ import { useElementClientHeightById } from '@/lib/hooks/useResizeClientHeight';
 import { useCardGridMetrics } from '@/hooks/useCardGridMetrics';
 import { useRemeasureGridVirtualizer } from '@/lib/hooks/useRemeasureGridVirtualizer';
 import { useVirtualizerScrollMargin } from '@/lib/hooks/useVirtualizerScrollMargin';
-import type { CardGridRowHeightVariant } from '@/utils/cardGridLayout';
+import type { CardGridRowHeightVariant } from '@/lib/util/cardGridLayout';
 
 export type VirtualCardGridProps<T> = {
   items: readonly T[];

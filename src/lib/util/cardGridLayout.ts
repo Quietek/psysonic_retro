@@ -3,16 +3,17 @@
  * and row-height estimates derived from measured cell width (TanStack virtual rows).
  */
 
-import {
-  DEFAULT_LIBRARY_GRID_MAX_COLUMNS,
-  LIBRARY_GRID_MAX_COLUMNS_MAX,
-  LIBRARY_GRID_MAX_COLUMNS_MIN,
-} from '../store/authStoreDefaults';
+// Library grid column config. Owned here (pure layout math) and re-exported by
+// authStoreDefaults, which clamps/defaults the user's libraryGridMaxColumns
+// setting against them — keeps this module store-free so ui/ + cover/ can use it.
+export const DEFAULT_LIBRARY_GRID_MAX_COLUMNS = 6;
+export const LIBRARY_GRID_MAX_COLUMNS_MIN = 4;
+export const LIBRARY_GRID_MAX_COLUMNS_MAX = 12;
 
 export const CARD_GRID_GAP_PX = 16;
 export const CARD_GRID_MIN_TILE_PX = 140;
 
-/** @deprecated use `DEFAULT_LIBRARY_GRID_MAX_COLUMNS` from `authStoreDefaults` */
+/** @deprecated use `DEFAULT_LIBRARY_GRID_MAX_COLUMNS` */
 export const CARD_GRID_MAX_COLS = DEFAULT_LIBRARY_GRID_MAX_COLUMNS;
 
 export function computeCardGridColumnCount(containerWidthPx: number, maxColumns: number): number {
