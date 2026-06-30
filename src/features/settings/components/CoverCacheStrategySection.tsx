@@ -18,7 +18,7 @@ import { serverListDisplayLabel } from '@/lib/server/serverDisplayName';
 import { serverIndexKeyForProfile } from '@/lib/server/serverIndexKey';
 import { showToast } from '@/lib/dom/toast';
 import { formatBytes } from '@/lib/format/formatBytes';
-import { clearImageCache, getImageCacheSize } from '@/utils/imageCache';
+import { clearImageCache, getImageCacheSize } from '@/cover';
 import { wakeLibraryCoverBackfill } from '@/lib/library/coverBackfillWake';
 import {
   COVER_CACHE_STRATEGIES,

@@ -3,7 +3,7 @@ import { albumCoverRef } from './ref';
 
 vi.mock('@tauri-apps/api/core', () => ({ isTauri: () => true }));
 vi.mock('../api/coverCache', () => ({ coverCacheEnsure: vi.fn() }));
-vi.mock('../utils/imageCache', () => ({ invalidateCacheKey: vi.fn() }));
+vi.mock('./imageCache', () => ({ invalidateCacheKey: vi.fn() }));
 vi.mock('./diskSrcCache', () => ({
   getDiskSrc: vi.fn(() => ''),
   rememberDiskSrc: vi.fn((_key: string, path: string) => `asset://${path}`),

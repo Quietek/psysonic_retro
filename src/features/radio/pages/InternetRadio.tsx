@@ -5,7 +5,7 @@ import { Plus, Search } from 'lucide-react';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { setRadioVolume } from '@/features/playback/store/radioPlayer';
 import { fadeOut } from '@/features/playback/utils/playback/fadeOut';
-import { invalidateCoverArt } from '@/utils/imageCache';
+import { invalidateCoverArt } from '@/cover';
 import { useTranslation } from 'react-i18next';
 import { showToast } from '@/lib/dom/toast';
 import RadioToolbar from '@/features/radio/components/RadioToolbar';

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { acquireUrl, getCachedBlob, releaseUrl, subscribeCoverUpgraded } from '@/utils/imageCache';
+import { acquireUrl, getCachedBlob, releaseUrl, subscribeCoverUpgraded } from '@/cover';
 import { resolveIntersectionScrollRoot } from '@/lib/dom/resolveIntersectionScrollRoot';
 
 interface CachedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {

@@ -5,7 +5,7 @@ import { setRating, star, unstar } from '@/lib/api/subsonicStarRating';
 import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { copyEntityShareLink } from '@/lib/share/copyEntityShareLink';
-import { invalidateCoverArt } from '@/utils/imageCache';
+import { invalidateCoverArt } from '@/cover';
 import { showToast } from '@/lib/dom/toast';
 
 export interface RunArtistEntityRatingDeps {
