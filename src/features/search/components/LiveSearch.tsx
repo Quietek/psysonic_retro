@@ -34,6 +34,7 @@ import {
   LiveSearchSongThumb,
   LiveSearchArtistThumb,
 } from '@/features/search/components/liveSearchResultThumbs';
+import { useLiveSearchHeaderCollapse } from '@/features/search/hooks/useLiveSearchHeaderCollapse';
 import { showToast } from '@/lib/dom/toast';
 import { useShareSearch } from '@/features/search/hooks/useShareSearch';
 import ShareSearchResults from '@/features/search/components/ShareSearchResults';
@@ -72,7 +73,6 @@ export default function LiveSearch() {
   const [loading, setLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isFocused, setIsFocused] = useState(false);
-  const [isCollapsed, setIsCollapsed] = useState(false);
   const [searchSource, setSearchSource] = useState<LiveSearchSource | null>(null);
   const localReadyRef = useRef(false);
   const liveSearchGenRef = useRef(0);
@@ -86,8 +86,7 @@ export default function LiveSearch() {
   const ref = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const collapsedRef = useRef(false);
-  const compactHeaderControlsRef = useRef(false);
+  const isCollapsed = useLiveSearchHeaderCollapse(ref);
   const serverId = useAuthStore(s => s.activeServerId);
   const musicLibraryFilterVersion = useAuthStore(s => s.musicLibraryFilterVersion);
   const indexEnabled = useLibraryIndexStore(s => s.isIndexEnabled(serverId));
@@ -352,92 +351,6 @@ export default function LiveSearch() {
       delete header.dataset.liveSearchOverlay;
     };
   }, [isCollapsed, isSearchActive]);
-
-  useEffect(() => {
-    const root = ref.current;
-    if (!root) return;
-    const header = root.closest('.content-header') as HTMLElement | null;
-    if (!header) return;
-    const spacer = header.querySelector('.spacer') as HTMLElement | null;
-    if (!spacer) return;
-
-    const MIN_EXPANDED_WIDTH = 260;
-    const SPACER_RESERVE = 24;
-    const HYSTERESIS_PX = 20;
-    // Live/Orbit compact-mode is intentionally stickier than search collapse,
-    // otherwise both systems can feed each other and oscillate.
-    const HEADER_CONTROLS_COMPACT_ON_SPACER = 36;
-    const HEADER_CONTROLS_COMPACT_OFF_SPACER = 108;
-    const SWITCH_COOLDOWN_MS = 180;
-    const collapseThreshold = MIN_EXPANDED_WIDTH + SPACER_RESERVE;
-    const expandThreshold = collapseThreshold + HYSTERESIS_PX;
-    let lastSwitchAt = 0;
-    let cooldownTimer: number | null = null;
-
-    const updateCollapsed = () => {
-      const searchWidth = root.getBoundingClientRect().width;
-      const spacerWidth = spacer.getBoundingClientRect().width;
-      const budget = searchWidth + spacerWidth;
-      const headerOverflowing = header.scrollWidth - header.clientWidth > 1;
-      let nextCollapsed = collapsedRef.current
-        ? budget < expandThreshold
-        : budget < collapseThreshold;
-      // Priority rule: if we are already compacting Live/Orbit labels, search
-      // must stay collapsed until compact mode can be released.
-      if (compactHeaderControlsRef.current) {
-        nextCollapsed = true;
-      }
-      if (nextCollapsed !== collapsedRef.current) {
-        const now = performance.now();
-        const remaining = SWITCH_COOLDOWN_MS - (now - lastSwitchAt);
-        if (remaining > 0) {
-          if (cooldownTimer == null) {
-            cooldownTimer = window.setTimeout(() => {
-              cooldownTimer = null;
-              updateCollapsed();
-            }, remaining);
-          }
-          return;
-        }
-        lastSwitchAt = now;
-        collapsedRef.current = nextCollapsed;
-        setIsCollapsed(nextCollapsed);
-      }
-
-      const nextCompactControls = nextCollapsed
-        ? (
-          compactHeaderControlsRef.current
-            // Stay compact until we clearly have room and no overflow.
-            ? (headerOverflowing || spacerWidth < HEADER_CONTROLS_COMPACT_OFF_SPACER)
-            // Enter compact only when both tight spacer and real overflow exist.
-            : (headerOverflowing && spacerWidth < HEADER_CONTROLS_COMPACT_ON_SPACER)
-        )
-        : false;
-      if (nextCompactControls !== compactHeaderControlsRef.current) {
-        compactHeaderControlsRef.current = nextCompactControls;
-        if (nextCompactControls) {
-          header.dataset.liveHeaderCompact = 'true';
-        } else {
-          delete header.dataset.liveHeaderCompact;
-        }
-      }
-    };
-
-    updateCollapsed();
-    const ro = new ResizeObserver(updateCollapsed);
-    ro.observe(header);
-    ro.observe(spacer);
-    ro.observe(root);
-    window.addEventListener('resize', updateCollapsed);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener('resize', updateCollapsed);
-      delete header.dataset.liveHeaderCompact;
-      if (cooldownTimer != null) {
-        window.clearTimeout(cooldownTimer);
-      }
-    };
-  }, []);
 
   // Close on click outside — but stay open while a song context menu is up.
   // The CM renders a fullscreen transparent backdrop (z-index 998) above the
