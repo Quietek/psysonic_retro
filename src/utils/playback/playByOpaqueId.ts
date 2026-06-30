@@ -1,5 +1,5 @@
 import { getSong } from '@/lib/api/subsonicLibrary';
-import { resolveAlbumForActiveServer } from '@/features/offline';
+import { resolveAlbumForActiveServer } from '@/store/mediaResolver';
 import { songToTrack } from './songToTrack';
 import { playAlbum } from './playAlbum';
 import { playArtistShuffled } from './playArtistShuffled';

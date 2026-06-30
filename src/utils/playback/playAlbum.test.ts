@@ -4,7 +4,10 @@ import { onInvoke } from '@/test/mocks/tauri';
 import { resetOrbitStore, resetPlayerStore } from '@/test/helpers/storeReset';
 import type { Track } from '../../store/playerStoreTypes';
 
-vi.mock('@/features/offline', () => ({
+// Spread the real module so registerMediaResolver stays callable — the offline
+// barrel loads offlineMediaResolve transitively, which registers at module init.
+vi.mock('@/store/mediaResolver', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/store/mediaResolver')>()),
   resolveAlbumForActiveServer: vi.fn(),
 }));
 
@@ -12,7 +15,7 @@ vi.mock('./fadeOut', () => ({
   fadeOut: vi.fn(async () => undefined),
 }));
 
-import { resolveAlbumForActiveServer } from '@/features/offline';
+import { resolveAlbumForActiveServer } from '@/store/mediaResolver';
 import { useOrbitStore } from '@/features/orbit';
 import { usePlayerStore } from '../../store/playerStore';
 import { playAlbum, playAlbumShuffled } from './playAlbum';

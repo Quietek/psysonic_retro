@@ -1,6 +1,6 @@
 import { getTopSongs } from '@/lib/api/subsonicArtists';
 import { filterSongsToActiveLibrary, getAlbumList, getRandomSongs } from '@/lib/api/subsonicLibrary';
-import { resolveAlbumForActiveServer } from '@/features/offline';
+import { resolveAlbumForActiveServer } from '@/store/mediaResolver';
 import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import {
   filterSongsForLuckyMixRatings,

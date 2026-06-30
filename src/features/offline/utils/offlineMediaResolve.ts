@@ -11,6 +11,7 @@ import { useAuthStore } from '@/store/authStore';
 import { shouldAttemptSubsonicForServer } from '@/utils/network/subsonicNetworkGuard';
 import { isOfflineBrowseActive } from '@/features/offline/utils/offlineBrowseMode';
 import { libraryIsReady } from '@/utils/library/libraryReady';
+import { registerMediaResolver } from '@/store/mediaResolver';
 import {
   loadAlbumFromLibraryIndex,
   loadArtistFromLibraryIndex,
@@ -25,7 +26,16 @@ import {
   playlistsOfflineBrowseEnabled,
 } from '@/features/offline/utils/offlinePlaylistBrowse';
 
-export type ResolvedAlbum = { album: SubsonicAlbum; songs: SubsonicSong[] };
+// resolveAlbumForServer / resolveMediaServerId / resolveAlbumForActiveServer +
+// the ResolvedAlbum type now live in the core seam; re-exported so the
+// @/features/offline barrel keeps surfacing them for UI consumers.
+import type { ResolvedAlbum } from '@/store/mediaResolver';
+export type { ResolvedAlbum };
+export {
+  resolveAlbumForServer,
+  resolveMediaServerId,
+  resolveAlbumForActiveServer,
+} from '@/store/mediaResolver';
 
 /**
  * Album detail / play / enqueue: the local SQLite index first when it is ready
@@ -66,9 +76,6 @@ export async function resolveAlbum(
     return null;
   }
 }
-
-/** @deprecated Use {@link resolveAlbum}. */
-export const resolveAlbumForServer = resolveAlbum;
 
 export async function resolveArtist(
   serverId: string,
@@ -115,16 +122,7 @@ export async function resolvePlaylist(
   }
 }
 
-export function resolveMediaServerId(explicit?: string | null): string | null {
-  return explicit ?? useAuthStore.getState().activeServerId;
-}
-
-/** Resolve album for active server when `serverId` omitted. */
-export async function resolveAlbumForActiveServer(
-  albumId: string,
-  serverId?: string,
-): Promise<ResolvedAlbum | null> {
-  const sid = serverId ?? useAuthStore.getState().activeServerId;
-  if (!sid) return null;
-  return resolveAlbum(sid, albumId);
-}
+// Install the offline-aware policy into the core seam. Runs at module init,
+// which happens at boot because AppShell eagerly imports the @/features/offline
+// barrel (export * evaluates this module).
+registerMediaResolver({ resolveAlbum, resolveArtist, resolvePlaylist });

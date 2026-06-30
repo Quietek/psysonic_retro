@@ -1,5 +1,5 @@
 import { usePlayerStore } from '../../store/playerStore';
-import { resolveAlbumForActiveServer } from '@/features/offline';
+import { resolveAlbumForActiveServer } from '@/store/mediaResolver';
 import { songToTrack } from './songToTrack';
 import { useOrbitStore } from '@/features/orbit';
 import { fadeOut } from './fadeOut';

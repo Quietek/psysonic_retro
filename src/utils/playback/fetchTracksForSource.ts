@@ -5,7 +5,7 @@ import {
   resolveArtist,
   resolveMediaServerId,
   resolvePlaylist,
-} from '@/features/offline';
+} from '@/store/mediaResolver';
 
 export async function fetchTracksForSource(source: DeviceSyncSource): Promise<SubsonicSong[]> {
   const serverId = resolveMediaServerId();
