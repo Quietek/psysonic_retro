@@ -4,7 +4,7 @@ import { useFavoritesOfflineSyncStore } from '@/features/offline';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';
 import { useOfflineJobStore } from '@/features/offline';
 import { FAVORITES_OFFLINE_JOB_ID } from '@/features/offline';
-import { entryBelongsToServer } from '@/features/offline';
+import { entryBelongsToServer } from '@/store/localPlaybackResolve';
 
 export type FavoritesOfflineUiStatus =
   | 'disabled'

@@ -17,7 +17,7 @@ import {
 } from '@/utils/network/activeServerReachability';
 import { resolveIndexKey, serverIndexKeyForProfile } from '@/utils/server/serverIndexKey';
 import { resolveServerIdForIndexKey } from '@/utils/server/serverLookup';
-import { findLocalPlaybackEntry } from '@/features/offline/utils/offlineLibraryHelpers';
+import { findLocalPlaybackEntry } from '@/store/localPlaybackResolve';
 import { enqueueOfflinePin } from '@/features/offline/utils/offlinePinQueue';
 
 export type OfflinePinKind = PinSource['kind'];

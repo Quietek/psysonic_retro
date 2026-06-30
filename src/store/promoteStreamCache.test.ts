@@ -28,7 +28,7 @@ vi.mock('../api/coverCache', () => ({
 
 const hasLocalPersistentPlaybackBytesMock = vi.fn((_trackId: string, _serverId: string) => false);
 
-vi.mock('@/features/offline', () => ({
+vi.mock('@/store/localPlaybackResolve', () => ({
   hasLocalPersistentPlaybackBytes: (trackId: string, serverId: string) =>
     hasLocalPersistentPlaybackBytesMock(trackId, serverId),
 }));

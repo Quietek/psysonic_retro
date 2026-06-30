@@ -1,4 +1,4 @@
-import { findLocalPlaybackUrl } from '@/features/offline';
+import { findLocalPlaybackUrl } from '@/store/localPlaybackResolve';
 import { resolvePlaybackUrl, type PlaybackSourceKind } from '../utils/playback/resolvePlaybackUrl';
 import { resolveServerIdForIndexKey } from '../utils/server/serverLookup';
 import { sameQueueTrackId } from '../utils/playback/queueIdentity';

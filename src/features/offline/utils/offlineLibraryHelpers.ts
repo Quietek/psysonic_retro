@@ -5,6 +5,7 @@ import type { CoverServerScope } from '@/cover/types';
 import { useAuthStore } from '@/store/authStore';
 import type { LocalPlaybackEntry, PinnedGroup, PinSource } from '@/store/localPlaybackStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';
+import { findLocalPlaybackEntry, hasLocalLibraryBytes } from '@/store/localPlaybackResolve';
 import { useOfflineStore, type OfflineAlbumMeta } from '@/features/offline/store/offlineStore';
 import { resolveTrackCoverArtId, trackToSong } from '@/utils/library/advancedSearchLocal';
 import { canonicalQueueServerKey, resolveIndexKey } from '@/utils/server/serverIndexKey';
@@ -32,100 +33,6 @@ export function resolveOfflineAlbumMeta(
   const server = useAuthStore.getState().servers.find(s => s.id === serverId);
   const indexKey = server ? serverIndexKeyForProfile(server) : serverId;
   return albums[`${indexKey}:${albumId}`] ?? albums[`${serverId}:${albumId}`];
-}
-
-function serverIndexKeysForServerId(serverId: string): string[] {
-  const servers = useAuthStore.getState().servers;
-  const server = servers.find(s => s.id === serverId);
-  const keys = new Set<string>();
-  if (server) {
-    const profileKey = serverIndexKeyForProfile(server);
-    if (profileKey) keys.add(profileKey);
-    keys.add(server.id);
-  }
-  keys.add(resolveIndexKey(serverId));
-  keys.add(serverId);
-  return [...keys].filter(Boolean);
-}
-
-export function entryBelongsToServer(entry: LocalPlaybackEntry, serverId: string): boolean {
-  return serverIndexKeysForServerId(serverId).includes(entry.serverIndexKey);
-}
-
-export function indexKeyBelongsToServer(serverIndexKey: string, serverId: string): boolean {
-  return serverIndexKeysForServerId(serverId).includes(serverIndexKey);
-}
-
-/** Resolve a library-tier row across legacy UUID / URL index-key variants. */
-export function findLocalPlaybackEntry(
-  trackId: string,
-  serverId: string,
-): LocalPlaybackEntry | null {
-  const lp = useLocalPlaybackStore.getState();
-  for (const key of serverIndexKeysForServerId(serverId)) {
-    const hit = lp.getEntry(trackId, key);
-    if (hit?.tier === 'library') return hit;
-  }
-  for (const entry of Object.values(lp.entries)) {
-    if (entry.trackId !== trackId || entry.tier !== 'library') continue;
-    if (entryBelongsToServer(entry, serverId)) return entry;
-  }
-  return null;
-}
-
-/** Index cache; run {@link reconcileLibraryTierForAlbum} / server reconcile so rows match disk. */
-export function hasLocalLibraryBytes(trackId: string, serverId: string): boolean {
-  return !!findLocalPlaybackEntry(trackId, serverId)?.localPath;
-}
-
-/** Resolve a `favorite-auto` tier row across index-key variants. */
-export function findFavoriteAutoEntry(
-  trackId: string,
-  serverId: string,
-): LocalPlaybackEntry | null {
-  const lp = useLocalPlaybackStore.getState();
-  for (const key of serverIndexKeysForServerId(serverId)) {
-    const hit = lp.getEntry(trackId, key);
-    if (hit?.tier === 'favorite-auto') return hit;
-  }
-  for (const entry of Object.values(lp.entries)) {
-    if (entry.trackId !== trackId || entry.tier !== 'favorite-auto') continue;
-    if (entryBelongsToServer(entry, serverId)) return entry;
-  }
-  return null;
-}
-
-export function hasLocalFavoriteAutoBytes(trackId: string, serverId: string): boolean {
-  return !!findFavoriteAutoEntry(trackId, serverId)?.localPath;
-}
-
-/** Manual offline library or favorites auto-sync — skip redundant hot-cache prefetch/promote. */
-export function hasLocalPersistentPlaybackBytes(trackId: string, serverId: string): boolean {
-  return hasLocalLibraryBytes(trackId, serverId) || hasLocalFavoriteAutoBytes(trackId, serverId);
-}
-
-/** Resolve `psysonic-local://` across legacy UUID / host index-key variants. */
-export function findLocalPlaybackUrl(
-  trackId: string,
-  serverId: string,
-  tier: 'library' | 'ephemeral' | 'favorite-auto',
-): string | null {
-  if (tier === 'library') {
-    const entry = findLocalPlaybackEntry(trackId, serverId);
-    if (entry?.localPath) return `psysonic-local://${entry.localPath}`;
-    return null;
-  }
-  if (tier === 'favorite-auto') {
-    const entry = findFavoriteAutoEntry(trackId, serverId);
-    if (entry?.localPath) return `psysonic-local://${entry.localPath}`;
-    return null;
-  }
-  const lp = useLocalPlaybackStore.getState();
-  for (const key of serverIndexKeysForServerId(serverId)) {
-    const url = lp.getLocalUrl(trackId, key, 'ephemeral');
-    if (url) return url;
-  }
-  return null;
 }
 
 /** Songs that still need a library-tier pin (used to skip redundant downloads). */

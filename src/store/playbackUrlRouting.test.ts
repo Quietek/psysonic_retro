@@ -11,7 +11,7 @@ const { offlineStoreState } = vi.hoisted(() => ({
   offlineStoreState: { localUrlByKey: new Map<string, string>() },
 }));
 
-vi.mock('@/features/offline', () => ({
+vi.mock('@/store/localPlaybackResolve', () => ({
   findLocalPlaybackUrl: (trackId: string, serverId: string, tier: string) => {
     if (tier !== 'library') return null;
     return offlineStoreState.localUrlByKey.has(`${serverId}:${trackId}`)

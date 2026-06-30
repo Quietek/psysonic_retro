@@ -8,8 +8,8 @@ import { isManualOfflinePlaylist } from '@/features/offline/utils/pinnedOfflineS
 import {
   hasLocalLibraryBytes,
   indexKeyBelongsToServer,
-  resolveOfflineAlbumMeta,
-} from '@/features/offline/utils/offlineLibraryHelpers';
+} from '@/store/localPlaybackResolve';
+import { resolveOfflineAlbumMeta } from '@/features/offline/utils/offlineLibraryHelpers';
 
 function listPlaylistPinnedGroupsForServer(serverId: string): PinnedGroup[] {
   return useLocalPlaybackStore.getState()

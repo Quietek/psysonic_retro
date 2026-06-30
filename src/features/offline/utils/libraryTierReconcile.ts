@@ -11,7 +11,7 @@ import {
   entryBelongsToServer,
   findLocalPlaybackEntry,
   indexKeyBelongsToServer,
-} from '@/features/offline/utils/offlineLibraryHelpers';
+} from '@/store/localPlaybackResolve';
 
 interface LibraryTrackProbeResult {
   path: string;

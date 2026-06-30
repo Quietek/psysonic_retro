@@ -11,8 +11,8 @@ import { showToast } from '@/utils/ui/toast';
 import { useOfflineJobStore, cancelledDownloads } from '@/features/offline/store/offlineJobStore';
 import { useLocalPlaybackStore, type PinSource } from '@/store/localPlaybackStore';
 import { getMediaDir } from '@/utils/media/mediaDir';
+import { findLocalPlaybackEntry } from '@/store/localPlaybackResolve';
 import {
-  findLocalPlaybackEntry,
   isOfflinePinComplete,
   pendingOfflinePinSongs,
 } from '@/features/offline/utils/offlineLibraryHelpers';

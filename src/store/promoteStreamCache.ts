@@ -4,7 +4,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { useHotCacheStore } from './hotCacheStore';
 import { getMediaDir } from '../utils/media/mediaDir';
 import { librarySqlServerId } from '../api/coverCache';
-import { hasLocalPersistentPlaybackBytes } from '@/features/offline';
+import { hasLocalPersistentPlaybackBytes } from '@/store/localPlaybackResolve';
 
 /**
  * Promote a track whose stream cache is full to the on-disk ephemeral tier.

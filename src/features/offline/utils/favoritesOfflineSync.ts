@@ -21,7 +21,7 @@ import {
   entryBelongsToServer,
   hasLocalLibraryBytes,
   hasLocalFavoriteAutoBytes,
-} from '@/features/offline/utils/offlineLibraryHelpers';
+} from '@/store/localPlaybackResolve';
 
 const CONCURRENCY = 2;
 const DEBOUNCE_MS = 600;

@@ -20,7 +20,7 @@ import {
 import type { AlbumBrowseQuery } from '@/utils/library/albumBrowseTypes';
 import { sortSubsonicAlbums } from '@/utils/library/albumBrowseSort';
 import { isLosslessSuffix } from '@/utils/library/losslessFormats';
-import { entryBelongsToServer } from '@/features/offline/utils/offlineLibraryHelpers';
+import { entryBelongsToServer } from '@/store/localPlaybackResolve';
 
 function sortBrowsableSongs(songs: SubsonicSong[]): SubsonicSong[] {
   return [...songs].sort((a, b) => a.title.localeCompare(b.title));
