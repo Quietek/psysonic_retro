@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { version as appVersion } from '../../package.json';
+import { version as appVersion } from '@/../package.json';
 import {
   resolveChangelogEntry,
   resolveReleaseNotes,
   type ReleaseNotesSource,
-} from '../utils/releaseNotes/releaseNotesResolve';
-import type { ReleaseNotesEntry } from '../utils/releaseNotes/releaseNotesMatch';
+} from '@/utils/releaseNotes/releaseNotesResolve';
+import type { ReleaseNotesEntry } from '@/utils/releaseNotes/releaseNotesMatch';
 
 export interface UseReleaseNotesResult {
   loading: boolean;

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Sparkles, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { version } from '../../package.json';
-import { useReleaseNotes } from '../hooks/useReleaseNotes';
-import { renderChangelogBody } from '../utils/changelog/changelogMarkdown';
+import { version } from '@/../package.json';
+import { useReleaseNotes } from '@/features/whatsNew/hooks/useReleaseNotes';
+import { renderChangelogBody } from '@/features/whatsNew/utils/changelogMarkdown';
 
 type WhatsNewView = 'highlights' | 'changelog';
 
