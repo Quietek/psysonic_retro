@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findReleaseNotesEntry } from './releaseNotesMatch';
+import { findReleaseNotesEntry } from '@/features/whatsNew/utils/releaseNotesMatch';
 
 const FIXTURE = `
 # Notes

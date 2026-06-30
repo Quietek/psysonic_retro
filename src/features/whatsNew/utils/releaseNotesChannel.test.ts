@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { isDevChannelVersion, isWorkspaceReleaseNotesMode } from './releaseNotesChannel';
+import { isDevChannelVersion, isWorkspaceReleaseNotesMode } from '@/features/whatsNew/utils/releaseNotesChannel';
 
 describe('releaseNotesChannel', () => {
   it('detects -dev channel versions', () => {

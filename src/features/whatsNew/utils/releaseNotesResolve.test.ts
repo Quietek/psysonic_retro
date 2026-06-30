@@ -4,21 +4,21 @@ const fetchWhatsNewAsset = vi.fn();
 const readReleaseNotesCache = vi.fn();
 const writeReleaseNotesCache = vi.fn();
 
-vi.mock('./releaseNotesChannel', () => ({
+vi.mock('@/features/whatsNew/utils/releaseNotesChannel', () => ({
   isDevChannelVersion: (version: string) => /-dev(?:\b|$)/i.test(version.trim()),
   isWorkspaceReleaseNotesMode: (version: string) => /-dev(?:\b|$)/i.test(version.trim()),
 }));
 
-vi.mock('./releaseNotesFetch', () => ({
+vi.mock('@/features/whatsNew/utils/releaseNotesFetch', () => ({
   fetchWhatsNewAsset: (...args: unknown[]) => fetchWhatsNewAsset(...args),
 }));
 
-vi.mock('./releaseNotesCache', () => ({
+vi.mock('@/features/whatsNew/utils/releaseNotesCache', () => ({
   readReleaseNotesCache: (...args: unknown[]) => readReleaseNotesCache(...args),
   writeReleaseNotesCache: (...args: unknown[]) => writeReleaseNotesCache(...args),
 }));
 
-vi.mock('../../generated/releaseNotesBundle', () => ({
+vi.mock('@/generated/releaseNotesBundle', () => ({
   WHATS_NEW_RAW: `## [1.48.0] - 2026-06-10
 
 ## Highlights
@@ -29,7 +29,7 @@ vi.mock('../../generated/releaseNotesBundle', () => ({
 - Embedded changelog fallback`,
 }));
 
-const { resolveReleaseNotes } = await import('./releaseNotesResolve');
+const { resolveReleaseNotes } = await import('@/features/whatsNew/utils/releaseNotesResolve');
 
 describe('resolveReleaseNotes (shipped channel)', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import type { AuthState } from '../../store/authStoreTypes';
-import { DYNAMIC_OVERLAP_HARD_CAP_SEC } from '../waveform/waveformSilence';
+import { DYNAMIC_OVERLAP_HARD_CAP_SEC } from '@/lib/waveform/waveformSilence';
 
 export type AutodjOverlapCapMode = 'auto' | 'limit';
 

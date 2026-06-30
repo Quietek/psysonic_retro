@@ -1,7 +1,7 @@
-import { isWorkspaceReleaseNotesMode } from './releaseNotesChannel';
-import { readReleaseNotesCache, writeReleaseNotesCache } from './releaseNotesCache';
-import { fetchWhatsNewAsset } from './releaseNotesFetch';
-import { findReleaseNotesEntry, type ReleaseNotesEntry } from './releaseNotesMatch';
+import { isWorkspaceReleaseNotesMode } from '@/features/whatsNew/utils/releaseNotesChannel';
+import { readReleaseNotesCache, writeReleaseNotesCache } from '@/features/whatsNew/utils/releaseNotesCache';
+import { fetchWhatsNewAsset } from '@/features/whatsNew/utils/releaseNotesFetch';
+import { findReleaseNotesEntry, type ReleaseNotesEntry } from '@/features/whatsNew/utils/releaseNotesMatch';
 
 export type ReleaseNotesSource =
   | 'workspace'
@@ -19,27 +19,27 @@ export interface ResolvedReleaseNotes {
 
 async function loadWorkspaceWhatsNewRaw(): Promise<string> {
   if (import.meta.env.DEV) {
-    return (await import('../../../WHATS_NEW.md?raw')).default;
+    return (await import('@/../WHATS_NEW.md?raw')).default;
   }
-  const { WHATS_NEW_RAW } = await import('../../generated/releaseNotesBundle');
+  const { WHATS_NEW_RAW } = await import('@/generated/releaseNotesBundle');
   return WHATS_NEW_RAW;
 }
 
 async function loadWorkspaceChangelogRaw(): Promise<string> {
   if (import.meta.env.DEV) {
-    return (await import('../../../CHANGELOG.md?raw')).default;
+    return (await import('@/../CHANGELOG.md?raw')).default;
   }
-  const { CHANGELOG_RAW } = await import('../../generated/releaseNotesBundle');
+  const { CHANGELOG_RAW } = await import('@/generated/releaseNotesBundle');
   return CHANGELOG_RAW;
 }
 
 async function loadEmbeddedWhatsNewRaw(): Promise<string> {
-  const { WHATS_NEW_RAW } = await import('../../generated/releaseNotesBundle');
+  const { WHATS_NEW_RAW } = await import('@/generated/releaseNotesBundle');
   return WHATS_NEW_RAW;
 }
 
 async function loadEmbeddedChangelogRaw(): Promise<string> {
-  const { CHANGELOG_RAW } = await import('../../generated/releaseNotesBundle');
+  const { CHANGELOG_RAW } = await import('@/generated/releaseNotesBundle');
   return CHANGELOG_RAW;
 }
 

@@ -4,8 +4,8 @@ import {
   resolveChangelogEntry,
   resolveReleaseNotes,
   type ReleaseNotesSource,
-} from '@/utils/releaseNotes/releaseNotesResolve';
-import type { ReleaseNotesEntry } from '@/utils/releaseNotes/releaseNotesMatch';
+} from '@/features/whatsNew/utils/releaseNotesResolve';
+import type { ReleaseNotesEntry } from '@/features/whatsNew/utils/releaseNotesMatch';
 
 export interface UseReleaseNotesResult {
   loading: boolean;

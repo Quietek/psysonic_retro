@@ -33,7 +33,7 @@ import { QueueList } from '@/features/queue/components/QueueList';
 import { QueueTabBar } from '@/features/queue/components/QueueTabBar';
 import { useQueueAutoScroll } from '@/features/queue/hooks/useQueueAutoScroll';
 import { useTimelineBootstrapOnMode, useTimelineHistoryResolver, useTimelinePlayHistory } from '@/features/playback/hooks/useTimelinePlayHistory';
-import { buildTimelineDisplayRows } from '@/utils/queue/buildTimelineDisplayRows';
+import { buildTimelineDisplayRows } from '@/features/playback/utils/buildTimelineDisplayRows';
 import { activeServerQueueTrackIds } from '@/features/playback/utils/playback/trackServerScope';
 
 export default function QueuePanel() {

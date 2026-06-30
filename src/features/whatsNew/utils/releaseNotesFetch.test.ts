@@ -8,7 +8,7 @@ vi.mock('@tauri-apps/api/core', () => ({
   isTauri: () => isTauri(),
 }));
 
-const { fetchWhatsNewAsset, whatsNewDownloadUrl } = await import('./releaseNotesFetch');
+const { fetchWhatsNewAsset, whatsNewDownloadUrl } = await import('@/features/whatsNew/utils/releaseNotesFetch');
 
 describe('releaseNotesFetch', () => {
   beforeEach(() => {

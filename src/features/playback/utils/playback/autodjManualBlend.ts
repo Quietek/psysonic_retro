@@ -5,7 +5,7 @@ import {
   planCrossfadeTransition,
   STANDARD_BLEND_SEC,
   type CrossfadeTransitionPlan,
-} from '@/utils/waveform/waveformSilence';
+} from '@/lib/waveform/waveformSilence';
 import { getTransitionMode } from '@/features/playback/utils/playback/playbackTransition';
 
 /** Same trust threshold as end-of-track scenario A in `waveformSilence.ts`. */

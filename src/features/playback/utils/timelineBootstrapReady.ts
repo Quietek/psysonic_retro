@@ -1,5 +1,5 @@
-import { useAuthStore } from '../../store/authStore';
-import { useLibraryIndexStore } from '../../store/libraryIndexStore';
+import { useAuthStore } from '@/store/authStore';
+import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { libraryIsReady } from '@/lib/library/libraryReady';
 
 /**

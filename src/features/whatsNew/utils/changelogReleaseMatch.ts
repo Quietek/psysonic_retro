@@ -8,4 +8,4 @@ export {
   splitReleaseNotesBlocks,
   type ChangelogReleaseEntry,
   type ReleaseNotesEntry,
-} from '../releaseNotes/releaseNotesMatch';
+} from '@/features/whatsNew/utils/releaseNotesMatch';

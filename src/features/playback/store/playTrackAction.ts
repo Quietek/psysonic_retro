@@ -8,7 +8,7 @@ import {
   computeAutodjManualBlendPlan,
   shouldAutodjInterruptBlend,
 } from '@/features/playback/utils/playback/autodjManualBlend';
-import type { CrossfadeTransitionPlan } from '@/utils/waveform/waveformSilence';
+import type { CrossfadeTransitionPlan } from '@/lib/waveform/waveformSilence';
 import {
   armInterruptHandoff,
   clearInterruptHandoff,
@@ -16,7 +16,7 @@ import {
   shouldDeferInterruptHandoffUi,
 } from '@/features/playback/utils/playback/autodjInterruptPrep';
 import { isCrossfadeNextReady } from '@/features/playback/store/crossfadePreload';
-import { STANDARD_BLEND_SEC } from '@/utils/waveform/waveformSilence';
+import { STANDARD_BLEND_SEC } from '@/lib/waveform/waveformSilence';
 import { armAutodjMixing, clearAutodjTransitionUi } from '@/features/playback/store/autodjTransitionUi';
 import {
   bindQueueServerForTracks,

@@ -15,9 +15,9 @@ import {
   subscribeQueueResolver,
 } from '@/features/playback/store/queueTrackResolver';
 import { findQueueItemRefIndex } from '@/features/playback/utils/playback/queueIdentity';
-import type { TimelineDisplayRow } from '@/utils/queue/buildTimelineDisplayRows';
-import { findTimelineScrollLocalIndex } from '@/utils/queue/buildTimelineDisplayRows';
-import { playTimelineHistoryTrack } from '@/utils/queue/playTimelineHistoryTrack';
+import type { TimelineDisplayRow } from '@/features/playback/utils/buildTimelineDisplayRows';
+import { findTimelineScrollLocalIndex } from '@/features/playback/utils/buildTimelineDisplayRows';
+import { playTimelineHistoryTrack } from '@/features/playback/utils/playTimelineHistoryTrack';
 
 type StartDrag = (
   payload: { data: string; label: string },

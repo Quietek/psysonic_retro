@@ -10,9 +10,9 @@
  * Kept out of the persisted Zustand store on purpose: this is ephemeral,
  * per-transition playback data, not user state.
  */
-import type { CrossfadeTransitionPlan } from '@/utils/waveform/waveformSilence';
+import type { CrossfadeTransitionPlan } from '@/lib/waveform/waveformSilence';
 
-export type { CrossfadeTransitionPlan } from '@/utils/waveform/waveformSilence';
+export type { CrossfadeTransitionPlan } from '@/lib/waveform/waveformSilence';
 
 /** trackId → planned transition for when this track starts under crossfade. */
 const planByTrackId = new Map<string, CrossfadeTransitionPlan>();

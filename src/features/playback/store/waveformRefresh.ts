@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import { coerceWaveformBins } from '@/utils/waveform/waveformParse';
+import { coerceWaveformBins } from '@/lib/waveform/waveformParse';
 import { getPlaybackIndexKey } from '@/features/playback/utils/playback/playbackServer';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { getWaveformRefreshGen } from '@/features/playback/store/waveformRefreshGen';

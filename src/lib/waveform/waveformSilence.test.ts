@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { analyzeBoundary, computeWaveformSilence, planCrossfadeTransition } from './waveformSilence';
+import { analyzeBoundary, computeWaveformSilence, planCrossfadeTransition } from '@/lib/waveform/waveformSilence';
 
 /** Build a 500-bin peak curve: `lead` silent bins, a loud middle, `trail` silent bins. */
 function curve(lead: number, mid: number, trail: number, loud = 200, quiet = 4): number[] {

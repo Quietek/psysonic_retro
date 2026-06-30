@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { bootstrapTrackFromPlaySession, timelineHistoryToQueueRefs } from './timelineHistoryRefs';
+import { bootstrapTrackFromPlaySession, timelineHistoryToQueueRefs } from '@/features/playback/utils/timelineHistoryRefs';
 
 describe('timelineHistoryRefs', () => {
   it('maps history rows to queue refs', () => {

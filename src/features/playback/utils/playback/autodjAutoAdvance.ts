@@ -1,4 +1,4 @@
-import { DYNAMIC_OVERLAP_HARD_CAP_SEC, STANDARD_BLEND_SEC } from '@/utils/waveform/waveformSilence';
+import { DYNAMIC_OVERLAP_HARD_CAP_SEC, STANDARD_BLEND_SEC } from '@/lib/waveform/waveformSilence';
 import type { QueueItemRef } from '@/lib/media/trackTypes';
 
 export type QueueRepeatMode = 'off' | 'all' | 'one';

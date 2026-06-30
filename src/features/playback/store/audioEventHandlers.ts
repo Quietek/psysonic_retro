@@ -88,7 +88,7 @@ import {
   getSeekTargetSetAt,
 } from '@/features/playback/store/seekTargetState';
 import { refreshWaveformForTrack } from '@/features/playback/store/waveformRefresh';
-import { analyzeBoundary, computeWaveformSilence } from '@/utils/waveform/waveformSilence';
+import { analyzeBoundary, computeWaveformSilence } from '@/lib/waveform/waveformSilence';
 import { autodjMaxOverlapCapSec } from '@/utils/playback/autodjOverlapCap';
 import {
   autodjJsTriggerAtSec,

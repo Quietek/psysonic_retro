@@ -3,7 +3,7 @@ import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { resetPlayerStore } from '@/test/helpers/storeReset';
 import { makeTrack, seedQueue } from '@/test/helpers/factories';
 import { seedQueueResolver } from '@/features/playback/store/queueTrackResolver';
-import { playTimelineHistoryTrack } from './playTimelineHistoryTrack';
+import { playTimelineHistoryTrack } from '@/features/playback/utils/playTimelineHistoryTrack';
 
 vi.mock('@/features/playback/store/queueTrackResolver', async importOriginal => {
   const actual = await importOriginal<typeof import('@/features/playback/store/queueTrackResolver')>();

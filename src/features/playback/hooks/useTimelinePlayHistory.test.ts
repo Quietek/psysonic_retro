@@ -13,7 +13,7 @@ vi.mock('@/lib/api/library', () => ({
   TIMELINE_HISTORY_BOOTSTRAP_LIMIT: 50,
 }));
 
-vi.mock('@/utils/queue/timelineBootstrapReady', () => ({
+vi.mock('@/features/playback/utils/timelineBootstrapReady', () => ({
   timelineBootstrapIndexReady: vi.fn(),
 }));
 
@@ -23,7 +23,7 @@ vi.mock('@/features/playback/store/queueTrackResolver', async importOriginal => 
 });
 
 import { libraryGetRecentPlaySessions } from '@/lib/api/library';
-import { timelineBootstrapIndexReady } from '@/utils/queue/timelineBootstrapReady';
+import { timelineBootstrapIndexReady } from '@/features/playback/utils/timelineBootstrapReady';
 
 describe('ensureTimelineBootstrap', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildTimelineDisplayRows, findTimelineScrollLocalIndex } from './buildTimelineDisplayRows';
+import { buildTimelineDisplayRows, findTimelineScrollLocalIndex } from '@/features/playback/utils/buildTimelineDisplayRows';
 import type { QueueItemRef } from '@/lib/media/trackTypes';
 
 const ref = (trackId: string, extra?: Partial<QueueItemRef>): QueueItemRef => ({
