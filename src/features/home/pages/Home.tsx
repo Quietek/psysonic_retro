@@ -3,32 +3,32 @@ import { getAlbumList, getRandomSongs } from '@/lib/api/subsonicLibrary';
 import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { runLocalRandomSongs } from '@/lib/library/browseTextSearch';
 import React, { useEffect, useState } from 'react';
-import Hero from '../components/Hero';
+import Hero from '@/features/home/components/Hero';
 import { AlbumRow } from '@/features/album';
-import SongRail from '../components/SongRail';
-import BecauseYouLikeRail from '../components/BecauseYouLikeRail';
+import SongRail from '@/features/home/components/SongRail';
+import BecauseYouLikeRail from '@/features/home/components/BecauseYouLikeRail';
 import { LosslessAlbumsRail } from '@/features/album';
 import { useTranslation } from 'react-i18next';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
-import { useHomeStore } from '../store/homeStore';
-import { useAuthStore } from '../store/authStore';
-import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '../utils/mix/mixRatingFilter';
-import { usePerfProbeFlags } from '../utils/perf/perfFlags';
-import { bumpPerfCounter } from '../utils/perf/perfTelemetry';
+import { useHomeStore } from '@/features/home/store/homeStore';
+import { useAuthStore } from '@/store/authStore';
+import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '@/utils/mix/mixRatingFilter';
+import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
+import { bumpPerfCounter } from '@/utils/perf/perfTelemetry';
 import { dedupeById } from '@/lib/util/dedupeById';
 import { shuffleArray } from '@/lib/util/shuffleArray';
-import { useLibraryCoverPrefetch } from '../cover/useLibraryCoverPrefetch';
-import { primeAlbumCoversForDisplay, warmHomeMainstageCovers } from '../cover/warmDiskPeek';
-import { readBecauseYouLikeCache } from '../store/becauseYouLikeCache';
+import { useLibraryCoverPrefetch } from '@/cover/useLibraryCoverPrefetch';
+import { primeAlbumCoversForDisplay, warmHomeMainstageCovers } from '@/cover/warmDiskPeek';
+import { readBecauseYouLikeCache } from '@/features/home/store/becauseYouLikeCache';
 import {
   isHomeFeedSnapshotEmpty,
   readHomeFeedCache,
   readHomeFeedCacheStale,
   writeHomeFeedCache,
   type HomeFeedSnapshot,
-} from '../store/homeFeedCache';
-import { useConnectionStatus } from '../hooks/useConnectionStatus';
+} from '@/features/home/store/homeFeedCache';
+import { useConnectionStatus } from '@/hooks/useConnectionStatus';
 import { useOfflineBrowseContext } from '@/features/offline';
 import { useOfflineBrowseReloadToken } from '@/features/offline';
 import { useDevOfflineBrowseStore } from '@/features/offline';

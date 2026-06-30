@@ -3,7 +3,7 @@ import {
   clearBecauseYouLikeCache,
   readBecauseYouLikeCache,
   writeBecauseYouLikeCache,
-} from './becauseYouLikeCache';
+} from '@/features/home/store/becauseYouLikeCache';
 
 describe('becauseYouLikeCache', () => {
   it('invalidates when music library filter version changes', () => {

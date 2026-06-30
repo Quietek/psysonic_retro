@@ -3,7 +3,7 @@ import { Disc3, LayoutGrid, ListOrdered, ListTodo, PanelLeft, RotateCcw, Users }
 import { useArtistLayoutStore } from '@/features/artist';
 import { useAuthStore } from '@/store/authStore';
 import type { QueueDisplayMode } from '@/store/authStoreTypes';
-import { useHomeStore } from '@/store/homeStore';
+import { useHomeStore } from '@/features/home';
 import { usePlayerBarLayoutStore } from '@/store/playerBarLayoutStore';
 import { usePlaylistLayoutStore } from '@/features/playlist';
 import { useQueueToolbarStore } from '@/store/queueToolbarStore';

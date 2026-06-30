@@ -9,7 +9,7 @@ import { resolveStartRoute } from '@/features/sidebar';
 
 // Route-level lazy loading: keeps the non-page graph (shell, player, stores) in
 // the entry chunk; each page is fetched when its route is first visited.
-const Home = lazy(() => import('../pages/Home'));
+const Home = lazy(() => import('@/features/home/pages/Home'));
 const Albums = lazy(() => import('@/features/album/pages/Albums'));
 const Artists = lazy(() => import('@/features/artist/pages/Artists'));
 const ArtistDetail = lazy(() => import('@/features/artist/pages/ArtistDetail'));

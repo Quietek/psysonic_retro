@@ -1,8 +1,8 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import React, { useRef, useState, useEffect, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react';
-import SongCard from './SongCard';
-import { usePerfProbeFlags } from '../utils/perf/perfFlags';
+import SongCard from '@/components/SongCard';
+import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { dedupeById } from '@/lib/util/dedupeById';
 
 interface Props {

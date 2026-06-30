@@ -8,21 +8,21 @@ import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Play, ListPlus, Music } from 'lucide-react';
-import { useAlbumCoverRef } from '../cover/useLibraryCoverRef';
-import { useLibraryCoverPrefetch } from '../cover/useLibraryCoverPrefetch';
-import { coverImgSrc } from '../cover/imgSrc';
-import { useCoverArt } from '../cover/useCoverArt';
-import { primeAlbumCoversForDisplay } from '../cover/warmDiskPeek';
+import { useAlbumCoverRef } from '@/cover/useLibraryCoverRef';
+import { useLibraryCoverPrefetch } from '@/cover/useLibraryCoverPrefetch';
+import { coverImgSrc } from '@/cover/imgSrc';
+import { useCoverArt } from '@/cover/useCoverArt';
+import { primeAlbumCoversForDisplay } from '@/cover/warmDiskPeek';
 import {
   readBecauseYouLikeCache,
   writeBecauseYouLikeCache,
   type BecauseYouLikeAnchor,
-} from '../store/becauseYouLikeCache';
+} from '@/features/home/store/becauseYouLikeCache';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { playAlbum, playAlbumShuffled } from '@/features/playback/utils/playback/playAlbum';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
-import { LongPressWaveOverlay } from './LongPressWaveOverlay';
+import { LongPressWaveOverlay } from '@/components/LongPressWaveOverlay';
 import { formatHumanHoursMinutes } from '@/lib/format/formatHumanDuration';
 import { AlbumRow } from '@/features/album';
 import { albumArtistDisplayName } from '@/features/album';

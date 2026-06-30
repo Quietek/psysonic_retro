@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useHomeStore, HomeSectionId } from '@/store/homeStore';
+import { useHomeStore, HomeSectionId } from '@/features/home';
 
 export function HomeCustomizer() {
   const { t } = useTranslation();

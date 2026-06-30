@@ -7,7 +7,7 @@ import { Play, ListPlus, RefreshCw, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../../store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import SongRail from '../SongRail';
+import { SongRail } from '@/features/home';
 import { playSongNow } from '@/features/playback/utils/playback/playSong';
 import { ndListSongs, ndInvalidateSongsCache } from '@/lib/api/navidromeBrowse';
 import { usePerfProbeFlags } from '../../utils/perf/perfFlags';
