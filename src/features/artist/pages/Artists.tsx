@@ -36,7 +36,7 @@ import { useArtistsBrowseScrollRestore } from '@/features/artist/hooks/useArtist
 import { useArtistsBrowseScrollReset } from '@/features/artist/hooks/useArtistsBrowseScrollReset';
 import { useNavigateToArtist } from '@/features/artist/hooks/useNavigateToArtist';
 import { peekArtistBrowseScrollRestore } from '@/features/artist/store/artistBrowseSessionStore';
-import { readArtistBrowseRestore } from '@/utils/navigation/albumDetailNavigation';
+import { readArtistBrowseRestore } from '@/lib/navigation/albumDetailNavigation';
 
 import { useScopedBrowseSearchQuery } from '@/store/liveSearchScopeStore';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';

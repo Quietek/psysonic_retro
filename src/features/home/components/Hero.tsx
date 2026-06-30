@@ -17,7 +17,7 @@ import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { useWindowVisibility } from '@/lib/hooks/useWindowVisibility';
 import { useAuthStore } from '@/store/authStore';
 import { useThemeStore } from '@/store/themeStore';
-import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '@/utils/mix/mixRatingFilter';
+import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '@/features/playback/utils/mixRatingFilter';
 import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { playAlbum, playAlbumShuffled } from '@/features/playback/utils/playback/playAlbum';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';

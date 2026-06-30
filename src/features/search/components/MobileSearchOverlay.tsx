@@ -5,7 +5,7 @@ import { useLiveSearchScopeStore } from '@/store/liveSearchScopeStore';
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { navigatePathWithAlbumReturnTo } from '@/utils/navigation/albumDetailNavigation';
+import { navigatePathWithAlbumReturnTo } from '@/lib/navigation/albumDetailNavigation';
 import { X, Search, Disc3, Users, Music, Music2, Clock, ChevronRight } from 'lucide-react';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';

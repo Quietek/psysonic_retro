@@ -5,7 +5,7 @@ import {
   enrichSongsForMixRatingFilter,
   getMixMinRatingsConfigFromAuth,
   passesMixMinRatings,
-} from '@/utils/mix/mixRatingFilter';
+} from '@/features/playback/utils/mixRatingFilter';
 import { shuffleArray } from '@/lib/util/shuffleArray';
 import { songToTrack } from '@/lib/media/songToTrack';
 /**

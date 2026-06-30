@@ -8,7 +8,7 @@ import {
   isComposersBrowsePath,
   useComposerBrowseSessionStore,
 } from '@/features/composers/store/composerBrowseSessionStore';
-import { shouldRestoreComposerBrowseSession } from '@/utils/navigation/albumDetailNavigation';
+import { shouldRestoreComposerBrowseSession } from '@/lib/navigation/albumDetailNavigation';
 import { useLiveSearchScopeStore } from '@/store/liveSearchScopeStore';
 
 export type ComposerBrowseScrollSnapshot = {

@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { resetPlayerStore } from '../../test/helpers/storeReset';
+import { resetPlayerStore } from '@/test/helpers/storeReset';
 
 vi.mock('@/lib/api/subsonicRatings', () => ({
   prefetchArtistUserRatings: vi.fn(),
@@ -14,7 +14,7 @@ import {
   enrichSongsForMixRatingFilter,
   filterTopArtistsForMixRatings,
   passesMixMinRatings,
-} from './mixRatingFilter';
+} from '@/features/playback/utils/mixRatingFilter';
 
 const enabledArtist2: { enabled: true; minSong: 0; minAlbum: 0; minArtist: 2 } = {
   enabled: true,

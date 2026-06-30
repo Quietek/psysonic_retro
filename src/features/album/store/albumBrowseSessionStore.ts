@@ -1,6 +1,20 @@
 import { create } from 'zustand';
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import type { AlbumBrowseSort } from '@/lib/library/browseTextSearch';
+import {
+  isAlbumDetailPath,
+  isArtistDetailPath,
+  isComposerDetailPath,
+} from '@/lib/navigation/detailRoutePaths';
+
+// Detail-route predicates now live in lib/navigation (pure URL checks shared by
+// both browse logic and lower-layer navigation helpers). Re-exported here so the
+// `@/features/album` barrel surface for browse consumers stays unchanged.
+export {
+  isAlbumDetailPath,
+  isArtistDetailPath,
+  isComposerDetailPath,
+} from '@/lib/navigation/detailRoutePaths';
 
 export const DEFAULT_ALBUM_BROWSE_SORT: AlbumBrowseSort = 'alphabeticalByName';
 
@@ -212,11 +226,6 @@ export function albumBrowseSurfaceForPath(pathname: string): AlbumBrowseSurface 
   return null;
 }
 
-/** True when pathname is a single album detail route (`/album/:id`). */
-export function isAlbumDetailPath(pathname: string): boolean {
-  return /^\/album\/[^/]+\/?$/.test(pathname.split('?')[0]?.replace(/\/$/, '') || pathname);
-}
-
 /** Single genre detail route (`/genres/:name`), not the genre cloud (`/genres`). */
 export function isGenreDetailPath(pathname: string): boolean {
   const path = pathname.split('?')[0]?.replace(/\/$/, '') || pathname;
@@ -227,16 +236,6 @@ export function genreDetailGenreFromPath(pathname: string): string | null {
   const path = pathname.split('?')[0]?.replace(/\/$/, '') || pathname;
   const match = path.match(/^\/genres\/([^/]+)$/);
   return match ? decodeURIComponent(match[1]) : null;
-}
-
-/** True when pathname is a single artist detail route (`/artist/:id`). */
-export function isArtistDetailPath(pathname: string): boolean {
-  return /^\/artist\/[^/]+\/?$/.test(pathname);
-}
-
-/** True when pathname is a single composer detail route (`/composer/:id`). */
-export function isComposerDetailPath(pathname: string): boolean {
-  return /^\/composer\/[^/]+\/?$/.test(pathname);
 }
 
 export function isAdvancedSearchLeaveTargetPath(pathname: string): boolean {

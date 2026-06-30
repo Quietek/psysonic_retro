@@ -9,7 +9,7 @@ import {
   useArtistBrowseSessionStore,
 } from '@/features/artist/store/artistBrowseSessionStore';
 import { isArtistDetailPath } from '@/features/album';
-import { shouldRestoreArtistBrowseSession } from '@/utils/navigation/albumDetailNavigation';
+import { shouldRestoreArtistBrowseSession } from '@/lib/navigation/albumDetailNavigation';
 import { useLiveSearchScopeStore } from '@/store/liveSearchScopeStore';
 
 export type ArtistBrowseScrollSnapshot = {

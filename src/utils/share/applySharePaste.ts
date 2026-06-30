@@ -6,7 +6,7 @@ import type { Location, NavigateFunction } from 'react-router-dom';
 import type { TFunction } from 'i18next';
 import { useAuthStore } from '../../store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { navigateToAlbumDetail } from '../navigation/albumDetailNavigation';
+import { navigateToAlbumDetail } from '@/lib/navigation/albumDetailNavigation';
 import { findServerIdForShareUrl, type EntitySharePayloadV1 } from './shareLink';
 import { showToast } from '@/lib/dom/toast';
 

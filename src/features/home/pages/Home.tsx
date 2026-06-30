@@ -13,7 +13,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { ChevronRight } from 'lucide-react';
 import { useHomeStore } from '@/features/home/store/homeStore';
 import { useAuthStore } from '@/store/authStore';
-import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '@/utils/mix/mixRatingFilter';
+import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '@/features/playback/utils/mixRatingFilter';
 import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { bumpPerfCounter } from '@/lib/perf/perfTelemetry';
 import { dedupeById } from '@/lib/util/dedupeById';

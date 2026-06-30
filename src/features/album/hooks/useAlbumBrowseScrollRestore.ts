@@ -7,7 +7,7 @@ import {
   type AlbumBrowseSurface,
   useAlbumBrowseSessionStore,
 } from '@/features/album/store/albumBrowseSessionStore';
-import { shouldRestoreAlbumBrowseSession } from '@/utils/navigation/albumDetailNavigation';
+import { shouldRestoreAlbumBrowseSession } from '@/lib/navigation/albumDetailNavigation';
 
 type PendingScroll = {
   scrollTop: number;

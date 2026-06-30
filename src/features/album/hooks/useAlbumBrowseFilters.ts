@@ -15,7 +15,7 @@ import {
   useAlbumBrowseSessionStore,
 } from '@/features/album/store/albumBrowseSessionStore';
 import type { AlbumBrowseSort } from '@/lib/library/browseTextSearch';
-import { shouldRestoreAlbumBrowseSession } from '@/utils/navigation/albumDetailNavigation';
+import { shouldRestoreAlbumBrowseSession } from '@/lib/navigation/albumDetailNavigation';
 import { useLiveSearchScopeStore } from '@/store/liveSearchScopeStore';
 
 const ALBUMS_SURFACE: AlbumBrowseSurface = 'albums';

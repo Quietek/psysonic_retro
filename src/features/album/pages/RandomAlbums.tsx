@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authStore';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
-import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '@/utils/mix/mixRatingFilter';
+import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '@/features/playback/utils/mixRatingFilter';
 import { runLocalRandomAlbums, runLocalAlbumsByGenres } from '@/lib/library/browseTextSearch';
 import { useOfflineStore } from '@/features/offline';
 import { useDownloadModalStore } from '@/features/offline';
@@ -36,7 +36,7 @@ import { useInpageScrollViewport } from '@/lib/hooks/useInpageScrollViewport';
 import { useAlbumGridBrowseFilters, type AlbumGridBrowseSnapshot } from '@/features/album/hooks/useAlbumGridBrowseFilters';
 import { useAlbumBrowseScrollRestore } from '@/features/album/hooks/useAlbumBrowseScrollRestore';
 import { useAlbumBrowseScrollSnapshotSync, type AlbumBrowseScrollSnapshot } from '@/features/album/hooks/useAlbumBrowseFilters';
-import { readAlbumBrowseRestore } from '@/utils/navigation/albumDetailNavigation';
+import { readAlbumBrowseRestore } from '@/lib/navigation/albumDetailNavigation';
 import { albumArtistDisplayName } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';
 
 const ALBUM_COUNT = 30;

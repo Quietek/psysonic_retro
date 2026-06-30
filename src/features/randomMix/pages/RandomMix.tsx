@@ -12,7 +12,7 @@ import { useOrbitSongRowBehavior } from '@/features/orbit';
 import {
   fetchRandomMixSongsUntilFull,
   getMixMinRatingsConfigFromAuth,
-} from '@/utils/mix/mixRatingFilter';
+} from '@/features/playback/utils/mixRatingFilter';
 import { fetchGenreCatalog } from '@/features/playback/utils/playback/genreBrowsePlayback';
 import { AUDIOBOOK_GENRES, filterRandomMixSongs } from '@/features/randomMix/utils/randomMixHelpers';
 import RandomMixHeader from '@/features/randomMix/components/RandomMixHeader';

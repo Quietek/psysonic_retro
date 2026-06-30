@@ -40,7 +40,7 @@ import { useAlbumBrowseScrollRestore } from '@/features/album/hooks/useAlbumBrow
 import { useAlbumBrowseScrollReset } from '@/features/album/hooks/useAlbumBrowseScrollReset';
 import { useBrowseAlbumTextSearch } from '@/features/album/hooks/useBrowseAlbumTextSearch';
 import { peekAlbumBrowseScrollRestore } from '@/features/album/store/albumBrowseSessionStore';
-import { readAlbumBrowseRestore } from '@/utils/navigation/albumDetailNavigation';
+import { readAlbumBrowseRestore } from '@/lib/navigation/albumDetailNavigation';
 import { albumArtistDisplayName } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';
 import { useAlbumCatalogYearBounds } from '@/features/album/hooks/useAlbumCatalogYearBounds';
 import type { AlbumBrowseSort } from '@/lib/library/albumBrowseSort';

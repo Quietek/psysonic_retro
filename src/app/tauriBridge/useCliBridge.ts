@@ -5,7 +5,7 @@ import type { NavigateFunction } from 'react-router-dom';
 import { getSimilarSongs } from '@/lib/api/subsonicArtists';
 import { getMusicFolders } from '@/lib/api/subsonicLibrary';
 import { search as subsonicSearch } from '@/lib/api/subsonicSearch';
-import { filterSongsForLuckyMixRatings, getMixMinRatingsConfigFromAuth } from '@/utils/mix/mixRatingFilter';
+import { filterSongsForLuckyMixRatings, getMixMinRatingsConfigFromAuth } from '@/features/playback/utils/mixRatingFilter';
 import { shuffleArray } from '@/lib/util/shuffleArray';
 import { songToTrack } from '@/lib/media/songToTrack';
 import { showToast } from '@/lib/dom/toast';

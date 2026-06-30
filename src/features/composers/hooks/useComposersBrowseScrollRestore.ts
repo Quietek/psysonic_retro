@@ -4,7 +4,7 @@ import {
   peekComposerBrowseScrollRestore,
   useComposerBrowseSessionStore,
 } from '@/features/composers/store/composerBrowseSessionStore';
-import { shouldRestoreComposerBrowseSession } from '@/utils/navigation/albumDetailNavigation';
+import { shouldRestoreComposerBrowseSession } from '@/lib/navigation/albumDetailNavigation';
 
 type PendingScroll = {
   scrollTop: number;

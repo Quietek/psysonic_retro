@@ -28,7 +28,7 @@ import { libraryScopeForServer } from '@/lib/api/subsonicClient';
 import {
   readAlbumBrowseRestore,
   readAlbumDetailReturnTo,
-} from '@/utils/navigation/albumDetailNavigation';
+} from '@/lib/navigation/albumDetailNavigation';
 import { usePerfProbeFlags } from '@/lib/perf/perfFlags';
 import { runBulkEnqueue, runBulkPlayAll, runBulkShuffle } from '@/features/playback/utils/playback/runBulkPlay';
 

@@ -12,7 +12,7 @@ import {
   stashGenreDetailReturnFilters,
   useAlbumBrowseSessionStore,
 } from '@/features/album';
-import { shouldRestoreAlbumBrowseSession } from '@/utils/navigation/albumDetailNavigation';
+import { shouldRestoreAlbumBrowseSession } from '@/lib/navigation/albumDetailNavigation';
 import type { AlbumBrowseScrollSnapshot } from '@/features/album';
 
 /** Genre detail: locked genre filter + leave/restore session (same contract as All Albums). */

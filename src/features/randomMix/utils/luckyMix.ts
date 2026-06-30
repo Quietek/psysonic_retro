@@ -21,7 +21,7 @@ import {
   filterSongsForLuckyMixRatings,
   filterTopArtistsForMixRatings,
   getMixMinRatingsConfigFromAuth,
-} from '@/utils/mix/mixRatingFilter';
+} from '@/features/playback/utils/mixRatingFilter';
 import {
   MIX_TARGET_SIZE,
   SEED_TARGET_SIZE,

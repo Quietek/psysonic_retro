@@ -18,7 +18,7 @@ import { useArtistsBrowseScrollReset } from '@/features/artist';
 import { useNavigateToComposer } from '@/features/composers/hooks/useNavigateToComposer';
 import { peekComposerBrowseScrollRestore } from '@/features/composers/store/composerBrowseSessionStore';
 import { useScopedBrowseSearchQuery } from '@/store/liveSearchScopeStore';
-import { readComposerBrowseRestore } from '@/utils/navigation/albumDetailNavigation';
+import { readComposerBrowseRestore } from '@/lib/navigation/albumDetailNavigation';
 import { filterArtistsWithRoleAlbumCredits } from '@/lib/library/composerBrowse';
 import { ALL_SENTINEL, artistLetterBucket } from '@/features/artist';
 import { useLibraryIgnoredArticles } from '@/lib/library/hooks/useLibraryIgnoredArticles';

@@ -23,7 +23,7 @@ vi.mock('@/lib/api/subsonicLibrary', () => ({
   getRandomSongs: vi.fn(),
 }));
 
-vi.mock('@/utils/mix/mixRatingFilter', () => ({
+vi.mock('@/features/playback/utils/mixRatingFilter', () => ({
   getMixMinRatingsConfigFromAuth: vi.fn(),
   enrichSongsForMixRatingFilter: vi.fn(),
   passesMixMinRatings: vi.fn(),
@@ -33,7 +33,7 @@ import { buildInfiniteQueueCandidates } from '@/features/playback/utils/playback
 import {
   enrichSongsForMixRatingFilter,
   getMixMinRatingsConfigFromAuth,
-} from '@/utils/mix/mixRatingFilter';
+} from '@/features/playback/utils/mixRatingFilter';
 import { makeSubsonicSong } from '@/test/helpers/factories';
 
 const seed = (overrides: Partial<Track> = {}): Track => ({

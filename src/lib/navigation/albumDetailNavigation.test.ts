@@ -12,8 +12,8 @@ import {
   shouldRestoreArtistBrowseSession,
   shouldRestoreComposerBrowseSession,
   shouldSkipMainScrollResetOnRouteChange,
-} from './albumDetailNavigation';
-import { useAdvancedSearchSessionStore } from '../../store/advancedSearchSessionStore';
+} from '@/lib/navigation/albumDetailNavigation';
+import { useAdvancedSearchSessionStore } from '@/store/advancedSearchSessionStore';
 
 describe('albumDetailNavigation', () => {
   afterEach(() => {

@@ -4,10 +4,10 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { useAlbumDetailBack } from '@/features/album/hooks/useAlbumDetailBack';
-import { navigateAlbumDetailBack } from '@/utils/navigation/albumDetailNavigation';
+import { navigateAlbumDetailBack } from '@/lib/navigation/albumDetailNavigation';
 
-vi.mock('@/utils/navigation/albumDetailNavigation', async (importOriginal) => {
-  const mod = await importOriginal<typeof import('@/utils/navigation/albumDetailNavigation')>();
+vi.mock('@/lib/navigation/albumDetailNavigation', async (importOriginal) => {
+  const mod = await importOriginal<typeof import('@/lib/navigation/albumDetailNavigation')>();
   return {
     ...mod,
     navigateAlbumDetailBack: vi.fn(mod.navigateAlbumDetailBack),

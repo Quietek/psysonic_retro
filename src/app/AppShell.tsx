@@ -1,7 +1,7 @@
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ensurePlaybackServerActive } from '@/features/playback/utils/playback/playbackServer';
-import { navigatePathWithAlbumReturnTo, shouldSkipMainScrollResetOnRouteChange } from '../utils/navigation/albumDetailNavigation';
+import { navigatePathWithAlbumReturnTo, shouldSkipMainScrollResetOnRouteChange } from '@/lib/navigation/albumDetailNavigation';
 import { getCurrentWebview } from '@tauri-apps/api/webview';
 import { PanelRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';

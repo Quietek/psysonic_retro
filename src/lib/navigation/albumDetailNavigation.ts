@@ -2,12 +2,12 @@ import type { Location, NavigateFunction, NavigationType } from 'react-router-do
 import {
   isAdvancedSearchPath,
   useAdvancedSearchSessionStore,
-} from '../../store/advancedSearchSessionStore';
+} from '@/store/advancedSearchSessionStore';
 import {
   isAlbumDetailPath,
   isArtistDetailPath,
   isComposerDetailPath,
-} from '@/features/album';
+} from '@/lib/navigation/detailRoutePaths';
 import {
   peekPersistedAdvancedSearchLeaveSnapshot,
   saveAdvancedSearchLeaveSnapshot,

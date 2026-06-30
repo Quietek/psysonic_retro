@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import {
   navigateAlbumDetailBack,
   readAlbumDetailReturnTo,
-} from '@/utils/navigation/albumDetailNavigation';
+} from '@/lib/navigation/albumDetailNavigation';
 
 /** Leave album/artist detail for the page that opened it (or history back as fallback). */
 export function useAlbumDetailBack(fallback = '/') {

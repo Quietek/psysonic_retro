@@ -26,7 +26,7 @@ import {
 import {
   readAdvancedSearchRestore,
   shouldRestoreAdvancedSearchSession,
-} from '@/utils/navigation/albumDetailNavigation';
+} from '@/lib/navigation/albumDetailNavigation';
 import {
   clearAdvancedSearchLeaveSnapshots,
   consumeAdvancedSearchLeavingForDetail,

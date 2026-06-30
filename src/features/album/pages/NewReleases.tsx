@@ -34,7 +34,7 @@ import { useAlbumBrowseScrollRestore } from '@/features/album/hooks/useAlbumBrow
 import { useAlbumBrowseScrollReset } from '@/features/album/hooks/useAlbumBrowseScrollReset';
 import { useBrowseAlbumTextSearch } from '@/features/album/hooks/useBrowseAlbumTextSearch';
 import { useAlbumBrowseScrollSnapshotSync, type AlbumBrowseScrollSnapshot } from '@/features/album/hooks/useAlbumBrowseFilters';
-import { readAlbumBrowseRestore } from '@/utils/navigation/albumDetailNavigation';
+import { readAlbumBrowseRestore } from '@/lib/navigation/albumDetailNavigation';
 import { albumArtistDisplayName } from '@/features/album/utils/deriveAlbumHeaderArtistRefs';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { filterAlbumsByGenres } from '@/lib/library/albumBrowseFilters';

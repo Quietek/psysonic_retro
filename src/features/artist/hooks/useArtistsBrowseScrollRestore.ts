@@ -4,7 +4,7 @@ import {
   peekArtistBrowseScrollRestore,
   useArtistBrowseSessionStore,
 } from '@/features/artist/store/artistBrowseSessionStore';
-import { shouldRestoreArtistBrowseSession } from '@/utils/navigation/albumDetailNavigation';
+import { shouldRestoreArtistBrowseSession } from '@/lib/navigation/albumDetailNavigation';
 
 type PendingScroll = {
   scrollTop: number;
