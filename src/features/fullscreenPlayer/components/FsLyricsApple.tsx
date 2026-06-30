@@ -1,10 +1,10 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
-import { useLyrics, type WordLyricsLine } from '@/hooks/useLyrics';
-import { useWordLyricsSync } from '@/hooks/useWordLyricsSync';
+import { useLyrics, type WordLyricsLine } from '@/features/lyrics';
+import { useWordLyricsSync } from '@/features/lyrics';
 import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';
-import type { LrcLine } from '@/api/lrclib';
+import type { LrcLine } from '@/features/lyrics';
 import type { Track } from '@/lib/media/trackTypes';
 import { EaseScroller, targetForFraction } from '@/utils/ui/easeScroll';
 

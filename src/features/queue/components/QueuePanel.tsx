@@ -18,7 +18,7 @@ import { copyTextToClipboard } from '@/utils/server/serverMagicString';
 import { showToast } from '@/utils/ui/toast';
 import { useThemeStore } from '@/store/themeStore';
 import { useLyricsStore } from '@/store/lyricsStore';
-import LyricsPane from '@/components/LyricsPane';
+import { LyricsPane } from '@/features/lyrics';
 import { NowPlayingInfo } from '@/features/nowPlaying';
 import { useLuckyMixStore } from '@/features/randomMix';
 import { useQueueToolbarStore } from '@/store/queueToolbarStore';

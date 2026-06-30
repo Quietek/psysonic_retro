@@ -22,7 +22,7 @@ import {
   getQueueResolverVersion,
   subscribeQueueResolver,
 } from '@/features/playback/store/queueTrackResolver';
-import LyricsPane from '@/components/LyricsPane';
+import { LyricsPane } from '@/features/lyrics';
 import { usePlaybackDelayPress } from '@/hooks/usePlaybackDelayPress';
 import PlaybackDelayModal from '@/features/playback/components/PlaybackDelayModal';
 import PlaybackScheduleBadge from '@/features/playback/components/PlaybackScheduleBadge';

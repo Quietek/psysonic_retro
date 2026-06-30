@@ -2,12 +2,12 @@ import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/featur
 import { useEffect, useRef, useCallback } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import type { LrcLine } from '../api/lrclib';
-import { useLyrics, type WordLyricsLine } from '../hooks/useLyrics';
-import { useAuthStore } from '../store/authStore';
+import type { LrcLine } from '@/features/lyrics/api/lrclib';
+import { useLyrics, type WordLyricsLine } from '@/features/lyrics/hooks/useLyrics';
+import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from 'react-i18next';
 import type { Track } from '@/lib/media/trackTypes';
-import { EaseScroller, targetForFraction } from '../utils/ui/easeScroll';
+import { EaseScroller, targetForFraction } from '@/utils/ui/easeScroll';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 
 interface Props {

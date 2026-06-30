@@ -12,7 +12,7 @@
  *  - notFound entries: 7 days. Lets the user / server admin add lyrics
  *    later without an indefinite negative cache.
  */
-import type { CachedLyrics } from '../../hooks/useLyrics';
+import type { CachedLyrics } from '@/features/lyrics/hooks/useLyrics';
 
 const DB_NAME = 'psysonic-lyrics-cache';
 const STORE_NAME = 'lyrics';

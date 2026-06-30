@@ -4,13 +4,13 @@ import type { Track } from '@/lib/media/trackTypes';
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { invoke } from '@tauri-apps/api/core';
-import { fetchLyrics, parseLrc, LrcLine } from '../api/lrclib';
-import { fetchNeteaselyrics } from '../api/netease';
-import { fetchLyricsPlus, hasWordSync } from '../api/lyricsplus';
-import { useAuthStore } from '../store/authStore';
+import { fetchLyrics, parseLrc, LrcLine } from '@/features/lyrics/api/lrclib';
+import { fetchNeteaselyrics } from '@/features/lyrics/api/netease';
+import { fetchLyricsPlus, hasWordSync } from '@/features/lyrics/api/lyricsplus';
+import { useAuthStore } from '@/store/authStore';
 import { useOfflineStore } from '@/features/offline';
 import { useHotCacheStore } from '@/features/playback/store/hotCacheStore';
-import { getCachedLyrics, putCachedLyrics, lyricsCacheKey } from '../utils/cache/lyricsPersistentCache';
+import { getCachedLyrics, putCachedLyrics, lyricsCacheKey } from '@/features/lyrics/utils/lyricsPersistentCache';
 export type LyricsSource = 'server' | 'lrclib' | 'netease' | 'embedded' | 'lyricsplus';
 
 /**
