@@ -13,8 +13,8 @@ import {
 import {
   bootstrapTrackFromPlaySession,
   timelineHistoryToQueueRefs,
-} from '../utils/queue/timelineHistoryRefs';
-import { timelineBootstrapIndexReady } from '../utils/queue/timelineBootstrapReady';
+} from '@/utils/queue/timelineHistoryRefs';
+import { timelineBootstrapIndexReady } from '@/utils/queue/timelineBootstrapReady';
 
 const BOOTSTRAP_RETRY_MS = 2_000;
 

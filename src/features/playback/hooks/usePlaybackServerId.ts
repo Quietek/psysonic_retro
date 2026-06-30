@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { getPlaybackServerId } from '@/features/playback/utils/playback/playbackServer';
 

@@ -14,7 +14,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useThemeStore } from '@/store/themeStore';
 import { Equalizer } from '@/features/equalizer';
 import { useTranslation } from 'react-i18next';
-import { usePlaybackLibraryNavigate } from '@/hooks/usePlaybackLibraryNavigate';
+import { usePlaybackLibraryNavigate } from '@/features/playback/hooks/usePlaybackLibraryNavigate';
 import { useRadioMetadata } from '@/features/radio';
 import { useRadioMprisSync } from '@/features/radio';
 import { usePlaybackDelayPress } from '@/hooks/usePlaybackDelayPress';

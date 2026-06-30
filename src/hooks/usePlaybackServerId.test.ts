@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useAuthStore } from '../store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { usePlaybackServerId } from './usePlaybackServerId';
+import { usePlaybackServerId } from '@/features/playback/hooks/usePlaybackServerId';
 
 vi.mock('../utils/server/switchActiveServer', () => ({
   switchActiveServer: vi.fn(async () => true),

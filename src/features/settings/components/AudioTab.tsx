@@ -7,7 +7,7 @@ import SettingsSubSection from '@/features/settings/components/SettingsSubSectio
 import { SettingsGroup } from '@/features/settings/components/SettingsGroup';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';
 import { effectiveLoudnessPreAnalysisAttenuationDb } from '@/utils/audio/loudnessPreAnalysisSlider';
-import { useAudioDevicesProbe } from '@/hooks/useAudioDevicesProbe';
+import { useAudioDevicesProbe } from '@/features/playback/hooks/useAudioDevicesProbe';
 import { IS_MACOS } from '@/lib/util/platform';
 import { AudioOutputDeviceSection } from '@/features/settings/components/audio/AudioOutputDeviceSection';
 import { NormalizationBlock } from '@/features/settings/components/audio/NormalizationBlock';

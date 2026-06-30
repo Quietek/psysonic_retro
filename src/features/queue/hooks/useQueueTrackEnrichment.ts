@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { listen } from '@tauri-apps/api/event';
 import { libraryGetFacts, libraryGetTrack } from '@/lib/api/library';
-import { usePlaybackServerId } from '@/hooks/usePlaybackServerId';
+import { usePlaybackServerId } from '@/features/playback/hooks/usePlaybackServerId';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import {
   enrichmentDisplayComplete,

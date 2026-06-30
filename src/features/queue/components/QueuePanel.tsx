@@ -10,7 +10,7 @@ import { OrbitGuestQueue, OrbitQueueHead } from '@/features/orbit';
 import HostApprovalQueue from '@/features/orbit/components/HostApprovalQueue';
 import { usePlaylistStore } from '@/features/playlist';
 import { useTranslation } from 'react-i18next';
-import { usePlaybackLibraryNavigate } from '@/hooks/usePlaybackLibraryNavigate';
+import { usePlaybackLibraryNavigate } from '@/features/playback/hooks/usePlaybackLibraryNavigate';
 import { useAuthStore } from '@/store/authStore';
 import { encodeSharePayload } from '@/utils/share/shareLink';
 import { serverShareBaseUrl } from '@/utils/server/serverEndpoint';
@@ -32,7 +32,7 @@ import { QueueToolbar } from '@/features/queue/components/QueueToolbar';
 import { QueueList } from '@/features/queue/components/QueueList';
 import { QueueTabBar } from '@/features/queue/components/QueueTabBar';
 import { useQueueAutoScroll } from '@/features/queue/hooks/useQueueAutoScroll';
-import { useTimelineBootstrapOnMode, useTimelineHistoryResolver, useTimelinePlayHistory } from '@/hooks/useTimelinePlayHistory';
+import { useTimelineBootstrapOnMode, useTimelineHistoryResolver, useTimelinePlayHistory } from '@/features/playback/hooks/useTimelinePlayHistory';
 import { buildTimelineDisplayRows } from '@/utils/queue/buildTimelineDisplayRows';
 import { activeServerQueueTrackIds } from '@/features/playback/utils/playback/trackServerScope';
 

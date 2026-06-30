@@ -3,8 +3,8 @@ import { setRating } from '@/lib/api/subsonicStarRating';
 import { queueSongRating } from '@/features/playback/store/pendingStarSync';
 import type { SubsonicAlbum, SubsonicArtist } from '@/lib/api/subsonicTypes';
 import type { Track } from '@/lib/media/trackTypes';
-import { useAuthStore } from '../store/authStore';
-import { showToast } from '../utils/ui/toast';
+import { useAuthStore } from '@/store/authStore';
+import { showToast } from '@/utils/ui/toast';
 
 type RatingKind = 'song' | 'album' | 'artist';
 

@@ -13,9 +13,9 @@ import {
   startInstantMix as startInstantMixAction,
   startRadio as startRadioAction,
 } from '@/utils/componentHelpers/contextMenuActions';
-import { useContextMenuKeyboardNav } from '@/hooks/useContextMenuKeyboardNav';
-import { useContextMenuRating } from '@/hooks/useContextMenuRating';
-import { usePlaybackLibraryNavigate } from '@/hooks/usePlaybackLibraryNavigate';
+import { useContextMenuKeyboardNav } from '@/features/contextMenu/hooks/useContextMenuKeyboardNav';
+import { useContextMenuRating } from '@/features/contextMenu/hooks/useContextMenuRating';
+import { usePlaybackLibraryNavigate } from '@/features/playback/hooks/usePlaybackLibraryNavigate';
 import { useNavigate } from 'react-router-dom';
 import { useOfflineBrowseContext } from '@/features/offline';
 import {

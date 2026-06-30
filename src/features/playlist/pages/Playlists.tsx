@@ -14,9 +14,9 @@ import {
   defaultSmartFilters,
   type SmartFilters, type PendingSmartPlaylist,
 } from '@/features/playlist/utils/playlistsSmart';
-import { useSmartCoverCollage } from '@/hooks/useSmartCoverCollage';
+import { useSmartCoverCollage } from '@/features/playlist/hooks/useSmartCoverCollage';
 import { usePlaylistsLibraryScopeCounts } from '@/features/playlist/hooks/usePlaylistsLibraryScopeCounts';
-import { usePendingSmartPolling } from '@/hooks/usePendingSmartPolling';
+import { usePendingSmartPolling } from '@/features/playlist/hooks/usePendingSmartPolling';
 import { runPlaylistsOpenSmartEditor } from '@/features/playlist/utils/runPlaylistsOpenSmartEditor';
 import { runPlaylistsSaveSmart } from '@/features/playlist/utils/runPlaylistsSaveSmart';
 import {

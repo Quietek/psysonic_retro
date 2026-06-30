@@ -6,7 +6,7 @@ import {
 import {
   _resetTimelineBootstrapInFlightForTest,
   ensureTimelineBootstrap,
-} from './useTimelinePlayHistory';
+} from '@/features/playback/hooks/useTimelinePlayHistory';
 
 vi.mock('@/lib/api/library', () => ({
   libraryGetRecentPlaySessions: vi.fn(async () => []),
