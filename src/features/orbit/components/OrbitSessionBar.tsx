@@ -19,7 +19,7 @@ import OrbitSettingsPopover from '@/features/orbit/components/OrbitSettingsPopov
 import OrbitSharePopover from '@/features/orbit/components/OrbitSharePopover';
 import OrbitDiagnosticsPopover from '@/features/orbit/components/OrbitDiagnosticsPopover';
 import ConfirmModal from '@/components/ConfirmModal';
-import { formatTrackTime } from '@/utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 
 /**
  * Orbit — top-strip session indicator.

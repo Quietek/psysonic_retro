@@ -12,7 +12,7 @@ import {
   coverTrafficGridPaginationDepth,
 } from '@/cover/coverTraffic';
 import { coverEnsureQueueBacklog, coverEnsureResumePump, coverEnsureSubscribeBacklogDrain } from '@/cover/ensureQueue';
-import { dedupeById } from '@/utils/dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 import { albumBrowseCompScanComplete, albumBrowseCompFilterClientOnly } from '@/utils/library/albumCompilation';
 import type { AlbumCompFilter } from '@/utils/library/albumCompilation';
 import {

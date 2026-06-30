@@ -3,7 +3,7 @@ import { getAlbumsByGenre } from '@/lib/api/subsonicGenres';
 import { getAlbumList } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum } from '@/features/offline';
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
-import { dedupeById } from '@/utils/dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 import { shuffleArray } from '@/utils/playback/shuffleArray';
 import React, { useEffect, useLayoutEffect, useState, useCallback, useRef } from 'react';
 import { RefreshCw, Download, HardDriveDownload } from 'lucide-react';

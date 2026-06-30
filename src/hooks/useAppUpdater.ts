@@ -4,7 +4,7 @@ import { dirname } from '@tauri-apps/api/path';
 import { invoke } from '@tauri-apps/api/core';
 import { useTranslation } from 'react-i18next';
 import { version as currentVersion } from '../../package.json';
-import { IS_LINUX, IS_MACOS, IS_WINDOWS } from '../utils/platform';
+import { IS_LINUX, IS_MACOS, IS_WINDOWS } from '@/lib/util/platform';
 import { SKIP_KEY, isNewer, isWithinModerationWindow, pickAsset, type ReleaseData, type DlState } from '../utils/componentHelpers/appUpdaterHelpers';
 
 /** All update-modal state, the GitHub release probe and the download/relaunch

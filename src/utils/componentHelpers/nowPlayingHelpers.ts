@@ -1,5 +1,5 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { sanitizeHtml as sanitizeHtmlBase } from '../sanitizeHtml';
+import { sanitizeHtml as sanitizeHtmlBase } from '@/lib/util/sanitizeHtml';
 
 export function formatTime(s: number): string {
   if (!s || isNaN(s)) return '0:00';

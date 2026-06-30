@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { IS_LINUX } from '../utils/platform';
+import { IS_LINUX } from '@/lib/util/platform';
 
 /**
  * Whether animated themes may raise CPU load on this setup — Linux with the

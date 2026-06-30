@@ -3,7 +3,7 @@ import { AudioLines } from 'lucide-react';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { Track } from '@/store/playerStoreTypes';
 import { songToTrack } from '@/utils/playback/songToTrack';
-import { formatLongDuration } from '@/utils/format/formatDuration';
+import { formatLongDuration } from '@/lib/format/formatDuration';
 
 interface Props {
   discNums: number[];

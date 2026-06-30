@@ -11,7 +11,7 @@ import {
   albumToAlbum,
   trackToSong,
 } from '@/utils/library/advancedSearchLocal';
-import { dedupeById } from '@/utils/dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 import { isOfflineBrowseActive } from '@/features/offline/utils/offlineBrowseMode';
 import { favoritesServerIds } from '@/features/offline/utils/favoritesOfflineBrowse';
 import {

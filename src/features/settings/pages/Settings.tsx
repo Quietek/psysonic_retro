@@ -5,7 +5,7 @@ import {
   AudioLines, HardDrive, Info, Keyboard, LayoutGrid, Music2, Paintbrush, Palette, Search, Server, Sparkles, Users, X,
 } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
-import { IS_MACOS } from '@/utils/platform';
+import { IS_MACOS } from '@/lib/util/platform';
 import { AppearanceTab } from '@/features/settings/components/AppearanceTab';
 import { ThemesTab } from '@/features/settings/components/ThemesTab';
 import { AudioTab } from '@/features/settings/components/AudioTab';

@@ -1,7 +1,7 @@
 import { getAlbumList } from '@/lib/api/subsonicLibrary';
 import { getAlbumsByGenre } from '@/lib/api/subsonicGenres';
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
-import { dedupeById } from '../dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 import {
   filterAlbumsByCompilation,
   filterAlbumsByYearBounds,

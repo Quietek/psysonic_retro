@@ -17,7 +17,7 @@ import { clearDiskSrcCacheForServer } from '@/cover/diskSrcCache';
 import { serverListDisplayLabel } from '@/utils/server/serverDisplayName';
 import { serverIndexKeyForProfile } from '@/utils/server/serverIndexKey';
 import { showToast } from '@/utils/ui/toast';
-import { formatBytes } from '@/utils/format/formatBytes';
+import { formatBytes } from '@/lib/format/formatBytes';
 import { clearImageCache, getImageCacheSize } from '@/utils/imageCache';
 import { wakeLibraryCoverBackfill } from '@/utils/library/coverBackfillWake';
 import {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatRelativeTime } from './relativeTime';
+import { formatRelativeTime } from '@/lib/format/relativeTime';
 
 describe('formatRelativeTime', () => {
   const SECOND = 1000;

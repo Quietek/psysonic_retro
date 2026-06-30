@@ -6,7 +6,7 @@ import { getStarredForServer } from '@/lib/api/subsonicStarRating';
 import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { invoke } from '@tauri-apps/api/core';
-import i18n from '@/i18n';
+import i18n from '@/lib/i18n';
 import { useAuthStore } from '@/store/authStore';
 import { cancelledDownloads, useOfflineJobStore } from '@/features/offline/store/offlineJobStore';
 import { useFavoritesOfflineSyncStore } from '@/features/offline/store/favoritesOfflineSyncStore';

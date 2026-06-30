@@ -1,4 +1,4 @@
-import { formatRelativeTime } from '../format/relativeTime';
+import { formatRelativeTime } from '@/lib/format/relativeTime';
 
 /**
  * Render a relative time string like "3 hours ago" / "in 2 weeks" with

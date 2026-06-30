@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
-import { dedupeById } from '@/utils/dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 
 interface Props {
   title: string;

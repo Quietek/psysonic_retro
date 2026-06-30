@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { HardDriveDownload, Check, X } from 'lucide-react';
 import { useZipDownloadStore } from '@/features/offline/store/zipDownloadStore';
-import { formatBytes } from '@/utils/format/formatBytes';
+import { formatBytes } from '@/lib/format/formatBytes';
 
 function ZipDownloadItem({ id }: { id: string }) {
   const dismiss = useZipDownloadStore(s => s.dismiss);

@@ -10,7 +10,7 @@ import { shuffleArray } from '../../utils/playback/shuffleArray';
 import { songToTrack } from '../../utils/playback/songToTrack';
 import { showToast } from '../../utils/ui/toast';
 import { switchActiveServer } from '../../utils/server/switchActiveServer';
-import i18n from '../../i18n';
+import i18n from '@/lib/i18n';
 import { usePlayerStore } from '../../store/playerStore';
 import { useAuthStore } from '../../store/authStore';
 import { executeCliPlayerCommand } from '../../config/shortcutActions';

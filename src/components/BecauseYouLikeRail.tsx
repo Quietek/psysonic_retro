@@ -23,7 +23,7 @@ import { useAuthStore } from '../store/authStore';
 import { playAlbum, playAlbumShuffled } from '../utils/playback/playAlbum';
 import { useLongPressAction } from '../hooks/useLongPressAction';
 import { LongPressWaveOverlay } from './LongPressWaveOverlay';
-import { formatHumanHoursMinutes } from '../utils/format/formatHumanDuration';
+import { formatHumanHoursMinutes } from '@/lib/format/formatHumanDuration';
 import { AlbumRow } from '@/features/album';
 import { albumArtistDisplayName } from '@/features/album';
 

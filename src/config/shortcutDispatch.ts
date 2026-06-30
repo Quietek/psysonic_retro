@@ -1,5 +1,5 @@
 import { queueSongRating } from '../store/pendingStarSync';
-import i18n from '../i18n';
+import i18n from '@/lib/i18n';
 import { usePlayerStore } from '../store/playerStore';
 import { showToast } from '../utils/ui/toast';
 import { playByOpaqueId } from '../utils/playback/playByOpaqueId';

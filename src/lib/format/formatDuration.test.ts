@@ -6,7 +6,7 @@ import {
   formatPlaybarToggleClock,
   playbarMinuteFieldWidth,
   PLAYBAR_CLOCK_PAD,
-} from './formatDuration';
+} from '@/lib/format/formatDuration';
 
 describe('formatTrackTime', () => {
   it('formats m:ss with zero-padded seconds', () => {

@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { HardDriveDownload, Heart } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { formatBytes } from '@/utils/format/formatBytes';
+import { formatBytes } from '@/lib/format/formatBytes';
 
 const OPEN_DELAY_MS = 450;
 

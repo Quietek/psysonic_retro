@@ -9,7 +9,7 @@ import { usePlayerStore } from '../store/playerStore';
 import { enqueueAndPlay } from '../utils/playback/playSong';
 import { useDragDrop } from '../contexts/DragDropContext';
 import { useOrbitSongRowBehavior } from '@/features/orbit';
-import { formatTrackTime } from '../utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 import { resolveTrackArtistRefs } from '../utils/playback/trackArtistRefs';
 import { tooltipAttrs } from '@/ui/tooltipAttrs';
 

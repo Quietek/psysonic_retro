@@ -10,7 +10,7 @@ import {
 import type { SeekbarStyle, WindowButtonStyle } from '@/store/authStoreTypes';
 import { useFontStore, FontId } from '@/store/fontStore';
 import { useThemeStore } from '@/store/themeStore';
-import { IS_LINUX, IS_WINDOWS } from '@/utils/platform';
+import { IS_LINUX, IS_WINDOWS } from '@/lib/util/platform';
 import SettingsSubSection from '@/features/settings/components/SettingsSubSection';
 import { SettingsGroup } from '@/features/settings/components/SettingsGroup';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';

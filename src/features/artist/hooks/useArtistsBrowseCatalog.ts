@@ -1,7 +1,7 @@
 import { getArtists } from '@/lib/api/subsonicArtists';
 import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { dedupeById } from '@/utils/dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 import {
   fetchLocalArtistCatalogChunk,
   fetchNetworkStarredArtists,

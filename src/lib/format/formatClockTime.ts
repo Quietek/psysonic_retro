@@ -1,4 +1,4 @@
-import type { ClockFormat } from '../../store/authStoreTypes';
+import type { ClockFormat } from '@/store/authStoreTypes';
 
 /**
  * Localized wall-clock `HH:MM` for a timestamp (sleep-timer / queue-ETA labels).

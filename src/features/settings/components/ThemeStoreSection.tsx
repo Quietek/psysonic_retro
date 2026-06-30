@@ -6,7 +6,7 @@ import CoverLightbox from '@/components/CoverLightbox';
 import { useThemeAnimationRisk } from '@/hooks/useThemeAnimationRisk';
 import { AnimatedThemeBadge } from '@/features/settings/components/AnimatedThemeBadge';
 import CustomSelect from '@/ui/CustomSelect';
-import { formatRelativeTime } from '@/utils/format/relativeTime';
+import { formatRelativeTime } from '@/lib/format/relativeTime';
 import { useThemeStore } from '@/store/themeStore';
 import { useInstalledThemesStore, type InstalledTheme } from '@/store/installedThemesStore';
 import {

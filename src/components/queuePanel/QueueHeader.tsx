@@ -7,8 +7,8 @@ import { useAuthStore } from '../../store/authStore';
 import type { QueueItemRef } from '../../store/playerStoreTypes';
 import type { QueueDisplayMode } from '../../store/authStoreTypes';
 import type { DurationMode } from '../../utils/componentHelpers/queuePanelHelpers';
-import { formatLongDuration } from '../../utils/format/formatDuration';
-import { formatClockTime } from '../../utils/format/formatClockTime';
+import { formatLongDuration } from '@/lib/format/formatDuration';
+import { formatClockTime } from '@/lib/format/formatClockTime';
 import { resolveQueueTrack } from '../../utils/library/queueTrackView';
 import {
   getQueueResolverVersion,

@@ -8,7 +8,7 @@ import {
   getQueueResolverVersion,
   subscribeQueueResolver,
 } from '@/utils/library/queueTrackResolver';
-import { formatTrackTime } from '@/utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 
 interface Props {
   onClose: () => void;

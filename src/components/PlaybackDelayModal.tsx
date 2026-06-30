@@ -8,7 +8,7 @@ import { useShallow } from 'zustand/react/shallow';
 
 import type { TFunction } from 'i18next';
 import { formatPlaybackScheduleRemaining } from '../utils/format/playbackScheduleFormat';
-import { formatClockTime } from '../utils/format/formatClockTime';
+import { formatClockTime } from '@/lib/format/formatClockTime';
 import {
   isValidPlaybackSchedulePreviewTimestamp,
   parsePlaybackDelayCustomMinutes,

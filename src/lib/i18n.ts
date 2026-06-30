@@ -1,17 +1,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { deTranslation } from './locales/de';
-import { enTranslation } from './locales/en';
-import { frTranslation } from './locales/fr';
-import { zhTranslation } from './locales/zh';
-import { nbTranslation } from './locales/nb';
-import { ruTranslation } from './locales/ru';
-import { nlTranslation } from './locales/nl';
-import { esTranslation } from './locales/es';
-import { roTranslation } from './locales/ro';
-import { jaTranslation } from './locales/ja';
-import { huTranslation } from './locales/hu';
-import { plTranslation } from './locales/pl';
+import { deTranslation } from '@/locales/de';
+import { enTranslation } from '@/locales/en';
+import { frTranslation } from '@/locales/fr';
+import { zhTranslation } from '@/locales/zh';
+import { nbTranslation } from '@/locales/nb';
+import { ruTranslation } from '@/locales/ru';
+import { nlTranslation } from '@/locales/nl';
+import { esTranslation } from '@/locales/es';
+import { roTranslation } from '@/locales/ro';
+import { jaTranslation } from '@/locales/ja';
+import { huTranslation } from '@/locales/hu';
+import { plTranslation } from '@/locales/pl';
 
 const savedLanguage = localStorage.getItem('psysonic_language') || 'en';
 

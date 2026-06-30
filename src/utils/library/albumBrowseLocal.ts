@@ -1,7 +1,7 @@
 import { libraryAdvancedSearch, libraryListAlbumsByGenre } from '@/lib/api/library';
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
 import { libraryScopeForServer } from '@/lib/api/subsonicClient';
-import { dedupeById } from '../dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 import { albumToAlbum } from './advancedSearchLocal';
 import { sharedServerFilters } from './albumBrowseFilters';
 import { albumSortClauses, sortSubsonicAlbums } from './albumBrowseSort';

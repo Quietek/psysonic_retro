@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Cast, Clock, Radio, SkipForward, Users } from 'lucide-react';
 import type { useRadioMetadata } from '@/features/radio';
 import { usePlayerStore } from '@/store/playerStore';
-import { formatTrackTime } from '@/utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 
 type NonNullStoreField<K extends keyof ReturnType<typeof usePlayerStore.getState>> =
   NonNullable<ReturnType<typeof usePlayerStore.getState>[K]>;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from '../store/authStore';
 import type { LinuxWaylandTextRenderProfile } from '../store/authStoreTypes';
-import { IS_LINUX, IS_MACOS, IS_WINDOWS } from '../utils/platform';
+import { IS_LINUX, IS_MACOS, IS_WINDOWS } from '@/lib/util/platform';
 
 /**
  * One-shot platform + window-shell configuration. Reads tiling-WM state,

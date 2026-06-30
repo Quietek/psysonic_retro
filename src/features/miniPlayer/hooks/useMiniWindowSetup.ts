@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from '@/store/authStore';
-import { IS_LINUX } from '@/utils/platform';
+import { IS_LINUX } from '@/lib/util/platform';
 import {
   EXPANDED_SIZE, EXPANDED_MIN, readStoredExpandedHeight,
 } from '@/features/miniPlayer/utils/miniPlayerHelpers';

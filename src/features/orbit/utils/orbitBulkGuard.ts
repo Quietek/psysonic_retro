@@ -1,6 +1,6 @@
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
 import { useConfirmModalStore } from '@/store/confirmModalStore';
-import i18n from '@/i18n';
+import i18n from '@/lib/i18n';
 
 /**
  * Ask the user before dropping many tracks into the shared Orbit queue.

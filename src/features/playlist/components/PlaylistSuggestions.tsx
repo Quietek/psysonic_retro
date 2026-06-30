@@ -14,8 +14,8 @@ import { songToTrack } from '@/utils/playback/songToTrack';
 import { getQueueTracksView } from '@/utils/library/queueTrackView';
 import { codecLabel } from '@/utils/componentHelpers/playlistDetailHelpers';
 import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
-import { formatTrackTime } from '@/utils/format/formatDuration';
-import i18n from '@/i18n';
+import { formatTrackTime } from '@/lib/format/formatDuration';
+import i18n from '@/lib/i18n';
 
 const PL_CENTERED = new Set(['favorite', 'rating', 'duration', 'playCount', 'bpm']);
 

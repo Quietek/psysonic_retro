@@ -1,6 +1,6 @@
 import { applyServerPlayQueue } from './applyServerPlayQueue';
 import { invoke } from '@tauri-apps/api/core';
-import i18n from '../i18n';
+import i18n from '@/lib/i18n';
 import { showToast } from '../utils/ui/toast';
 import { useAuthStore } from './authStore';
 import {

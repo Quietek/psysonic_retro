@@ -8,7 +8,7 @@ import { useThemeStore } from '../store/themeStore';
 import { useFontStore } from '../store/fontStore';
 import { useKeybindingsStore } from '../store/keybindingsStore';
 import { usePerfProbeFlags } from '../utils/perf/perfFlags';
-import i18n from '../i18n';
+import i18n from '@/lib/i18n';
 
 /**
  * Mini-player webview tree. Rendered in the secondary Tauri window labelled

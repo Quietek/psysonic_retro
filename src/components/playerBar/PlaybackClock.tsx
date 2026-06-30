@@ -4,7 +4,7 @@ import {
   formatPlaybarClock,
   formatPlaybarToggleClock,
   formatTrackTime,
-} from '../../utils/format/formatDuration';
+} from '@/lib/format/formatDuration';
 
 /** Renders the playback clock without ever causing PlayerBar to re-render.
  *  Updates the DOM directly via an imperative store subscription. */

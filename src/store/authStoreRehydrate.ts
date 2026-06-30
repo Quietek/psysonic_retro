@@ -1,4 +1,4 @@
-import { IS_LINUX } from '../utils/platform';
+import { IS_LINUX } from '@/lib/util/platform';
 import { sanitizeHiResCrossfadeResampleHz } from '../utils/audio/hiResCrossfadeResample';
 import {
   sanitizeAutodjOverlapCapMode,

@@ -54,7 +54,7 @@ import { useNowPlayingPrewarm } from '@/features/nowPlaying';
 import { useOfflineAutoNav } from '@/features/offline';
 import { useOfflineLibraryFilterSuspend } from '@/features/offline';
 import { AppShellQueueResizerSeam } from '../components/AppShellQueueResizerSeam';
-import { IS_LINUX, IS_MACOS } from '../utils/platform';
+import { IS_LINUX, IS_MACOS } from '@/lib/util/platform';
 import { useConnectionStatus } from '../hooks/useConnectionStatus';
 import { useIdlePlayQueuePull } from '../hooks/useIdlePlayQueuePull';
 import { useAuthStore } from '../store/authStore';

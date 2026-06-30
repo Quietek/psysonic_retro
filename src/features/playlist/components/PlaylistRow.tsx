@@ -5,8 +5,8 @@ import type { ColDef } from '@/utils/useTracklistColumns';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { codecLabel } from '@/utils/componentHelpers/playlistDetailHelpers';
 import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
-import i18n from '@/i18n';
-import { formatTrackTime } from '@/utils/format/formatDuration';
+import i18n from '@/lib/i18n';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 import StarRating from '@/components/StarRating';
 import { PlaylistArtistCell } from '@/features/playlist/components/PlaylistArtistCell';
 

@@ -1,4 +1,4 @@
-import { IS_LINUX, IS_MACOS, IS_WINDOWS } from '../platform';
+import { IS_LINUX, IS_MACOS, IS_WINDOWS } from '@/lib/util/platform';
 
 export const SKIP_KEY = 'psysonic_skipped_update_version';
 

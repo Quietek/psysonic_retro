@@ -25,7 +25,7 @@ vi.mock('../store/keybindingsStore', () => ({
 vi.mock('../utils/perf/perfFlags', () => ({
   usePerfProbeFlags: () => ({ disableTooltipPortal: true }),
 }));
-vi.mock('../i18n', () => ({
+vi.mock('@/lib/i18n', () => ({
   default: { changeLanguage: vi.fn() },
 }));
 vi.mock('@/features/miniPlayer', () => ({ default: () => <div data-testid="mini-player" /> }));
@@ -38,7 +38,7 @@ vi.mock('../contexts/DragDropContext', () => ({
 
 import { render, cleanup } from '@testing-library/react';
 import MiniPlayerApp from './MiniPlayerApp';
-import i18n from '../i18n';
+import i18n from '@/lib/i18n';
 
 beforeEach(() => {
   themeRehydrate.mockClear();

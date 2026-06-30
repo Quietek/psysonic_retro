@@ -1,5 +1,5 @@
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
-import { dedupeById } from '../dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 import { isOfflineBrowseActive } from '@/features/offline';
 import { loadOfflineAlbumCatalogChunk } from '@/features/offline';
 import type { AlbumBrowseQuery } from './albumBrowseTypes';

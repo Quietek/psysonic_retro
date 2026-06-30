@@ -4,7 +4,7 @@ import { Music, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { ServerProfile } from '@/store/authStoreTypes';
-import { formatTrackTime } from '@/utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 import type { ShareQueuePreviewState } from '@/features/search/hooks/useShareQueuePreview';
 import { sharePayloadTotal, type QueueableShareSearchPayload } from '@/utils/share/shareSearch';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';

@@ -12,7 +12,7 @@ import {
 } from '../utils/server/serverHttpHeaders';
 import { syncServerHttpContextForProfile } from '../utils/server/syncServerHttpContext';
 import { useTranslation } from 'react-i18next';
-import i18n from '../i18n';
+import i18n from '@/lib/i18n';
 import CustomSelect from '@/ui/CustomSelect';
 import {
   decodeServerMagicString,

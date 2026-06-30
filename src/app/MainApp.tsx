@@ -29,7 +29,7 @@ import { useLibraryCoverBackfill } from '../hooks/useLibraryCoverBackfill';
 import { useCoverRevalidateScheduler } from '../cover/useCoverRevalidateScheduler';
 import { runCoverIdbUpgradeMigration } from '../utils/migrations/coverIdbUpgradeMigration';
 import { useMigrationOrchestrator } from '../hooks/useMigrationOrchestrator';
-import { IS_WINDOWS } from '../utils/platform';
+import { IS_WINDOWS } from '@/lib/util/platform';
 import TauriEventBridge from './TauriEventBridge';
 import AppShell from './AppShell';
 import ErrorBoundary from '../components/ErrorBoundary';

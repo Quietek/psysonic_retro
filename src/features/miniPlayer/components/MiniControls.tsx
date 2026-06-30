@@ -1,5 +1,5 @@
 import { Pause, Play, SkipBack, SkipForward } from 'lucide-react';
-import { formatTrackTime } from '@/utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 import type { MiniControlAction } from '@/features/miniPlayer/utils/miniPlayerBridge';
 
 interface Props {

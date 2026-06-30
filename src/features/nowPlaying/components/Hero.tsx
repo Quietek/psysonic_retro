@@ -6,7 +6,7 @@ import type { CoverArtRef } from '@/cover/types';
 import type { ArtistStats, TrackStats } from '@/music-network';
 import type { SubsonicOpenArtistRef } from '@/lib/api/subsonicTypes';
 import { OpenArtistRefInline } from '@/features/artist';
-import { formatTrackTime } from '@/utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 import { useEnrichmentPrimaryLabel } from '@/hooks/useEnrichmentPrimaryLabel';
 import { useEnrichmentPrimaryIcon } from '@/hooks/useEnrichmentPrimaryIcon';
 import { renderPresetIcon } from '@/components/settings/musicNetwork/presetIcon';

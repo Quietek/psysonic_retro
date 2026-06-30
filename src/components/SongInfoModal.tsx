@@ -12,7 +12,7 @@ import { useLibraryIndexStore } from '../store/libraryIndexStore';
 import { useTranslation } from 'react-i18next';
 import { copyTextToClipboard } from '../utils/server/serverMagicString';
 import { showToast } from '../utils/ui/toast';
-import { formatTrackTime } from '../utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 import { formatLastSeen } from '../utils/componentHelpers/userMgmtHelpers';
 import { libraryIsReady } from '../utils/library/libraryReady';
 import {
@@ -21,7 +21,7 @@ import {
   resolveQueueBpm,
   type ParsedTrackEnrichment,
 } from '../utils/library/trackEnrichment';
-import i18n from '../i18n';
+import i18n from '@/lib/i18n';
 
 function formatSize(bytes?: number): string | null {
   if (!bytes) return null;

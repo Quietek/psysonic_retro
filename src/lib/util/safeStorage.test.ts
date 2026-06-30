@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { createSafeJSONStorage } from './safeStorage';
+import { createSafeJSONStorage } from '@/lib/util/safeStorage';
 
 describe('createSafeJSONStorage', () => {
   afterEach(() => {

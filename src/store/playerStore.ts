@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { readInitialNetworkLovedCache, persistNetworkLovedCache } from './networkLovedCacheStorage';
 import { readInitialPlayerPrefs, persistPlayerPrefs } from './playerPrefsStorage';
-import { createHydrationGatedStorage, createSafeJSONStorage } from './safeStorage';
+import { createHydrationGatedStorage, createSafeJSONStorage } from '@/lib/util/safeStorage';
 import { emitPlaybackProgress } from './playbackProgress';
 import type { PlayerState, QueueItemRef, Track } from './playerStoreTypes';
 import { toQueueItemRefs } from '../utils/library/queueItemRef';

@@ -11,9 +11,9 @@ import { useThemeStore } from '@/store/themeStore';
 import { previewInputFromSong, usePreviewStore } from '@/store/previewStore';
 import StarRating from '@/components/StarRating';
 import { codecLabel, type ColKey } from '@/features/album/utils/albumTrackListHelpers';
-import { formatLongDuration } from '@/utils/format/formatDuration';
+import { formatLongDuration } from '@/lib/format/formatDuration';
 import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
-import i18n from '@/i18n';
+import i18n from '@/lib/i18n';
 import { offlineActionPolicy, type OfflineActionPolicy } from '@/features/offline';
 import { resolveTrackArtistRefs } from '@/utils/playback/trackArtistRefs';
 

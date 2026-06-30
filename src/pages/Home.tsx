@@ -16,7 +16,7 @@ import { useAuthStore } from '../store/authStore';
 import { filterAlbumsByMixRatings, getMixMinRatingsConfigFromAuth } from '../utils/mix/mixRatingFilter';
 import { usePerfProbeFlags } from '../utils/perf/perfFlags';
 import { bumpPerfCounter } from '../utils/perf/perfTelemetry';
-import { dedupeById } from '../utils/dedupeById';
+import { dedupeById } from '@/lib/util/dedupeById';
 import { shuffleArray } from '../utils/playback/shuffleArray';
 import { useLibraryCoverPrefetch } from '../cover/useLibraryCoverPrefetch';
 import { primeAlbumCoversForDisplay, warmHomeMainstageCovers } from '../cover/warmDiskPeek';

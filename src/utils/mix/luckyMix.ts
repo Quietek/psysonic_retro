@@ -4,7 +4,7 @@ import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { QueueItemRef } from '../../store/playerStoreTypes';
 import { songToTrack } from '../playback/songToTrack';
 import { invoke } from '@tauri-apps/api/core';
-import i18n from '../../i18n';
+import i18n from '@/lib/i18n';
 import { useAuthStore } from '../../store/authStore';
 import { pushQueueUndoFromGetter } from '../../store/queueUndo';
 import { usePlayerStore } from '../../store/playerStore';

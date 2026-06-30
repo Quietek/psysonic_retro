@@ -6,7 +6,7 @@ import { usePlayerStore } from '@/store/playerStore';
 import { previewInputFromSong, usePreviewStore } from '@/store/previewStore';
 import { useOrbitSongRowBehavior } from '@/features/orbit';
 import { songToTrack } from '@/utils/playback/songToTrack';
-import { formatTrackTime } from '@/utils/format/formatDuration';
+import { formatTrackTime } from '@/lib/format/formatDuration';
 import ArtistTopTrackCover from '@/features/artist/components/ArtistTopTrackCover';
 import { topSongAlbumForCover } from '@/features/artist/components/topSongAlbumForCover';
 

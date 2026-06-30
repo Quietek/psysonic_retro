@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 
 // Echo the i18n key + params so the rounding/branching can be asserted
 // without depending on a locale's exact "N hours M minutes" template.
-vi.mock('../../i18n', () => ({
+vi.mock('@/lib/i18n', () => ({
   default: {
     t: (key: string, params: Record<string, unknown>) => `${key}|${JSON.stringify(params)}`,
     resolvedLanguage: 'en',
@@ -10,7 +10,7 @@ vi.mock('../../i18n', () => ({
   },
 }));
 
-import { formatHumanHoursMinutes, formatPlayerStatsListeningTotal, formatPlayerStatsListenedSec } from './formatHumanDuration';
+import { formatHumanHoursMinutes, formatPlayerStatsListeningTotal, formatPlayerStatsListenedSec } from '@/lib/format/formatHumanDuration';
 
 describe('formatHumanHoursMinutes', () => {
   it('rounds to the nearest minute instead of truncating', () => {

@@ -7,7 +7,7 @@ import {
   type PlaySessionDayDetail,
   type PlaySessionRecentDay,
 } from '@/lib/api/library';
-import { formatPlayerStatsListeningTotal } from '@/utils/format/formatHumanDuration';
+import { formatPlayerStatsListeningTotal } from '@/lib/format/formatHumanDuration';
 import {
   formatPlayerStatsDayLabel,
   PLAYER_STATS_RECENT_DAYS_LIMIT,

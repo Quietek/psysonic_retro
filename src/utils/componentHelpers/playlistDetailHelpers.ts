@@ -1,6 +1,6 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { formatHumanHoursMinutes } from '../format/formatHumanDuration';
-import { formatMb } from '../format/formatBytes';
+import { formatHumanHoursMinutes } from '@/lib/format/formatHumanDuration';
+import { formatMb } from '@/lib/format/formatBytes';
 
 export function sanitizeFilename(name: string): string {
   return name

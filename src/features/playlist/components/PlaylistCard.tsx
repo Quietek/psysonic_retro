@@ -7,7 +7,7 @@ import { usePlayerStore } from '@/store/playerStore';
 import {
   displayPlaylistName, isSmartPlaylistName, type PendingSmartPlaylist,
 } from '@/features/playlist/utils/playlistsSmart';
-import { formatHumanHoursMinutes } from '@/utils/format/formatHumanDuration';
+import { formatHumanHoursMinutes } from '@/lib/format/formatHumanDuration';
 import { useDragSource } from '@/contexts/DragDropContext';
 import { PlaylistCardMainCover, PlaylistSmartCoverCell } from '@/features/playlist/components/PlaylistCoverImages';
 

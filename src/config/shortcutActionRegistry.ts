@@ -3,7 +3,7 @@ import { getSong } from '@/lib/api/subsonicLibrary';
 import { songToTrack } from '../utils/playback/songToTrack';
 import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import i18n from '../i18n';
+import i18n from '@/lib/i18n';
 import { usePlayerStore } from '../store/playerStore';
 import { usePreviewStore } from '../store/previewStore';
 import { useLyricsStore } from '../store/lyricsStore';

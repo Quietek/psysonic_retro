@@ -13,7 +13,7 @@ import { usePlayerStatsRecordingEnabled } from '@/features/stats/hooks/usePlayer
 import PlayerStatsHeatmap from '@/features/stats/components/PlayerStatsHeatmap';
 import PlayerStatsIndexRequiredNotice from '@/features/stats/components/PlayerStatsIndexRequiredNotice';
 import PlayerStatsRecentDays from '@/features/stats/components/PlayerStatsRecentDays';
-import { formatPlayerStatsListeningTotal } from '@/utils/format/formatHumanDuration';
+import { formatPlayerStatsListeningTotal } from '@/lib/format/formatHumanDuration';
 
 const currentCalendarYear = () => new Date().getFullYear();
 

@@ -5,7 +5,7 @@
  * tests pin only the `hour12` mapping, which is what the setting controls.
  */
 import { describe, expect, it } from 'vitest';
-import { formatClockTime } from './formatClockTime';
+import { formatClockTime } from '@/lib/format/formatClockTime';
 
 const SAMPLE_TS = Date.UTC(2026, 0, 1, 19, 17, 0); // 19:17 UTC, deterministic
 

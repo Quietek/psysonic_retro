@@ -16,7 +16,7 @@ import { useAuthStore } from '../store/authStore';
 import { useTranslation } from 'react-i18next';
 import { copyEntityShareLink } from '../utils/share/copyEntityShareLink';
 import { showToast } from '../utils/ui/toast';
-import { sanitizeHtml } from '../utils/sanitizeHtml';
+import { sanitizeHtml } from '@/lib/util/sanitizeHtml';
 import { usePerfProbeFlags } from '../utils/perf/perfFlags';
 import { albumGridWarmCovers } from '../cover/layoutSizes';
 import { VirtualCardGrid } from '../components/VirtualCardGrid';

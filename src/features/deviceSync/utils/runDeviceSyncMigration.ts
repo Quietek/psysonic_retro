@@ -5,7 +5,7 @@ import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { applyLegacyTemplate } from '@/features/deviceSync/utils/deviceSyncLegacyTemplate';
 import { trackToSyncInfo } from '@/features/deviceSync/utils/deviceSyncHelpers';
 import { fetchTracksForSource } from '@/utils/playback/fetchTracksForSource';
-import { IS_WINDOWS } from '@/utils/platform';
+import { IS_WINDOWS } from '@/lib/util/platform';
 
 export type MigrationPhase = 'closed' | 'loading' | 'preview' | 'executing' | 'done' | 'nothing';
 

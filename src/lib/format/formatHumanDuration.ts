@@ -1,4 +1,4 @@
-import i18n from '../../i18n';
+import i18n from '@/lib/i18n';
 
 /**
  * Totals / statistics: localized "N hours M minutes" (not track mm:ss).
