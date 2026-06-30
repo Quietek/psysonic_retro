@@ -24,8 +24,8 @@ import {
 } from '@/features/playback/store/queueTrackResolver';
 import LyricsPane from './LyricsPane';
 import { usePlaybackDelayPress } from '../hooks/usePlaybackDelayPress';
-import PlaybackDelayModal from './PlaybackDelayModal';
-import PlaybackScheduleBadge from './PlaybackScheduleBadge';
+import PlaybackDelayModal from '@/features/playback/components/PlaybackDelayModal';
+import PlaybackScheduleBadge from '@/features/playback/components/PlaybackScheduleBadge';
 import { usePlaybackScheduleRemaining } from '../utils/format/playbackScheduleFormat';
 
 // ── Color extraction ──────────────────────────────────────────────────────────

@@ -18,7 +18,7 @@ import { usePlaybackLibraryNavigate } from '@/hooks/usePlaybackLibraryNavigate';
 import { useRadioMetadata } from '@/features/radio';
 import { useRadioMprisSync } from '@/features/radio';
 import { usePlaybackDelayPress } from '@/hooks/usePlaybackDelayPress';
-import PlaybackDelayModal from '@/components/PlaybackDelayModal';
+import PlaybackDelayModal from '@/features/playback/components/PlaybackDelayModal';
 import { usePlaybackScheduleRemaining } from '@/utils/format/playbackScheduleFormat';
 import { usePreviewStore } from '@/features/playback/store/previewStore';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';

@@ -3,11 +3,11 @@ import { createPortal } from 'react-dom';
 import { X, Moon, Sunrise } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { useShallow } from 'zustand/react/shallow';
 
 import type { TFunction } from 'i18next';
-import { formatPlaybackScheduleRemaining } from '../utils/format/playbackScheduleFormat';
+import { formatPlaybackScheduleRemaining } from '@/utils/format/playbackScheduleFormat';
 import { formatClockTime } from '@/lib/format/formatClockTime';
 import {
   isValidPlaybackSchedulePreviewTimestamp,

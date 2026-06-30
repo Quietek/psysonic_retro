@@ -7,7 +7,7 @@ import { useState, useRef, useMemo } from 'react';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useOrbitStore } from '@/features/orbit';
 import { OrbitGuestQueue, OrbitQueueHead } from '@/features/orbit';
-import HostApprovalQueue from '@/components/HostApprovalQueue';
+import HostApprovalQueue from '@/features/orbit/components/HostApprovalQueue';
 import { usePlaylistStore } from '@/features/playlist';
 import { useTranslation } from 'react-i18next';
 import { usePlaybackLibraryNavigate } from '@/hooks/usePlaybackLibraryNavigate';

@@ -13,7 +13,7 @@ import { IS_LINUX } from '@/lib/util/platform';
 import { showToast } from '@/utils/ui/toast';
 import { AboutPsysonicBrandHeader } from '@/components/AboutPsysonicLol';
 import CustomSelect from '@/ui/CustomSelect';
-import LicensesPanel from '@/components/LicensesPanel';
+import LicensesPanel from '@/features/settings/components/LicensesPanel';
 import SettingsSubSection from '@/features/settings/components/SettingsSubSection';
 import { SettingsGroup } from '@/features/settings/components/SettingsGroup';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';

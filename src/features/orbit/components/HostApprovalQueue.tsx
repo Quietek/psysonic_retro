@@ -9,7 +9,7 @@ import {
   declineOrbitSuggestion,
   suggestionKey,
 } from '@/features/orbit';
-import { TrackCoverArtImage } from '../cover/TrackCoverArtImage';
+import { TrackCoverArtImage } from '@/cover/TrackCoverArtImage';
 import { ORBIT_DEFAULT_SETTINGS } from '@/features/orbit';
 
 const HOST_APPROVAL_COVER_CSS_PX = 36;

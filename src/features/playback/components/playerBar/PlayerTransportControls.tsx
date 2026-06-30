@@ -5,7 +5,7 @@ import type { TFunction } from 'i18next';
 import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import { useAutodjTransitionUi } from '@/features/playback/store/autodjTransitionUi';
 import { usePreviewStore } from '@/features/playback/store/previewStore';
-import PlaybackScheduleBadge from '@/components/PlaybackScheduleBadge';
+import PlaybackScheduleBadge from '@/features/playback/components/PlaybackScheduleBadge';
 import { usePlaybackDelayPress } from '@/hooks/usePlaybackDelayPress';
 import { usePlaybackScheduleRemaining } from '@/utils/format/playbackScheduleFormat';
 

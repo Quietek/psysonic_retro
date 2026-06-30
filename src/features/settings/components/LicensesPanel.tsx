@@ -8,8 +8,8 @@ import {
   loadLicensesData,
   type LicenseEntry,
   type LicensesData,
-} from '../utils/licensesData';
-import LicenseTextModal from './LicenseTextModal';
+} from '@/utils/licensesData';
+import LicenseTextModal from '@/components/LicenseTextModal';
 
 const ROW_HEIGHT = 56;
 

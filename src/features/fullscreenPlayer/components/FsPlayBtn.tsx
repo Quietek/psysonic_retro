@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { usePlaybackDelayPress } from '@/hooks/usePlaybackDelayPress';
 import { usePlaybackScheduleRemaining } from '@/utils/format/playbackScheduleFormat';
-import PlaybackDelayModal from '@/components/PlaybackDelayModal';
-import PlaybackScheduleBadge from '@/components/PlaybackScheduleBadge';
+import PlaybackDelayModal from '@/features/playback/components/PlaybackDelayModal';
+import PlaybackScheduleBadge from '@/features/playback/components/PlaybackScheduleBadge';
 
 // Play/Pause button (isolated — subscribes to isPlaying only).
 export const FsPlayBtn = memo(function FsPlayBtn({
