@@ -1,6 +1,6 @@
 import { getLyricsBySongId } from '@/lib/api/subsonicLyrics';
 import type { SubsonicStructuredLyrics } from '@/lib/api/subsonicTypes';
-import type { Track } from '../store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { invoke } from '@tauri-apps/api/core';
@@ -9,7 +9,7 @@ import { fetchNeteaselyrics } from '../api/netease';
 import { fetchLyricsPlus, hasWordSync } from '../api/lyricsplus';
 import { useAuthStore } from '../store/authStore';
 import { useOfflineStore } from '@/features/offline';
-import { useHotCacheStore } from '../store/hotCacheStore';
+import { useHotCacheStore } from '@/features/playback/store/hotCacheStore';
 import { getCachedLyrics, putCachedLyrics, lyricsCacheKey } from '../utils/cache/lyricsPersistentCache';
 export type LyricsSource = 'server' | 'lrclib' | 'netease' | 'embedded' | 'lyricsplus';
 

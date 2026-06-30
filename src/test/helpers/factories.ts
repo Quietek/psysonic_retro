@@ -7,8 +7,8 @@
  */
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import type { ServerProfile } from '@/store/authStoreTypes';
-import type { Track } from '@/store/playerStoreTypes';
-import { usePlayerStore } from '@/store/playerStore';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { toQueueItemRefs } from '@/utils/library/queueItemRef';
 import { seedQueueResolver } from '@/utils/library/queueTrackResolver';
 let trackCounter = 0;

@@ -10,7 +10,7 @@ import {
   type ParsedTrackEnrichment,
 } from '@/utils/library/trackEnrichment';
 import { libraryIsReady } from '@/utils/library/libraryReady';
-import { normalizeAnalysisTrackId } from '@/utils/playback/queueIdentity';
+import { normalizeAnalysisTrackId } from '@/features/playback/utils/playback/queueIdentity';
 
 const EMPTY: ParsedTrackEnrichment = {
   serverBpm: null,

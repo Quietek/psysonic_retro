@@ -5,7 +5,7 @@ import type {
   InternetRadioStation, SubsonicAlbum, SubsonicArtist, SubsonicSong,
 } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import type { TopFavoriteArtist } from '@/features/favorites/components/TopFavoriteArtists';
 import { useConnectionStatus } from '@/hooks/useConnectionStatus';
 import { isActiveServerReachable } from '@/utils/network/activeServerReachability';

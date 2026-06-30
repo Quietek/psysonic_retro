@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import type { Track } from '../store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { useOrbitStore } from '@/features/orbit';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useAuthStore } from '../store/authStore';
 import { useTranslation } from 'react-i18next';

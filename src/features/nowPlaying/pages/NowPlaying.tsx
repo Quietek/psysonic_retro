@@ -8,10 +8,10 @@ import { usePlaybackLibraryNavigate } from '@/hooks/usePlaybackLibraryNavigate';
 import { usePlaybackServerId } from '@/hooks/usePlaybackServerId';
 import { useTranslation } from 'react-i18next';
 import { Music, EyeOff, LayoutGrid, RotateCcw, Eye } from 'lucide-react';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { useLyricsStore } from '@/store/lyricsStore';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { useRadioMetadata } from '@/features/radio';
 import { useDragDrop } from '@/lib/dnd/DragDropContext';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
@@ -38,7 +38,7 @@ import DiscographyCard from '@/features/nowPlaying/components/DiscographyCard';
 import { useNowPlayingFetchers } from '@/features/nowPlaying/hooks/useNowPlayingFetchers';
 import { useNowPlayingStarLove } from '@/features/nowPlaying/hooks/useNowPlayingStarLove';
 import { useArtistInfoBatch } from '@/features/artist';
-import { primaryTrackArtistRef, resolveTrackArtistRefs } from '@/utils/playback/trackArtistRefs';
+import { primaryTrackArtistRef, resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 import type { ArtistCardTab } from '@/features/nowPlaying/components/ArtistCard';
 
 // ─── Main Page ────────────────────────────────────────────────────────────────

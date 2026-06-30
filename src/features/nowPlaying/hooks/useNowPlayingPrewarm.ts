@@ -10,9 +10,9 @@ import { coverArtIdFromRadio } from '@/cover/ids';
 import type { CoverArtRef } from '@/cover/types';
 import { prewarmNowPlayingFetchers } from '@/features/nowPlaying/hooks/useNowPlayingFetchers';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { usePlaybackServerId } from '@/hooks/usePlaybackServerId';
-import { primaryTrackArtistRef } from '@/utils/playback/trackArtistRefs';
+import { primaryTrackArtistRef } from '@/features/playback/utils/playback/trackArtistRefs';
 
 const NOW_PLAYING_COVER_CSS_PX = 800;
 

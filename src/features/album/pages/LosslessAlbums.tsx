@@ -1,7 +1,7 @@
 import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
 import { resolveAlbum } from '@/features/offline';
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import AlbumCard from '@/features/album/components/AlbumCard';
 import { LOSSLESS_MODE_QUERY } from '@/utils/library/losslessMode';
@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '@/store/authStore';
 import { useOfflineStore } from '@/features/offline';
 import { useDownloadModalStore } from '@/features/offline';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useZipDownloadStore } from '@/features/offline';
 import { useRangeSelection } from '@/lib/hooks/useRangeSelection';
 import { useMainstageInpageHeaderTight } from '@/hooks/useMainstageInpageHeaderTight';

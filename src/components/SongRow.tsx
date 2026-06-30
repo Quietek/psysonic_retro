@@ -1,16 +1,16 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '../utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import React, { memo } from 'react';
 import { useNavigateToAlbum } from '@/features/album';
 import { useNavigateToArtist } from '@/features/artist';
 import { Play, ListPlus } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePlayerStore } from '../store/playerStore';
-import { enqueueAndPlay } from '../utils/playback/playSong';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { enqueueAndPlay } from '@/features/playback/utils/playback/playSong';
 import { useDragDrop } from '@/lib/dnd/DragDropContext';
 import { useOrbitSongRowBehavior } from '@/features/orbit';
 import { formatTrackTime } from '@/lib/format/formatDuration';
-import { resolveTrackArtistRefs } from '../utils/playback/trackArtistRefs';
+import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 import { tooltipAttrs } from '@/ui/tooltipAttrs';
 
 interface Props {

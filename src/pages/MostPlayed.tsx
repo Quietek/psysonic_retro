@@ -1,15 +1,15 @@
 import { getAlbumList } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum } from '@/features/offline';
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '../utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowUpDown, ArrowDown, ArrowUp, TrendingUp, UsersRound, Play, ListPlus } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { AlbumCoverArtImage } from '../cover/AlbumCoverArtImage';
 import { ArtistCoverArtImage } from '../cover/ArtistCoverArtImage';
-import { playAlbum, playAlbumShuffled } from '../utils/playback/playAlbum';
+import { playAlbum, playAlbumShuffled } from '@/features/playback/utils/playback/playAlbum';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
 import { LongPressWaveOverlay } from '../components/LongPressWaveOverlay';
 import { useTranslation } from 'react-i18next';

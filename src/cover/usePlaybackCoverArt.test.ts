@@ -4,7 +4,7 @@ import type { CoverArtHandle } from './types';
 import { albumCoverRef } from './ref';
 import { usePlaybackCoverArt } from './usePlaybackCoverArt';
 import { useAuthStore } from '../store/authStore';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { makeTrack } from '../test/helpers/factories';
 import { resetAllStores } from '../test/helpers/storeReset';
 import { toQueueItemRefs } from '../utils/library/queueItemRef';

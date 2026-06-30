@@ -18,7 +18,7 @@ import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
 import { useMainstageInpageHeaderTight } from '../hooks/useMainstageInpageHeaderTight';
 import { useAuthStore } from '../store/authStore';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   fetchGenreAlbumCount,
   fetchGenreTracksForPlayback,
@@ -30,7 +30,7 @@ import {
   readAlbumDetailReturnTo,
 } from '../utils/navigation/albumDetailNavigation';
 import { usePerfProbeFlags } from '../utils/perf/perfFlags';
-import { runBulkEnqueue, runBulkPlayAll, runBulkShuffle } from '../utils/playback/runBulkPlay';
+import { runBulkEnqueue, runBulkPlayAll, runBulkShuffle } from '@/features/playback/utils/playback/runBulkPlay';
 
 export default function GenreDetail() {
   const { name } = useParams<{ name: string }>();

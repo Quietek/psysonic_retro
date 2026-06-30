@@ -3,9 +3,9 @@ import { useVirtualizer } from '@tanstack/react-virtual';
 import { Play } from 'lucide-react';
 import type { TFunction } from 'i18next';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useLuckyMixStore } from '@/store/luckyMixStore';
-import type { QueueItemRef, PlayerState } from '@/store/playerStoreTypes';
+import type { QueueItemRef, PlayerState } from '@/features/playback/store/playerStoreTypes';
 import type { QueueDisplayMode } from '@/store/authStoreTypes';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 import { resolveQueueTrack } from '@/utils/library/queueTrackView';
@@ -13,7 +13,7 @@ import {
   getQueueResolverVersion,
   subscribeQueueResolver,
 } from '@/utils/library/queueTrackResolver';
-import { findQueueItemRefIndex } from '@/utils/playback/queueIdentity';
+import { findQueueItemRefIndex } from '@/features/playback/utils/playback/queueIdentity';
 import type { TimelineDisplayRow } from '@/utils/queue/buildTimelineDisplayRows';
 import { findTimelineScrollLocalIndex } from '@/utils/queue/buildTimelineDisplayRows';
 import { playTimelineHistoryTrack } from '@/utils/queue/playTimelineHistoryTrack';

@@ -4,7 +4,7 @@ import { listen } from '@tauri-apps/api/event';
 import type { TFunction } from 'i18next';
 import { useAuthStore } from '../store/authStore';
 import { IS_MACOS } from '@/lib/util/platform';
-import { sortAudioDeviceIds } from '../utils/audio/audioDeviceLabels';
+import { sortAudioDeviceIds } from '@/features/playback/utils/audio/audioDeviceLabels';
 import { showToast } from '../utils/ui/toast';
 
 interface UseAudioDevicesProbeResult {

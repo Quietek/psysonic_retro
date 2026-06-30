@@ -1,7 +1,7 @@
-import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/store/playbackProgress';
+import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';
 import { useEffect, useRef, useState } from 'react';
-import { usePlayerStore } from '@/store/playerStore';
-import { usePreviewStore } from '@/store/previewStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { usePreviewStore } from '@/features/playback/store/previewStore';
 import { useAuthStore } from '@/store/authStore';
 import {
   ANIMATED_STYLES, AnimState,

@@ -1,4 +1,4 @@
-import type { QueueItemRef } from './playerStoreTypes';
+import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { invoke } from '@tauri-apps/api/core';

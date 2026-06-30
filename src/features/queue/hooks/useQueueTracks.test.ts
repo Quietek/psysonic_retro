@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { usePlayerStore } from '@/store/playerStore';
-import type { Track } from '@/store/playerStoreTypes';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { getCachedTrack, _resetQueueResolverForTest } from '@/utils/library/queueTrackResolver';
 import { seedQueue } from '@/test/helpers/factories';
 import { useQueueTrackAt, useCurrentTrack, useQueueItems } from '@/features/queue/hooks/useQueueTracks';

@@ -1,9 +1,9 @@
 import { getSong } from '@/lib/api/subsonicLibrary';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { useEffect, useRef } from 'react';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   readOrbitState,
   applyOrbitTransitionSettings,

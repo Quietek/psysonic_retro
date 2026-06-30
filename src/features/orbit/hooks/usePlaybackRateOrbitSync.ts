@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
-import { usePlaybackRateStore } from '@/store/playbackRateStore';
+import { usePlaybackRateStore } from '@/features/playback/store/playbackRateStore';
 
 /** Re-sync playback rate when Orbit enters or leaves shared playback. */
 export function usePlaybackRateOrbitSync() {

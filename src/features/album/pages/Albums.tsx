@@ -1,6 +1,6 @@
 import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
 import { resolveAlbum } from '@/features/offline';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import AlbumCard from '@/features/album/components/AlbumCard';
 import { albumGridWarmCovers, coverDisplayCssPxForAlbumGrid } from '@/cover/layoutSizes';
@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useOfflineStore } from '@/features/offline';
 import { useDownloadModalStore } from '@/features/offline';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { invoke } from '@tauri-apps/api/core';
 import { join } from '@tauri-apps/api/path';
 import { showToast } from '@/utils/ui/toast';

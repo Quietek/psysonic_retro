@@ -4,18 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import type { ColDef } from '@/utils/useTracklistColumns';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/store/playerStoreTypes';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { useSelectionStore } from '@/store/selectionStore';
 import { useThemeStore } from '@/store/themeStore';
-import { previewInputFromSong, usePreviewStore } from '@/store/previewStore';
+import { previewInputFromSong, usePreviewStore } from '@/features/playback/store/previewStore';
 import StarRating from '@/components/StarRating';
 import { codecLabel, type ColKey } from '@/features/album/utils/albumTrackListHelpers';
 import { formatLongDuration } from '@/lib/format/formatDuration';
 import { formatLastSeen } from '@/utils/componentHelpers/userMgmtHelpers';
 import i18n from '@/lib/i18n';
 import { offlineActionPolicy, type OfflineActionPolicy } from '@/features/offline';
-import { resolveTrackArtistRefs } from '@/utils/playback/trackArtistRefs';
+import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 
 type ContextMenuFn = (
   x: number,

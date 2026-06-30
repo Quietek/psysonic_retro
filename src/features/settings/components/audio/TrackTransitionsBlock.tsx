@@ -10,7 +10,7 @@ import {
   getTransitionMode,
   setTransitionMode,
   type TransitionMode,
-} from '@/utils/playback/playbackTransition';
+} from '@/features/playback/utils/playback/playbackTransition';
 import { SettingsGroup } from '@/features/settings/components/SettingsGroup';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';
 import { SettingsSubCard, SettingsField, SettingsRow, SettingsValue } from '@/features/settings/components/SettingsSubCard';

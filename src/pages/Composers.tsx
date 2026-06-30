@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ndListArtistsByRole } from '@/lib/api/navidromeBrowse';
 import { LayoutGrid, List } from 'lucide-react';
 import StarFilterButton from '../components/StarFilterButton';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '../store/authStore';
 import { useTranslation } from 'react-i18next';
 import { useVirtualizer } from '@tanstack/react-virtual';

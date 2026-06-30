@@ -9,7 +9,7 @@ import {
   subscribeTimelineSessionHistory,
   TIMELINE_HISTORY_BOOTSTRAP_LIMIT,
   type TimelinePlayedRef,
-} from '../store/timelineSessionHistory';
+} from '@/features/playback/store/timelineSessionHistory';
 import {
   bootstrapTrackFromPlaySession,
   timelineHistoryToQueueRefs,

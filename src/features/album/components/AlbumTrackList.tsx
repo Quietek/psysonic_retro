@@ -1,8 +1,8 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import React, { useMemo, useState, useEffect } from 'react';
 import { useTracklistColumns } from '@/utils/useTracklistColumns';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useTranslation } from 'react-i18next';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { useSelectionStore } from '@/store/selectionStore';

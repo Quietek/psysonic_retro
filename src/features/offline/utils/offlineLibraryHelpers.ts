@@ -9,7 +9,7 @@ import { findLocalPlaybackEntry, hasLocalLibraryBytes } from '@/store/localPlayb
 import { useOfflineStore, type OfflineAlbumMeta } from '@/features/offline/store/offlineStore';
 import { resolveTrackCoverArtId, trackToSong } from '@/utils/library/advancedSearchLocal';
 import { canonicalQueueServerKey, resolveIndexKey } from '@/utils/server/serverIndexKey';
-import type { Track } from '@/store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { findServerByIdOrIndexKey, resolveServerIdForIndexKey } from '@/utils/server/serverLookup';
 import { serverIndexKeyForProfile } from '@/utils/server/serverIndexKey';
 

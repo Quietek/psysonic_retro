@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { usePlayerStore } from '../../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useWindowVisibility } from '@/lib/hooks/useWindowVisibility';
 
 /** Remaining time until wall-clock `deadlineMs` (m:ss or h:mm:ss). */

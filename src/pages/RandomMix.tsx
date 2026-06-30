@@ -1,9 +1,9 @@
-import { queueSongStar } from '../store/pendingStarSync';
+import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import type { SubsonicSong, SubsonicGenre } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '../utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import React, { useEffect, useMemo, useState } from 'react';
-import { usePlayerStore } from '../store/playerStore';
-import { usePreviewStore } from '../store/previewStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { usePreviewStore } from '@/features/playback/store/previewStore';
 import { useAuthStore } from '../store/authStore';
 import { useLibraryIndexStore } from '../store/libraryIndexStore';
 import { useTranslation } from 'react-i18next';

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import type { Location, NavigateFunction } from 'react-router-dom';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 
 export interface PlaylistRouteEffectsDeps {
   setContextMenuSongId: React.Dispatch<React.SetStateAction<string | null>>;

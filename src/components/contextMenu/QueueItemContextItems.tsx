@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { Play, Radio, Heart, ChevronRight, User, Disc3, ListMusic, Info, Sparkles, Star, Trash2, Share2 } from 'lucide-react';
-import { queueSongStar } from '../../store/pendingStarSync';
+import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import { getMusicNetworkRuntime, useEnrichmentPrimary } from '../../music-network';
-import type { Track } from '../../store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { useAuthStore } from '../../store/authStore';
 import { renderPresetIcon } from '../settings/musicNetwork/presetIcon';
 import StarRating from '../StarRating';

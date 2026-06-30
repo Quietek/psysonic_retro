@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { setRating } from '@/lib/api/subsonicStarRating';
-import { queueSongRating } from '../store/pendingStarSync';
+import { queueSongRating } from '@/features/playback/store/pendingStarSync';
 import type { SubsonicAlbum, SubsonicArtist } from '@/lib/api/subsonicTypes';
-import type { Track } from '../store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { useAuthStore } from '../store/authStore';
 import { showToast } from '../utils/ui/toast';
 

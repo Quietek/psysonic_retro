@@ -1,20 +1,20 @@
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '../utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import React, { memo, useMemo } from 'react';
 import { Play, ListPlus, Star, Disc3 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { CoverArtImage } from '../cover/CoverArtImage';
 import { useCoverArt } from '../cover/useCoverArt';
 import { useTrackCoverRef } from '../cover/useLibraryCoverRef';
 import { COVER_DENSE_RAIL_CELL_CSS_PX } from '../cover/layoutSizes';
-import { enqueueAndPlay } from '../utils/playback/playSong';
+import { enqueueAndPlay } from '@/features/playback/utils/playback/playSong';
 import { useDragDrop } from '@/lib/dnd/DragDropContext';
 import { useOrbitSongRowBehavior } from '@/features/orbit';
 import { useNavigateToAlbum } from '@/features/album';
 import { useNavigateToArtist } from '@/features/artist';
 import { OpenArtistRefInline } from '@/features/artist';
-import { resolveTrackArtistRefs } from '../utils/playback/trackArtistRefs';
+import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 
 interface SongCardProps {
   song: SubsonicSong;

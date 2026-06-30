@@ -1,9 +1,9 @@
 import { createPlaylist, deletePlaylist, getPlaylist, getPlaylists, updatePlaylist } from '@/lib/api/subsonicPlaylists';
 import { getSong } from '@/lib/api/subsonicLibrary';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { useAuthStore } from '@/store/authStore';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   orbitOutboxPlaylistName,
   type OrbitQueueItem,

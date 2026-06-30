@@ -8,7 +8,7 @@ const resolvePlaybackUrlMock = vi.fn((_trackId: string, _serverId?: string) =>
   'https://music.test/stream',
 );
 
-vi.mock('../playback/resolvePlaybackUrl', () => ({
+vi.mock('@/features/playback/utils/playback/resolvePlaybackUrl', () => ({
   resolvePlaybackUrl: (trackId: string, serverId?: string) =>
     resolvePlaybackUrlMock(trackId, serverId),
 }));

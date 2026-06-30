@@ -9,7 +9,7 @@ import i18n from '@/lib/i18n';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 import StarRating from '@/components/StarRating';
 import { OpenArtistRefInline } from '@/features/artist';
-import { resolveTrackArtistRefs } from '@/utils/playback/trackArtistRefs';
+import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 
 export interface FavoriteSongRowCallbacks {
   activate: (song: SubsonicSong, index: number, e: React.MouseEvent) => void;

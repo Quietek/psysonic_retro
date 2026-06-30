@@ -1,4 +1,4 @@
-import type { QueueItemRef, Track } from '../../store/playerStoreTypes';
+import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
 import { getCachedTrack, placeholderTrack, applyQueueOverrides } from './queueTrackResolver';
 
 /**

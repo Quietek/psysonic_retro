@@ -2,9 +2,9 @@ import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ListPlus, Play, SlidersHorizontal, X } from 'lucide-react';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useSelectionStore } from '@/store/selectionStore';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { AddToPlaylistSubmenu } from '@/components/ContextMenu';
 import GenreFilterBar from '@/components/GenreFilterBar';
 

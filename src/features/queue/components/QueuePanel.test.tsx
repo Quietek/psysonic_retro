@@ -33,7 +33,7 @@ vi.mock('@/features/orbit/utils/orbitBulkGuard', () => ({
 import QueuePanel from '@/features/queue/components/QueuePanel';
 import { fireEvent } from '@testing-library/react';
 import { renderWithProviders } from '@/test/helpers/renderWithProviders';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { resetAllStores } from '@/test/helpers/storeReset';
 import { makeTrack, makeTracks, seedQueue } from '@/test/helpers/factories';

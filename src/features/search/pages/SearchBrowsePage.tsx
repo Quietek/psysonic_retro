@@ -14,7 +14,7 @@ import StarFilterButton from '@/components/StarFilterButton';
 import { tooltipAttrs } from '@/ui/tooltipAttrs';
 import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { isAdvancedSearchLeaveTargetPath } from '@/features/album';
 import {
   isAdvancedSearchPath,

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { enqueuePlaylistAll, playPlaylistAll, shufflePlaylistAll } from '@/features/playlist/utils/playlistBulkPlayActions';
-import type { Track } from '@/store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 
 // Only id/queue identity matters for these actions.
 const tracks = [{ id: 'a' }, { id: 'b' }, { id: 'c' }] as unknown as Track[];

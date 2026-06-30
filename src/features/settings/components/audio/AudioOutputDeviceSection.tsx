@@ -8,7 +8,7 @@ import { SettingsGroup } from '@/features/settings/components/SettingsGroup';
 import { SettingsToggle } from '@/features/settings/components/SettingsToggle';
 import { useAuthStore } from '@/store/authStore';
 import { useEqStore } from '@/store/eqStore';
-import { buildAudioDeviceSelectOptions } from '@/utils/audio/audioDeviceLabels';
+import { buildAudioDeviceSelectOptions } from '@/features/playback/utils/audio/audioDeviceLabels';
 
 interface Props {
   audioDevices: string[];

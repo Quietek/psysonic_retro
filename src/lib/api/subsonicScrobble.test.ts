@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { reportNowPlaying, scrobbleSong } from '@/lib/api/subsonicScrobble';
 import { shouldAttemptSubsonicForServer } from '@/utils/network/subsonicNetworkGuard';
 

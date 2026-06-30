@@ -8,7 +8,7 @@ import { formatTrackTime } from '@/lib/format/formatDuration';
 import type { ShareQueuePreviewState } from '@/features/search/hooks/useShareQueuePreview';
 import { sharePayloadTotal, type QueueableShareSearchPayload } from '@/utils/share/shareSearch';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { COVER_DENSE_SEARCH_CSS_PX } from '@/cover/layoutSizes';
 import { COVER_SCOPE_ACTIVE, type CoverServerScope } from '@/cover/types';
 import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';

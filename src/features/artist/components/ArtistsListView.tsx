@@ -2,7 +2,7 @@ import React from 'react';
 import type { Virtualizer } from '@tanstack/react-virtual';
 import type { TFunction } from 'i18next';
 import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
-import type { PlayerState } from '@/store/playerStoreTypes';
+import type { PlayerState } from '@/features/playback/store/playerStoreTypes';
 import { OTHER_BUCKET, type ArtistListFlatRow } from '@/features/artist/utils/artistsHelpers';
 import { ArtistRowAvatar } from '@/features/artist/components/ArtistAvatars';
 

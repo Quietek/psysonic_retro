@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
-import { usePlayerStore } from '../../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '../../store/authStore';
-import { setSeekFallbackVisualTarget } from '../../store/seekFallbackState';
-import { getIsAudioPaused } from '../../store/engineState';
+import { setSeekFallbackVisualTarget } from '@/features/playback/store/seekFallbackState';
+import { getIsAudioPaused } from '@/features/playback/store/engineState';
 
 /** Audio output device lifecycle: device switches (Bluetooth headphones, USB
  * DAC, …) and pinned-device-unplugged fallbacks emitted by the Rust

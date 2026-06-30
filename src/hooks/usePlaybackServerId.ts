@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useAuthStore } from '../store/authStore';
-import { usePlayerStore } from '../store/playerStore';
-import { getPlaybackServerId } from '../utils/playback/playbackServer';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { getPlaybackServerId } from '@/features/playback/utils/playback/playbackServer';
 
 /**
  * Subsonic server that owns the current queue / stream (may differ from the browsed

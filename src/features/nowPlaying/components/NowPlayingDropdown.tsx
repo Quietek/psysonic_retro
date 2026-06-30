@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
 import { PlayCircle, Pause, User, Radio, RefreshCw } from 'lucide-react';
 import { nowPlayingPresence } from '@/features/nowPlaying/api/nowPlayingPresence';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 

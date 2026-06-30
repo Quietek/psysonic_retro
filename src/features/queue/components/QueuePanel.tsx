@@ -1,10 +1,10 @@
 import { Play } from 'lucide-react';
 import { updatePlaylist } from '@/lib/api/subsonicPlaylists';
 import { resolvePlaylist, resolveMediaServerId } from '@/features/offline';
-import { songToTrack } from '@/utils/playback/songToTrack';
-import type { Track } from '@/store/playerStoreTypes';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { useState, useRef, useMemo } from 'react';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useOrbitStore } from '@/features/orbit';
 import { OrbitGuestQueue, OrbitQueueHead } from '@/features/orbit';
 import HostApprovalQueue from '@/components/HostApprovalQueue';
@@ -34,7 +34,7 @@ import { QueueTabBar } from '@/features/queue/components/QueueTabBar';
 import { useQueueAutoScroll } from '@/features/queue/hooks/useQueueAutoScroll';
 import { useTimelineBootstrapOnMode, useTimelineHistoryResolver, useTimelinePlayHistory } from '@/hooks/useTimelinePlayHistory';
 import { buildTimelineDisplayRows } from '@/utils/queue/buildTimelineDisplayRows';
-import { activeServerQueueTrackIds } from '@/utils/playback/trackServerScope';
+import { activeServerQueueTrackIds } from '@/features/playback/utils/playback/trackServerScope';
 
 export default function QueuePanel() {
   const orbitRole = useOrbitStore(s => s.role);

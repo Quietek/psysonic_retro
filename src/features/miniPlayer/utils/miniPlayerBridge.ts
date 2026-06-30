@@ -1,11 +1,11 @@
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { listen, emitTo } from '@tauri-apps/api/event';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
-import { setTransitionMode, type TransitionMode } from '@/utils/playback/playbackTransition';
+import { setTransitionMode, type TransitionMode } from '@/features/playback/utils/playback/playbackTransition';
 import { resolveQueueTrack } from '@/utils/library/queueTrackView';
 import type { SubsonicOpenArtistRef } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 
 export const MINI_WINDOW_LABEL = 'mini';
 

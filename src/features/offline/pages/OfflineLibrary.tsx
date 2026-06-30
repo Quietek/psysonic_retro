@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useOfflineStore } from '@/features/offline/store/offlineStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { AlbumCoverArtImage } from '@/cover/AlbumCoverArtImage';
 import { coverServerScopeForServerId } from '@/cover/serverScope';
 import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
@@ -33,7 +33,7 @@ import {
   type OfflineLibraryCard,
 } from '@/features/offline/utils/offlineLibraryHelpers';
 import { showToast } from '@/utils/ui/toast';
-import { shuffleArray } from '@/utils/playback/shuffleArray';
+import { shuffleArray } from '@/features/playback/utils/playback/shuffleArray';
 import { getMediaDir } from '@/utils/media/mediaDir';
 import { canonicalQueueServerKey, resolveIndexKey } from '@/utils/server/serverIndexKey';
 import { reconcileAllLibraryTiersFromDisk } from '@/features/offline/utils/libraryTierReconcile';

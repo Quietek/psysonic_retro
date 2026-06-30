@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { usePlayerStore } from '../../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { resetPlayerStore } from '@/test/helpers/storeReset';
 import { makeTrack, seedQueue } from '@/test/helpers/factories';
 import { seedQueueResolver } from '@/utils/library/queueTrackResolver';

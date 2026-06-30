@@ -4,15 +4,15 @@ import { getSimilarSongs2, fetchSimilarTracksRouted, getTopSongs } from '@/lib/a
 import { filterSongsForLuckyMixRatings, getMixMinRatingsConfigFromAuth } from '../mix/mixRatingFilter';
 import { buildDownloadUrl } from '@/lib/api/subsonicStreamUrl';
 import { useAuthStore } from '../../store/authStore';
-import { usePlayerStore } from '../../store/playerStore';
-import type { Track } from '../../store/playerStoreTypes';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { resolveQueueTrack } from '../library/queueTrackView';
 import { useZipDownloadStore } from '@/features/offline';
 import { useDownloadModalStore } from '@/features/offline';
 import type { EntityShareKind } from '../share/shareLink';
 import { copyEntityShareLink } from '../share/copyEntityShareLink';
 import { sanitizeFilename, shuffleArray } from './contextMenuHelpers';
-import { songToTrack } from '../playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { showToast } from '../ui/toast';
 
 export async function copyShareLink(

@@ -1,5 +1,5 @@
 import { useAuthStore } from '../../store/authStore';
-import { resolvePlaybackUrl } from '../playback/resolvePlaybackUrl';
+import { resolvePlaybackUrl } from '@/features/playback/utils/playback/resolvePlaybackUrl';
 import { isDevOfflineBrowseForced } from '@/features/offline';
 import { resolveServerIdForIndexKey } from '../server/serverLookup';
 import { isActiveServerReachable } from './activeServerReachability';

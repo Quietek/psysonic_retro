@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { toQueueItemRefs } from './queueItemRef';
-import type { Track } from '../../store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 
 describe('toQueueItemRefs', () => {
   it('uses per-track serverId when present', () => {

@@ -1,14 +1,14 @@
 import React from 'react';
 import { ChevronDown, FolderOpen, HardDrive, Music, Waves } from 'lucide-react';
 import type { TFunction } from 'i18next';
-import type { Track } from '@/store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import type { LoudnessLufsPreset, NormalizationEngine } from '@/store/authStoreTypes';
-import type { PlaybackSourceKind } from '@/utils/playback/resolvePlaybackUrl';
+import type { PlaybackSourceKind } from '@/features/playback/utils/playback/resolvePlaybackUrl';
 import {
   formatQueueReplayGainParts,
   renderStars,
 } from '@/utils/componentHelpers/queuePanelHelpers';
-import { loudnessGainPlaceholderUntilCacheDb } from '@/utils/audio/loudnessPlaceholder';
+import { loudnessGainPlaceholderUntilCacheDb } from '@/features/playback/utils/audio/loudnessPlaceholder';
 import { effectiveLoudnessPreAnalysisAttenuationDb } from '@/utils/audio/loudnessPreAnalysisSlider';
 import { formatQueueBpmTech, formatQueueMoodLabels } from '@/utils/library/trackEnrichment';
 import { useQueueTrackEnrichment } from '@/features/queue/hooks/useQueueTrackEnrichment';
@@ -17,8 +17,8 @@ import { PlaybackBufferingOverlay } from '@/components/playback/PlaybackBufferin
 import { CoverArtImage } from '@/cover/CoverArtImage';
 import { OpenArtistRefInline } from '@/features/artist';
 import { usePlaybackTrackCoverRef } from '@/cover/useLibraryCoverRef';
-import { usePlayerStore } from '@/store/playerStore';
-import { resolveTrackArtistRefs } from '@/utils/playback/trackArtistRefs';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 
 interface Props {
   currentTrack: Track;

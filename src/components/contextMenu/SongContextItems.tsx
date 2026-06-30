@@ -3,12 +3,12 @@ import { Play, ListPlus, Radio, Heart, ChevronRight, ChevronsRight, User, Disc3,
 import { useNavigateToAlbum } from '@/features/album';
 import { useNavigateToArtist } from '@/features/artist';
 import { resolveAlbum, resolveMediaServerId, resolvePlaylist } from '@/features/offline';
-import { queueSongStar } from '../../store/pendingStarSync';
+import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import { getMusicNetworkRuntime, useEnrichmentPrimary } from '../../music-network';
-import type { Track } from '../../store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { useAuthStore } from '../../store/authStore';
 import { usePlaylistStore } from '@/features/playlist';
-import { songToTrack } from '../../utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { showToast } from '../../utils/ui/toast';
 import { suggestOrbitTrack, hostEnqueueToOrbit, evaluateOrbitSuggestGate, OrbitSuggestBlockedError } from '@/features/orbit';
 import { renderPresetIcon } from '../settings/musicNetwork/presetIcon';

@@ -5,13 +5,13 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 're
 import { useTranslation } from 'react-i18next';
 import { Info } from 'lucide-react';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { usePlaybackServerId } from '@/hooks/usePlaybackServerId';
 import { fetchBandsintownEvents, type BandsintownEvent } from '@/api/bandsintown';
 import CachedImage from '@/ui/CachedImage';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
-import { primaryTrackArtistRef } from '@/utils/playback/trackArtistRefs';
+import { primaryTrackArtistRef } from '@/features/playback/utils/playback/trackArtistRefs';
 
 const TOUR_LIMIT = 5;
 const BIO_CLAMP_LINES = 4;

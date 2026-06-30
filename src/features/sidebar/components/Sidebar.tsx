@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useOfflineJobStore } from '@/features/offline';
 import { clearOfflinePinTasks } from '@/features/offline';
 import { useDeviceSyncJobStore } from '@/features/deviceSync';

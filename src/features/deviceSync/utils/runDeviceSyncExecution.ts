@@ -6,7 +6,7 @@ import { useDeviceSyncStore, type DeviceSyncSource } from '@/features/deviceSync
 import { useDeviceSyncJobStore } from '@/features/deviceSync/store/deviceSyncJobStore';
 import { showToast } from '@/utils/ui/toast';
 import { trackToSyncInfo, uuid } from '@/features/deviceSync/utils/deviceSyncHelpers';
-import { fetchTracksForSource } from '@/utils/playback/fetchTracksForSource';
+import { fetchTracksForSource } from '@/features/playback/utils/playback/fetchTracksForSource';
 
 export interface SyncDelta {
   addBytes: number;

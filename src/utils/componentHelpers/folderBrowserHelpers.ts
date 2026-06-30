@@ -1,6 +1,6 @@
 import type React from 'react';
 import type { SubsonicAlbum, SubsonicDirectoryEntry } from '@/lib/api/subsonicTypes';
-import type { Track } from '../../store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 
 export type ColumnKind = 'roots' | 'indexes' | 'directory';
 export type NavPos = { colIndex: number; rowIndex: number };

@@ -1,11 +1,11 @@
-import { queueSongStar } from '../store/pendingStarSync';
+import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import { getSong } from '@/lib/api/subsonicLibrary';
-import { songToTrack } from '../utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import i18n from '@/lib/i18n';
-import { usePlayerStore } from '../store/playerStore';
-import { usePreviewStore } from '../store/previewStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { usePreviewStore } from '@/features/playback/store/previewStore';
 import { useLyricsStore } from '../store/lyricsStore';
 import { showToast } from '../utils/ui/toast';
 import type { ActionContext, ShortcutSlot, ShortcutActionMeta } from '@/config/shortcutTypes';

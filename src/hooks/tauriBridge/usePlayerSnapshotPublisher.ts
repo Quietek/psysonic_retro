@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { getPlaybackProgressSnapshot } from '../../store/playbackProgress';
-import { usePlayerStore } from '../../store/playerStore';
+import { getPlaybackProgressSnapshot } from '@/features/playback/store/playbackProgress';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '../../store/authStore';
 import { resolveQueueTrack } from '../../utils/library/queueTrackView';
 

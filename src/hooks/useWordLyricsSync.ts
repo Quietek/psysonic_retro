@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '../store/playbackProgress';
-import type { Track } from '../store/playerStoreTypes';
+import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import type { WordLyricsLine } from './useLyrics';
 
 interface Args {

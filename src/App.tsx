@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAuthStore } from './store/authStore';
-import { usePlayerStore } from './store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useLyricsStore } from './store/lyricsStore';
 import { useThemeStore } from './store/themeStore';
 import { useInstalledThemesStore } from './store/installedThemesStore';

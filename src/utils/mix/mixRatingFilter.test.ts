@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { usePlayerStore } from '../../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { resetPlayerStore } from '../../test/helpers/storeReset';
 
 vi.mock('@/lib/api/subsonicRatings', () => ({

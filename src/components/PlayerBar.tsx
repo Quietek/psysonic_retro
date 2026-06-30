@@ -1,4 +1,4 @@
-import { queueSongStar } from '../store/pendingStarSync';
+import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import { coverArtIdFromRadio } from '../cover/ids';
 import { resolvePlaybackTrackCoverArtId } from '../cover/resolveCoverArtId';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -8,7 +8,7 @@ import {
   PictureInPicture2, Ellipsis,
 } from 'lucide-react';
 import { invoke } from '@tauri-apps/api/core';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
 import { useAuthStore } from '../store/authStore';
 import { useThemeStore } from '../store/themeStore';
@@ -20,10 +20,10 @@ import { useRadioMprisSync } from '@/features/radio';
 import { usePlaybackDelayPress } from '../hooks/usePlaybackDelayPress';
 import PlaybackDelayModal from './PlaybackDelayModal';
 import { usePlaybackScheduleRemaining } from '../utils/format/playbackScheduleFormat';
-import { usePreviewStore } from '../store/previewStore';
+import { usePreviewStore } from '@/features/playback/store/previewStore';
 import { usePerfProbeFlags } from '../utils/perf/perfFlags';
 import { coerceOpenArtistRefs } from '@/lib/api/openArtistRefs';
-import { resolveTrackArtistRefs } from '../utils/playback/trackArtistRefs';
+import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 import { PlayerTrackInfo } from './playerBar/PlayerTrackInfo';
 import { PlayerTransportControls } from './playerBar/PlayerTransportControls';
 import { PlayerSeekbarSection } from './playerBar/PlayerSeekbarSection';

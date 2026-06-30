@@ -11,7 +11,7 @@ import { useCoverLightboxSrc } from '../cover/lightbox';
 import { ArrowLeft, Users, Heart, Feather, Share2 } from 'lucide-react';
 import WikipediaIcon from '../components/WikipediaIcon';
 import { open } from '@tauri-apps/plugin-shell';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '../store/authStore';
 import { useTranslation } from 'react-i18next';
 import { copyEntityShareLink } from '../utils/share/copyEntityShareLink';

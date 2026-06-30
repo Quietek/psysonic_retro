@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import type { TFunction } from 'i18next';
 import type { SubsonicArtist } from '@/lib/api/subsonicTypes';
 import type { ServerProfile } from '@/store/authStoreTypes';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { activateShareSearchServer } from '@/utils/share/enqueueShareSearchPayload';
 import { sharePayloadTotal, type ShareSearchMatch } from '@/utils/share/shareSearch';
 import type { ShareSearchPreviewState } from '@/features/search/hooks/useShareSearchPreview';

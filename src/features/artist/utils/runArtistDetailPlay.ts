@@ -1,9 +1,9 @@
 import type { TFunction } from 'i18next';
 import { getSimilarSongs2, getTopSongs } from '@/lib/api/subsonicArtists';
 import type { SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '@/store/playerStoreTypes';
-import { songToTrack } from '@/utils/playback/songToTrack';
-import { runBulkPlayAll, runBulkShuffle } from '@/utils/playback/runBulkPlay';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
+import { runBulkPlayAll, runBulkShuffle } from '@/features/playback/utils/playback/runBulkPlay';
 import { resolveAlbum, resolveMediaServerId } from '@/features/offline';
 
 /** Ordered artist discography tracks for play-all / shuffle (network or local bytes). */

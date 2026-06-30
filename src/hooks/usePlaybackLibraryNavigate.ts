@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ensurePlaybackServerActive } from '../utils/playback/playbackServer';
+import { ensurePlaybackServerActive } from '@/features/playback/utils/playback/playbackServer';
 import { navigatePathWithAlbumReturnTo } from '../utils/navigation/albumDetailNavigation';
 
 /** Navigate to library routes for the playing queue — switches to {@link queueServerId} when needed. */

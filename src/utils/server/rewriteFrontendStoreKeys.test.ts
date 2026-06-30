@@ -3,7 +3,7 @@ import { useAnalysisStrategyStore } from '../../store/analysisStrategyStore';
 import { useCoverStrategyStore } from '../../store/coverStrategyStore';
 import { useLocalPlaybackStore } from '../../store/localPlaybackStore';
 import { useOfflineStore } from '@/features/offline';
-import { usePlayerStore } from '../../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { rewriteFrontendStoreKeysForRemap } from './rewriteFrontendStoreKeys';
 
 describe('rewriteFrontendStoreKeysForRemap', () => {

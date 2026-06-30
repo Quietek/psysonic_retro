@@ -1,9 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { onInvoke } from '@/test/mocks/tauri';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import type { TrackRefDto } from '@/lib/api/library';
-import type { Track } from '@/store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import {
   getCachedTrack,
   _resetQueueResolverForTest,

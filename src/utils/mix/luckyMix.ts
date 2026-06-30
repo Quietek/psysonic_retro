@@ -1,13 +1,13 @@
 import { fetchSimilarTracksRouted } from '@/lib/api/subsonicArtists';
 import { filterSongsToActiveLibrary, getRandomSongs } from '@/lib/api/subsonicLibrary';
 import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { QueueItemRef } from '../../store/playerStoreTypes';
-import { songToTrack } from '../playback/songToTrack';
+import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { invoke } from '@tauri-apps/api/core';
 import i18n from '@/lib/i18n';
 import { useAuthStore } from '../../store/authStore';
-import { pushQueueUndoFromGetter } from '../../store/queueUndo';
-import { usePlayerStore } from '../../store/playerStore';
+import { pushQueueUndoFromGetter } from '@/features/playback/store/queueUndo';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useLuckyMixStore } from '../../store/luckyMixStore';
 import { isLuckyMixAvailable } from '../../hooks/useLuckyMixAvailable';
 import { showToast } from '../ui/toast';
@@ -16,7 +16,7 @@ import {
   playbackServerDiffersFromActive,
   prepareActiveServerForNewMix,
   shouldHandoffQueueToActiveServer,
-} from '../playback/playbackServer';
+} from '@/features/playback/utils/playback/playbackServer';
 import {
   filterSongsForLuckyMixRatings,
   filterTopArtistsForMixRatings,

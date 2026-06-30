@@ -4,7 +4,7 @@ import { useThemeStore } from '../store/themeStore';
 import { coverIndexKeyFromRef, coverStorageKeyFromRef } from '../cover/storageKeys';
 import { connectBaseUrlForServer } from '../utils/server/serverEndpoint';
 import { serverIndexKeyForProfile } from '../utils/server/serverIndexKey';
-import { getPlaybackServerId } from '../utils/playback/playbackServer';
+import { getPlaybackServerId } from '@/features/playback/utils/playback/playbackServer';
 import { restBaseFromUrl } from '@/lib/api/subsonicClient';
 import type { CoverArtRef, CoverArtTier } from '../cover/types';
 

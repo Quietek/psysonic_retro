@@ -1,8 +1,8 @@
-import { usePlayerStore } from '../../store/playerStore';
-import type { QueueItemRef } from '../../store/playerStoreTypes';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
 import { getQueueTracksView, resolveQueueTrack } from '../library/queueTrackView';
 import { resolveBatch } from '../library/queueTrackResolver';
-import { findQueueItemRefIndex, sameQueueItemRef } from '../playback/queueIdentity';
+import { findQueueItemRefIndex, sameQueueItemRef } from '@/features/playback/utils/playback/queueIdentity';
 
 /**
  * Play a timeline history row without replacing the queue. Upcoming slots jump

@@ -6,7 +6,7 @@ import { useDeviceSyncJobStore } from '@/features/deviceSync/store/deviceSyncJob
 import { useDeviceSyncStore } from '@/features/deviceSync/store/deviceSyncStore';
 import { showToast } from '@/utils/ui/toast';
 import { trackToSyncInfo } from '@/features/deviceSync/utils/deviceSyncHelpers';
-import { fetchTracksForSource } from '@/utils/playback/fetchTracksForSource';
+import { fetchTracksForSource } from '@/features/playback/utils/playback/fetchTracksForSource';
 
 export function useDeviceSyncJobEvents(
   t: TFunction,

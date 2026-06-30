@@ -2,8 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AudioLines, ChevronRight, Heart, Play, Square } from 'lucide-react';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import type { Track } from '../../store/playerStoreTypes';
-import { previewInputFromSong, usePreviewStore } from '../../store/previewStore';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
+import { previewInputFromSong, usePreviewStore } from '@/features/playback/store/previewStore';
 import { useDragDrop } from '@/lib/dnd/DragDropContext';
 import { formatRandomMixDuration } from '../../utils/componentHelpers/randomMixHelpers';
 

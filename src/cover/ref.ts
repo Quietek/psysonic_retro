@@ -1,4 +1,4 @@
-import { getPlaybackServerId } from '../utils/playback/playbackServer';
+import { getPlaybackServerId } from '@/features/playback/utils/playback/playbackServer';
 import { useAuthStore } from '../store/authStore';
 import { coverServerScopeForServerId } from './serverScope';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';

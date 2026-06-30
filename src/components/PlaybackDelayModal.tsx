@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Moon, Sunrise } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '../store/authStore';
 import { useShallow } from 'zustand/react/shallow';
 
@@ -14,7 +14,7 @@ import {
   parsePlaybackDelayCustomMinutes,
   scheduleDelayMsFromSeconds,
   scheduleSecondsFromCustomMinutes,
-} from '../utils/playback/playbackScheduleDelay';
+} from '@/features/playback/utils/playback/playbackScheduleDelay';
 
 /** One tap = schedule; custom minutes still covers any duration. */
 const PRESET_SECONDS = [30, 60, 120, 300, 600, 900, 1800, 3600] as const;

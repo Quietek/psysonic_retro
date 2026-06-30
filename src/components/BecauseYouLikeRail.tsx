@@ -2,8 +2,8 @@ import { getArtist, getArtistInfo } from '@/lib/api/subsonicArtists';
 import { filterAlbumsToActiveLibrary } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum, resolveMediaServerId } from '@/features/offline';
 import type { SubsonicAlbum } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '../utils/playback/songToTrack';
-import { shuffleArray } from '../utils/playback/shuffleArray';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
+import { shuffleArray } from '@/features/playback/utils/playback/shuffleArray';
 import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,9 +18,9 @@ import {
   writeBecauseYouLikeCache,
   type BecauseYouLikeAnchor,
 } from '../store/becauseYouLikeCache';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '../store/authStore';
-import { playAlbum, playAlbumShuffled } from '../utils/playback/playAlbum';
+import { playAlbum, playAlbumShuffled } from '@/features/playback/utils/playback/playAlbum';
 import { useLongPressAction } from '@/lib/hooks/useLongPressAction';
 import { LongPressWaveOverlay } from './LongPressWaveOverlay';
 import { formatHumanHoursMinutes } from '@/lib/format/formatHumanDuration';

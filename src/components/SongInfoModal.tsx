@@ -4,7 +4,7 @@ import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
 import { ndGetSongPath } from '@/lib/api/navidromeAdmin';
 import { useAuthStore } from '../store/authStore';

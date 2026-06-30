@@ -1,11 +1,11 @@
 import { getSong } from '@/lib/api/subsonicLibrary';
 import { resolveAlbum, resolveArtist } from '@/features/offline';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '../playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import type { Location, NavigateFunction } from 'react-router-dom';
 import type { TFunction } from 'i18next';
 import { useAuthStore } from '../../store/authStore';
-import { usePlayerStore } from '../../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { navigateToAlbumDetail } from '../navigation/albumDetailNavigation';
 import { findServerIdForShareUrl, type EntitySharePayloadV1 } from './shareLink';
 import { showToast } from '../ui/toast';

@@ -15,10 +15,10 @@ import { renderHook } from '@testing-library/react';
 import { emitTauriEvent } from '@/test/mocks/tauri';
 import { resetAllStores } from '@/test/helpers/storeReset';
 import { makeTrack } from '@/test/helpers/factories';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
-import { getSeekFallbackVisualTarget, setSeekFallbackVisualTarget } from '@/store/seekFallbackState';
-import { setIsAudioPaused } from '@/store/engineState';
+import { getSeekFallbackVisualTarget, setSeekFallbackVisualTarget } from '@/features/playback/store/seekFallbackState';
+import { setIsAudioPaused } from '@/features/playback/store/engineState';
 import { useAudioDeviceBridge } from './useAudioDeviceBridge';
 
 const track = makeTrack({ id: 't1', duration: 300 });

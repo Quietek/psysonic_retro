@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useShallow } from 'zustand/react/shallow';
 import { formatPlaybackScheduleRemaining } from '../utils/format/playbackScheduleFormat';
 import { useWindowVisibility } from '@/lib/hooks/useWindowVisibility';

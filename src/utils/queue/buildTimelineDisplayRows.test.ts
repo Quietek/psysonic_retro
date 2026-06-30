@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { buildTimelineDisplayRows, findTimelineScrollLocalIndex } from './buildTimelineDisplayRows';
-import type { QueueItemRef } from '../../store/playerStoreTypes';
+import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
 
 const ref = (trackId: string, extra?: Partial<QueueItemRef>): QueueItemRef => ({
   serverId: 's1',

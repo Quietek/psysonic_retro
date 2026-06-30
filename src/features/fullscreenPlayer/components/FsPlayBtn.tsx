@@ -1,7 +1,7 @@
 import React, { memo, useRef } from 'react';
 import { Moon, Pause, Play, Sunrise } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { usePlaybackDelayPress } from '@/hooks/usePlaybackDelayPress';
 import { usePlaybackScheduleRemaining } from '@/utils/format/playbackScheduleFormat';
 import PlaybackDelayModal from '@/components/PlaybackDelayModal';

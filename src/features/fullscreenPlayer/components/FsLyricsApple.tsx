@@ -1,11 +1,11 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { useLyrics, type WordLyricsLine } from '@/hooks/useLyrics';
 import { useWordLyricsSync } from '@/hooks/useWordLyricsSync';
-import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/store/playbackProgress';
+import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';
 import type { LrcLine } from '@/api/lrclib';
-import type { Track } from '@/store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { EaseScroller, targetForFraction } from '@/utils/ui/easeScroll';
 
 // Fullscreen synced lyrics.

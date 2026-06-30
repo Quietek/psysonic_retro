@@ -1,5 +1,5 @@
-import type { QueueItemRef } from '../../store/playerStoreTypes';
-import type { TimelinePlayedRef } from '../../store/timelineSessionHistory';
+import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
+import type { TimelinePlayedRef } from '@/features/playback/store/timelineSessionHistory';
 
 export type TimelineDisplayRow =
   | { kind: 'history'; ref: TimelinePlayedRef; localIndex: number; key: string }

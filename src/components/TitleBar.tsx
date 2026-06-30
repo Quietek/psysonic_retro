@@ -1,7 +1,7 @@
 import React from 'react';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { Minus, Square, X } from 'lucide-react';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '../store/authStore';
 import { IS_MACOS } from '@/lib/util/platform';
 

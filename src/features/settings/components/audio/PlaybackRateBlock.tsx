@@ -17,8 +17,8 @@ import {
   playbackSpeedStep,
   varispeedSpeedFromSemitones,
   type PlaybackStrategy,
-} from '@/utils/audio/playbackRateHelpers';
-import { usePlaybackRateStore } from '@/store/playbackRateStore';
+} from '@/features/playback/utils/audio/playbackRateHelpers';
+import { usePlaybackRateStore } from '@/features/playback/store/playbackRateStore';
 import { useOrbitStore } from '@/features/orbit';
 import { useAuthStore } from '@/store/authStore';
 import { isOrbitPlaybackSyncActive } from '@/features/orbit';

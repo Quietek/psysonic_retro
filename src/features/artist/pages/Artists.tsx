@@ -4,7 +4,7 @@ import { LayoutGrid, List, Images } from 'lucide-react';
 import SelectionToggleButton from '@/components/SelectionToggleButton';
 import StarFilterButton from '@/components/StarFilterButton';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from 'react-i18next';
 import { useVirtualizer } from '@tanstack/react-virtual';

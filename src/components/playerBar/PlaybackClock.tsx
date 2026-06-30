@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from 'react';
-import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '../../store/playbackProgress';
+import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';
 import {
   formatPlaybarClock,
   formatPlaybarToggleClock,

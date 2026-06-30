@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useConnectionStatus } from '@/hooks/useConnectionStatus';
 import { useNavidromeAdminRole } from '@/hooks/useNavidromeAdminRole';
 import { serverListDisplayLabel } from '@/utils/server/serverDisplayName';

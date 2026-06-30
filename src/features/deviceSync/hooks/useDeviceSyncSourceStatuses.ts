@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { fetchTracksForSource } from '@/utils/playback/fetchTracksForSource';
+import { fetchTracksForSource } from '@/features/playback/utils/playback/fetchTracksForSource';
 import { trackToSyncInfo, type SyncStatus } from '@/features/deviceSync/utils/deviceSyncHelpers';
 import type { DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncStore';
 

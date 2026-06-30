@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Check, Clock3, ListMusic, Pencil, Play, Sparkles, Trash2 } from 'lucide-react';
 import type { SubsonicPlaylist } from '@/lib/api/subsonicTypes';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   displayPlaylistName, isSmartPlaylistName, type PendingSmartPlaylist,
 } from '@/features/playlist/utils/playlistsSmart';

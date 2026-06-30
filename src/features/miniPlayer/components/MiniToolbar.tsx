@@ -4,7 +4,7 @@ import { emit } from '@tauri-apps/api/event';
 import { Blend, Infinity as InfinityIcon, ListMusic, MoveRight, Shuffle, Volume2, VolumeX, Waves } from 'lucide-react';
 import type { TFunction } from 'i18next';
 import type { MiniSyncPayload } from '@/features/miniPlayer/utils/miniPlayerBridge';
-import { getTransitionMode } from '@/utils/playback/playbackTransition';
+import { getTransitionMode } from '@/features/playback/utils/playback/playbackTransition';
 
 interface Props {
   state: MiniSyncPayload;

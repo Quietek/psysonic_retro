@@ -5,7 +5,7 @@ import { coverIndexKeyFromRef } from '@/cover/storageKeys';
 import { useNowPlayingPrewarm } from '@/features/nowPlaying/hooks/useNowPlayingPrewarm';
 import { prewarmNowPlayingFetchers } from '@/features/nowPlaying/hooks/useNowPlayingFetchers';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { makeTrack } from '@/test/helpers/factories';
 import { resetAllStores } from '@/test/helpers/storeReset';
 import { toQueueItemRefs } from '@/utils/library/queueItemRef';

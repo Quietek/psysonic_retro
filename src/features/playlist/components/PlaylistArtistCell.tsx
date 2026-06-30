@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { resolveTrackArtistRefs } from '@/utils/playback/trackArtistRefs';
+import { resolveTrackArtistRefs } from '@/features/playback/utils/playback/trackArtistRefs';
 
 /**
  * Multi-artist credit for playlist track rows (main list + suggestions).

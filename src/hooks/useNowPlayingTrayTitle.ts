@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { getCurrentWindow } from '@tauri-apps/api/window';
-import type { Track } from '../store/playerStoreTypes';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 
 /**
  * Keep `document.title`, the OS window title, and the tray tooltip in sync

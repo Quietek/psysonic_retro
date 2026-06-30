@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import {
   _resetTimelineSessionHistoryForTest,
   isTimelineBootstrapAttempted,
-} from '../store/timelineSessionHistory';
+} from '@/features/playback/store/timelineSessionHistory';
 import {
   _resetTimelineBootstrapInFlightForTest,
   ensureTimelineBootstrap,

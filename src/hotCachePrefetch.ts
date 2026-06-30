@@ -1,14 +1,14 @@
 import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
-import { getPlaybackCacheServerKey } from './utils/playback/playbackServer';
-import type { QueueItemRef } from './store/playerStoreTypes';
+import { getPlaybackCacheServerKey } from '@/features/playback/utils/playback/playbackServer';
+import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
 import { resolveQueueTrack } from './utils/library/queueTrackView';
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from './store/authStore';
-import { selectHotCacheEntries, useHotCacheStore } from './store/hotCacheStore';
+import { selectHotCacheEntries, useHotCacheStore } from '@/features/playback/store/hotCacheStore';
 import { useLocalPlaybackStore } from './store/localPlaybackStore';
 import { getMediaDir } from './utils/media/mediaDir';
 import { librarySqlServerId } from './api/coverCache';
-import { usePlayerStore } from './store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   bumpHotCachePreviousTrackGrace,
   clearHotCachePreviousGrace,

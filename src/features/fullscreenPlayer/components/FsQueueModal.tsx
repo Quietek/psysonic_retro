@@ -1,8 +1,8 @@
 import { memo, useMemo, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X } from 'lucide-react';
-import { usePlayerStore } from '@/store/playerStore';
-import type { Track } from '@/store/playerStoreTypes';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 import { resolveQueueTrack } from '@/utils/library/queueTrackView';
 import {
   getQueueResolverVersion,

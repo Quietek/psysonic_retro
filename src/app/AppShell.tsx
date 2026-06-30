@@ -1,6 +1,6 @@
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ensurePlaybackServerActive } from '../utils/playback/playbackServer';
+import { ensurePlaybackServerActive } from '@/features/playback/utils/playback/playbackServer';
 import { navigatePathWithAlbumReturnTo, shouldSkipMainScrollResetOnRouteChange } from '../utils/navigation/albumDetailNavigation';
 import { getCurrentWebview } from '@tauri-apps/api/webview';
 import { PanelRight } from 'lucide-react';
@@ -58,13 +58,13 @@ import { IS_LINUX, IS_MACOS } from '@/lib/util/platform';
 import { useConnectionStatus } from '../hooks/useConnectionStatus';
 import { useIdlePlayQueuePull } from '../hooks/useIdlePlayQueuePull';
 import { useAuthStore } from '../store/authStore';
-import { usePlayerStore } from '../store/playerStore';
-import '../store/previewPlayerVolumeSync';
-import '../store/queueResolverBridge';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import '@/features/playback/store/previewPlayerVolumeSync';
+import '@/features/playback/store/queueResolverBridge';
 import { useThemeStore } from '../store/themeStore';
 import { useFontStore } from '../store/fontStore';
 import { useEqStore } from '../store/eqStore';
-import { usePlaybackRateStore } from '../store/playbackRateStore';
+import { usePlaybackRateStore } from '@/features/playback/store/playbackRateStore';
 import { usePlaybackRateOrbitSync } from '@/features/orbit';
 import { usePerfProbeFlags } from '../utils/perf/perfFlags';
 import {

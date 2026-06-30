@@ -1,5 +1,5 @@
-import type { QueueItemRef, Track } from '../../store/playerStoreTypes';
-import { stampTrackServerId } from '../playback/trackServerScope';
+import type { QueueItemRef, Track } from '@/features/playback/store/playerStoreTypes';
+import { stampTrackServerId } from '@/features/playback/utils/playback/trackServerScope';
 import { canonicalQueueServerKey } from '../server/serverIndexKey';
 
 /**

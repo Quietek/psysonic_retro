@@ -1,8 +1,8 @@
-import { queueSongStar } from '../store/pendingStarSync';
+import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import { usePlaybackCoverArt } from '../hooks/usePlaybackCoverArt';
 import { usePlaybackTrackCoverRef } from '../cover/useLibraryCoverRef';
-import type { Track } from '../store/playerStoreTypes';
-import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '../store/playbackProgress';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
+import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';
 import React, { useState, useCallback, useRef, useEffect, useSyncExternalStore, CSSProperties } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlaybackLibraryNavigate } from '../hooks/usePlaybackLibraryNavigate';
@@ -13,7 +13,7 @@ import {
   Shuffle, Repeat, Repeat1, Heart, Music, MicVocal, ListMusic, X,
   Moon, Sunrise,
 } from 'lucide-react';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useCachedUrl } from '@/ui/CachedImage';
 import { OpenArtistRefInline } from '@/features/artist';
 import { formatTrackTime } from '@/lib/format/formatDuration';

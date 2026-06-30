@@ -2,9 +2,9 @@ import { getInternetRadioStations, createInternetRadioStation, updateInternetRad
 import { type InternetRadioStation } from '@/lib/api/subsonicTypes';
 import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import { Plus, Search } from 'lucide-react';
-import { usePlayerStore } from '@/store/playerStore';
-import { setRadioVolume } from '@/store/radioPlayer';
-import { fadeOut } from '@/utils/playback/fadeOut';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { setRadioVolume } from '@/features/playback/store/radioPlayer';
+import { fadeOut } from '@/features/playback/utils/playback/fadeOut';
 import { invalidateCoverArt } from '@/utils/imageCache';
 import { useTranslation } from 'react-i18next';
 import { showToast } from '@/utils/ui/toast';

@@ -1,7 +1,7 @@
-import type { QueueItemRef } from '../../store/playerStoreTypes';
+import type { QueueItemRef } from '@/features/playback/store/playerStoreTypes';
 import type { PlaySessionRecentTrack } from '@/lib/api/library';
-import type { TimelinePlayedRef } from '../../store/timelineSessionHistory';
-import type { Track } from '../../store/playerStoreTypes';
+import type { TimelinePlayedRef } from '@/features/playback/store/timelineSessionHistory';
+import type { Track } from '@/features/playback/store/playerStoreTypes';
 
 export function timelineHistoryToQueueRefs(
   history: TimelinePlayedRef[],

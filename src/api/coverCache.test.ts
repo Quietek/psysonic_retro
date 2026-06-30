@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { useAuthStore } from '../store/authStore';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { makeTrack } from '../test/helpers/factories';
 import { resetAllStores } from '../test/helpers/storeReset';
 import { invokeMock, onInvoke } from '../test/mocks/tauri';

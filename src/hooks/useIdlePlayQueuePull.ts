@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react';
-import { applyServerPlayQueue } from '../store/applyServerPlayQueue';
+import { applyServerPlayQueue } from '@/features/playback/store/applyServerPlayQueue';
 import { useAuthStore } from '../store/authStore';
 import { useOrbitStore } from '@/features/orbit';
-import { usePlayerStore } from '../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   getPlaybackIdleSinceMs,
   isIdleQueuePullSuspended,
   isQueueNaturallyEnded,
   isPlaybackIdleLongEnough,
   markPlaybackIdle,
-} from '../store/queuePlaybackIdle';
-import { hasPendingQueueSync } from '../store/queueSync';
+} from '@/features/playback/store/queuePlaybackIdle';
+import { hasPendingQueueSync } from '@/features/playback/store/queueSync';
 import type { ConnectionStatus } from './useConnectionStatus';
 import { canAutoIdlePlayQueuePull } from './usePlayQueueSyncLedState';
 

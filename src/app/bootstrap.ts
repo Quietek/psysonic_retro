@@ -1,4 +1,4 @@
-import { installQueueUndoHotkey } from '../store/queueUndoHotkey';
+import { installQueueUndoHotkey } from '@/features/playback/store/queueUndoHotkey';
 import { configureStartupSplash } from './startupSplash';
 import { setupMusicNetworkRuntime } from './musicNetworkBridge';
 import { invoke } from '@tauri-apps/api/core';

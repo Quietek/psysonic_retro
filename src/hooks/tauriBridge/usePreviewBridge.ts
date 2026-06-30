@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
-import { usePreviewStore } from '../../store/previewStore';
+import { usePreviewStore } from '@/features/playback/store/previewStore';
 
 /** Track-preview lifecycle: Rust audio engine emits start/progress/end. The
  * store mirrors them so any tracklist row can render its preview UI. */

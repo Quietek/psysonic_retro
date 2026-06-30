@@ -1,4 +1,4 @@
-import { queueSongStar, queueSongRating } from '@/store/pendingStarSync';
+import { queueSongStar, queueSongRating } from '@/features/playback/store/pendingStarSync';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTracklistColumns, type ColDef } from '@/utils/useTracklistColumns';
 import { TopFavoriteArtistsRow } from '@/features/favorites/components/TopFavoriteArtists';
@@ -11,7 +11,7 @@ import { useFavoritesSelection } from '@/features/favorites/hooks/useFavoritesSe
 import { useBulkPlPickerOutsideClick } from '@/hooks/useBulkPlPickerOutsideClick';
 import { AlbumRow } from '@/features/album';
 import { ArtistRow } from '@/features/artist';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useTranslation } from 'react-i18next';
 import { useSelectionStore } from '@/store/selectionStore';
 import FavoritesOfflineHeader from '@/features/favorites/components/FavoritesOfflineHeader';

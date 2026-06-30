@@ -1,11 +1,11 @@
 import { getSong } from '@/lib/api/subsonicLibrary';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import { useEffect, useRef, useState } from 'react';
 import { X, RefreshCw, Shuffle, Settings2, Share2, HelpCircle, Activity } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
 import { useHelpModalStore } from '@/store/helpModalStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import {
   endOrbitSession,
   leaveOrbitSession,

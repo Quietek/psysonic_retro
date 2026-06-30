@@ -2,7 +2,7 @@ import { parseSubsonicEntityStarRating, prefetchAlbumUserRatings, prefetchArtist
 import { getRandomSongs } from '@/lib/api/subsonicLibrary';
 import type { SubsonicAlbum, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '../../store/authStore';
-import { usePlayerStore } from '../../store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 
 /** Default target list size for Random Mix; per-call override via `fetchRandomMixSongsUntilFull(c, { targetSize })`. */
 export const RANDOM_MIX_TARGET_SIZE = 50;

@@ -4,8 +4,8 @@ import {
   Shuffle, ListMusic, ChevronDown, Star, MicVocal,
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { usePlayerStore } from '@/store/playerStore';
-import { queueSongStar, queueSongRating } from '@/store/pendingStarSync';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { queueSongStar, queueSongRating } from '@/features/playback/store/pendingStarSync';
 import { useAlbumCoverRef, useArtistCoverRef } from '@/cover/useLibraryCoverRef';
 import { usePlaybackCoverArt } from '@/hooks/usePlaybackCoverArt';
 import { useCachedUrl } from '@/ui/CachedImage';

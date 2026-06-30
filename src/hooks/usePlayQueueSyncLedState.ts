@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { ConnectionStatus } from '../hooks/useConnectionStatus';
-import { pullPlayQueueFromActiveServer } from '../store/applyServerPlayQueue';
+import { pullPlayQueueFromActiveServer } from '@/features/playback/store/applyServerPlayQueue';
 import { useAuthStore } from '../store/authStore';
 import { useOrbitStore } from '@/features/orbit';
-import { usePlayerStore } from '../store/playerStore';
-import { getPlaybackServerId, queueIsMultiServer } from '../utils/playback/playbackServer';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
+import { getPlaybackServerId, queueIsMultiServer } from '@/features/playback/utils/playback/playbackServer';
 import {
   getIdleQueuePullSuspendedSnapshot,
   subscribeIdleQueuePullSuspended,
-} from '../store/queuePlaybackIdle';
-import { clearQueueHandoffPending, isQueueHandoffPending } from '../store/queueSyncUiState';
+} from '@/features/playback/store/queuePlaybackIdle';
+import { clearQueueHandoffPending, isQueueHandoffPending } from '@/features/playback/store/queueSyncUiState';
 import { showToast } from '../utils/ui/toast';
 
 export function usePlayQueueSyncLedState(status: ConnectionStatus) {

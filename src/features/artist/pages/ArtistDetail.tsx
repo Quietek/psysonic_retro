@@ -6,7 +6,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { AlbumCard } from '@/features/album';
 import { ArrowDownUp } from 'lucide-react';
 import { open } from '@tauri-apps/plugin-shell';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { useTranslation } from 'react-i18next';
 import { useArtistLayoutStore, type ArtistSectionId } from '@/features/artist/store/artistLayoutStore';

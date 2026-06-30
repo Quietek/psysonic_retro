@@ -1,6 +1,6 @@
 import type React from 'react';
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 
 export interface StartPlaylistRowDragDeps {
   e: React.MouseEvent;

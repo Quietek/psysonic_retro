@@ -43,13 +43,13 @@ vi.mock('../../store/authStore', () => ({
   },
 }));
 
-vi.mock('../../store/playerStore', () => ({
+vi.mock('@/features/playback/store/playerStore', () => ({
   usePlayerStore: {
     getState: () => ({ enqueue: mocks.enqueue }),
   },
 }));
 
-vi.mock('../playback/songToTrack', () => ({
+vi.mock('@/features/playback/utils/playback/songToTrack', () => ({
   songToTrack: mocks.songToTrack,
 }));
 

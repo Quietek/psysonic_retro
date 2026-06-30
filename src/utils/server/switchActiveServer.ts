@@ -6,8 +6,8 @@ import {
 } from '../../cover/coverTraffic';
 import { useAuthStore } from '../../store/authStore';
 import { useOrbitStore } from '@/features/orbit';
-import { flushPlayQueueForServer } from '../../store/queueSync';
-import { markQueueHandoffPending } from '../../store/queueSyncUiState';
+import { flushPlayQueueForServer } from '@/features/playback/store/queueSync';
+import { markQueueHandoffPending } from '@/features/playback/store/queueSyncUiState';
 import { endOrbitSession, leaveOrbitSession } from '@/features/orbit';
 import { ensureConnectUrlResolved } from './serverEndpoint';
 import { syncServerHttpContextForProfile } from './syncServerHttpContext';

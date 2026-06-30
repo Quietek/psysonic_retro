@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import type { TFunction } from 'i18next';
 import { PlaybackRateControls } from '@/features/settings';
-import { usePlaybackRateStore } from '../../store/playbackRateStore';
+import { usePlaybackRateStore } from '@/features/playback/store/playbackRateStore';
 import { useOrbitStore } from '@/features/orbit';
 import {
   clampPlaybackPitch,
@@ -13,7 +13,7 @@ import {
   playbackPitchStep,
   playbackSpeedStep,
   varispeedSpeedFromSemitones,
-} from '../../utils/audio/playbackRateHelpers';
+} from '@/features/playback/utils/audio/playbackRateHelpers';
 import { isOrbitPlaybackSyncActive } from '@/features/orbit';
 import { usePlayerBarAnchoredPopover } from '../../hooks/usePlayerBarAnchoredPopover';
 

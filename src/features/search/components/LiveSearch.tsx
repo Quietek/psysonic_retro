@@ -1,6 +1,6 @@
 import { subscribeLibrarySyncIdle, subscribeLibrarySyncProgress } from '@/lib/api/library';
 import type { SearchResults, SubsonicArtist } from '@/lib/api/subsonicTypes';
-import { songToTrack } from '@/utils/playback/songToTrack';
+import { songToTrack } from '@/features/playback/utils/playback/songToTrack';
 import {
   LIVE_SEARCH_DEBOUNCE_NETWORK_MS,
   LIVE_SEARCH_DEBOUNCE_RACE_MS,
@@ -24,7 +24,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useNavigateToAlbum } from '@/features/album';
 import { Search, Disc3, Users, Music, TextSearch, Database, Globe } from 'lucide-react';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { useLibraryIndexStore } from '@/store/libraryIndexStore';
 import { useTranslation } from 'react-i18next';

@@ -4,7 +4,7 @@ import type { DeviceSyncSource } from '@/features/deviceSync/store/deviceSyncSto
 import type { SubsonicSong } from '@/lib/api/subsonicTypes';
 import { applyLegacyTemplate } from '@/features/deviceSync/utils/deviceSyncLegacyTemplate';
 import { trackToSyncInfo } from '@/features/deviceSync/utils/deviceSyncHelpers';
-import { fetchTracksForSource } from '@/utils/playback/fetchTracksForSource';
+import { fetchTracksForSource } from '@/features/playback/utils/playback/fetchTracksForSource';
 import { IS_WINDOWS } from '@/lib/util/platform';
 
 export type MigrationPhase = 'closed' | 'loading' | 'preview' | 'executing' | 'done' | 'nothing';

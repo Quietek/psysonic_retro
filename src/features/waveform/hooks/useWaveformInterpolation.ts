@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import type { SeekbarStyle } from '@/store/authStoreTypes';
-import { getPlaybackProgressSnapshot } from '@/store/playbackProgress';
+import { getPlaybackProgressSnapshot } from '@/features/playback/store/playbackProgress';
 import {
   ANIMATED_STYLES, AnimState, INTERPOLATION_PAINT_MIN_MS,
   isBarQuantizedSeekStyle, quantizeProgressByBars,

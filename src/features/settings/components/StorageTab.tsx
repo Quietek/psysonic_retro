@@ -4,7 +4,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { open as openDialog } from '@tauri-apps/plugin-dialog';
 import { Download, FolderOpen, Trash2, X } from 'lucide-react';
 import { useAuthStore } from '@/store/authStore';
-import { countHotCacheTracks } from '@/store/hotCacheStore';
+import { countHotCacheTracks } from '@/features/playback/store/hotCacheStore';
 import { useLocalPlaybackStore } from '@/store/localPlaybackStore';
 import { formatBytes, snapHotCacheMb } from '@/lib/format/formatBytes';
 import SettingsSubSection from '@/features/settings/components/SettingsSubSection';

@@ -12,7 +12,7 @@ import {
 } from '@/features/orbit/utils/orbit';
 import { randomOrbitSessionName } from '@/features/orbit/utils/orbitNames';
 import { useAuthStore } from '@/store/authStore';
-import { usePlayerStore } from '@/store/playerStore';
+import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { isLanUrl, serverShareBaseUrl } from '@/utils/server/serverEndpoint';
 import { ORBIT_DEFAULT_MAX_USERS } from '@/features/orbit/api/orbit';
 

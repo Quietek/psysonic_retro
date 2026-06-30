@@ -2,7 +2,7 @@ import {
   buildCoverArtUrl,
   buildCoverArtUrlForServer,
 } from '@/lib/api/subsonicStreamUrl';
-import { getPlaybackServerId } from '../utils/playback/playbackServer';
+import { getPlaybackServerId } from '@/features/playback/utils/playback/playbackServer';
 import { useAuthStore } from '../store/authStore';
 import { connectBaseUrlForServer } from '../utils/server/serverEndpoint';
 import type { CoverArtRef, CoverArtTier } from './types';
