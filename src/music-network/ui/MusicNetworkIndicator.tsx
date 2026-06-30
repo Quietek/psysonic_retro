@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useEnrichmentPrimary } from '../music-network';
-import { renderPresetIcon } from './settings/musicNetwork/presetIcon';
+import { useEnrichmentPrimary } from '@/music-network';
+import { renderPresetIcon } from '@/music-network/ui/presetIcon';
 
 /**
  * Sidebar status indicator for the enrichment primary (the account that drives

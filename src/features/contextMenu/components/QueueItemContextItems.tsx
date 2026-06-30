@@ -4,7 +4,7 @@ import { queueSongStar } from '@/features/playback/store/pendingStarSync';
 import { getMusicNetworkRuntime, useEnrichmentPrimary } from '@/music-network';
 import type { Track } from '@/lib/media/trackTypes';
 import { useAuthStore } from '@/store/authStore';
-import { renderPresetIcon } from '@/components/settings/musicNetwork/presetIcon';
+import { renderPresetIcon } from '@/music-network';
 import StarRating from '@/ui/StarRating';
 import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/AddToPlaylistSubmenu';
 import type { ContextMenuItemsProps } from '@/features/contextMenu/components/contextMenuItemTypes';

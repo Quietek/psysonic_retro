@@ -9,7 +9,7 @@ import { OpenArtistRefInline } from '@/features/artist';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 import { useEnrichmentPrimaryLabel } from '@/hooks/useEnrichmentPrimaryLabel';
 import { useEnrichmentPrimaryIcon } from '@/hooks/useEnrichmentPrimaryIcon';
-import { renderPresetIcon } from '@/components/settings/musicNetwork/presetIcon';
+import { renderPresetIcon } from '@/music-network';
 
 interface HeroProps {
   track: { title: string; artist: string; album: string; year?: number;

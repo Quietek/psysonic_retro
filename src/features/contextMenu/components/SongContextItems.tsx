@@ -11,7 +11,7 @@ import { usePlaylistStore } from '@/features/playlist';
 import { songToTrack } from '@/lib/media/songToTrack';
 import { showToast } from '@/utils/ui/toast';
 import { suggestOrbitTrack, hostEnqueueToOrbit, evaluateOrbitSuggestGate, OrbitSuggestBlockedError } from '@/features/orbit';
-import { renderPresetIcon } from '@/components/settings/musicNetwork/presetIcon';
+import { renderPresetIcon } from '@/music-network';
 import StarRating from '@/ui/StarRating';
 import { AddToPlaylistSubmenu } from '@/features/contextMenu/components/AddToPlaylistSubmenu';
 import type { ContextMenuItemsProps } from '@/features/contextMenu/components/contextMenuItemTypes';

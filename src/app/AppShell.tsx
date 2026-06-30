@@ -28,7 +28,7 @@ import {
   mainRouteInpageScrollViewportId,
 } from '../constants/appScroll';
 import ConnectionIndicator from '@/app/ConnectionIndicator';
-import MusicNetworkIndicator from '../components/MusicNetworkIndicator';
+import { MusicNetworkIndicator } from '@/music-network';
 import { OfflineBanner } from '@/features/offline';
 import AppUpdater from '@/features/updater/components/AppUpdater';
 import TitleBar from '@/app/TitleBar';

@@ -17,7 +17,7 @@ import { PlaybackBufferingOverlay } from '@/features/playback/components/Playbac
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useEnrichmentPrimaryLabel } from '@/hooks/useEnrichmentPrimaryLabel';
 import { useEnrichmentPrimaryIcon } from '@/hooks/useEnrichmentPrimaryIcon';
-import { renderPresetIcon } from '@/components/settings/musicNetwork/presetIcon';
+import { renderPresetIcon } from '@/music-network';
 import {
   usePlayerBarLayoutStore,
   type PlayerBarLayoutItemId,

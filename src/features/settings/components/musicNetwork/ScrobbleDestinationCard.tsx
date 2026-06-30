@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { getPreset, type Account, type UserProfile } from '@/music-network';
-import { renderPresetIcon } from '@/components/settings/musicNetwork/presetIcon';
+import { renderPresetIcon } from '@/music-network';
 
 /**
  * One connected account as a single self-contained block: header (icon, label,
