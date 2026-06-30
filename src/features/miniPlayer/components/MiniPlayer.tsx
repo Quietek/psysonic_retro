@@ -1,4 +1,4 @@
-import { usePlaybackCoverArt } from '@/hooks/usePlaybackCoverArt';
+import { usePlaybackCoverArt } from '@/cover/usePlaybackCoverArt';
 import { usePlaybackTrackCoverRef } from '@/cover/useLibraryCoverRef';
 import { useEffect, useRef, useState } from 'react';
 import { emit } from '@tauri-apps/api/event';

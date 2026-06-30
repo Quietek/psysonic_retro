@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { GRID_COVER_WARM_LIMIT } from '@/cover/layoutSizes';
-import { useWarmGridCovers } from '@/hooks/useWarmGridCovers';
+import { useWarmGridCovers } from '@/cover/useWarmGridCovers';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { APP_MAIN_SCROLL_VIEWPORT_ID } from '@/constants/appScroll';
 import { useElementClientHeightById } from '@/lib/hooks/useResizeClientHeight';

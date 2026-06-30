@@ -3,7 +3,7 @@ import { acquirePerfLivePoll, patchPerfLiveAnalysis } from '@/utils/perf/perfLiv
 import { setPerfProbeTelemetryActive } from '@/utils/perf/perfTelemetry';
 import { useAnalysisPerfLast } from '@/utils/perf/analysisPerfStore';
 import { useAnalysisPerfListener } from '@/hooks/useAnalysisPerfListener';
-import { useCoverPerfListener, useCoverUiThroughputPoll } from '@/hooks/useCoverPerfListener';
+import { useCoverPerfListener, useCoverUiThroughputPoll } from '@/cover/useCoverPerfListener';
 import {
   getPerfProbeFlags,
   subscribePerfProbeFlags,

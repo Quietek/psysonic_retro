@@ -31,7 +31,7 @@ import {
   usePerfOverlayMode,
 } from '@/utils/perf/perfOverlayMode';
 import { useAnalysisPerfListener } from '@/hooks/useAnalysisPerfListener';
-import { useCoverPerfListener } from '@/hooks/useCoverPerfListener';
+import { useCoverPerfListener } from '@/cover/useCoverPerfListener';
 import { getCoverCachedPerMinute, getCoverUiPerMinute } from '@/utils/perf/coverPerfStore';
 
 const SAMPLE_MS = 500;

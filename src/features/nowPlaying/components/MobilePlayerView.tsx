@@ -1,5 +1,5 @@
 import { queueSongStar } from '@/features/playback/store/pendingStarSync';
-import { usePlaybackCoverArt } from '@/hooks/usePlaybackCoverArt';
+import { usePlaybackCoverArt } from '@/cover/usePlaybackCoverArt';
 import { usePlaybackTrackCoverRef } from '@/cover/useLibraryCoverRef';
 import type { Track } from '@/lib/media/trackTypes';
 import { getPlaybackProgressSnapshot, subscribePlaybackProgress } from '@/features/playback/store/playbackProgress';

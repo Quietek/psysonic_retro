@@ -26,7 +26,7 @@ import { bootstrapAllIndexedServers } from '@/lib/library/librarySession';
 import { hydrateQueueFromIndex } from '@/features/playback/store/queueRestore';
 import { useLibraryAnalysisBackfill } from '@/lib/library/hooks/useLibraryAnalysisBackfill';
 import { useCoverArtPrefetch } from '../cover/useCoverArtPrefetch';
-import { useLibraryCoverBackfill } from '../hooks/useLibraryCoverBackfill';
+import { useLibraryCoverBackfill } from '@/cover/useLibraryCoverBackfill';
 import { useCoverRevalidateScheduler } from '../cover/useCoverRevalidateScheduler';
 import { runCoverIdbUpgradeMigration } from '../utils/migrations/coverIdbUpgradeMigration';
 import { useMigrationOrchestrator } from '../hooks/useMigrationOrchestrator';

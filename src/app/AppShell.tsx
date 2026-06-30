@@ -48,7 +48,7 @@ import { useQueueResizer } from '@/features/queue';
 import { useGlobalDndAndSelectionBlockers } from '@/lib/hooks/useGlobalDndAndSelectionBlockers';
 import { useAppActivityTracking } from '../hooks/useAppActivityTracking';
 import { useMainScrollingIndicator } from '../hooks/useMainScrollingIndicator';
-import { useCoverNavigationPriority } from '../hooks/useCoverNavigationPriority';
+import { useCoverNavigationPriority } from '@/cover/useCoverNavigationPriority';
 import { useLiveSearchRouteScope } from '@/features/search';
 import { useNowPlayingPrewarm } from '@/features/nowPlaying';
 import { useOfflineAutoNav } from '@/features/offline';

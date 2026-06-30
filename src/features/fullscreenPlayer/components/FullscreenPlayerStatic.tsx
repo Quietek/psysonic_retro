@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { queueSongStar, queueSongRating } from '@/features/playback/store/pendingStarSync';
 import { useAlbumCoverRef, useArtistCoverRef } from '@/cover/useLibraryCoverRef';
-import { usePlaybackCoverArt } from '@/hooks/usePlaybackCoverArt';
+import { usePlaybackCoverArt } from '@/cover/usePlaybackCoverArt';
 import { useCachedUrl } from '@/ui/CachedImage';
 import { useArtistFanart } from '@/cover/useArtistFanart';
 import { backdropFromConfig } from '@/cover/artistBackdrop';

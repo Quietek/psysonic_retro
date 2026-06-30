@@ -6,13 +6,13 @@ import {
   libraryCoverBackfillRunFullPass,
   libraryCoverBackfillSetBaseUrl,
   librarySqlServerId,
-} from '../api/coverCache';
+} from '@/api/coverCache';
 import { coverStrategyAllowsLibraryBackfill } from '@/lib/library/coverStrategy';
-import { useAuthStore } from '../store/authStore';
-import { useCoverStrategyStore } from '../store/coverStrategyStore';
+import { useAuthStore } from '@/store/authStore';
+import { useCoverStrategyStore } from '@/store/coverStrategyStore';
 import { subscribeLibraryCoverBackfillWake } from '@/lib/library/coverBackfillWake';
-import { serverIndexKeyForProfile } from '../utils/server/serverIndexKey';
-import { subscribeConnectCache } from '../utils/server/serverEndpoint';
+import { serverIndexKeyForProfile } from '@/utils/server/serverIndexKey';
+import { subscribeConnectCache } from '@/utils/server/serverEndpoint';
 
 /**
  * Library cover warm-up — configure session in Rust; full pass runs natively.

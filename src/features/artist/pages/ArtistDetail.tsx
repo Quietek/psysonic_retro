@@ -34,7 +34,7 @@ import { usePerfProbeFlags } from '@/utils/perf/perfFlags';
 import { albumGridWarmCovers, COVER_DENSE_GRID_MIN_CELL_CSS_PX, GRID_COVER_WARM_LIMIT } from '@/cover/layoutSizes';
 import { artistDetailCoverWarmAlbums } from '@/features/artist/components/topSongAlbumForCover';
 import { useLibraryCoverPrefetch } from '@/cover/useLibraryCoverPrefetch';
-import { useWarmGridCovers } from '@/hooks/useWarmGridCovers';
+import { useWarmGridCovers } from '@/cover/useWarmGridCovers';
 import { VirtualCardGrid } from '@/ui/VirtualCardGrid';
 import { LOSSLESS_MODE_QUERY } from '@/lib/library/losslessMode';
 import { sortArtistAlbumsByYear } from '@/features/artist/utils/sortArtistAlbums';

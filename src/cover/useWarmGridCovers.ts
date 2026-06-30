@@ -3,8 +3,8 @@ import {
   collectAlbumCoverWarmItems,
   ensureAlbumCoverMisses,
   warmCoverDiskSrcBatch,
-} from '../cover/warmDiskPeek';
-import type { CoverSurfaceKind } from '../cover/types';
+} from '@/cover/warmDiskPeek';
+import type { CoverSurfaceKind } from '@/cover/types';
 
 const DEFAULT_LIMIT = 120;
 

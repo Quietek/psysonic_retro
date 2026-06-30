@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import {
   coverTrafficBeginNavigation,
   coverTrafficEndNavigation,
-} from '../cover/coverTraffic';
+} from '@/cover/coverTraffic';
 
 /**
  * On route change: cancel queued peek/ensure/prefetch from the old page and
