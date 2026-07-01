@@ -6,8 +6,8 @@ import { filterSongsToActiveLibrary, similarSongsRequestCount } from '@/lib/api/
 import {
   FEATURE_AUDIOMUSE_SIMILAR_TRACKS,
   OP_SIMILAR_TRACKS,
-} from '@/serverCapabilities/catalog';
-import { resolveCallRoutesForServer } from '@/serverCapabilities/storeView';
+} from '@/lib/serverCapabilities/catalog';
+import { resolveCallRoutesForServer } from '@/lib/serverCapabilities/storeView';
 import type {
   SubsonicAlbum,
   SubsonicArtist,

@@ -9,14 +9,14 @@ import {
   type SubsonicServerIdentity,
 } from '@/lib/server/subsonicServerIdentity';
 import { fetchOpenSubsonicExtensionsWithCredentials } from '@/lib/api/subsonicOpenSubsonic';
-import { buildCapabilityContext } from '@/serverCapabilities/context';
+import { buildCapabilityContext } from '@/lib/serverCapabilities/context';
 import {
   PROBE_LEGACY_INSTANT_MIX,
   PROBE_OPENSUBSONIC_EXTENSIONS,
   SERVER_CAPABILITY_CATALOG,
   SONIC_SIMILARITY_EXTENSION,
-} from '@/serverCapabilities/catalog';
-import { neededProbeIds } from '@/serverCapabilities/resolve';
+} from '@/lib/serverCapabilities/catalog';
+import { neededProbeIds } from '@/lib/serverCapabilities/resolve';
 import {
   SUBSONIC_CLIENT,
   api,

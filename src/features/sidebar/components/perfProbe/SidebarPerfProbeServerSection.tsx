@@ -1,13 +1,13 @@
 import { useAuthStore } from '@/store/authStore';
 import type { NavidromeAdminRole } from '@/lib/hooks/useNavidromeAdminRole';
 import { isNavidromeServer, formatServerSoftware } from '@/lib/server/subsonicServerIdentity';
-import { FEATURE_AUDIOMUSE_SIMILAR_TRACKS, OP_SIMILAR_TRACKS } from '@/serverCapabilities/catalog';
+import { FEATURE_AUDIOMUSE_SIMILAR_TRACKS, OP_SIMILAR_TRACKS } from '@/lib/serverCapabilities/catalog';
 import {
   isFeatureActiveForServer,
   resolveCallRoutesForServer,
   resolveFeatureForServer,
-} from '@/serverCapabilities/storeView';
-import type { CapabilityStatus, FeatureTrust, ResolvedCapability } from '@/serverCapabilities/types';
+} from '@/lib/serverCapabilities/storeView';
+import type { CapabilityStatus, FeatureTrust, ResolvedCapability } from '@/lib/serverCapabilities/types';
 import { PerfProbeMetricSection } from '@/features/sidebar/components/perfProbe/PerfProbeMetricCard';
 import PerfProbeDetailList, { type PerfProbeDetailRow } from '@/features/sidebar/components/perfProbe/PerfProbeDetailList';
 import PerfProbeStatusBadge, { type PerfProbeBadgeTone } from '@/features/sidebar/components/perfProbe/PerfProbeStatusBadge';

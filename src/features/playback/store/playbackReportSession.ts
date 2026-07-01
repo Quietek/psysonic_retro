@@ -1,7 +1,7 @@
 import { reportNowPlaying, reportPlayback } from '@/lib/api/subsonicScrobble';
 import type { PlaybackReportState } from '@/lib/api/subsonicTypes';
-import { FEATURE_PLAYBACK_REPORT } from '@/serverCapabilities/catalog';
-import { isFeatureActiveForServer } from '@/serverCapabilities/storeView';
+import { FEATURE_PLAYBACK_REPORT } from '@/lib/serverCapabilities/catalog';
+import { isFeatureActiveForServer } from '@/lib/serverCapabilities/storeView';
 import { isPlaybackRateApplied } from '@/features/playback/utils/audio/playbackRateHelpers';
 import { isOrbitPlaybackSyncActive } from '@/store/orbitRuntime';
 import { useAuthStore } from '@/store/authStore';

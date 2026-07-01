@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
-import { getCapabilityDefinition } from '@/serverCapabilities/catalog';
-import { isFeatureActiveForServer, resolveFeatureForServer } from '@/serverCapabilities/storeView';
+import { getCapabilityDefinition } from '@/lib/serverCapabilities/catalog';
+import { isFeatureActiveForServer, resolveFeatureForServer } from '@/lib/serverCapabilities/storeView';
 
 /** Inline badge for auto-managed server capabilities (Settings → Servers header row). */
 export function ServerCapabilityHeaderBadge({

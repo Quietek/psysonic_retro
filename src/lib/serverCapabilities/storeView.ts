@@ -1,4 +1,4 @@
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import type {
   InstantMixProbeResult,
 } from '@/lib/server/subsonicServerIdentity';

@@ -1228,6 +1228,23 @@
   },
   {
     "type": "dependency",
+    "from": "src/lib/serverCapabilities/storeView.ts",
+    "to": "src/store/authStore.ts",
+    "unresolvedTo": "@/store/authStore",
+    "dependencyTypes": [
+      "aliased",
+      "aliased-tsconfig",
+      "aliased-tsconfig-paths",
+      "local",
+      "import"
+    ],
+    "rule": {
+      "severity": "error",
+      "name": "lib-is-the-floor"
+    }
+  },
+  {
+    "type": "dependency",
     "from": "src/lib/share/copyEntityShareLink.ts",
     "to": "src/store/authStore.ts",
     "unresolvedTo": "@/store/authStore",

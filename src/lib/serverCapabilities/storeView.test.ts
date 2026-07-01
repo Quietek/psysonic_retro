@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import {
   FEATURE_AUDIOMUSE_SIMILAR_TRACKS,
   FEATURE_PLAYBACK_REPORT,

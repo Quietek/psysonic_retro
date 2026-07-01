@@ -4,7 +4,7 @@ vi.mock('@/lib/api/subsonicScrobble', () => ({
   reportPlayback: vi.fn(() => Promise.resolve()),
   reportNowPlaying: vi.fn(() => Promise.resolve()),
 }));
-vi.mock('@/serverCapabilities/storeView', () => ({
+vi.mock('@/lib/serverCapabilities/storeView', () => ({
   isFeatureActiveForServer: vi.fn(),
 }));
 vi.mock('@/store/authStore', () => ({
@@ -25,7 +25,7 @@ vi.mock('@/store/orbitRuntime', async (importOriginal) => ({
 }));
 
 import { reportNowPlaying, reportPlayback } from '@/lib/api/subsonicScrobble';
-import { isFeatureActiveForServer } from '@/serverCapabilities/storeView';
+import { isFeatureActiveForServer } from '@/lib/serverCapabilities/storeView';
 import { useAuthStore } from '@/store/authStore';
 import {
   _resetPlaybackReportSessionForTest,
