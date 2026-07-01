@@ -13,7 +13,7 @@ vi.mock('@tauri-apps/api/event', () => ({
   listen: vi.fn(async () => () => {}),
 }));
 
-vi.mock('@/api/migration', () => ({
+vi.mock('@/lib/api/migration', () => ({
   migrationInspect: (mappings: unknown) => migrationInspectMock(mappings),
   migrationRun: (mappings: unknown) => migrationRunMock(mappings),
 }));

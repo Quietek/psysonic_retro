@@ -1,12 +1,12 @@
 import { invoke } from '@tauri-apps/api/core';
-import { useAuthStore } from '../store/authStore';
-import { useThemeStore } from '../store/themeStore';
-import { coverIndexKeyFromRef, coverStorageKeyFromRef } from '../cover/storageKeys';
+import { useAuthStore } from '@/store/authStore';
+import { useThemeStore } from '@/store/themeStore';
+import { coverIndexKeyFromRef, coverStorageKeyFromRef } from '@/cover/storageKeys';
 import { connectBaseUrlForServer } from '@/lib/server/serverEndpoint';
 import { serverIndexKeyForProfile } from '@/lib/server/serverIndexKey';
 import { getPlaybackServerId } from '@/features/playback/utils/playback/playbackServer';
 import { restBaseFromUrl } from '@/lib/api/subsonicClient';
-import type { CoverArtRef, CoverArtTier } from '../cover/types';
+import type { CoverArtRef, CoverArtTier } from '@/cover/types';
 
 /** Library SQLite `track.server_id` uses host index keys, not auth profile UUIDs. */
 export function librarySqlServerId(profileOrIndexServerId: string): string {

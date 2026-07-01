@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { coverCacheStats } from '../api/coverCache';
+import { coverCacheStats } from '@/lib/api/coverCache';
 import { coverStrategyAllowsRoutePrefetch } from '@/lib/library/coverStrategy';
 import { useCoverStrategyStore } from '../store/coverStrategyStore';
 import { useAuthStore } from '../store/authStore';

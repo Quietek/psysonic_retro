@@ -6,7 +6,7 @@ import { AddServerForm } from '@/features/settings/components/AddServerForm';
 import { encodeServerMagicString } from '@/lib/server/serverMagicString';
 
 // resolve_host_addresses Tauri command — hint-only, must not block save.
-vi.mock('@/api/network', () => ({
+vi.mock('@/lib/api/network', () => ({
   resolveHostAddresses: vi.fn(async () => [] as string[]),
 }));
 

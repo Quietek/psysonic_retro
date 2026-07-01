@@ -6,7 +6,7 @@ import {
   libraryCoverBackfillRunFullPass,
   libraryCoverBackfillSetBaseUrl,
   librarySqlServerId,
-} from '@/api/coverCache';
+} from '@/lib/api/coverCache';
 import { coverStrategyAllowsLibraryBackfill } from '@/lib/library/coverStrategy';
 import { useAuthStore } from '@/store/authStore';
 import { useCoverStrategyStore } from '@/store/coverStrategyStore';

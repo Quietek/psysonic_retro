@@ -3,7 +3,7 @@ import { useAuthStore } from '../store/authStore';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { collectPlaybackMiddlePriorityTrackIds } from '@/features/playback/store/loudnessBackfillWindow';
 import { getPlaybackServerId } from '@/features/playback/utils/playback/playbackServer';
-import { analysisSetPlaybackPriorityHints } from '../api/analysis';
+import { analysisSetPlaybackPriorityHints } from '@/lib/api/analysis';
 import { serverIndexKeyFromUrl } from '@/lib/server/serverIndexKey';
 import { hotCacheFrontendDebug } from './helpers';
 

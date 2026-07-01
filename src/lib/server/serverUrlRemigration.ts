@@ -34,7 +34,7 @@ import {
   migrationRun,
   type MigrationInspectReport,
   type MigrationRunResult,
-} from '@/api/migration';
+} from '@/lib/api/migration';
 import { rewriteFrontendStoreKeysForRemap } from '@/utils/server/rewriteFrontendStoreKeys';
 import { serverIndexKeyFromUrl } from '@/lib/server/serverIndexKey';
 

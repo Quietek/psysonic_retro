@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
-import { analysisGetPipelineQueueStats, type AnalysisPipelineQueueStatsDto } from '@/api/analysis';
-import { coverGetPipelineQueueStats, type CoverPipelineQueueStatsDto } from '@/api/coverCache';
+import { analysisGetPipelineQueueStats, type AnalysisPipelineQueueStatsDto } from '@/lib/api/analysis';
+import { coverGetPipelineQueueStats, type CoverPipelineQueueStatsDto } from '@/lib/api/coverCache';
 import { coverEnsureQueueStats } from '@/cover/ensureQueue';
 import { coverPeekQueueStats } from '@/cover/peekQueue';
 import PerfOverlaySparkline from '@/app/PerfOverlaySparkline';

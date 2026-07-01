@@ -18,7 +18,7 @@ import {
   type AnalysisFailedTrackDto,
   libraryAnalysisProgress,
   type LibraryAnalysisProgressDto,
-} from '@/api/analysis';
+} from '@/lib/api/analysis';
 import { libraryGetTracksBatch, type LibraryTrackDto, type TrackRefDto } from '@/lib/api/library';
 import { buildStreamUrlForServer } from '@/lib/api/subsonicStreamUrl';
 import { serverListDisplayLabel } from '@/lib/server/serverDisplayName';

@@ -15,7 +15,7 @@ import type { SubsonicArtistInfo, SubsonicSong, SubsonicAlbum, SubsonicArtist } 
 
 vi.mock('@/lib/api/subsonicArtists');
 vi.mock('@/lib/api/subsonicLibrary');
-vi.mock('@/api/bandsintown');
+vi.mock('@/lib/api/bandsintown');
 vi.mock('@/lib/network/subsonicNetworkGuard', () => ({
   shouldAttemptSubsonicForServer: vi.fn(() => true),
 }));
@@ -23,7 +23,7 @@ vi.mock('@/lib/network/subsonicNetworkGuard', () => ({
 import { shouldAttemptSubsonicForServer } from '@/lib/network/subsonicNetworkGuard';
 import { getArtistForServer, getArtistInfoForServer, getTopSongsForServer } from '@/lib/api/subsonicArtists';
 import { getAlbumForServer, getSongForServer } from '@/lib/api/subsonicLibrary';
-import { fetchBandsintownEvents } from '@/api/bandsintown';
+import { fetchBandsintownEvents } from '@/lib/api/bandsintown';
 import { useNowPlayingFetchers, type NowPlayingFetchersDeps } from '@/features/nowPlaying/hooks/useNowPlayingFetchers';
 
 // Resolved return shapes of the mocked API calls — used to cast deliberately

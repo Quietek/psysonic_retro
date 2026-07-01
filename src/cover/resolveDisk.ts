@@ -1,5 +1,5 @@
 import { isTauri } from '@tauri-apps/api/core';
-import { coverCacheEnsure } from '../api/coverCache';
+import { coverCacheEnsure } from '@/lib/api/coverCache';
 import { invalidateCacheKey } from './imageCache';
 import { getDiskSrc, rememberDiskSrc } from './diskSrcCache';
 import { coverStorageKeyFromRef } from './storageKeys';

@@ -8,7 +8,7 @@ import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { usePlayerStore } from '@/features/playback/store/playerStore';
 import { useAuthStore } from '@/store/authStore';
 import { usePlaybackServerId } from '@/features/playback/hooks/usePlaybackServerId';
-import { fetchBandsintownEvents, type BandsintownEvent } from '@/api/bandsintown';
+import { fetchBandsintownEvents, type BandsintownEvent } from '@/lib/api/bandsintown';
 import CachedImage from '@/ui/CachedImage';
 import OverlayScrollArea from '@/ui/OverlayScrollArea';
 import { primaryTrackArtistRef } from '@/features/playback/utils/playback/trackArtistRefs';

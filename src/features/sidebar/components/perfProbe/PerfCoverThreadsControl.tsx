@@ -4,7 +4,7 @@ import {
   libraryCoverBackfillResetCursor,
   libraryCoverBackfillRunFullPass,
   libraryCoverBackfillSetParallel,
-} from '@/api/coverCache';
+} from '@/lib/api/coverCache';
 
 const COVER_THREADS_MIN = 1;
 const COVER_THREADS_MAX = 16;

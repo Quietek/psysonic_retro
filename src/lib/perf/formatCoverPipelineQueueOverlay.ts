@@ -1,4 +1,4 @@
-import type { CoverPipelineQueueStatsDto } from '@/api/coverCache';
+import type { CoverPipelineQueueStatsDto } from '@/lib/api/coverCache';
 import type { CoverEnsureQueueStats } from '@/cover/ensureQueue';
 import type { CoverPeekQueueStats } from '@/cover/peekQueue';
 import { formatAnalysisTierQueue } from '@/lib/perf/formatAnalysisQueueStats';

@@ -2,7 +2,7 @@ import { describe, expect, it, vi, beforeEach } from 'vitest';
 import { albumCoverRef } from './ref';
 
 vi.mock('@tauri-apps/api/core', () => ({ isTauri: () => true }));
-vi.mock('../api/coverCache', () => ({ coverCacheEnsure: vi.fn() }));
+vi.mock('@/lib/api/coverCache', () => ({ coverCacheEnsure: vi.fn() }));
 vi.mock('./imageCache', () => ({ invalidateCacheKey: vi.fn() }));
 vi.mock('./diskSrcCache', () => ({
   getDiskSrc: vi.fn(() => ''),
@@ -10,7 +10,7 @@ vi.mock('./diskSrcCache', () => ({
 }));
 
 import { ensureCoverTierDiskSrc } from './resolveDisk';
-import { coverCacheEnsure } from '../api/coverCache';
+import { coverCacheEnsure } from '@/lib/api/coverCache';
 import { getDiskSrc, rememberDiskSrc } from './diskSrcCache';
 
 const ref = albumCoverRef('al-1', 'al-1');

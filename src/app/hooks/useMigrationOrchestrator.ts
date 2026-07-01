@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
 import { libraryGenreTagsInspect, libraryGenreTagsRun } from '@/lib/api/library';
-import { migrationInspect, migrationRun, type ServerIndexMapping } from '@/api/migration';
+import { migrationInspect, migrationRun, type ServerIndexMapping } from '@/lib/api/migration';
 import { useAuthStore } from '@/store/authStore';
 import { useMigrationStore } from '@/store/migrationStore';
 import { serverIndexKeyFromUrl } from '@/lib/server/serverIndexKey';

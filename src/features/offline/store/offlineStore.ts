@@ -16,7 +16,7 @@ import {
   isOfflinePinComplete,
   pendingOfflinePinSongs,
 } from '@/features/offline/utils/offlineLibraryHelpers';
-import { librarySqlServerId } from '@/api/coverCache';
+import { librarySqlServerId } from '@/lib/api/coverCache';
 import { resolveIndexKey, serverIndexKeyForProfile } from '@/lib/server/serverIndexKey';
 import { isSmartPlaylistName } from '@/lib/format/playlistDetailHelpers';
 import {

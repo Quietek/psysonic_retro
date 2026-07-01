@@ -1,5 +1,5 @@
 import { libraryUpsertSongsFromApi } from '@/lib/api/library';
-import { librarySqlServerId } from '@/api/coverCache';
+import { librarySqlServerId } from '@/lib/api/coverCache';
 import { getAlbumForServer } from '@/lib/api/subsonicLibrary';
 import { getArtistForServer } from '@/lib/api/subsonicArtists';
 import { getStarredForServer } from '@/lib/api/subsonicStarRating';

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { coverCacheEnsure, coverCachePeekBatch } from '@/api/coverCache';
+import { coverCacheEnsure, coverCachePeekBatch } from '@/lib/api/coverCache';
 import { albumCoverRef } from '@/cover/ref';
 import { resolvePlaybackCoverScope } from '@/cover/ref';
 import { resolveTrackCoverRefFromLibrary } from '@/cover/resolveEntryLibrary';

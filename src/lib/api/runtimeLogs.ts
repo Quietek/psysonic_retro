@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import type { LoggingMode } from '../store/authStoreTypes';
+import type { LoggingMode } from '@/store/authStoreTypes';
 
 export interface RuntimeLogLine {
   seq: number;

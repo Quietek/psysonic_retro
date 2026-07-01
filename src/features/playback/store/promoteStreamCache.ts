@@ -3,7 +3,7 @@ import type { Track } from '@/lib/media/trackTypes';
 import { invoke } from '@tauri-apps/api/core';
 import { useHotCacheStore } from '@/features/playback/store/hotCacheStore';
 import { getMediaDir } from '@/lib/media/mediaDir';
-import { librarySqlServerId } from '@/api/coverCache';
+import { librarySqlServerId } from '@/lib/api/coverCache';
 import { hasLocalPersistentPlaybackBytes } from '@/store/localPlaybackResolve';
 
 /**

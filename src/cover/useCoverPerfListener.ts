@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { listen } from '@tauri-apps/api/event';
-import { coverGetPipelineQueueStats } from '@/api/coverCache';
+import { coverGetPipelineQueueStats } from '@/lib/api/coverCache';
 import { recordCoverProgress, recordCoverUiTotal } from '@/lib/perf/coverPerfStore';
 
 /** How often to sample the backend's cumulative on-demand (UI) ensure count. */

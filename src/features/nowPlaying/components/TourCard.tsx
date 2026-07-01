@@ -2,7 +2,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Calendar, Info } from 'lucide-react';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
-import type { BandsintownEvent } from '@/api/bandsintown';
+import type { BandsintownEvent } from '@/lib/api/bandsintown';
 import { isoToParts } from '@/features/nowPlaying/utils/nowPlayingHelpers';
 
 interface TourCardProps {

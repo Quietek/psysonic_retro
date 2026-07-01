@@ -22,7 +22,7 @@ vi.mock('@/lib/api/subsonicStreamUrl', () => ({
   buildStreamUrlForServer: (_sid: string, id: string) => `https://mock/stream/${id}`,
 }));
 
-vi.mock('@/api/coverCache', () => ({
+vi.mock('@/lib/api/coverCache', () => ({
   librarySqlServerId: (k: string) => k,
 }));
 

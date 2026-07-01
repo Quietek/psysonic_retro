@@ -10,7 +10,7 @@ import { BackdropSourceList } from '@/features/settings/components/BackdropSourc
 import type { BackdropSurface } from '@/store/themeStore';
 import type { BackdropSource } from '@/cover/artistBackdrop';
 import { MusicNetworkSection } from '@/features/settings/components/musicNetwork/MusicNetworkSection';
-import { purgeExternalArtworkAllServers } from '@/api/coverCache';
+import { purgeExternalArtworkAllServers } from '@/lib/api/coverCache';
 
 export function IntegrationsTab() {
   const { t } = useTranslation();

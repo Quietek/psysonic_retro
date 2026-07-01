@@ -1,4 +1,4 @@
-import type { AnalysisPipelineQueueStatsDto } from '@/api/analysis';
+import type { AnalysisPipelineQueueStatsDto } from '@/lib/api/analysis';
 
 export function formatAnalysisTierQueue(
   total: number,

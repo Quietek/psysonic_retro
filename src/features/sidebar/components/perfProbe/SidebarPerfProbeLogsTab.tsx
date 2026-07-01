@@ -11,7 +11,7 @@ import { Copy, Download, Pause, Play, Trash2 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { save as saveDialog } from '@tauri-apps/plugin-dialog';
 import { writeFile } from '@tauri-apps/plugin-fs';
-import { getLoggingMode, tailRuntimeLogs, type RuntimeLogLine } from '@/api/runtimeLogs';
+import { getLoggingMode, tailRuntimeLogs, type RuntimeLogLine } from '@/lib/api/runtimeLogs';
 import { invoke } from '@tauri-apps/api/core';
 import { useAuthStore } from '@/store/authStore';
 import type { LoggingMode } from '@/store/authStoreTypes';

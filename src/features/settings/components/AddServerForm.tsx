@@ -16,7 +16,7 @@ import {
 } from '@/lib/server/serverMagicString';
 import { shortHostFromServerUrl } from '@/lib/server/serverDisplayName';
 import { isLanUrl } from '@/lib/server/serverEndpoint';
-import { resolveHostAddresses } from '@/api/network';
+import { resolveHostAddresses } from '@/lib/api/network';
 
 type FormState = {
   name: string;

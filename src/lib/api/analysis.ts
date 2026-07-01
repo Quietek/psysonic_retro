@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import { serverIndexKeyFromUrl } from '@/lib/server/serverIndexKey';
 
 export interface AnalysisBackfillQueueStatsDto {

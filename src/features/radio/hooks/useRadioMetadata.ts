@@ -8,7 +8,7 @@ import {
   fetchAzuraCastNowPlaying,
   type AzuraCastNowPlaying,
   type AzuraCastSong,
-} from '@/api/azuracast';
+} from '@/lib/api/azuracast';
 
 // ─── Public types ─────────────────────────────────────────────────────────────
 

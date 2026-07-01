@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import {
   analysisSetPipelineParallelism,
   libraryAnalysisBackfillConfigure,
-} from '@/api/analysis';
-import { librarySqlServerId } from '@/api/coverCache';
+} from '@/lib/api/analysis';
+import { librarySqlServerId } from '@/lib/api/coverCache';
 import { useAuthStore } from '@/store/authStore';
 import { useAnalysisStrategyStore } from '@/store/analysisStrategyStore';
 import { DEFAULT_ADVANCED_PARALLELISM } from '@/lib/library/analysisStrategy';

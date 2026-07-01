@@ -12,7 +12,7 @@ import {
   coverCacheStatsServer,
   libraryCoverCatalogSize,
   libraryCoverProgress,
-} from '@/api/coverCache';
+} from '@/lib/api/coverCache';
 import { clearDiskSrcCacheForServer } from '@/cover/diskSrcCache';
 import { serverListDisplayLabel } from '@/lib/server/serverDisplayName';
 import { serverIndexKeyForProfile } from '@/lib/server/serverIndexKey';
