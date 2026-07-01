@@ -18,7 +18,7 @@ import OrbitExitModal from '@/features/orbit/components/OrbitExitModal';
 import OrbitSettingsPopover from '@/features/orbit/components/OrbitSettingsPopover';
 import OrbitSharePopover from '@/features/orbit/components/OrbitSharePopover';
 import OrbitDiagnosticsPopover from '@/features/orbit/components/OrbitDiagnosticsPopover';
-import ConfirmModal from '@/components/ConfirmModal';
+import ConfirmModal from '@/ui/ConfirmModal';
 import { formatTrackTime } from '@/lib/format/formatDuration';
 
 /**

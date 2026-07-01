@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RotateCcw, UserPlus, Users } from 'lucide-react';
 import type { NdUser } from '@/lib/api/navidromeAdmin';
-import ConfirmModal from '@/components/ConfirmModal';
+import ConfirmModal from '@/ui/ConfirmModal';
 import { useUserMgmtData } from '@/features/settings/hooks/useUserMgmtData';
 import { useUserMgmtActions } from '@/features/settings/hooks/useUserMgmtActions';
 import { UserForm } from '@/features/settings/components/UserForm';

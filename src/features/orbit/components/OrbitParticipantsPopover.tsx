@@ -4,7 +4,7 @@ import { Crown, User, UserMinus, ShieldOff, Mic, MicOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useOrbitStore } from '@/features/orbit/store/orbitStore';
 import { kickOrbitParticipant, removeOrbitParticipant, setOrbitSuggestionBlocked } from '@/features/orbit/utils/orbit';
-import ConfirmModal from '@/components/ConfirmModal';
+import ConfirmModal from '@/ui/ConfirmModal';
 
 interface Props {
   /** Anchor — we position the popover directly below its bottom-right. */

@@ -6,7 +6,7 @@ import { open } from '@tauri-apps/plugin-dialog';
 import { useInstalledThemesStore } from '@/store/installedThemesStore';
 import { validateThemePackage, type ValidatedTheme } from '@/lib/themes/validateThemePackage';
 import { showToast } from '@/lib/dom/toast';
-import ConfirmModal from '@/components/ConfirmModal';
+import ConfirmModal from '@/ui/ConfirmModal';
 
 /**
  * Import a community theme from a local `.zip` (manifest.json + theme.css).

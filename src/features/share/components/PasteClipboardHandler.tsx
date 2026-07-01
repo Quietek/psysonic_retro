@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useAuthStore } from '../store/authStore';
+import { useAuthStore } from '@/store/authStore';
 import type { EntitySharePayloadV1 } from '@/lib/share/shareLink';
 import { decodeSharePayloadFromText } from '@/lib/share/shareLink';
 import { decodeServerMagicStringFromText } from '@/lib/server/serverMagicString';
@@ -17,9 +17,9 @@ import {
   readOrbitState,
   OrbitJoinError,
 } from '@/features/orbit';
-import { switchActiveServer } from '../utils/server/switchActiveServer';
+import { switchActiveServer } from '@/utils/server/switchActiveServer';
 import { useOrbitAccountPickerStore } from '@/features/orbit';
-import ConfirmModal from './ConfirmModal';
+import ConfirmModal from '@/ui/ConfirmModal';
 
 const ORBIT_JOIN_ERROR_KEYS: Record<string, string> = {
   'not-found':    'orbit.joinErrNotFound',

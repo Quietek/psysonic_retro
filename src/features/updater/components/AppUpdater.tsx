@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { version as currentVersion } from '@/../package.json';
 import { formatBytes } from '@/lib/format/formatBytes';
 import { useAppUpdater } from '@/features/updater/hooks/useAppUpdater';
-import Modal from '@/components/Modal';
+import Modal from '@/ui/Modal';
 import Changelog from '@/features/updater/components/Changelog';
 
 export default function AppUpdater() {

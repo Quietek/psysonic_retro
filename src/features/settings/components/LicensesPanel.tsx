@@ -9,7 +9,7 @@ import {
   type LicenseEntry,
   type LicensesData,
 } from '@/features/settings/utils/licensesData';
-import LicenseTextModal from '@/components/LicenseTextModal';
+import LicenseTextModal from './LicenseTextModal';
 
 const ROW_HEIGHT = 56;
 
