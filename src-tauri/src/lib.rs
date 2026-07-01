@@ -87,7 +87,9 @@ fn set_app_user_model_id() {
 fn specta_builder() -> tauri_specta::Builder<tauri::Wry> {
     tauri_specta::Builder::<tauri::Wry>::new()
         .commands(tauri_specta::collect_commands![
-            crate::lib_commands::app_api::core::greet
+            crate::lib_commands::app_api::core::greet,
+            psysonic_library::browse_support::library_get_catalog_year_bounds,
+            psysonic_library::browse_support::library_get_genre_album_counts,
         ])
 }
 

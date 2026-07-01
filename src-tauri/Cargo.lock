@@ -4261,6 +4261,7 @@ dependencies = [
  "rusqlite",
  "serde",
  "serde_json",
+ "specta",
  "tauri",
  "tokio",
  "wiremock",
