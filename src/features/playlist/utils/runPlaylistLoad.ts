@@ -4,6 +4,7 @@ import { filterSongsToActiveLibrary } from '@/lib/api/subsonicLibrary';
 import type { SubsonicPlaylist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { useAuthStore } from '@/store/authStore';
 import { usePlaylistStore } from '@/features/playlist/store/playlistStore';
+import { usePlaylistMembershipStore } from '@/store/playlistMembershipStore';
 import { isOfflineBrowseActive } from '@/features/offline';
 import { resolvePlaylist } from '@/features/offline';
 
@@ -21,6 +22,11 @@ function applyLoadedPlaylist(
   deps: RunPlaylistLoadDeps,
   playlist: SubsonicPlaylist,
   songs: SubsonicSong[],
+  // The membership cache must hold the *full* server-side track list, not the
+  // library-scope-filtered view — otherwise dedup would treat out-of-scope
+  // members as new and re-add them as duplicates. Defaults to the shown songs
+  // (offline path, where the resolved list already is the full membership).
+  membershipIds: string[] = songs.map(s => s.id),
 ): void {
   const { setPlaylist, setSongs, setCustomCoverId, setRatings, setStarredSongs } = deps;
   setPlaylist(playlist);
@@ -34,6 +40,7 @@ function applyLoadedPlaylist(
   });
   setRatings(init);
   setStarredSongs(starred);
+  usePlaylistMembershipStore.getState().setPlaylistSongIds(deps.id, membershipIds);
 }
 
 export async function runPlaylistLoad(deps: RunPlaylistLoadDeps): Promise<void> {
@@ -51,7 +58,7 @@ export async function runPlaylistLoad(deps: RunPlaylistLoadDeps): Promise<void> 
 
     const { playlist, songs } = await getPlaylist(id);
     const filteredSongs = await filterSongsToActiveLibrary(songs);
-    applyLoadedPlaylist(deps, playlist, filteredSongs);
+    applyLoadedPlaylist(deps, playlist, filteredSongs, songs.map(s => s.id));
   } catch {
     const stub = usePlaylistStore.getState().playlists.find(p => p.id === id);
     if (stub) {
