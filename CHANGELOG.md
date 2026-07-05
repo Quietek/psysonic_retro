@@ -77,6 +77,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * Queue rows that were far from the currently playing track (e.g. after starting a large playlist from the middle, or scrolling the queue) no longer stay stuck on a "…" placeholder — the queue now loads track details for whatever you scroll to, in the desktop queue panel, the mobile queue drawer, and the fullscreen "up next" overlay.
 
+### Artists browse — case-insensitive search for Cyrillic names
+
+**By [@cucadmuh](https://github.com/cucadmuh), PR [#1237](https://github.com/Psychotoxical/psysonic/pull/1237)**
+
+* Artist name search on the Artists page no longer depends on query letter case for Cyrillic (and other non-ASCII) names when the local library index is enabled — matching uses the indexed `name_sort` key with Unicode case folding instead of SQLite `LIKE` on the display name alone.
+
 
 ## [1.49.0] - 2026-06-29
 

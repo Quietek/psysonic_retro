@@ -183,6 +183,7 @@ const CONTRIBUTOR_ENTRIES = [
       'Connection — ignore spurious WebKitGTK navigator.onLine offline hint on desktop; confirm via server probe; flush pending favorite/rating sync on real reachability (report: mikmik on Psysonic Discord, PR #1234)',
       'Playlists — batch playlist writes past the GET URL limit (add >341 tracks), in-memory membership cache for fast dedup, offline↔playlist layering detangle (PR #1235)',
       'Queue — resolve thin-state rows off the visible range so off-window items stop rendering as "…" placeholders (desktop panel, mobile drawer, fullscreen up-next) (PR #1236)',
+      'Artists browse — case-insensitive Cyrillic/non-ASCII name search when local index is enabled (PR #1237)',
     ],
   },
   {
