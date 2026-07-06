@@ -26,6 +26,11 @@ export function AppearanceTab() {
   const fontStore = useFontStore();
   const [isTilingWm, setIsTilingWm] = useState(false);
 
+  const fullscreenPlayerStyleOptions: SegmentedOption<'minimal' | 'immersive'>[] = [
+    { id: 'minimal', label: t('settings.fullscreenPlayerMinimal') },
+    { id: 'immersive', label: t('settings.fullscreenPlayerImmersive') },
+  ];
+
   useEffect(() => {
     if (!IS_LINUX) return;
     isTilingWmCmd().then(setIsTilingWm).catch(() => {});
@@ -266,6 +271,52 @@ export function AppearanceTab() {
             </div>
             </SettingsSubCard>
           </SettingsGroup>
+        </div>
+      </SettingsSubSection>
+
+      <SettingsSubSection
+        title={t('settings.fullscreenPlayerStyle')}
+        icon={<Sliders size={16} />}
+      >
+        <div className="settings-card">
+          <SettingsGroup>
+            <SettingsField desc={t('settings.fullscreenPlayerStyleDesc')}>
+              <SettingsSegmented
+                options={fullscreenPlayerStyleOptions}
+                value={auth.fullscreenPlayerStyle}
+                onChange={auth.setFullscreenPlayerStyle}
+              />
+            </SettingsField>
+          </SettingsGroup>
+          {auth.fullscreenPlayerStyle === 'immersive' && (
+            <SettingsGroup>
+              <SettingsToggle
+                label={t('settings.fsShowArtistPortrait')}
+                desc={t('settings.fsShowArtistPortraitDesc')}
+                checked={auth.showFsArtistPortrait}
+                onChange={auth.setShowFsArtistPortrait}
+              />
+              {auth.showFsArtistPortrait && (
+                <SettingsSubCard>
+                  <SettingsField label={t('settings.fsPortraitDim')}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <input
+                        type="range"
+                        min={0}
+                        max={80}
+                        step={1}
+                        value={auth.fsPortraitDim}
+                        onChange={e => auth.setFsPortraitDim(parseInt(e.target.value, 10))}
+                        className="ui-scale-slider"
+                        style={{ flex: 1 }}
+                      />
+                      <SettingsValue>{auth.fsPortraitDim}%</SettingsValue>
+                    </div>
+                  </SettingsField>
+                </SettingsSubCard>
+              )}
+            </SettingsGroup>
+          )}
         </div>
       </SettingsSubSection>
 
