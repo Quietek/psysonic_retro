@@ -25,6 +25,11 @@ import {
 } from '@/lib/library/genreCatalogCountsCache';
 import { fetchGenreAlbumTotal } from '@/lib/library/genreAlbumBrowse';
 import { libraryIsReady } from '@/lib/library/libraryReady';
+import {
+  fetchOfflineLocalGenreCatalog,
+  isOfflineBrowseActive,
+  offlineLocalBrowseEnabled,
+} from '@/features/offline';
 
 /** Drop genres with no indexed albums/tracks (stale server list or orphan rows). */
 export function filterGenresWithContent(genres: SubsonicGenre[]): SubsonicGenre[] {
@@ -121,6 +126,13 @@ export async function fetchGenreAlbumCount(
 ): Promise<number | null> {
   if (!genre.trim()) return null;
   if (indexEnabled && serverId) {
+    if (isOfflineBrowseActive() && offlineLocalBrowseEnabled(serverId)) {
+      const genres = await fetchOfflineLocalGenreCatalog(serverId);
+      const match = genres.find(
+        g => g.value.localeCompare(genre, undefined, { sensitivity: 'accent' }) === 0,
+      );
+      return match?.albumCount ?? null;
+    }
     const scopeKey = libraryScopeCacheKeyForServer(serverId);
     const cached = lookupGenreAlbumCount(serverId, genre, scopeKey);
     if (cached != null) return cached;
@@ -152,6 +164,12 @@ export async function fetchGenreCatalog(
 
   const scopeKey = libraryScopeCacheKeyForServer(serverId);
   const cacheKey = genreCatalogCacheKey(serverId, scopeKey);
+  const offlineLocal = isOfflineBrowseActive() && offlineLocalBrowseEnabled(serverId);
+
+  if (offlineLocal) {
+    return filterGenresWithContent(await fetchOfflineLocalGenreCatalog(serverId));
+  }
+
   const fresh = peekGenreCatalogCache(serverId, scopeKey, false);
   if (fresh) return fresh;
 
