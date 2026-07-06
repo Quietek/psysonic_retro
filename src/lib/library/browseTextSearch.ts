@@ -7,7 +7,11 @@ import type { ArtistCreditMode } from '@/lib/api/library';
 import { search, searchSongsPaged } from '@/lib/api/subsonicSearch';
 import type { SearchResults, SubsonicAlbum, SubsonicArtist, SubsonicSong } from '@/lib/api/subsonicTypes';
 import { libraryAdvancedSearch, libraryGetArtistLosslessBrowse, libraryListLosslessAlbums } from '@/lib/api/library';
-import { libraryScopeForServer } from '@/lib/api/subsonicClient';
+import {
+  libraryScopeForServer,
+  libraryScopePairsForServer,
+  librarySelectionForServer,
+} from '@/lib/api/subsonicClient';
 import {
   LIVE_SEARCH_DEBOUNCE_NETWORK_MS,
   LIVE_SEARCH_DEBOUNCE_RACE_MS,
@@ -28,7 +32,8 @@ import {
   type LibrarySearchDebugEntry,
   type LibrarySearchSurface,
 } from './libraryDevLog';
-import { libraryIsReady } from './libraryReady';
+import { libraryIsReady, waitForLibraryBrowseReady } from './libraryReady';
+import { artistBrowseTimed, emitArtistsBrowseDebug } from './artistBrowseDebug';
 import { raceSearchSources, type SearchRaceWinner } from './searchRace';
 
 export type { LibrarySearchSurface };
@@ -318,6 +323,7 @@ export async function runLocalBrowseSongPage(
     const resp = await libraryAdvancedSearch({
       serverId,
       libraryScope: libraryScopeForServer(serverId) ?? undefined,
+      libraryScopes: libraryScopePairsForServer(serverId),
       query: q,
       entityTypes: ['track'],
       limit: pageSize,
@@ -416,6 +422,7 @@ export async function runLocalRandomSongs(
     const resp = await libraryAdvancedSearch({
       serverId,
       libraryScope: libraryScopeForServer(serverId) ?? undefined,
+      libraryScopes: libraryScopePairsForServer(serverId),
       entityTypes: ['track'],
       sort: [{ field: 'random', dir: 'asc' }],
       limit,
@@ -440,6 +447,7 @@ export async function runLocalLosslessAlbums(
     const resp = await libraryListLosslessAlbums({
       serverId,
       libraryScope: libraryScopeForServer(serverId) ?? undefined,
+      libraryScopes: librarySelectionForServer(serverId),
       limit,
       offset,
     });
@@ -464,6 +472,7 @@ export async function runLocalArtistLosslessBrowse(
       serverId,
       artistId,
       libraryScope: libraryScopeForServer(serverId) ?? undefined,
+      libraryScopes: librarySelectionForServer(serverId),
     });
     if (resp.source !== 'local') return null;
     return {
@@ -488,6 +497,7 @@ export async function runLocalRandomAlbums(
     const resp = await libraryAdvancedSearch({
       serverId,
       libraryScope: libraryScopeForServer(serverId) ?? undefined,
+      libraryScopes: libraryScopePairsForServer(serverId),
       entityTypes: ['album'],
       sort: [{ field: 'random', dir: 'asc' }],
       limit,
@@ -553,6 +563,7 @@ export async function runLocalBrowseAllArtists(
     const resp = await libraryAdvancedSearch({
       serverId,
       libraryScope: libraryScopeForServer(serverId) ?? undefined,
+      libraryScopes: libraryScopePairsForServer(serverId),
       entityTypes: ['artist'],
       limit,
       offset: 0,
@@ -578,20 +589,34 @@ export async function fetchLocalArtistCatalogChunk(
   creditMode: ArtistCreditMode = 'album',
   letterBucket?: string | null,
 ): Promise<ArtistCatalogChunkResult | null> {
-  if (!serverId || !(await libraryIsReady(serverId))) return null;
+  if (!serverId) return null;
+  const { ready, waitedMs } = await artistBrowseTimed(
+    'library_ready',
+    () => waitForLibraryBrowseReady(serverId),
+    { serverId },
+  );
+  if (!ready) {
+    emitArtistsBrowseDebug('library_not_ready', { serverId, offset, chunkSize, waitedMs });
+    return null;
+  }
   const bucket = letterBucket && letterBucket !== 'ALL' ? letterBucket : undefined;
   try {
-    const resp = await libraryAdvancedSearch({
-      serverId,
-      libraryScope: libraryScopeForServer(serverId) ?? undefined,
-      entityTypes: ['artist'],
-      artistCreditMode: creditMode,
-      ...(bucket ? { artistLetterBucket: bucket } : {}),
-      sort: [{ field: 'name', dir: 'asc' }],
-      limit: chunkSize,
-      offset,
-      skipTotals: true,
-    });
+    const resp = await artistBrowseTimed(
+      'rust_advanced_search',
+      () => libraryAdvancedSearch({
+        serverId,
+        libraryScope: libraryScopeForServer(serverId) ?? undefined,
+        libraryScopes: libraryScopePairsForServer(serverId),
+        entityTypes: ['artist'],
+        artistCreditMode: creditMode,
+        ...(bucket ? { artistLetterBucket: bucket } : {}),
+        sort: [{ field: 'name', dir: 'asc' }],
+        limit: chunkSize,
+        offset,
+        skipTotals: true,
+      }),
+      { offset, chunkSize, creditMode, letterBucket: bucket },
+    );
     if (resp.source !== 'local') return null;
     const artists = resp.artists.map(artistToArtist);
     return { artists, hasMore: artists.length === chunkSize };

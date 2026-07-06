@@ -4,6 +4,7 @@ import type { AlbumBrowseQuery } from './albumBrowseTypes';
 const libraryGetGenreAlbumCounts = vi.fn();
 const libraryIsReady = vi.fn();
 const libraryScopeForServer = vi.fn();
+const librarySelectionForServer = vi.fn();
 const runLocalAlbumBrowse = vi.fn();
 
 vi.mock('@/lib/api/library', () => ({
@@ -16,6 +17,7 @@ vi.mock('./libraryReady', () => ({
 
 vi.mock('@/lib/api/subsonicClient', () => ({
   libraryScopeForServer: (...args: unknown[]) => libraryScopeForServer(...args),
+  librarySelectionForServer: (...args: unknown[]) => librarySelectionForServer(...args),
 }));
 
 vi.mock('./albumBrowseLocal', () => ({
@@ -36,6 +38,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   libraryIsReady.mockResolvedValue(true);
   libraryScopeForServer.mockReturnValue('lib-a');
+  librarySelectionForServer.mockReturnValue(['lib-a']);
 });
 
 describe('fetchAlbumBrowseGenreOptions', () => {
@@ -53,6 +56,28 @@ describe('fetchAlbumBrowseGenreOptions', () => {
     expect(libraryGetGenreAlbumCounts).toHaveBeenCalledWith({
       serverId: 'srv-1',
       libraryScope: 'lib-a',
+    });
+    expect(runLocalAlbumBrowse).not.toHaveBeenCalled();
+  });
+
+  it('uses one scoped SQL query for a multi-library selection', async () => {
+    librarySelectionForServer.mockReturnValue(['lib-a', 'lib-b']);
+    libraryGetGenreAlbumCounts.mockResolvedValue([
+      { value: 'Rock', albumCount: 15, songCount: 45 },
+      { value: 'Pop', albumCount: 4, songCount: 12 },
+      { value: 'Jazz', albumCount: 2, songCount: 6 },
+    ]);
+
+    await expect(fetchAlbumBrowseGenreOptions('srv-1', true, baseQuery)).resolves.toEqual([
+      { genre: 'Rock', count: 15 },
+      { genre: 'Pop', count: 4 },
+      { genre: 'Jazz', count: 2 },
+    ]);
+
+    expect(libraryGetGenreAlbumCounts).toHaveBeenCalledTimes(1);
+    expect(libraryGetGenreAlbumCounts).toHaveBeenCalledWith({
+      serverId: 'srv-1',
+      libraryScopes: ['lib-a', 'lib-b'],
     });
     expect(runLocalAlbumBrowse).not.toHaveBeenCalled();
   });

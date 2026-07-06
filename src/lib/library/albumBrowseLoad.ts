@@ -22,8 +22,7 @@ import { albumBrowseHasServerFilters, countGenresFromAlbums, filterAlbumsByCompi
 import { runLocalAlbumBrowse } from './albumBrowseLocal';
 import { fetchAlbumBrowseNetwork } from './albumBrowseNetwork';
 import { fetchStarredAlbumBrowse } from './albumBrowseStarredFetch';
-import { libraryGetGenreAlbumCounts } from '@/lib/api/library';
-import { libraryScopeForServer } from '@/lib/api/subsonicClient';
+import { librarySelectionForServer } from '@/lib/api/subsonicClient';
 import { libraryIsReady } from './libraryReady';
 import type {
   AlbumBrowseFetchCallbacks,
@@ -32,6 +31,13 @@ import type {
   GenreFilterOption,
 } from './albumBrowseTypes';
 import { GENRE_ALBUM_FETCH_LIMIT } from './albumBrowseTypes';
+import { albumBrowseTimed, emitAlbumBrowseDebug } from './albumBrowseDebug';
+import { fetchGenreAlbumCountsDeduped } from './albumBrowseGenreCountsCache';
+
+/** Unfiltered browse: paint a small SQL page first, then grow the catalog buffer. */
+export function albumBrowseBootstrapEligible(query: AlbumBrowseQuery): boolean {
+  return !albumBrowseHasServerFilters(query) && query.compFilter === 'all';
+}
 
 /** One local-index chunk for lazy catalog loading (All Albums slice mode). */
 export async function fetchLocalAlbumCatalogChunk(
@@ -63,30 +69,49 @@ export async function fetchAlbumBrowseGenreOptions(
   query: AlbumBrowseQuery,
 ): Promise<GenreFilterOption[]> {
   const withoutGenre: AlbumBrowseQuery = { ...query, genres: [] };
-  const scope = libraryScopeForServer(serverId);
+  const selection = librarySelectionForServer(serverId);
   const hasCombinedFilters =
     albumBrowseHasServerFilters(withoutGenre) || query.compFilter !== 'all';
 
-  // Sidebar library scope only: use the full scoped genre catalog from the local
-  // index instead of getGenres() (server-wide) or a 500-album sample.
-  if (indexEnabled && serverId && scope && !hasCombinedFilters && (await libraryIsReady(serverId))) {
+  // Sidebar library scope only: build the genre catalog from the light per-library
+  // `track_genre` index query instead of getGenres() (server-wide) or a 500-album
+  // multi-scope CTE sample. For multi-library selection we sum counts per library —
+  // cross-library album duplicates are counted once per library (a cosmetic hint),
+  // but the genre set stays correct and each query is an indexed GROUP BY.
+  if (indexEnabled && serverId && selection.length >= 1 && !hasCombinedFilters && (await libraryIsReady(serverId))) {
     try {
-      const rows = await libraryGetGenreAlbumCounts({
-        serverId,
-        libraryScope: scope,
-      });
-      return rows.map(row => ({ genre: row.value, count: row.albumCount }));
+      if (selection.length === 1) {
+        const rows = await albumBrowseTimed(
+          'genre_album_counts',
+          () => fetchGenreAlbumCountsDeduped({ serverId, libraryScope: selection[0] }),
+          { libraryCount: 1 },
+        );
+        return rows.map(row => ({ genre: row.value, count: row.albumCount }));
+      }
+      const rows = await albumBrowseTimed(
+        'genre_album_counts_multi',
+        () => fetchGenreAlbumCountsDeduped({ serverId, libraryScopes: selection }),
+        { libraryCount: selection.length },
+      );
+      return rows.map(row => ({ genre: row.value, count: row.albumCount })).sort(
+        (a, b) => b.count - a.count || a.genre.localeCompare(b.genre),
+      );
     } catch {
+      emitAlbumBrowseDebug('genre_album_counts_fallback', { reason: 'error' });
       /* fall through to album-derived options */
     }
   }
 
-  const page = await fetchAlbumBrowsePage(
-    serverId,
-    indexEnabled,
-    withoutGenre,
-    0,
-    GENRE_ALBUM_FETCH_LIMIT,
+  const page = await albumBrowseTimed(
+    'genre_options_album_page',
+    () => fetchAlbumBrowsePage(
+      serverId,
+      indexEnabled,
+      withoutGenre,
+      0,
+      GENRE_ALBUM_FETCH_LIMIT,
+    ),
+    { limit: GENRE_ALBUM_FETCH_LIMIT },
   );
   return countGenresFromAlbums(filterAlbumsByCompilation(page.albums, query.compFilter));
 }

@@ -196,9 +196,16 @@ export interface LibrarySortClause {
   dir: SortDir;
 }
 
+/** One server + library folder id — profile `serverId` space until IPC wrappers remap. */
+export interface LibraryScopePair {
+  serverId: string;
+  libraryId: string;
+}
+
 export interface LibraryAdvancedSearchRequest {
   serverId: string;
   libraryScope?: string | null;
+  libraryScopes?: LibraryScopePair[];
   query?: string | null; // shorthand → fts clause on text fields
   entityTypes: LibraryEntityType[];
   filters?: LibraryFilterClause[];
@@ -280,6 +287,7 @@ export interface LibraryLiveSearchRequest {
   query: string;
   /** Subsonic `musicFolderId` / Navidrome library id — omit for all libraries. */
   libraryScope?: string | null;
+  libraryScopes?: LibraryScopePair[];
   artistLimit?: number;
   albumLimit?: number;
   songLimit?: number;
@@ -290,6 +298,8 @@ export interface LibraryLiveSearchRequest {
 export interface LibraryLosslessAlbumsRequest {
   serverId: string;
   libraryScope?: string | null;
+  /** Ordered library ids for a multi-library selection; wins over `libraryScope`. */
+  libraryScopes?: string[] | null;
   limit?: number;
   offset?: number;
 }
@@ -304,6 +314,8 @@ export interface LibraryArtistLosslessBrowseRequest {
   serverId: string;
   artistId: string;
   libraryScope?: string | null;
+  /** Ordered library ids for a multi-library selection; wins over `libraryScope`. */
+  libraryScopes?: string[] | null;
 }
 
 export interface LibraryArtistLosslessBrowseResponse {
@@ -381,6 +393,7 @@ export type LibraryGenreAlbumsRequest = {
   serverId: string;
   genre: string;
   libraryScope?: string | null;
+  libraryScopes?: LibraryScopePair[];
   sort?: LibrarySortClause[];
   limit?: number;
   offset?: number;

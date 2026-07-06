@@ -20,7 +20,7 @@ import {
 } from '@/lib/api/subsonicStreamUrl';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { parseSubsonicEntityStarRating } from '@/lib/api/subsonicRatings';
-import { getClient, libraryFilterParams, libraryScopeForServer } from '@/lib/api/subsonicClient';
+import { getClient, libraryFilterParams, libraryFilterParamsForServer, libraryScopeCacheKeyForServer, libraryScopeForServer, libraryScopeIsActive, libraryScopePairsForServer, librarySelectionForServer } from '@/lib/api/subsonicClient';
 import { useAuthStore } from '@/store/authStore';
 import { resetAuthStore } from '@/test/helpers/storeReset';
 
@@ -76,6 +76,41 @@ describe('libraryFilterParams', () => {
     });
     expect(libraryFilterParams()).toEqual({ musicFolderId: 'mf-7' });
   });
+
+  it('returns repeated musicFolderId values for multi-library selection', () => {
+    const serverId = setUpServer();
+    useAuthStore.getState().setMusicLibrarySelection(['mf-2', 'mf-7']);
+    expect(libraryFilterParams()).toEqual({ musicFolderId: ['mf-2', 'mf-7'] });
+    expect(libraryFilterParamsForServer(serverId)).toEqual({ musicFolderId: ['mf-2', 'mf-7'] });
+  });
+});
+
+describe('librarySelectionForServer', () => {
+  it('migrates legacy all or absent to empty array', () => {
+    const serverId = setUpServer();
+    expect(librarySelectionForServer(serverId)).toEqual([]);
+    useAuthStore.setState({
+      musicLibraryFilterByServer: { [serverId]: 'all' },
+    });
+    expect(librarySelectionForServer(serverId)).toEqual([]);
+  });
+
+  it('migrates legacy single id to one-element array', () => {
+    const serverId = setUpServer();
+    useAuthStore.setState({
+      musicLibraryFilterByServer: { [serverId]: 'mf-7' },
+    });
+    expect(librarySelectionForServer(serverId)).toEqual(['mf-7']);
+  });
+
+  it('returns ordered selection when the new map has an entry', () => {
+    const serverId = setUpServer();
+    useAuthStore.setState({
+      musicLibrarySelectionByServer: { [serverId]: ['lib-b', 'lib-a'] },
+      musicLibraryFilterByServer: { [serverId]: 'lib-b' },
+    });
+    expect(librarySelectionForServer(serverId)).toEqual(['lib-b', 'lib-a']);
+  });
 });
 
 describe('libraryScopeForServer', () => {
@@ -94,6 +129,85 @@ describe('libraryScopeForServer', () => {
       musicLibraryFilterByServer: { [serverId]: 'mf-7' },
     });
     expect(libraryScopeForServer(serverId)).toBe('mf-7');
+  });
+
+  it('returns undefined when multiple libraries are selected', () => {
+    const serverId = setUpServer();
+    useAuthStore.getState().setMusicLibrarySelection(['mf-2', 'mf-7']);
+    expect(libraryScopeForServer(serverId)).toBeUndefined();
+    expect(libraryScopeIsActive(serverId)).toBe(true);
+    expect(libraryScopeCacheKeyForServer(serverId)).toBe('mf-2,mf-7');
+  });
+});
+
+describe('libraryScopePairsForServer', () => {
+  it('returns empty array when all libraries or unset', () => {
+    const serverId = setUpServer();
+    expect(libraryScopePairsForServer(serverId)).toEqual([]);
+    useAuthStore.setState({
+      musicLibraryFilterByServer: { [serverId]: 'all' },
+    });
+    expect(libraryScopePairsForServer(serverId)).toEqual([]);
+  });
+
+  it('returns one ordered pair for legacy single-library filter', () => {
+    const serverId = setUpServer();
+    useAuthStore.setState({
+      musicLibraryFilterByServer: { [serverId]: 'mf-7' },
+    });
+    expect(libraryScopePairsForServer(serverId)).toEqual([
+      { serverId, libraryId: 'mf-7' },
+    ]);
+  });
+
+  it('returns ordered pairs from multi-library selection', () => {
+    const serverId = setUpServer();
+    useAuthStore.setState({
+      musicLibrarySelectionByServer: { [serverId]: ['lib-b', 'lib-a'] },
+      musicLibraryFilterByServer: { [serverId]: 'lib-b' },
+    });
+    expect(libraryScopePairsForServer(serverId)).toEqual([
+      { serverId, libraryId: 'lib-b' },
+      { serverId, libraryId: 'lib-a' },
+    ]);
+  });
+});
+
+describe('librarySelectionForServer — collapse when all libraries selected', () => {
+  it('collapses to the all-libraries scope when every folder is selected', () => {
+    const serverId = setUpServer();
+    useAuthStore.setState({
+      musicFolders: [
+        { id: 'mf-1', name: 'A' },
+        { id: 'mf-2', name: 'B' },
+      ],
+    });
+    useAuthStore.getState().setMusicLibrarySelection(['mf-1', 'mf-2']);
+    expect(librarySelectionForServer(serverId)).toEqual([]);
+    expect(libraryScopeIsActive(serverId)).toBe(false);
+    expect(libraryScopeCacheKeyForServer(serverId)).toBe('all');
+    expect(libraryScopePairsForServer(serverId)).toEqual([]);
+    expect(libraryFilterParamsForServer(serverId)).toEqual({});
+  });
+
+  it('keeps the scope when only a subset is selected', () => {
+    const serverId = setUpServer();
+    useAuthStore.setState({
+      musicFolders: [
+        { id: 'mf-1', name: 'A' },
+        { id: 'mf-2', name: 'B' },
+      ],
+    });
+    useAuthStore.getState().setMusicLibrarySelection(['mf-1']);
+    expect(librarySelectionForServer(serverId)).toEqual(['mf-1']);
+    expect(libraryScopeIsActive(serverId)).toBe(true);
+    expect(libraryScopeCacheKeyForServer(serverId)).toBe('mf-1');
+  });
+
+  it('does not collapse when the folder list is not yet loaded', () => {
+    const serverId = setUpServer();
+    useAuthStore.getState().setMusicLibrarySelection(['mf-1', 'mf-2']);
+    expect(librarySelectionForServer(serverId)).toEqual(['mf-1', 'mf-2']);
   });
 });
 

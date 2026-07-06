@@ -1,5 +1,7 @@
 import { lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { lazyLoadAlbumsPage } from '@/features/album/utils/albumBrowseRoutePrefetch';
+import { lazyLoadArtistsPage } from '@/features/artist/utils/artistBrowseRoutePrefetch';
 import MobilePlayerView from '@/features/nowPlaying/components/MobilePlayerView';
 import { useIsMobile } from '@/lib/hooks/useIsMobile';
 import { useSidebarStore } from '@/features/sidebar';
@@ -10,8 +12,8 @@ import { resolveStartRoute } from '@/features/sidebar';
 // Route-level lazy loading: keeps the non-page graph (shell, player, stores) in
 // the entry chunk; each page is fetched when its route is first visited.
 const Home = lazy(() => import('@/features/home/pages/Home'));
-const Albums = lazy(() => import('@/features/album/pages/Albums'));
-const Artists = lazy(() => import('@/features/artist/pages/Artists'));
+const Albums = lazy(() => lazyLoadAlbumsPage());
+const Artists = lazy(() => lazyLoadArtistsPage());
 const ArtistDetail = lazy(() => import('@/features/artist/pages/ArtistDetail'));
 const Composers = lazy(() => import('@/features/composers/pages/Composers'));
 const ComposerDetail = lazy(() => import('@/features/composers/pages/ComposerDetail'));

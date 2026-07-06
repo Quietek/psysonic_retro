@@ -16,10 +16,28 @@ import type {
 } from '@/lib/api/subsonicTypes';
 
 export async function getArtists(): Promise<SubsonicArtist[]> {
+  return fetchArtistsWithParams(libraryFilterParams());
+}
+
+/** Merge artist indexes from several music folders (many servers ignore multi `musicFolderId`). */
+export async function getArtistsAcrossLibraries(libraryIds: string[]): Promise<SubsonicArtist[]> {
+  if (libraryIds.length === 0) return getArtists();
+  if (libraryIds.length === 1) {
+    return fetchArtistsWithParams({ musicFolderId: libraryIds[0]! });
+  }
+  const byId = new Map<string, SubsonicArtist>();
+  for (const libraryId of libraryIds) {
+    const batch = await fetchArtistsWithParams({ musicFolderId: libraryId }).catch(() => []);
+    for (const artist of batch) byId.set(artist.id, artist);
+  }
+  return [...byId.values()];
+}
+
+async function fetchArtistsWithParams(
+  params: Record<string, string | number | string[]>,
+): Promise<SubsonicArtist[]> {
   type ArtistIndexEntry = { artist?: SubsonicArtist | SubsonicArtist[] };
-  const data = await api<{ artists?: { index?: ArtistIndexEntry | ArtistIndexEntry[] } }>('getArtists.view', {
-    ...libraryFilterParams(),
-  });
+  const data = await api<{ artists?: { index?: ArtistIndexEntry | ArtistIndexEntry[] } }>('getArtists.view', params);
   const rawIdx = data.artists?.index;
   const indices = Array.isArray(rawIdx) ? rawIdx : (rawIdx ? [rawIdx] : []);
   const artists: SubsonicArtist[] = [];
@@ -32,7 +50,10 @@ export async function getArtists(): Promise<SubsonicArtist[]> {
 }
 
 export async function getArtist(id: string): Promise<{ artist: SubsonicArtist; albums: SubsonicAlbum[] }> {
-  const data = await api<{ artist: SubsonicArtist & { album: SubsonicAlbum[] } }>('getArtist.view', { id });
+  const data = await api<{ artist: SubsonicArtist & { album: SubsonicAlbum[] } }>('getArtist.view', {
+    id,
+    ...libraryFilterParams(),
+  });
   const { album, ...artist } = data.artist;
   return { artist, albums: album ?? [] };
 }
@@ -41,7 +62,11 @@ export async function getArtistForServer(
   serverId: string,
   id: string,
 ): Promise<{ artist: SubsonicArtist; albums: SubsonicAlbum[] }> {
-  const data = await apiForServer<{ artist: SubsonicArtist & { album: SubsonicAlbum[] } }>(serverId, 'getArtist.view', { id });
+  const data = await apiForServer<{ artist: SubsonicArtist & { album: SubsonicAlbum[] } }>(
+    serverId,
+    'getArtist.view',
+    { id, ...libraryFilterParamsForServer(serverId) },
+  );
   const { album, ...artist } = data.artist;
   return { artist, albums: album ?? [] };
 }

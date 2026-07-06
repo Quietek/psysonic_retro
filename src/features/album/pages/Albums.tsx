@@ -3,6 +3,7 @@ import { resolveAlbum } from '@/features/offline';
 import { songToTrack } from '@/lib/media/songToTrack';
 import { useState, useEffect, useLayoutEffect, useRef, useMemo } from 'react';
 import AlbumCard from '@/features/album/components/AlbumCard';
+import AlbumBrowseGridSkeleton from '@/features/album/components/AlbumBrowseGridSkeleton';
 import { albumGridWarmCovers, coverDisplayCssPxForAlbumGrid } from '@/cover/layoutSizes';
 import { useLibraryCoverPrefetch } from '@/cover/useLibraryCoverPrefetch';
 import { useAuthStore } from '@/store/authStore';
@@ -53,6 +54,11 @@ import {
   filterAlbumsByYearBounds,
 } from '@/lib/library/albumBrowseFilters';
 import { useScopedBrowseSearchQuery } from '@/store/liveSearchScopeStore';
+import {
+  beginAlbumBrowseTrace,
+  emitAlbumBrowseDebug,
+} from '@/lib/library/albumBrowseDebug';
+import { librarySelectionForServer } from '@/lib/api/subsonicClient';
 
 type SortType = AlbumBrowseSort;
 
@@ -68,7 +74,17 @@ export default function Albums() {
   const auth = useAuthStore();
   const serverId = useAuthStore(s => s.activeServerId ?? '');
   const indexEnabled = useLibraryIndexStore(s => s.isIndexEnabled(serverId));
-  const catalogYears = useAlbumCatalogYearBounds(serverId, indexEnabled, musicLibraryFilterVersion);
+
+  useLayoutEffect(() => {
+    beginAlbumBrowseTrace({
+      serverId,
+      indexEnabled,
+      libraryFilterVersion: musicLibraryFilterVersion,
+      libraryScopeCount: librarySelectionForServer(serverId).length,
+    });
+    return () => emitAlbumBrowseDebug('page_unmount');
+  }, [serverId, indexEnabled, musicLibraryFilterVersion]);
+
   const downloadAlbum = useOfflineStore(s => s.downloadAlbum);
   const requestDownloadFolder = useDownloadModalStore(s => s.requestFolder);
 
@@ -178,6 +194,25 @@ export default function Albums() {
   const bindLoadMoreSentinel = browseData.bindLoadMoreSentinel;
   const loadMore = browseData.loadMore;
 
+  const catalogYears = useAlbumCatalogYearBounds(
+    serverId,
+    indexEnabled,
+    musicLibraryFilterVersion,
+    loading && albums.length === 0,
+  );
+
+  const prevLoadingRef = useRef(loading);
+  useEffect(() => {
+    if (prevLoadingRef.current && !loading) {
+      emitAlbumBrowseDebug('ui_loading_false', {
+        displayAlbumCount: displayAlbums.length,
+        albumCount: albums.length,
+        textSearchActive,
+      });
+    }
+    prevLoadingRef.current = loading;
+  }, [loading, displayAlbums.length, albums.length, textSearchActive]);
+
   useAlbumBrowseScrollSnapshotSync(scrollSnapshotRef, scrollBodyEl, displayAlbums.length);
 
   const { isScrollRestorePending } = useAlbumBrowseScrollRestore({
@@ -218,6 +253,16 @@ export default function Albums() {
   const maxGridCols = useAuthStore(s => clampLibraryGridMaxColumns(s.libraryGridMaxColumns));
   const [albumCellDisplayCssPx, setAlbumCellDisplayCssPx] = useState(140);
   const [albumGridCols, setAlbumGridCols] = useState(4);
+
+  useLayoutEffect(() => {
+    if (!loading && displayAlbums.length > 0) {
+      emitAlbumBrowseDebug('grid_first_paint', {
+        displayAlbumCount: displayAlbums.length,
+        albumGridCols,
+        textSearchActive,
+      });
+    }
+  }, [loading, displayAlbums.length, albumGridCols, textSearchActive]);
 
   // ── Multi-selection ──────────────────────────────────────────────────────
   // `displayAlbums` — visible grid slice (local index) or loaded SQL pages (network).
@@ -477,9 +522,7 @@ export default function Albums() {
         ]}
       >
         {loading && albums.length === 0 ? (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem' }}>
-            <div className="spinner" />
-          </div>
+          <AlbumBrowseGridSkeleton slotCount={Math.max(albumGridCols * 3, 12)} />
         ) : !loading && albums.length === 0 && !serverFilterActive && !compFilterActive ? (
           <div className="empty-state" style={{ padding: '3rem 1rem', textAlign: 'center' }}>
             {t('common.libraryEmpty')}

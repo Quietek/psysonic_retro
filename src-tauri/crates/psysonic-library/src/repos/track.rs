@@ -1,4 +1,4 @@
-use rusqlite::{params, OptionalExtension, Transaction};
+use rusqlite::{params, params_from_iter, OptionalExtension, Transaction};
 
 use crate::genre_tags::{self, genres_for_track_raw_json};
 use crate::store::{LibraryStore, WriteOpTiming};
@@ -429,6 +429,62 @@ impl<'a> TrackRepository<'a> {
         .map_err(|e| e.to_string())
     }
 
+    /// Live tracks with no `library_id` hot column (multi-library scope gap).
+    pub fn count_untagged_tracks(&self, server_id: &str) -> Result<u64, String> {
+        self.store.with_read_conn(|conn| {
+            conn.query_row(
+                "SELECT COUNT(*) FROM track \
+                 WHERE server_id = ?1 AND deleted = 0 \
+                   AND (library_id IS NULL OR library_id = '')",
+                params![server_id],
+                |row| row.get::<_, i64>(0),
+            )
+        })
+        .map(|n| n.max(0) as u64)
+        .map_err(|e| e.to_string())
+    }
+
+    /// Tag empty `library_id` rows by album membership. Only fills rows
+    /// where `library_id` is NULL/empty so prior tags are never clobbered.
+    pub fn tag_library_by_album_ids(
+        &self,
+        server_id: &str,
+        library_id: &str,
+        album_ids: &[String],
+    ) -> Result<u64, String> {
+        if album_ids.is_empty() {
+            return Ok(0);
+        }
+        const CHUNK: usize = 400;
+        let mut total = 0u64;
+        self.store.with_conn_mut("track.tag_library_by_album_ids", |conn| {
+            let tx = conn.transaction()?;
+            for chunk in album_ids.chunks(CHUNK) {
+                let placeholders = (0..chunk.len())
+                    .map(|_| "?")
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                let sql = format!(
+                    "UPDATE track SET library_id = ?1 \
+                     WHERE server_id = ?2 AND deleted = 0 \
+                       AND album_id IN ({placeholders}) \
+                       AND (library_id IS NULL OR library_id = '')"
+                );
+                let mut params: Vec<rusqlite::types::Value> = vec![
+                    rusqlite::types::Value::Text(library_id.to_string()),
+                    rusqlite::types::Value::Text(server_id.to_string()),
+                ];
+                for id in chunk {
+                    params.push(id.clone().into());
+                }
+                let n = tx.execute(&sql, params_from_iter(params.iter()))?;
+                total += n as u64;
+            }
+            tx.commit()?;
+            Ok(total)
+        })
+    }
+
     /// Batch upsert with optional §6.9 id-remap detection. When
     /// `unstable_track_ids` is `true`, each incoming row is checked
     /// against the existing `track` table for a collision via
@@ -782,7 +838,11 @@ ON CONFLICT(server_id, id) DO UPDATE SET
   play_count           = excluded.play_count,
   played_at            = excluded.played_at,
   server_path          = excluded.server_path,
-  library_id           = excluded.library_id,
+  -- P20: never let a sync path that omits library membership (OpenSubsonic
+  -- whole-server search3/getAlbumList2 carry no libraryId) clobber a library_id
+  -- previously captured by a scoped / Navidrome-native sync back to NULL —
+  -- that silently erases multi-library scope tagging. A non-empty incoming id wins.
+  library_id           = COALESCE(NULLIF(excluded.library_id, ''), track.library_id),
   isrc                 = excluded.isrc,
   mbid_recording       = excluded.mbid_recording,
   bpm                  = excluded.bpm,
@@ -835,7 +895,8 @@ ON CONFLICT(server_id, id) DO UPDATE SET
   play_count           = excluded.play_count,
   played_at            = excluded.played_at,
   server_path          = excluded.server_path,
-  library_id           = excluded.library_id,
+  -- P20: preserve prior library_id when a sync path omits it (see UPSERT above).
+  library_id           = COALESCE(NULLIF(excluded.library_id, ''), track.library_id),
   isrc                 = excluded.isrc,
   mbid_recording       = excluded.mbid_recording,
   bpm                  = excluded.bpm,
@@ -989,6 +1050,100 @@ mod tests {
         with_hash.content_hash = Some("server-hash".into());
         repo.upsert_batch(&[with_hash]).unwrap();
         assert_eq!(read(&store).as_deref(), Some("server-hash"));
+    }
+
+    #[test]
+    fn resync_does_not_clobber_library_id_when_incoming_is_empty() {
+        // P20: a Navidrome-native / scoped sync tags a track with library_id, then
+        // a whole-server OpenSubsonic resync (no libraryId) must not wipe it — that
+        // is what silently emptied multi-library scope on large servers.
+        let store = LibraryStore::open_in_memory();
+        let repo = TrackRepository::new(&store);
+
+        let mut tagged = row("s1", "t1", "First");
+        tagged.library_id = Some("1".into());
+        repo.upsert_batch(&[tagged]).unwrap();
+
+        let read = |store: &LibraryStore| -> Option<String> {
+            store
+                .with_conn("misc", |c| {
+                    c.query_row(
+                        "SELECT library_id FROM track WHERE server_id='s1' AND id='t1'",
+                        [],
+                        |r| r.get(0),
+                    )
+                })
+                .unwrap()
+        };
+
+        // OpenSubsonic resync carries no library membership.
+        let mut none_scope = row("s1", "t1", "First (resynced, no lib)");
+        none_scope.library_id = None;
+        repo.upsert_batch(&[none_scope]).unwrap();
+        assert_eq!(read(&store).as_deref(), Some("1"));
+
+        // Empty-string is treated the same as NULL.
+        let mut empty_scope = row("s1", "t1", "First (resynced, empty lib)");
+        empty_scope.library_id = Some(String::new());
+        repo.upsert_batch(&[empty_scope]).unwrap();
+        assert_eq!(read(&store).as_deref(), Some("1"));
+
+        // A genuine library move (non-empty id) still wins.
+        let mut moved = row("s1", "t1", "First");
+        moved.library_id = Some("2".into());
+        repo.upsert_batch(&[moved]).unwrap();
+        assert_eq!(read(&store).as_deref(), Some("2"));
+    }
+
+    #[test]
+    fn tag_library_by_album_ids_fills_only_empty_rows_and_chunks() {
+        let store = LibraryStore::open_in_memory();
+        let repo = TrackRepository::new(&store);
+        let mut tagged = row("s1", "t1", "First");
+        tagged.library_id = Some("9".into());
+        tagged.album_id = Some("al1".into());
+        let mut empty = row("s1", "t2", "Second");
+        empty.album_id = Some("al1".into());
+        empty.library_id = None;
+        let mut other_album = row("s1", "t3", "Third");
+        other_album.album_id = Some("al2".into());
+        other_album.library_id = None;
+        repo.upsert_batch(&[tagged, empty, other_album]).unwrap();
+
+        let n = repo
+            .tag_library_by_album_ids("s1", "1", &["al1".into(), "al2".into()])
+            .unwrap();
+        assert_eq!(n, 2);
+
+        let read = |id: &str| -> Option<String> {
+            store
+                .with_read_conn(|c| {
+                    c.query_row(
+                        "SELECT library_id FROM track WHERE id = ?1",
+                        params![id],
+                        |r| r.get(0),
+                    )
+                })
+                .unwrap()
+        };
+        assert_eq!(read("t1").as_deref(), Some("9"));
+        assert_eq!(read("t2").as_deref(), Some("1"));
+        assert_eq!(read("t3").as_deref(), Some("1"));
+    }
+
+    #[test]
+    fn count_untagged_tracks_excludes_deleted_and_populated_rows() {
+        let store = LibraryStore::open_in_memory();
+        let repo = TrackRepository::new(&store);
+        let mut tagged = row("s1", "t1", "First");
+        tagged.library_id = Some("1".into());
+        let mut empty = row("s1", "t2", "Second");
+        empty.library_id = None;
+        let mut deleted = row("s1", "t3", "Third");
+        deleted.library_id = None;
+        deleted.deleted = true;
+        repo.upsert_batch(&[tagged, empty, deleted]).unwrap();
+        assert_eq!(repo.count_untagged_tracks("s1").unwrap(), 1);
     }
 
     #[test]

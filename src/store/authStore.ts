@@ -24,6 +24,7 @@ import { syncAllServerHttpContexts } from '@/lib/server/syncServerHttpContext';
 import type { AuthState } from './authStoreTypes';
 import { getCachedConnectBaseUrl } from '@/lib/server/serverEndpoint';
 import { serverProfileBaseUrl } from '@/lib/server/serverBaseUrl';
+import { setDebugLoggingModeSource } from '@/lib/perf/debugLoggingMode';
 import { createDiscordBannerActions } from './authDiscordBannerActions';
 
 export const useAuthStore = create<AuthState>()(
@@ -124,6 +125,7 @@ export const useAuthStore = create<AuthState>()(
       nowPlayingAtTop: false,
       musicFolders: [],
       musicLibraryFilterByServer: {},
+      musicLibrarySelectionByServer: {},
       musicLibraryFilterVersion: 0,
       entityRatingSupportByServer: {},
       audiomuseNavidromeByServer: {},
@@ -184,3 +186,7 @@ export const useAuthStore = create<AuthState>()(
     }
   )
 );
+
+// Wire the lib-safe debug-logging gate to the auth store's `loggingMode`
+// (store → lib injection; keeps `src/lib` instrumentation free of store imports).
+setDebugLoggingModeSource(() => useAuthStore.getState().loggingMode === 'debug');

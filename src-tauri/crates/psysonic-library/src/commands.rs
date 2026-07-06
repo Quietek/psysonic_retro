@@ -22,7 +22,10 @@ use crate::cross_server;
 use crate::dto::{
     count_local_tracks, local_tracks_max_updated_ms, track_index_nonempty, ArtifactInputDto,
     FactInputDto, LibraryAdvancedSearchRequest, LibraryAdvancedSearchResponse,
-    LibraryCrossServerSearchResponse, LibraryLiveSearchRequest, LibraryLiveSearchResponse, LibraryTrackDto,
+    LibraryCrossServerSearchResponse, LibraryLiveSearchRequest, LibraryLiveSearchResponse,
+    LibraryScopeAlbumDetailRequest, LibraryScopeAlbumDetailResponse, LibraryScopeArtistDetailRequest,
+    LibraryScopeArtistDetailResponse, LibraryScopeListRequest, LibraryScopeSearchRequest,
+    LibraryTrackDto,
     LibraryTracksEnvelope, OfflinePathDto, PlaySessionDayDetailDto, PlaySessionHeatmapDayDto,
     PlaySessionInputDto, PlaySessionRecentDayDto, PlaySessionRecentTrackDto, PlaySessionYearBoundsDto, PlaySessionYearSummaryDto, PurgeReportDto, SyncJobDto, SyncStateDto,
     TrackArtifactDto, TrackFactDto, TrackRefDto,
@@ -31,6 +34,7 @@ use crate::live_search;
 use crate::payload::LibrarySyncProgressPayload;
 use crate::repos::{PlaySessionRepository, SyncStateRepository, TrackRepository};
 use crate::runtime::{CurrentJob, LibraryRuntime, SyncSession};
+use crate::scope_merge;
 use crate::search::search_tracks;
 use crate::store::LibraryStore;
 use crate::sync::bandwidth::PlaybackHint;
@@ -39,6 +43,7 @@ use crate::sync::capability::{probe_and_persist, CapabilityFlags, NavidromeProbe
 use crate::sync::delta::DeltaSyncRunner;
 use crate::sync::error::SyncError;
 use crate::sync::initial::InitialSyncRunner;
+use crate::sync::library_tag::run_tag_pass_best_effort;
 use crate::sync::progress::{ChannelProgress, Progress, ProgressEvent};
 use crate::sync::tombstone::should_auto_reconcile;
 
@@ -316,15 +321,18 @@ pub async fn library_search(
     limit: Option<u32>,
     offset: Option<u32>,
     library_scope: Option<String>,
+    library_scopes: Option<Vec<String>>,
 ) -> Result<LibraryTracksEnvelope, String> {
-    let _ = library_scope; // PR-5a accepts the arg for forward-compat; filter is wired in §5.13
+    let scopes = effective_library_scopes(library_scope.as_deref(), library_scopes.as_deref());
     let limit = limit.unwrap_or(100).clamp(1, 500);
     let offset = offset.unwrap_or(0);
-    // `search_tracks` returns lean `TrackHit` rows for FTS; PR-5a
-    // re-fetches the full `TrackRow` per hit so the DTO carries every
-    // hot column. Acceptable for `limit ≤ 100`; PR-5d wires a single-
-    // statement SQL builder via the FilterRegistry.
-    let hits = search_tracks(&runtime.store, &server_id, &query, limit as i64 + offset as i64)?;
+    let hits = search_tracks(
+        &runtime.store,
+        &server_id,
+        &query,
+        limit as i64 + offset as i64,
+        &scopes,
+    )?;
     let mut paged: Vec<TrackRefDto> = hits
         .into_iter()
         .skip(offset as usize)
@@ -521,7 +529,80 @@ pub async fn library_advanced_search(
     request: LibraryAdvancedSearchRequest,
 ) -> Result<LibraryAdvancedSearchResponse, String> {
     let store = Arc::clone(&runtime.store);
-    library_spawn_blocking(move || advanced_search::run_advanced_search(&store, &request)).await
+    let trace_album_browse = psysonic_core::logging::should_log_albums_browse_trace()
+        && request.entity_types.len() == 1
+        && request.entity_types[0] == crate::filter::EntityKind::Album
+        && request
+            .query
+            .as_deref()
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .is_none();
+    let trace_artists_browse = psysonic_core::logging::should_log_artists_browse_trace()
+        && request.entity_types.len() == 1
+        && request.entity_types[0] == crate::filter::EntityKind::Artist
+        && request
+            .query
+            .as_deref()
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .is_none();
+    let trace_offset = request.offset;
+    let trace_limit = request.limit;
+    let trace_filter_count = request.filters.len();
+    let trace_scope_count = request
+        .library_scopes
+        .as_ref()
+        .map(|scopes| scopes.len())
+        .unwrap_or(if request.library_scope.is_some() { 1 } else { 0 });
+    library_spawn_blocking(move || {
+        let t0 = std::time::Instant::now();
+        let result = advanced_search::run_advanced_search(&store, &request);
+        if trace_album_browse {
+            let step_ms = t0.elapsed().as_millis();
+            let album_count = result.as_ref().map(|r| r.albums.len()).unwrap_or(0);
+            crate::app_deprintln!(
+                "[frontend][albums-browse] {}",
+                serde_json::json!({
+                    "step": "rust_advanced_search",
+                    "elapsedMs": 0,
+                    "details": {
+                        "stepMs": step_ms,
+                        "albums": album_count,
+                        "offset": trace_offset,
+                        "limit": trace_limit,
+                        "filterCount": trace_filter_count,
+                        "scopeCount": trace_scope_count,
+                        "ok": result.is_ok(),
+                    }
+                })
+            );
+        }
+        if trace_artists_browse {
+            let step_ms = t0.elapsed().as_millis();
+            let artist_count = result.as_ref().map(|r| r.artists.len()).unwrap_or(0);
+            crate::app_deprintln!(
+                "[frontend][artists-browse] {}",
+                serde_json::json!({
+                    "step": "rust_advanced_search",
+                    "elapsedMs": 0,
+                    "details": {
+                        "stepMs": step_ms,
+                        "artists": artist_count,
+                        "offset": trace_offset,
+                        "limit": trace_limit,
+                        "filterCount": trace_filter_count,
+                        "scopeCount": trace_scope_count,
+                        "creditMode": request.artist_credit_mode,
+                        "letterBucket": request.artist_letter_bucket,
+                        "ok": result.is_ok(),
+                    }
+                })
+            );
+        }
+        result
+    })
+    .await
 }
 
 // NOT specta-collected: returns a DTO carrying `raw_json: Value` (LibraryTrack/Album/ArtistDto) — specta rc.25 can't export serde_json::Value. Stays hand-written on generate_handler!.
@@ -541,7 +622,34 @@ pub async fn library_list_albums_by_genre(
     request: crate::dto::LibraryGenreAlbumsRequest,
 ) -> Result<crate::dto::LibraryGenreAlbumsResponse, String> {
     let store = Arc::clone(&runtime.store);
-    library_spawn_blocking(move || crate::genre_album_browse::list_albums_by_genre(&store, &request))
+    let trace = psysonic_core::logging::should_log_albums_browse_trace();
+    let trace_genre = request.genre.clone();
+    let trace_offset = request.offset;
+    let trace_limit = request.limit;
+    library_spawn_blocking(move || {
+        let t0 = std::time::Instant::now();
+        let result = crate::genre_album_browse::list_albums_by_genre(&store, &request);
+        if trace {
+            let step_ms = t0.elapsed().as_millis();
+            let album_count = result.as_ref().map(|r| r.albums.len()).unwrap_or(0);
+            crate::app_deprintln!(
+                "[frontend][albums-browse] {}",
+                serde_json::json!({
+                    "step": "rust_list_albums_by_genre",
+                    "elapsedMs": 0,
+                    "details": {
+                        "stepMs": step_ms,
+                        "albums": album_count,
+                        "genre": trace_genre,
+                        "offset": trace_offset,
+                        "limit": trace_limit,
+                        "ok": result.is_ok(),
+                    }
+                })
+            );
+        }
+        result
+    })
         .await
 }
 
@@ -562,6 +670,70 @@ pub async fn library_genre_tags_run(
     let store = Arc::clone(&runtime.store);
     library_spawn_blocking(move || crate::genre_tags_backfill::run_genre_tags_backfill(&store, &app))
         .await
+}
+
+/// Rebuild precomputed cluster identity keys (`library-cluster.db` attach).
+#[tauri::command]
+#[specta::specta]
+pub fn library_cluster_rebuild(
+    runtime: State<'_, LibraryRuntime>,
+    server_id: Option<String>,
+) -> Result<u64, String> {
+    let server_id = server_id
+        .as_deref()
+        .map(str::trim)
+        .filter(|s| !s.is_empty());
+    crate::identity::rebuild_cluster_keys(&runtime.store, server_id)
+}
+
+// NOT specta-collected: returns a DTO carrying `raw_json: Value` (LibraryTrack/Album/ArtistDto) — specta rc.25 can't export serde_json::Value. Stays hand-written on generate_handler!.
+#[tauri::command]
+pub async fn library_scope_list_albums(
+    runtime: State<'_, LibraryRuntime>,
+    request: LibraryScopeListRequest,
+) -> Result<Vec<crate::dto::LibraryAlbumDto>, String> {
+    let store = Arc::clone(&runtime.store);
+    library_spawn_blocking(move || scope_merge::list_albums(&store, &request)).await
+}
+
+// NOT specta-collected: returns a DTO carrying `raw_json: Value` (LibraryTrack/Album/ArtistDto) — specta rc.25 can't export serde_json::Value. Stays hand-written on generate_handler!.
+#[tauri::command]
+pub async fn library_scope_list_artists(
+    runtime: State<'_, LibraryRuntime>,
+    request: LibraryScopeListRequest,
+) -> Result<Vec<crate::dto::LibraryArtistDto>, String> {
+    let store = Arc::clone(&runtime.store);
+    library_spawn_blocking(move || scope_merge::list_artists(&store, &request)).await
+}
+
+// NOT specta-collected: returns a DTO carrying `raw_json: Value` (LibraryTrack/Album/ArtistDto) — specta rc.25 can't export serde_json::Value. Stays hand-written on generate_handler!.
+#[tauri::command]
+pub async fn library_scope_search_tracks(
+    runtime: State<'_, LibraryRuntime>,
+    request: LibraryScopeSearchRequest,
+) -> Result<Vec<LibraryTrackDto>, String> {
+    let store = Arc::clone(&runtime.store);
+    library_spawn_blocking(move || scope_merge::search_tracks(&store, &request)).await
+}
+
+// NOT specta-collected: returns a DTO carrying `raw_json: Value` (LibraryTrack/Album/ArtistDto) — specta rc.25 can't export serde_json::Value. Stays hand-written on generate_handler!.
+#[tauri::command]
+pub async fn library_scope_album_detail(
+    runtime: State<'_, LibraryRuntime>,
+    request: LibraryScopeAlbumDetailRequest,
+) -> Result<LibraryScopeAlbumDetailResponse, String> {
+    let store = Arc::clone(&runtime.store);
+    library_spawn_blocking(move || scope_merge::album_detail(&store, &request)).await
+}
+
+// NOT specta-collected: returns a DTO carrying `raw_json: Value` (LibraryTrack/Album/ArtistDto) — specta rc.25 can't export serde_json::Value. Stays hand-written on generate_handler!.
+#[tauri::command]
+pub async fn library_scope_artist_detail(
+    runtime: State<'_, LibraryRuntime>,
+    request: LibraryScopeArtistDetailRequest,
+) -> Result<LibraryScopeArtistDetailResponse, String> {
+    let store = Arc::clone(&runtime.store);
+    library_spawn_blocking(move || scope_merge::artist_detail(&store, &request)).await
 }
 
 // NOT specta-collected: returns a DTO carrying `raw_json: Value` (LibraryTrack/Album/ArtistDto) — specta rc.25 can't export serde_json::Value. Stays hand-written on generate_handler!.
@@ -596,6 +768,7 @@ pub async fn library_live_search(
         &request.server_id,
         &request.query,
         request.library_scope.as_deref(),
+        request.library_scopes.as_deref(),
         request.artist_limit.unwrap_or(5),
         request.album_limit.unwrap_or(5),
         request.song_limit.unwrap_or(10),
@@ -618,10 +791,27 @@ pub async fn library_search_cross_server(
     servers: Option<Vec<String>>,
 ) -> Result<LibraryCrossServerSearchResponse, String> {
     let limit = limit.unwrap_or(100);
-    cross_server::run_cross_server_search(&runtime.store, &query, limit, servers.as_deref())
+    cross_server::run_cross_server_search(&runtime.store, &query, limit, servers.as_deref(), None)
 }
 
 // ── helpers ──────────────────────────────────────────────────────────
+
+/// Ordered multi-scope wins; else single `library_scope`; empty = all libraries.
+fn effective_library_scopes(
+    library_scope: Option<&str>,
+    library_scopes: Option<&[String]>,
+) -> Vec<String> {
+    if let Some(list) = library_scopes {
+        return crate::search::normalized_library_scopes(list);
+    }
+    crate::search::normalized_library_scopes(
+        &library_scope
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .map(|s| vec![s.to_string()])
+            .unwrap_or_default(),
+    )
+}
 
 fn hydrate_refs(
     runtime: &LibraryRuntime,
@@ -945,7 +1135,19 @@ async fn library_sync_start_inner(
             if let Some(creds) = navidrome_creds.clone() {
                 runner = runner.with_navidrome_credentials(creds);
             }
-            sync_outcome_to_result(runner.run().await)
+            let run = sync_outcome_to_result(runner.run().await);
+            if run.is_ok() {
+                run_tag_pass_best_effort(
+                    &store,
+                    &subsonic,
+                    &session_clone.server_id,
+                    Some(Arc::clone(&cancel_for_task)),
+                    Arc::clone(&progress),
+                    false,
+                )
+                .await;
+            }
+            run
         } else {
             // Delta — Mode A manual integrity uses the DeltaMismatch
             // budget for tombstones when the local/server count gap
@@ -973,7 +1175,19 @@ async fn library_sync_start_inner(
             if let Some(creds) = navidrome_creds.clone() {
                 runner = runner.with_navidrome_credentials(creds);
             }
-            sync_outcome_to_result(runner.run().await)
+            let run = sync_outcome_to_result(runner.run().await);
+            if run.is_ok() {
+                run_tag_pass_best_effort(
+                    &store,
+                    &subsonic,
+                    &session_clone.server_id,
+                    Some(Arc::clone(&cancel_for_task)),
+                    Arc::clone(&progress),
+                    true,
+                )
+                .await;
+            }
+            run
         };
 
         // Closing the mpsc sender by dropping `progress` so the

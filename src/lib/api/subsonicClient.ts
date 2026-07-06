@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getLuckyMixLibraryScopeOverride } from '@/lib/library/luckyMixScopeOverride';
 import md5 from 'md5';
 import { version } from '@/../package.json';
 import { useAuthStore } from '@/store/authStore';
@@ -117,22 +118,91 @@ export async function api<T>(
 }
 
 /** Optional `musicFolderId` when the user narrowed browsing to one Subsonic library (see `getMusicFolders`). */
-export function libraryFilterParams(): Record<string, string | number> {
+export function libraryFilterParams(): Record<string, string | number | string[]> {
   const { activeServerId } = useAuthStore.getState();
   return activeServerId ? libraryFilterParamsForServer(activeServerId) : {};
 }
 
+type AuthSnapshot = ReturnType<typeof useAuthStore.getState>;
+
+function rawLibrarySelection(state: AuthSnapshot, resolved: string): string[] {
+  const selection = state.musicLibrarySelectionByServer[resolved];
+  if (selection !== undefined) return selection;
+  const legacy = state.musicLibraryFilterByServer[resolved];
+  if (legacy === undefined || legacy === 'all') return [];
+  return [legacy];
+}
+
+/**
+ * True when `selection` already covers every library of the active server, so it
+ * is equivalent to "All libraries". Only checked for the active server, since
+ * `musicFolders` is the folder list of that server.
+ */
+function selectionCoversAllLibraries(
+  state: AuthSnapshot,
+  resolved: string,
+  selection: string[],
+): boolean {
+  if (resolved !== state.activeServerId) return false;
+  const folders = state.musicFolders;
+  if (folders.length === 0 || selection.length < folders.length) return false;
+  const selected = new Set(selection);
+  return folders.every(folder => selected.has(folder.id));
+}
+
+/** Ordered library folder ids for a server; empty = all libraries. */
+export function librarySelectionForServer(serverId: string): string[] {
+  const resolved = resolveServerIdForIndexKey(serverId);
+  const state = useAuthStore.getState();
+  const selection = rawLibrarySelection(state, resolved);
+  // Selecting every library one-by-one is the same as "All libraries": collapse
+  // to the empty/all scope so browse and search take the faster unscoped path
+  // (no per-library `IN` filter, no cross-library merge) and share the "all"
+  // cache — identical to picking the All-libraries option. The sidebar picker
+  // reads raw state, so its per-library checkmarks are unaffected.
+  if (selection.length > 0 && selectionCoversAllLibraries(state, resolved, selection)) {
+    return [];
+  }
+  return selection;
+}
+
+/** Ordered, resolved library folder ids for Subsonic / local index scope. */
+export function libraryScopesForServer(serverId: string): string[] {
+  return librarySelectionForServer(serverId);
+}
+
+/** Ordered scope pairs for local index reads — profile `serverId` space; empty when all libraries. */
+export function libraryScopePairsForServer(serverId: string): { serverId: string; libraryId: string }[] {
+  return librarySelectionForServer(serverId).map(libraryId => ({ serverId, libraryId }));
+}
+
 /** Navidrome/Subsonic music folder id for the local library index, or undefined for all libraries. */
 export function libraryScopeForServer(serverId: string): string | undefined {
-  const resolved = resolveServerIdForIndexKey(serverId);
-  const f = useAuthStore.getState().musicLibraryFilterByServer[resolved];
-  if (f === undefined || f === 'all') return undefined;
-  return f;
+  const selection = librarySelectionForServer(serverId);
+  return selection.length === 1 ? selection[0] : undefined;
+}
+
+/** True when the user narrowed browsing to one or more libraries (not "all"). */
+export function libraryScopeIsActive(serverId: string): boolean {
+  return librarySelectionForServer(serverId).length > 0;
+}
+
+/** Stable cache-key segment for scoped reads (`all` or comma-joined library ids). */
+export function libraryScopeCacheKeyForServer(serverId: string): string {
+  const selection = librarySelectionForServer(serverId);
+  if (selection.length === 0) return 'all';
+  return selection.join(',');
 }
 
 /** Library folder filter for an explicit saved server (e.g. Now Playing while browsing another). */
-export function libraryFilterParamsForServer(serverId: string): Record<string, string | number> {
-  const scope = libraryScopeForServer(serverId);
-  if (!scope) return {};
-  return { musicFolderId: scope };
+export function libraryFilterParamsForServer(
+  serverId: string,
+): Record<string, string | number | string[]> {
+  const luckyMixScope = getLuckyMixLibraryScopeOverride();
+  if (luckyMixScope) return { musicFolderId: luckyMixScope };
+
+  const scopes = libraryScopesForServer(serverId);
+  if (scopes.length === 0) return {};
+  if (scopes.length === 1) return { musicFolderId: scopes[0] };
+  return { musicFolderId: scopes };
 }

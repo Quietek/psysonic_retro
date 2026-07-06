@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { AudioLines, ChevronRight, HardDriveDownload, Settings } from 'lucide-react';
 import type { SidebarItemConfig } from '@/features/sidebar/store/sidebarStore';
 import { ALL_NAV_ITEMS } from '@/config/navItems';
+import { mainstageBrowseNavHandlers } from '@/features/sidebar/utils/mainstageBrowseNavHandlers';
 import WhatsNewBanner from '@/features/whatsNew/components/WhatsNewBanner';
 import ThemeUpdateBanner from '@/features/settings/components/ThemeUpdateBanner';
 import SidebarLibraryPicker from '@/features/sidebar/components/SidebarLibraryPicker';
@@ -20,14 +21,14 @@ interface MusicFolder { id: string; name: string }
 interface Props {
   isCollapsed: boolean;
   showLibraryPicker: boolean;
-  filterId: string;
-  selectedFolderName: string | null;
+  selectedLibraryIds: string[];
+  selectionSummary: string | null;
   libraryDropdownOpen: boolean;
   setLibraryDropdownOpen: (open: boolean) => void;
   dropdownRect: { top: number; left: number; width: number };
   libraryTriggerRef: React.RefObject<HTMLButtonElement | null>;
   musicFolders: MusicFolder[];
-  pickLibrary: (id: 'all' | string) => void;
+  onLibrarySelectionChange: (libraryIds: string[]) => void;
   visibleLibraryConfigs: SidebarItemConfig[];
   visibleSystemConfigs: SidebarItemConfig[];
   playlistsExpanded: boolean;
@@ -55,9 +56,9 @@ interface Props {
 
 export default function SidebarNavBody(props: Props) {
   const {
-    isCollapsed, showLibraryPicker, filterId, selectedFolderName,
+    isCollapsed, showLibraryPicker, selectedLibraryIds, selectionSummary,
     libraryDropdownOpen, setLibraryDropdownOpen, dropdownRect, libraryTriggerRef,
-    musicFolders, pickLibrary,
+    musicFolders, onLibrarySelectionChange,
     visibleLibraryConfigs,
     visibleSystemConfigs,
     playlistsExpanded, setPlaylistsExpanded, playlists, playlistsLoading,
@@ -90,14 +91,14 @@ export default function SidebarNavBody(props: Props) {
         {nowPlayingAtTop && nowPlayingLink}
         {!isCollapsed && (showLibraryPicker ? (
           <SidebarLibraryPicker
-            filterId={filterId}
-            selectedFolderName={selectedFolderName}
+            selectedLibraryIds={selectedLibraryIds}
+            selectionSummary={selectionSummary}
             libraryDropdownOpen={libraryDropdownOpen}
             setLibraryDropdownOpen={setLibraryDropdownOpen}
             dropdownRect={dropdownRect}
             libraryTriggerRef={libraryTriggerRef}
             musicFolders={musicFolders}
-            pickLibrary={pickLibrary}
+            onSelectionChange={onLibrarySelectionChange}
           />
         ) : (
           <span className="nav-section-label">{t('sidebar.library')}</span>
@@ -154,6 +155,7 @@ export default function SidebarNavBody(props: Props) {
               className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
               data-tooltip={isCollapsed ? t(item.labelKey) : undefined}
               data-tooltip-pos="bottom"
+              {...mainstageBrowseNavHandlers(item.to)}
             >
               <item.icon size={isCollapsed ? 22 : 18} />
               {item.to === '/new-releases' && newReleasesUnreadCount > 0 && (
@@ -176,6 +178,7 @@ export default function SidebarNavBody(props: Props) {
                 className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                 data-tooltip={isCollapsed ? t(item.labelKey) : undefined}
                 data-tooltip-pos="bottom"
+                {...mainstageBrowseNavHandlers(item.to)}
               >
                 <item.icon size={isCollapsed ? 22 : 18} />
                 {!isCollapsed && <span>{t(item.labelKey)}</span>}

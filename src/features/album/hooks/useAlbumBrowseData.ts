@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -22,10 +23,11 @@ import {
   fetchAlbumBrowseGenreOptions,
   fetchAlbumBrowsePage,
   fetchLocalAlbumCatalogChunk,
+  albumBrowseBootstrapEligible,
   type AlbumBrowseQuery,
   type GenreFilterOption,
 } from '@/lib/library/albumBrowseLoad';
-import { libraryScopeForServer } from '@/lib/api/subsonicClient';
+import { libraryScopeIsActive } from '@/lib/api/subsonicClient';
 import {
   ALBUM_YEAR_FILTER_DEBOUNCE_MS,
   resolveAlbumYearBounds,
@@ -40,6 +42,21 @@ import { useOfflineBrowseContext } from '@/features/offline';
 import { useClientSliceInfiniteScroll } from '@/lib/hooks/useClientSliceInfiniteScroll';
 import { useDebouncedValue } from '@/lib/hooks/useDebouncedValue';
 import { useInpageScrollSentinel } from '@/lib/hooks/useInpageScrollSentinel';
+import {
+  albumBrowseTimed,
+  emitAlbumBrowseDebug,
+} from '@/lib/library/albumBrowseDebug';
+import { scheduleAlbumBrowseBackgroundWork } from '@/lib/library/albumBrowseBackground';
+import {
+  ALBUM_BROWSE_BOOTSTRAP_CHUNK,
+  albumBrowseCatalogCacheKey,
+  albumBrowseCatalogInflight,
+  albumBrowseInitialLoadKey,
+  fetchAlbumBrowseCatalogDeduped,
+  readAlbumBrowseCatalogCache,
+  storeAlbumBrowseCatalogCache,
+} from '@/lib/library/albumBrowseInflight';
+import { librarySelectionForServer } from '@/lib/api/subsonicClient';
 
 const PAGE_SIZE = 30;
 const CLIENT_SLICE_PAGE_SIZE = 60;
@@ -135,6 +152,16 @@ export function useAlbumBrowseData({
     compFilter,
   }), [sort, yearFilterActive, yearFilterBounds, losslessOnly, starredOnly, compFilter]);
 
+  const catalogLoadKey = useMemo(
+    () => albumBrowseInitialLoadKey(
+      serverId,
+      musicLibraryFilterVersion,
+      browseQuery,
+      offlineBrowseActive,
+    ),
+    [serverId, musicLibraryFilterVersion, browseQuery, offlineBrowseActive],
+  );
+
   const compFilterActive = compFilter !== 'all';
   const compFilterClientOnly = albumBrowseCompFilterClientOnly(compFilter, browseMode);
 
@@ -173,7 +200,7 @@ export function useAlbumBrowseData({
 
   const genreFiltered = albumBrowseHasGenreFilter(browseQuery);
   const serverFilterActive = albumBrowseHasServerFilters(browseQuery);
-  const libraryScopeActive = libraryScopeForServer(serverId) != null;
+  const libraryScopeActive = libraryScopeIsActive(serverId);
   const narrowGenreList = yearFilterActive || losslessOnly || starredOnly || compFilterActive;
   /** When true, GenreFilterBar uses `genreCatalogOptions` instead of server `getGenres()`. */
   const genreCatalogActive = narrowGenreList || (indexEnabled && libraryScopeActive);
@@ -291,21 +318,31 @@ export function useAlbumBrowseData({
       }
     };
     try {
-      const pageResult = await fetchAlbumBrowsePage(
-        serverId,
-        indexEnabled,
-        query,
-        offset,
-        PAGE_SIZE,
-        {
-          onPartial: partial => {
-            if (generation !== loadGenerationRef.current) return;
-            applyPage(partial);
-            loadingRef.current = false;
-            if (append) setLoadingMore(false);
-            else setLoading(false);
+      const pageResult = await albumBrowseTimed(
+        append ? 'page_browse_more' : 'page_browse',
+        () => fetchAlbumBrowsePage(
+          serverId,
+          indexEnabled,
+          query,
+          offset,
+          PAGE_SIZE,
+          {
+            onPartial: partial => {
+              if (generation !== loadGenerationRef.current) return;
+              applyPage(partial);
+              loadingRef.current = false;
+              if (append) setLoadingMore(false);
+              else {
+                setLoading(false);
+                emitAlbumBrowseDebug('loading_false', {
+                  source: 'page_browse_partial',
+                  albumCount: partial.albums.length,
+                });
+              }
+            },
           },
-        },
+        ),
+        { offset, pageSize: PAGE_SIZE, append },
       );
       applyPage(pageResult);
     } finally {
@@ -320,54 +357,218 @@ export function useAlbumBrowseData({
     }
   }, [indexEnabled, serverId]);
 
-  useEffect(() => {
-    let cancelled = false;
+  useLayoutEffect(() => {
+    const cached = readAlbumBrowseCatalogCache(catalogLoadKey);
+    if (!cached) return;
     pageRef.current = 0;
-    catalogOffsetRef.current = 0;
+    catalogOffsetRef.current = cached.albums.length;
     loadPendingRef.current = false;
     catalogLoadingRef.current = false;
-    // React Compiler set-state-in-effect rule: state set from an async result resolved in this effect.
+    // React Compiler set-state-in-effect rule: local state synced from the catalog cache before paint.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setPage(0);
-    setAlbums([]);
+    setBrowseMode('slice');
+    setAlbums(cached.albums);
     setHasMore(true);
-    setCatalogHasMore(false);
+    setCatalogHasMore(cached.hasMore);
     setCatalogLoadingMore(false);
-    setLoading(true);
+    setLoading(false);
+    emitAlbumBrowseDebug('load_effect_cache_hit', { albumCount: cached.albums.length, sync: true });
+  }, [catalogLoadKey]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadKey = catalogLoadKey;
+
+    if (readAlbumBrowseCatalogCache(loadKey)) {
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    const bootKey = albumBrowseCatalogCacheKey(
+      loadKey,
+      ALBUM_BROWSE_BOOTSTRAP_CHUNK,
+      CATALOG_CHUNK_SIZE,
+    );
+    const joinInflight =
+      albumBrowseCatalogInflight(loadKey)
+      || (albumBrowseBootstrapEligible(browseQuery) && albumBrowseCatalogInflight(bootKey));
+    if (!joinInflight) {
+      pageRef.current = 0;
+      catalogOffsetRef.current = 0;
+      loadPendingRef.current = false;
+      catalogLoadingRef.current = false;
+      // React Compiler set-state-in-effect rule: state set from an async result resolved in this effect.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setPage(0);
+      setAlbums([]);
+      setHasMore(true);
+      setCatalogHasMore(false);
+      setCatalogLoadingMore(false);
+      setLoading(true);
+    } else {
+      emitAlbumBrowseDebug('load_effect_join_inflight', {});
+    }
+
+    const generation = ++loadGenerationRef.current;
+
+    emitAlbumBrowseDebug('load_effect_start', {
+      serverId,
+      indexEnabled,
+      libraryFilterVersion: musicLibraryFilterVersion,
+      libraryScopeCount: librarySelectionForServer(serverId).length,
+      offlineBrowseActive,
+      joinInflight,
+      sort: browseQuery.sort,
+      genreCount: browseQuery.genres.length,
+      yearFilter: yearFilterActive,
+      losslessOnly,
+      starredOnly,
+      compFilter,
+    });
 
     void (async () => {
       if (offlineBrowseActive) {
-        const generation = ++loadGenerationRef.current;
+        emitAlbumBrowseDebug('load_branch', { mode: 'offline' });
         if (cancelled || generation !== loadGenerationRef.current) return;
         setBrowseMode('slice');
         try {
-          const first = await loadOfflineAlbumBrowseInitial(
-            serverId,
-            browseQuery,
-            CATALOG_CHUNK_SIZE,
-            starredOverrides,
+          const first = await albumBrowseTimed(
+            'offline_catalog_chunk',
+            () => loadOfflineAlbumBrowseInitial(
+              serverId,
+              browseQuery,
+              CATALOG_CHUNK_SIZE,
+              starredOverrides,
+            ),
           );
           if (cancelled || generation !== loadGenerationRef.current) return;
           setAlbums(first.albums);
           catalogOffsetRef.current = first.albums.length;
           setCatalogHasMore(first.hasMore);
+          emitAlbumBrowseDebug('load_effect_done', {
+            browseMode: 'slice',
+            albumCount: first.albums.length,
+            hasMore: first.hasMore,
+          });
         } catch {
           setAlbums([]);
           setCatalogHasMore(false);
+          emitAlbumBrowseDebug('load_effect_error', { browseMode: 'slice' });
         }
         setLoading(false);
+        emitAlbumBrowseDebug('loading_false', { source: 'offline' });
         return;
       }
       if (indexEnabled && serverId) {
-        const generation = ++loadGenerationRef.current;
+        emitAlbumBrowseDebug('load_branch', { mode: 'slice_try' });
         coverTrafficBeginGridPagination();
         try {
-          const first = await fetchLocalAlbumCatalogChunk(
-            serverId,
-            indexEnabled,
-            browseQuery,
-            0,
-            CATALOG_CHUNK_SIZE,
+          const bootstrap = albumBrowseBootstrapEligible(browseQuery);
+          if (bootstrap) {
+            const bootKey = albumBrowseCatalogCacheKey(
+              loadKey,
+              ALBUM_BROWSE_BOOTSTRAP_CHUNK,
+              CATALOG_CHUNK_SIZE,
+            );
+            const preview = await fetchAlbumBrowseCatalogDeduped(bootKey, () =>
+              albumBrowseTimed(
+                'local_catalog_bootstrap',
+                () => fetchLocalAlbumCatalogChunk(
+                  serverId,
+                  indexEnabled,
+                  browseQuery,
+                  0,
+                  ALBUM_BROWSE_BOOTSTRAP_CHUNK,
+                ),
+                { chunkSize: ALBUM_BROWSE_BOOTSTRAP_CHUNK },
+              ),
+            );
+            if (cancelled || generation !== loadGenerationRef.current) return;
+            if (preview != null && preview.albums.length > 0) {
+              setBrowseMode('slice');
+              setAlbums(preview.albums);
+              catalogOffsetRef.current = preview.albums.length;
+              const needsTail =
+                preview.hasMore && preview.albums.length < CATALOG_CHUNK_SIZE;
+              setCatalogHasMore(needsTail || preview.hasMore);
+              setLoading(false);
+              emitAlbumBrowseDebug('loading_false', {
+                source: 'slice_bootstrap',
+                albumCount: preview.albums.length,
+              });
+              emitAlbumBrowseDebug('load_effect_done', {
+                browseMode: 'slice',
+                bootstrap: true,
+                albumCount: preview.albums.length,
+                hasMore: preview.hasMore,
+              });
+              if (needsTail) {
+                const tailOffset = preview.albums.length;
+                const tailSize = CATALOG_CHUNK_SIZE - tailOffset;
+                scheduleAlbumBrowseBackgroundWork(() => {
+                  void (async () => {
+                    catalogLoadingRef.current = true;
+                    setCatalogLoadingMore(true);
+                    try {
+                      const tail = await fetchAlbumBrowseCatalogDeduped(loadKey, () =>
+                        albumBrowseTimed(
+                          'local_catalog_tail',
+                          () => fetchLocalAlbumCatalogChunk(
+                            serverId,
+                            indexEnabled,
+                            browseQuery,
+                            tailOffset,
+                            tailSize,
+                          ),
+                          { offset: tailOffset, chunkSize: tailSize },
+                        ),
+                      );
+                      if (
+                        cancelled
+                        || generation !== loadGenerationRef.current
+                        || tail == null
+                      ) return;
+                      setAlbums(prev => {
+                        const merged = dedupeById([...prev, ...tail.albums]);
+                        catalogOffsetRef.current = merged.length;
+                        storeAlbumBrowseCatalogCache(loadKey, {
+                          albums: merged,
+                          hasMore: tail.hasMore,
+                        });
+                        return merged;
+                      });
+                      setCatalogHasMore(tail.hasMore);
+                      emitAlbumBrowseDebug('catalog_tail_done', {
+                        albumCount: tail.albums.length,
+                        totalOffset: tailOffset + tail.albums.length,
+                      });
+                    } finally {
+                      catalogLoadingRef.current = false;
+                      if (generation === loadGenerationRef.current) {
+                        setCatalogLoadingMore(false);
+                      }
+                    }
+                  })();
+                });
+              } else {
+                storeAlbumBrowseCatalogCache(loadKey, preview);
+              }
+              return;
+            }
+          }
+          const first = await fetchAlbumBrowseCatalogDeduped(loadKey, () =>
+            albumBrowseTimed(
+              'local_catalog_chunk',
+              () => fetchLocalAlbumCatalogChunk(
+                serverId,
+                indexEnabled,
+                browseQuery,
+                0,
+                CATALOG_CHUNK_SIZE,
+              ),
+            ),
           );
           if (cancelled || generation !== loadGenerationRef.current) return;
           if (first != null) {
@@ -376,16 +577,27 @@ export function useAlbumBrowseData({
             catalogOffsetRef.current = first.albums.length;
             setCatalogHasMore(first.hasMore);
             setLoading(false);
+            emitAlbumBrowseDebug('loading_false', { source: 'slice', albumCount: first.albums.length });
+            emitAlbumBrowseDebug('load_effect_done', {
+              browseMode: 'slice',
+              albumCount: first.albums.length,
+              hasMore: first.hasMore,
+            });
             return;
           }
+          emitAlbumBrowseDebug('slice_fallback', { reason: 'local_chunk_null' });
         } finally {
           coverTrafficEndGridPagination();
           coverEnsureResumePump();
         }
       }
       if (cancelled) return;
+      emitAlbumBrowseDebug('load_branch', { mode: 'page' });
       setBrowseMode('page');
       await loadBrowse(browseQuery, 0, false);
+      if (!cancelled) {
+        emitAlbumBrowseDebug('load_effect_done', { browseMode: 'page' });
+      }
     })();
 
     return () => {
@@ -394,7 +606,7 @@ export function useAlbumBrowseData({
     // starredOverrides is read to seed star state during the load, but the browse
     // list must not reload on every star toggle — it is intentionally excluded.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [browseQuery, indexEnabled, offlineBrowseActive, offlineBrowseReloadTs, serverId, loadBrowse, musicLibraryFilterVersion]);
+  }, [catalogLoadKey, browseQuery, indexEnabled, offlineBrowseActive, offlineBrowseReloadTs, serverId, loadBrowse, musicLibraryFilterVersion]);
 
   useEffect(() => {
     if (!genreCatalogActive) {
@@ -403,15 +615,25 @@ export function useAlbumBrowseData({
       setGenreCatalogOptions(null);
       return;
     }
+    // Defer genre catalog until the first album chunk is loaded — avoids contending
+    // with `library_advanced_search` on the shared spawn_blocking pool at open.
+    if (loading) return;
     let cancelled = false;
-    void fetchAlbumBrowseGenreOptions(serverId, indexEnabled, browseQueryWithoutGenre).then(options => {
-      if (!cancelled) setGenreCatalogOptions(options);
+    void albumBrowseTimed(
+      'genre_options',
+      () => fetchAlbumBrowseGenreOptions(serverId, indexEnabled, browseQueryWithoutGenre),
+    ).then(options => {
+      if (!cancelled) {
+        setGenreCatalogOptions(options);
+        emitAlbumBrowseDebug('genre_options_set', { count: options.length });
+      }
     });
     return () => {
       cancelled = true;
     };
   }, [
     genreCatalogActive,
+    loading,
     serverId,
     indexEnabled,
     browseQueryWithoutGenre,

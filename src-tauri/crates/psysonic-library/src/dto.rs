@@ -408,6 +408,9 @@ pub struct LibraryGenreAlbumsRequest {
     pub genre: String,
     #[serde(default)]
     pub library_scope: Option<String>,
+    /// Ordered multi-library scope; merge runs only when more than one pair is set.
+    #[serde(default)]
+    pub library_scopes: Option<Vec<LibraryScopePair>>,
     #[serde(default)]
     pub sort: Vec<LibrarySortClause>,
     #[serde(default = "default_genre_album_limit")]
@@ -541,6 +544,9 @@ pub struct LibraryAdvancedSearchRequest {
     pub server_id: String,
     #[serde(default)]
     pub library_scope: Option<String>,
+    /// Ordered multi-library scope; merge runs only when more than one pair is set.
+    #[serde(default)]
+    pub library_scopes: Option<Vec<LibraryScopePair>>,
     #[serde(default)]
     pub query: Option<String>,
     pub entity_types: Vec<EntityKind>,
@@ -606,6 +612,9 @@ pub struct LibraryLiveSearchRequest {
     pub query: String,
     #[serde(default)]
     pub library_scope: Option<String>,
+    /// Ordered multi-library scope; merge runs only when more than one pair is set.
+    #[serde(default)]
+    pub library_scopes: Option<Vec<LibraryScopePair>>,
     #[serde(default)]
     pub artist_limit: Option<u32>,
     #[serde(default)]
@@ -633,6 +642,10 @@ pub struct LibraryLosslessAlbumsRequest {
     pub server_id: String,
     #[serde(default)]
     pub library_scope: Option<String>,
+    /// Ordered library ids for a multi-library selection; takes precedence over
+    /// the legacy single `library_scope` when present.
+    #[serde(default)]
+    pub library_scopes: Option<Vec<String>>,
     #[serde(default = "default_lossless_limit")]
     pub limit: u32,
     #[serde(default)]
@@ -660,6 +673,10 @@ pub struct LibraryArtistLosslessBrowseRequest {
     pub artist_id: String,
     #[serde(default)]
     pub library_scope: Option<String>,
+    /// Ordered library ids for a multi-library selection; takes precedence over
+    /// the legacy single `library_scope` when present.
+    #[serde(default)]
+    pub library_scopes: Option<Vec<String>>,
 }
 
 /// Lossless albums + tracks for one artist (local index).
@@ -669,6 +686,117 @@ pub struct LibraryArtistLosslessBrowseResponse {
     pub albums: Vec<LibraryAlbumDto>,
     pub tracks: Vec<LibraryTrackDto>,
     pub source: String,
+}
+
+// ──────────────────────────────────────────────────────────────────────
+//  Multi-library scope merge (WO-4)
+// ──────────────────────────────────────────────────────────────────────
+
+/// One `(server_id, library_id)` pair in priority order (index 0 = highest).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct LibraryScopePair {
+    pub server_id: String,
+    pub library_id: String,
+}
+
+/// Derive ordered `(server_id, library_id)` pairs from request fields.
+/// List order is merge priority (index 0 wins). Empty = all libraries on the server.
+pub(crate) fn ordered_library_scope_pairs(
+    server_id: &str,
+    library_scope: Option<&str>,
+    library_scopes: Option<&[LibraryScopePair]>,
+) -> Vec<LibraryScopePair> {
+    if let Some(scopes) = library_scopes {
+        let pairs: Vec<LibraryScopePair> = scopes
+            .iter()
+            .filter(|p| !p.server_id.trim().is_empty() && !p.library_id.trim().is_empty())
+            .cloned()
+            .collect();
+        if !pairs.is_empty() {
+            return pairs;
+        }
+    }
+    if let Some(scope) = library_scope.map(str::trim).filter(|s| !s.is_empty()) {
+        return vec![LibraryScopePair {
+            server_id: server_id.to_string(),
+            library_id: scope.to_string(),
+        }];
+    }
+    Vec::new()
+}
+
+/// Layer-2 dedup runs only when the ordered scope has more than one pair.
+pub(crate) fn multi_library_merge_enabled(scopes: &[LibraryScopePair]) -> bool {
+    scopes.len() > 1
+}
+
+/// Layer-1 scoped browse (sargable `library_id`, no cluster join) for one server.
+pub(crate) fn scoped_layer1_eligible(scopes: &[LibraryScopePair]) -> bool {
+    let Some(first) = scopes.first() else {
+        return false;
+    };
+    scopes
+        .iter()
+        .all(|p| p.server_id == first.server_id && !p.library_id.trim().is_empty())
+}
+
+/// Paginated album/artist browse over an ordered multi-library scope.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LibraryScopeListRequest {
+    pub scopes: Vec<LibraryScopePair>,
+    #[serde(default)]
+    pub sort: Option<String>,
+    #[serde(default)]
+    pub limit: Option<u32>,
+    #[serde(default)]
+    pub offset: Option<u32>,
+}
+
+/// FTS track search over an ordered multi-library scope.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LibraryScopeSearchRequest {
+    pub scopes: Vec<LibraryScopePair>,
+    pub query: String,
+    #[serde(default)]
+    pub limit: Option<u32>,
+}
+
+/// Aggregated album detail — anchor entity id on one server, scope for union.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LibraryScopeAlbumDetailRequest {
+    pub scopes: Vec<LibraryScopePair>,
+    pub album_id: String,
+    pub server_id: String,
+}
+
+/// Aggregated artist detail — anchor entity id on one server, scope for union.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LibraryScopeArtistDetailRequest {
+    pub scopes: Vec<LibraryScopePair>,
+    pub artist_id: String,
+    pub server_id: String,
+}
+
+/// `library_scope_album_detail` response.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LibraryScopeAlbumDetailResponse {
+    pub album: LibraryAlbumDto,
+    pub tracks: Vec<LibraryTrackDto>,
+}
+
+/// `library_scope_artist_detail` response.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LibraryScopeArtistDetailResponse {
+    pub artist: LibraryArtistDto,
+    pub albums: Vec<LibraryAlbumDto>,
+    pub tracks: Vec<LibraryTrackDto>,
 }
 
 /// `library_search_cross_server` response (§5.5B / §5.9).

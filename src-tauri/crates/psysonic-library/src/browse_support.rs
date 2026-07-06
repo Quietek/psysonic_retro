@@ -6,7 +6,10 @@ use tauri::State;
 use crate::dto::CatalogYearBoundsDto;
 use crate::dto::GenreAlbumCountDto;
 use crate::runtime::LibraryRuntime;
-use crate::search::library_scope_equals_sql;
+use crate::search::{
+    library_scope_in_sql, library_scope_sargable_equals_sql, normalized_library_scopes,
+    push_library_scope_binds,
+};
 use crate::store::LibraryStore;
 
 #[derive(Debug, Clone, serde::Deserialize, specta::Type)]
@@ -105,30 +108,59 @@ pub fn library_get_catalog_year_bounds(
     runtime: State<'_, LibraryRuntime>,
     server_id: String,
 ) -> Result<CatalogYearBoundsDto, String> {
-    catalog_year_bounds_for_server(&runtime.store, &server_id)
+    let trace = psysonic_core::logging::should_log_albums_browse_trace();
+    let t0 = std::time::Instant::now();
+    let result = catalog_year_bounds_for_server(&runtime.store, &server_id);
+    if trace {
+        let step_ms = t0.elapsed().as_millis();
+        let (min_year, max_year) = result
+            .as_ref()
+            .map(|b| (b.min_year, b.max_year))
+            .unwrap_or((None, None));
+        crate::app_deprintln!(
+            "[frontend][albums-browse] {}",
+            serde_json::json!({
+                "step": "rust_catalog_year_bounds",
+                "elapsedMs": 0,
+                "details": {
+                    "stepMs": step_ms,
+                    "serverId": server_id,
+                    "minYear": min_year,
+                    "maxYear": max_year,
+                    "ok": result.is_ok(),
+                }
+            })
+        );
+    }
+    result
 }
 
 pub(crate) fn genre_album_counts_for_server(
     store: &LibraryStore,
     server_id: &str,
-    library_scope: Option<&str>,
+    library_scopes: &[String],
 ) -> Result<Vec<GenreAlbumCountDto>, String> {
+    let scopes = normalized_library_scopes(library_scopes);
     store
         .with_read_conn(|conn| {
             let mut sql = String::from(
                 "SELECT tg.genre, COUNT(DISTINCT tg.album_id) AS album_count, \
                         COUNT(DISTINCT tg.track_id) AS song_count \
-                 FROM track_genre tg \
-                 INNER JOIN track t \
-                   ON t.server_id = tg.server_id AND t.id = tg.track_id AND t.deleted = 0 \
-                 WHERE tg.server_id = ?1 \
+                 FROM track t \
+                 INNER JOIN track_genre tg \
+                   ON tg.server_id = t.server_id AND tg.track_id = t.id \
+                 WHERE t.server_id = ?1 \
+                   AND t.deleted = 0 \
                    AND tg.album_id IS NOT NULL AND tg.album_id != ''",
             );
             let mut params: Vec<rusqlite::types::Value> =
                 vec![rusqlite::types::Value::Text(server_id.to_string())];
-            if let Some(scope) = library_scope.filter(|s| !s.trim().is_empty()) {
-                sql.push_str(&format!(" AND {}", library_scope_equals_sql("t")));
-                params.push(rusqlite::types::Value::Text(scope.to_string()));
+            if scopes.len() == 1 {
+                sql.push_str(&format!(" AND {}", library_scope_sargable_equals_sql("t")));
+                push_library_scope_binds(&mut params, &scopes);
+            } else if scopes.len() > 1 {
+                sql.push_str(&format!(" AND {}", library_scope_in_sql("t", scopes.len())));
+                push_library_scope_binds(&mut params, &scopes);
             }
             sql.push_str(
                 " GROUP BY tg.genre COLLATE NOCASE \
@@ -157,12 +189,38 @@ pub fn library_get_genre_album_counts(
     runtime: State<'_, LibraryRuntime>,
     server_id: String,
     library_scope: Option<String>,
+    library_scopes: Option<Vec<String>>,
 ) -> Result<Vec<GenreAlbumCountDto>, String> {
-    genre_album_counts_for_server(
-        &runtime.store,
-        &server_id,
-        library_scope.as_deref(),
-    )
+    let trace = psysonic_core::logging::should_log_albums_browse_trace();
+    let scopes = if let Some(scopes) = library_scopes {
+        normalized_library_scopes(&scopes)
+    } else if let Some(scope) = library_scope.as_deref().filter(|s| !s.trim().is_empty()) {
+        vec![scope.to_string()]
+    } else {
+        vec![]
+    };
+    let trace_scopes = scopes.clone();
+    let t0 = std::time::Instant::now();
+    let result = genre_album_counts_for_server(&runtime.store, &server_id, &scopes);
+    if trace {
+        let step_ms = t0.elapsed().as_millis();
+        let genre_count = result.as_ref().map(|rows| rows.len()).unwrap_or(0);
+        crate::app_deprintln!(
+            "[frontend][albums-browse] {}",
+            serde_json::json!({
+                "step": "rust_genre_album_counts",
+                "elapsedMs": 0,
+                "details": {
+                    "stepMs": step_ms,
+                    "serverId": server_id,
+                    "libraryScopes": trace_scopes,
+                    "genreCount": genre_count,
+                    "ok": result.is_ok(),
+                }
+            })
+        );
+    }
+    result
 }
 
 #[cfg(test)]
@@ -314,7 +372,7 @@ mod tests {
             .upsert_batch(&rock_one)
             .unwrap();
 
-        let counts = genre_album_counts_for_server(&store, "s1", None).unwrap();
+        let counts = genre_album_counts_for_server(&store, "s1", &[]).unwrap();
         assert_eq!(counts.len(), 2);
         assert_eq!(counts[0].value, "Rock");
         assert_eq!(counts[0].album_count, 2);
@@ -337,7 +395,7 @@ mod tests {
             .upsert_batch(&[scoped, other])
             .unwrap();
 
-        let counts = genre_album_counts_for_server(&store, "s1", Some("lib1")).unwrap();
+        let counts = genre_album_counts_for_server(&store, "s1", &[String::from("lib1")]).unwrap();
         assert_eq!(counts.len(), 1);
         assert_eq!(counts[0].value, "Rock");
         assert_eq!(counts[0].album_count, 1);
@@ -349,19 +407,42 @@ mod tests {
         let store = Arc::new(LibraryStore::open_in_memory());
         let mut scoped = make_row("s1", "r1", "al_a", 1);
         scoped.genre = Some("Rock".into());
-        scoped.library_id = None;
-        scoped.raw_json = r#"{"libraryId":"lib1"}"#.into();
+        scoped.library_id = Some("lib1".into());
         let mut other = make_row("s1", "r2", "al_b", 1);
         other.genre = Some("Rock".into());
-        other.library_id = None;
-        other.raw_json = r#"{"libraryId":"lib2"}"#.into();
+        other.library_id = Some("lib2".into());
         TrackRepository::new(&store)
             .upsert_batch(&[scoped, other])
             .unwrap();
 
-        let counts = genre_album_counts_for_server(&store, "s1", Some("lib1")).unwrap();
+        let counts = genre_album_counts_for_server(&store, "s1", &[String::from("lib1")]).unwrap();
         assert_eq!(counts.len(), 1);
         assert_eq!(counts[0].album_count, 1);
+    }
+
+    #[test]
+    fn genre_album_counts_multi_library_scope_in_one_query() {
+        let store = Arc::new(LibraryStore::open_in_memory());
+        let mut lib1 = make_row("s1", "r1", "al_a", 1);
+        lib1.genre = Some("Rock".into());
+        lib1.library_id = Some("lib1".into());
+        let mut lib2 = make_row("s1", "r2", "al_b", 1);
+        lib2.genre = Some("Pop".into());
+        lib2.library_id = Some("lib2".into());
+        TrackRepository::new(&store)
+            .upsert_batch(&[lib1, lib2])
+            .unwrap();
+
+        let counts = genre_album_counts_for_server(
+            &store,
+            "s1",
+            &[String::from("lib1"), String::from("lib2")],
+        )
+        .unwrap();
+        assert_eq!(counts.len(), 2);
+        // Equal album_count → ORDER BY tg.genre COLLATE NOCASE ASC: "Pop" before "Rock".
+        assert_eq!(counts[0].value, "Pop");
+        assert_eq!(counts[1].value, "Rock");
     }
 
     #[test]
@@ -372,13 +453,13 @@ mod tests {
         TrackRepository::new(&store)
             .upsert_batch(&[track.clone()])
             .unwrap();
-        let counts = genre_album_counts_for_server(&store, "s1", None).unwrap();
+        let counts = genre_album_counts_for_server(&store, "s1", &[]).unwrap();
         assert_eq!(counts.len(), 1);
         assert_eq!(counts[0].value, "ruspop");
 
         track.genre = Some("Pop".into());
         TrackRepository::new(&store).upsert_batch(&[track]).unwrap();
-        let counts = genre_album_counts_for_server(&store, "s1", None).unwrap();
+        let counts = genre_album_counts_for_server(&store, "s1", &[]).unwrap();
         assert_eq!(counts.len(), 1);
         assert_eq!(counts[0].value, "Pop");
     }
@@ -402,7 +483,7 @@ mod tests {
             })
             .unwrap();
 
-        let counts = genre_album_counts_for_server(&store, "s1", None).unwrap();
+        let counts = genre_album_counts_for_server(&store, "s1", &[]).unwrap();
         assert_eq!(counts.len(), 1);
         assert_eq!(counts[0].value, "Rock");
     }

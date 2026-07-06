@@ -8,7 +8,7 @@ export const commands = {
 	/**  Min/max album years from the local track catalog (for Albums browse filter spinners). */
 	libraryGetCatalogYearBounds: (serverId: string) => typedError<CatalogYearBoundsDto, string>(__TAURI_INVOKE("library_get_catalog_year_bounds", { serverId })),
 	/**  Distinct album counts per track genre — same grouping as genre album browse. */
-	libraryGetGenreAlbumCounts: (serverId: string, libraryScope: string | null) => typedError<GenreAlbumCountDto[], string>(__TAURI_INVOKE("library_get_genre_album_counts", { serverId, libraryScope })),
+	libraryGetGenreAlbumCounts: (serverId: string, libraryScope: string | null, libraryScopes: string[] | null) => typedError<GenreAlbumCountDto[], string>(__TAURI_INVOKE("library_get_genre_album_counts", { serverId, libraryScope, libraryScopes })),
 	/**
 	 *  Align `album.starred_at` with server favorites: UPDATE existing rows only
 	 *  (no INSERT / stub rows). Clears local stars absent from `starred_albums`.
@@ -43,6 +43,8 @@ export const commands = {
 	libraryGetOfflinePath: (serverId: string, trackId: string) => typedError<OfflinePathDto, string>(__TAURI_INVOKE("library_get_offline_path", { serverId, trackId })),
 	libraryGenreTagsInspect: () => typedError<GenreTagsInspectDto, string>(__TAURI_INVOKE("library_genre_tags_inspect")),
 	libraryGenreTagsRun: () => typedError<null, string>(__TAURI_INVOKE("library_genre_tags_run")),
+	/**  Rebuild precomputed cluster identity keys (`library-cluster.db` attach). */
+	libraryClusterRebuild: (serverId: string | null) => typedError<number, string>(__TAURI_INVOKE("library_cluster_rebuild", { serverId })),
 	librarySyncBindSession: (serverId: string, baseUrl: string, username: string, password: string, libraryScope: string | null) => typedError<null, string>(__TAURI_INVOKE("library_sync_bind_session", { serverId, baseUrl, username, password, libraryScope })),
 	librarySyncClearSession: (serverId: string) => typedError<null, string>(__TAURI_INVOKE("library_sync_clear_session", { serverId })),
 	librarySetPlaybackHint: (hint: string) => typedError<null, string>(__TAURI_INVOKE("library_set_playback_hint", { hint })),
@@ -444,6 +446,8 @@ export const commands = {
 	coverRevalidateTick: (cycleDays: number | null) => typedError<number, string>(__TAURI_INVOKE("cover_revalidate_tick", { cycleDays })),
 	exitApp: () => __TAURI_INVOKE<void>("exit_app"),
 	setLoggingMode: (mode: string) => typedError<null, string>(__TAURI_INVOKE("set_logging_mode", { mode })),
+	setPsylabAlbumsBrowseTrace: (enabled: boolean) => typedError<null, string>(__TAURI_INVOKE("set_psylab_albums_browse_trace", { enabled })),
+	setPsylabArtistsBrowseTrace: (enabled: boolean) => typedError<null, string>(__TAURI_INVOKE("set_psylab_artists_browse_trace", { enabled })),
 	getLoggingMode: () => __TAURI_INVOKE<string>("get_logging_mode"),
 	/**
 	 *  Incremental tail of the in-memory runtime log buffer for the PsyLab Logs tab.

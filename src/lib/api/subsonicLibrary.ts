@@ -3,7 +3,8 @@ import {
   shouldAttemptSubsonicForActiveServer,
   shouldAttemptSubsonicForServer,
 } from '@/lib/network/subsonicNetworkGuard';
-import { api, apiForServer, libraryFilterParams, libraryFilterParamsForServer } from '@/lib/api/subsonicClient';
+import { api, apiForServer, libraryFilterParams, libraryFilterParamsForServer, librarySelectionForServer } from '@/lib/api/subsonicClient';
+import { getLuckyMixLibraryScopeOverride } from '@/lib/library/luckyMixScopeOverride';
 import type {
   RandomSongsFilters,
   SubsonicAlbum,
@@ -103,8 +104,21 @@ let scopedLibraryAlbumIdCache: {
 async function albumIdsInLibraryScope(serverId: string): Promise<Set<string> | null> {
   const { musicLibraryFilterByServer, musicLibraryFilterVersion } = useAuthStore.getState();
   if (!serverId) return null;
-  const folder = musicLibraryFilterByServer[serverId];
-  if (folder === undefined || folder === 'all') {
+
+  const override = getLuckyMixLibraryScopeOverride();
+  let folder: string | null = null;
+  if (override) {
+    folder = override;
+  } else {
+    const selection = librarySelectionForServer(serverId);
+    if (selection.length === 1) {
+      folder = selection[0];
+    } else {
+      const legacy = musicLibraryFilterByServer[serverId];
+      if (legacy !== undefined && legacy !== 'all') folder = legacy;
+    }
+  }
+  if (!folder) {
     scopedLibraryAlbumIdCache = null;
     return null;
   }
@@ -176,6 +190,9 @@ export async function filterAlbumsToActiveLibrary(albums: SubsonicAlbum[]): Prom
 
 /** When scoped to one library, ask the server for more similar tracks — many will be filtered out client-side. */
 export function similarSongsRequestCount(desired: number): number {
+  if (getLuckyMixLibraryScopeOverride()) {
+    return Math.min(300, Math.max(desired, desired * 4));
+  }
   const { activeServerId, musicLibraryFilterByServer } = useAuthStore.getState();
   const f = activeServerId ? musicLibraryFilterByServer[activeServerId] : undefined;
   if (f === undefined || f === 'all') return desired;
@@ -249,7 +266,10 @@ export async function getAlbum(id: string): Promise<{ album: SubsonicAlbum; song
   if (!shouldAttemptSubsonicForActiveServer()) {
     throw new Error('Subsonic unavailable');
   }
-  const data = await api<{ album: SubsonicAlbum & { song: SubsonicSong[] } }>('getAlbum.view', { id });
+  const data = await api<{ album: SubsonicAlbum & { song: SubsonicSong[] } }>('getAlbum.view', {
+    id,
+    ...libraryFilterParams(),
+  });
   const { song, ...album } = data.album;
   return { album, songs: song ?? [] };
 }
@@ -261,7 +281,11 @@ export async function getAlbumForServer(
   if (!shouldAttemptSubsonicForServer(serverId)) {
     throw new Error('Subsonic unavailable');
   }
-  const data = await apiForServer<{ album: SubsonicAlbum & { song: SubsonicSong[] } }>(serverId, 'getAlbum.view', { id });
+  const data = await apiForServer<{ album: SubsonicAlbum & { song: SubsonicSong[] } }>(
+    serverId,
+    'getAlbum.view',
+    { id, ...libraryFilterParamsForServer(serverId) },
+  );
   const { song, ...album } = data.album;
   return { album, songs: song ?? [] };
 }

@@ -6,6 +6,7 @@
 import { invoke } from '@tauri-apps/api/core';
 import { commands } from '@/generated/bindings';
 import { serverIndexKeyForId, mapServerIdFromIndexKey } from './internal';
+import { mapScopePairs } from './scopeReads';
 import type {
   CatalogYearBounds,
   GenreAlbumCountRow,
@@ -32,9 +33,14 @@ export async function libraryGetCatalogYearBounds(args: {
 export async function libraryGetGenreAlbumCounts(args: {
   serverId: string;
   libraryScope?: string;
+  libraryScopes?: string[];
 }): Promise<GenreAlbumCountRow[]> {
   const indexKey = serverIndexKeyForId(args.serverId);
-  const res = await commands.libraryGetGenreAlbumCounts(indexKey, args.libraryScope ?? null);
+  const res = await commands.libraryGetGenreAlbumCounts(
+    indexKey,
+    args.libraryScope ?? null,
+    args.libraryScopes ?? null,
+  );
   if (res.status === 'error') throw new Error(res.error);
   return res.data;
 }
@@ -44,11 +50,15 @@ export function libraryListAlbumsByGenre(
   request: LibraryGenreAlbumsRequest,
 ): Promise<LibraryGenreAlbumsResponse> {
   const indexKey = serverIndexKeyForId(request.serverId);
+  const libraryScopes = request.libraryScopes
+    ? mapScopePairs(request.libraryScopes, request.serverId)
+    : undefined;
   return invoke<LibraryGenreAlbumsResponse>('library_list_albums_by_genre', {
     request: {
       serverId: indexKey,
       genre: request.genre,
       libraryScope: request.libraryScope ?? undefined,
+      libraryScopes,
       sort: request.sort ?? [],
       limit: request.limit ?? 50,
       offset: request.offset ?? 0,
