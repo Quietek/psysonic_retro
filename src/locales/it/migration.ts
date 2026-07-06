@@ -1,0 +1,15 @@
+export const migration = {
+  preparing: 'Preparazione aggiornamento…',
+  preparingBody: 'Analisi della tua libreria e della cache in corso…',
+  migrating: 'Migra dati',
+  working: 'In corso…',
+  skippedRows: 'Le righe relative ai server rimossi sono state saltate e il vecchio database di backup verrà rimosso una volta completato.',
+  failed: 'Migrazione fallita',
+  retry: 'Riprova',
+  copyDetails: 'Copia dettagli',
+  complete: 'Aggiornamento completato',
+  completeRows: '{{count}} righe migrate',
+  genreTagsTitle: 'Aggiornamento indice generi…',
+  genreTagsBody: 'Indicizzazione dei generi per la navigazione e i filtri. Questa operazione viene eseguita una sola volta dopo l\'aggiornamento.',
+  genreTagsFailed: 'Aggiornamento indice generi fallito',
+};

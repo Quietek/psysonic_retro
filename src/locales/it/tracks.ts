@@ -1,0 +1,16 @@
+export const tracks = {
+  title: 'Brani',
+  subtitle: 'Sfoglia. Cerca. Scopri.',
+  heroEyebrow: 'Canzone del momento',
+  heroReroll: 'Prendine un\'altra',
+  playSong: 'Riproduci',
+  enqueueSong: 'Aggiungi alla coda',
+  toAlbum: 'Vai all\'album',
+  railRandom: 'Casuali',
+  railHighlyRated: 'Molto apprezzate',
+  browseTitle: 'Sfoglia tutti i brani',
+  browseUnsupported: "Questo server non mostra l'intero catalogo in una volta sola. Usa la funzione di ricerca qui sopra per trovare brani specifici.",
+  searchPlaceholder: 'Cerca un brano per titolo, artista o album…',
+  count_one: '{{count}} brano',
+  count_other: '{{count}} brani',
+};

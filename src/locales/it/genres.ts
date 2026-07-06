@@ -1,0 +1,15 @@
+export const genres = {
+  title: 'Generi',
+  genreCount: 'Generi',
+  albumCount_one: '{{count}} album',
+  albumCount_other: '{{count}} album',
+  loading: 'Caricamento generi…',
+  empty: 'Nessun genere trovato.',
+  albumsLoading: 'Caricamento album…',
+  albumsEmpty: 'Nessun album trovato per questo genere.',
+  loadMore: 'Carica altro',
+  back: 'Indietro',
+  playTooltip: 'Riproduci (Tieni premuto per riproduzione casuale)',
+  shuffle: 'Casuale',
+  addToQueue: 'Aggiungi alla coda',
+};

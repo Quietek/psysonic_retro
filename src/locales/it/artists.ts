@@ -1,0 +1,27 @@
+export const artists = {
+  title: 'Artisti',
+  search: 'Cerca…',
+  all: 'Tutti',
+  other: 'Altri',
+  gridView: 'Griglia',
+  listView: 'Lista',
+  imagesOn: 'Le immagini degli artisti presenti — potrebbero aumentare il carico sulla rete e sul sistema',
+  imagesOff: 'Immagini degli artisti disattivate — verranno visualizzate solo le iniziali',
+  loadMore: 'Carica altro',
+  notFound: 'Nessun artista trovato.',
+  albumCount_one: '{{count}} Album',
+  albumCount_other: '{{count}} Album',
+  selectionCount: '{{count}} selezionati',
+  select: 'Multi selezione',
+  startSelect: 'Abilita selezione multipla',
+  cancelSelect: 'Cancella',
+  addToPlaylist: 'Aggiungi alla Playlist',
+  browse: {
+    creditMode: {
+      album: 'Artisti degli album',
+      track: 'Artisti dei brani',
+      tooltipAlbum: 'Mostra solo gli artisti degli album (indice predefinito della libreria)',
+      tooltipTrack: 'Mostra tutti gli interpreti dei brani, inclusi gli ospiti nelle compilation',
+    },
+  },
+};
