@@ -1,3 +1,4 @@
+import { librarySyncCatalogKey } from '@/lib/library/browseCatalogSyncKey';
 import type { AlbumBrowsePageResult, AlbumBrowseQuery } from './albumBrowseTypes';
 
 /** Stable key for the initial All Albums catalog chunk (survives Strict Mode remount). */
@@ -23,6 +24,17 @@ export function albumBrowseInitialLoadKey(
 
 const inflight = new Map<string, Promise<AlbumBrowsePageResult | null>>();
 const cache = new Map<string, AlbumBrowsePageResult>();
+
+/** Evict every buffered All Albums chunk (e.g. after a library sync changed rows). */
+export function clearAlbumBrowseCatalogCache(): void {
+  inflight.clear();
+  cache.clear();
+}
+
+/** Online All Albums catalog key, re-keyed on the library sync revision. */
+export function albumBrowseOnlineCatalogKey(base: string, syncRevision: number): string {
+  return librarySyncCatalogKey(base, syncRevision);
+}
 
 export function readAlbumBrowseCatalogCache(
   key: string,

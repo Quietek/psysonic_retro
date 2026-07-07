@@ -8,6 +8,8 @@ import {
 import type { UnlistenFn } from '@tauri-apps/api/event';
 import { libraryDevEnabled, logLibrarySync } from './libraryDevLog';
 import { invalidateGenreCatalogCache } from './genreCatalogCountsCache';
+import { clearArtistBrowseCatalogCache } from './artistBrowseInflight';
+import { clearAlbumBrowseCatalogCache } from './albumBrowseInflight';
 
 export type LibrarySyncQueueKind = 'full' | 'delta' | 'verify';
 
@@ -45,7 +47,18 @@ function ensureIdleListener(): Promise<UnlistenFn> {
 }
 
 function onSyncIdle(payload: LibrarySyncIdlePayload): void {
-  if (payload.ok) invalidateGenreCatalogCache(payload.serverId);
+  if (payload.ok) {
+    // The re-key on the sync revision (offlineLocalLibrarySyncRevision) is what
+    // actually drives the refetch after a sync added/renamed/pruned rows. These
+    // clears are complementary memory reclamation — they drop inflight promises
+    // and stale buffered chunks so they don't linger. Unlike the genre cache
+    // (keyed per serverId), the artist/album catalog caches have no serverId
+    // scope, so this clears every server's buffer; the only cost is a wasted
+    // refetch of identical data on another server's next render.
+    invalidateGenreCatalogCache(payload.serverId);
+    clearArtistBrowseCatalogCache();
+    clearAlbumBrowseCatalogCache();
+  }
   if (!waitingForIdle || waitingForIdle.serverId !== payload.serverId) return;
   const waiter = waitingForIdle;
   waitingForIdle = null;
