@@ -185,6 +185,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Renaming an artist on the server no longer leaves a stale entry in the local Artists list that opened to "Artist not found" — a sync now prunes artist rows the latest server listing no longer confirms that also have no remaining tracks. Cleanup runs on both full and delta syncs (only after a confirmed artist listing, so a transient empty response can't drop valid entries), plus a one-time pass at startup that clears ghosts already accumulated in existing libraries.
 * Newly added or renamed entries now show up right after a resync instead of only after an app restart: the Artists and Albums pages refresh their cached catalog when a library sync finishes.
 
+### Library — album artist links no longer dead-end at "Artist not found"
+
+**By [@cucadmuh](https://github.com/cucadmuh), reported by tummydummy, PR [#1254](https://github.com/Psychotoxical/psysonic/pull/1254)**
+
+* Clicking the artist beneath an album (most visibly in **Random Albums**) no longer shows "Artist not found" when the server's `getArtist` doesn't recognise that album-artist id — the artist page now falls back to the local library index, which shares the id the card was built from. Artist pages also stay reachable on a brief network hiccup when the library is indexed.
+
+### Library — album tiles no longer miss cover art in Random Albums
+
+**By [@cucadmuh](https://github.com/cucadmuh), reported by tummydummy, PR [#1254](https://github.com/Psychotoxical/psysonic/pull/1254)**
+
+* Album tiles for rows that synced without a cover id (surfacing most in **Random Albums**) no longer show a blank cover while the detail page has one — local browse now falls back to the album's first track cover id, so tile and detail resolve the same artwork. The same fallback applies to the detail header's library cover resolution, so the two stay consistent instead of flickering between art and placeholder.
+
 
 ## [1.49.0] - 2026-06-29
 
