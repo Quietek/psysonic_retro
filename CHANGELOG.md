@@ -203,6 +203,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 * When an artist is renamed on the server (minting a new artist id), the album's stored artist link no longer stays stuck on the old id and dead-ending at "Artist not found". Album metadata now follows the server's `getAlbum` for the artist reference, so a resync updates it instead of keeping the pre-rename id indefinitely. Complements the earlier ghost-row prune (#1253) and the local-index fallback (#1254), which did not clear the stale reference itself.
 
+### Library — multi-library dedup sidecar no longer accumulates dead identity keys
+
+**By [@cucadmuh](https://github.com/cucadmuh), PR [#1255](https://github.com/Psychotoxical/psysonic/pull/1255)**
+
+* The precomputed `library-cluster.db` identity keys used for cross-library dedup are now pruned on rebuild when their track no longer exists (removed, or dropped when a server mints a fresh id on rename). Previously the rebuild only refreshed live tracks and never deleted stale rows, so the sidecar grew with library churn until it was recreated wholesale (server switch / restore / import). The rows were inert (reads only ever join live tracks), so dedup and browse results are unchanged — this just stops the sidecar from bloating.
+
 
 ## [1.49.0] - 2026-06-29
 
