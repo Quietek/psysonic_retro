@@ -1,0 +1,48 @@
+diff --git a/src/features/settings/components/AppearanceTab.tsx b/src/features/settings/components/AppearanceTab.tsx
+index 7e19eaa2..e5bd5c11 100644
+--- a/src/features/settings/components/AppearanceTab.tsx
++++ b/src/features/settings/components/AppearanceTab.tsx
+@@ -249,6 +249,7 @@ export function AppearanceTab() {
+                   { id: 'jetbrains-mono',    label: 'JetBrains Mono',    stack: "'JetBrains Mono Variable', monospace" },
+                   { id: 'golos-text',        label: 'Golos Text',        stack: "'Golos Text Variable', sans-serif" },
+                   { id: 'unbounded',         label: 'Unbounded',         stack: "'Unbounded Variable', sans-serif" },
++                  { id: 'less-perfect-dos-vga', label: 'Less Perfect DOS VGA', stack: "'Less Perfect DOS VGA', monospace" },
+                 ] as { id: FontId; label: string; stack: string; hint?: string }[]
+               ).map(f => (
+                 <button
+diff --git a/src/store/fontStore.ts b/src/store/fontStore.ts
+index 18718bcc..a130ed52 100644
+--- a/src/store/fontStore.ts
++++ b/src/store/fontStore.ts
+@@ -1,7 +1,7 @@
+ import { create } from 'zustand';
+ import { persist } from 'zustand/middleware';
+ 
+-export type FontId = 'inter' | 'outfit' | 'dm-sans' | 'nunito' | 'rubik' | 'space-grotesk' | 'figtree' | 'manrope' | 'plus-jakarta-sans' | 'lexend' | 'geist' | 'jetbrains-mono' | 'golos-text' | 'unbounded' | 'opendyslexic';
++export type FontId = 'inter' | 'outfit' | 'dm-sans' | 'nunito' | 'rubik' | 'space-grotesk' | 'figtree' | 'manrope' | 'plus-jakarta-sans' | 'lexend' | 'geist' | 'jetbrains-mono' | 'golos-text' | 'unbounded' | 'opendyslexic' | 'less-perfect-dos-vga';
+ 
+ interface FontState {
+   font: FontId;
+diff --git a/src/styles/themes/_intro.css b/src/styles/themes/_intro.css
+index 00a88bd2..b689e1ee 100644
+--- a/src/styles/themes/_intro.css
++++ b/src/styles/themes/_intro.css
+@@ -30,4 +30,4 @@
+ @import '@fontsource/opendyslexic/700.css';
+ @import '@fontsource/opendyslexic/400-italic.css';
+ @import '@fontsource/opendyslexic/700-italic.css';
+-
++@import './less-perfect-dos-vga.css'
+diff --git a/src/styles/themes/font-overrides.css b/src/styles/themes/font-overrides.css
+index de501dc1..367683ea 100644
+--- a/src/styles/themes/font-overrides.css
++++ b/src/styles/themes/font-overrides.css
+@@ -73,4 +73,7 @@
+   --font-sans: 'OpenDyslexic', system-ui, sans-serif;
+   --font-display: 'OpenDyslexic', sans-serif;
+ }
+-
++[data-font='less-perfect-dos-vga'] {
++  --font-sans: 'Less Perfect DOS VGA', monospace;
++  --font-display: 'Less Perfect DOS VGA', monospace;
++}

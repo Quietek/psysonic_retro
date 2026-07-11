@@ -263,6 +263,7 @@ export function AppearanceTab() {
                   { id: 'jetbrains-mono',    label: 'JetBrains Mono',    stack: "'JetBrains Mono Variable', monospace" },
                   { id: 'golos-text',        label: 'Golos Text',        stack: "'Golos Text Variable', sans-serif" },
                   { id: 'unbounded',         label: 'Unbounded',         stack: "'Unbounded Variable', sans-serif" },
+                  { id: 'less-perfect-dos-vga', label: 'Less Perfect DOS VGA', stack: "'Less Perfect DOS VGA', monospace" },
                 ] as { id: FontId; label: string; stack: string; hint?: string }[]
               ).map(f => (
                 <button

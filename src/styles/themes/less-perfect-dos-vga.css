@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "Less Perfect DOS VGA";
+  src: url("../../assets/fonts/LessPerfectDOSVGA.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

@@ -73,4 +73,7 @@
   --font-sans: 'OpenDyslexic', system-ui, sans-serif;
   --font-display: 'OpenDyslexic', sans-serif;
 }
-
+[data-font='less-perfect-dos-vga'] {
+  --font-sans: 'Less Perfect DOS VGA', monospace;
+  --font-display: 'Less Perfect DOS VGA', monospace;
+}
