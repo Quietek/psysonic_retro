@@ -113,6 +113,17 @@ export function audioDefaultOutputDeviceName(): Promise<string | null> {
   return commands.audioDefaultOutputDeviceName();
 }
 
+export function audioDefaultOutputDeviceNameForPoll(): Promise<string | null> {
+  return commands.audioDefaultOutputDeviceNameForPoll();
+}
+
+export function audioMatchStoredOutputDeviceKey(
+  candidate: string,
+  storedKeys: string[],
+): Promise<string | null> {
+  return commands.audioMatchStoredOutputDeviceKey(candidate, storedKeys);
+}
+
 export function audioCanonicalizeSelectedDevice(): Promise<string | null> {
   return commands.audioCanonicalizeSelectedDevice();
 }

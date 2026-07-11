@@ -104,6 +104,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
+### Equalizer — per-device profiles follow the active system default
+
+**By [@cucadmuh](https://github.com/cucadmuh), PR [#1274](https://github.com/Psychotoxical/psysonic/pull/1274)**, suggested by [@JustBuddy](https://github.com/JustBuddy)
+
+* With **Remember EQ per device** enabled and **System Default** selected, the equalizer now keys profiles to the active OS default output and switches when that default changes externally (Windows sound settings, Stream Deck, etc.), instead of using one shared profile for all system-default outputs.
+* On Linux/PipeWire, the active default is resolved from WirePlumber (`wpctl`) first — including Hyprpanel, pavucontrol, and `wpctl set-default` — not cpal, which can keep a stale card name even after the default sink changes. When PipeWire has already moved the playback stream to the new default, the device watcher skips a redundant stream reopen (avoids a post-switch stutter).
+
 ### Frontend restructure — feature-folder architecture and hardening
 
 **By [@Psychotoxical](https://github.com/Psychotoxical), with additional architecture by [@cucadmuh](https://github.com/cucadmuh), PR [#1225](https://github.com/Psychotoxical/psysonic/pull/1225)**
