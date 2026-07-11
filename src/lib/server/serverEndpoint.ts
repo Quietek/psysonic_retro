@@ -280,6 +280,14 @@ async function pingWithConnectRetries(
  * list, it's tried first; on failure, the cache entry is cleared and the full
  * sequence runs.
  *
+ * LAN reclaim: a sticky *public* endpoint would otherwise pin the whole session
+ * to the public address (public keeps answering, so LAN-first is never retried).
+ * When a higher-priority LAN endpoint is configured, each call first attempts a
+ * single, no-retry probe of it — so a laptop returning to the LAN upgrades back
+ * on the next reachability tick, while staying off-LAN costs only one probe
+ * (its natural timeout) rather than the full retry cushion. The probe uses the
+ * normal ping timeout, so a slow-but-reachable LAN still upgrades.
+ *
  * Each endpoint is probed with {@link pingWithConnectRetries} (initial ping +
  * {@link CONNECT_PING_RETRIES} retries, {@link CONNECT_PING_RETRY_DELAY_MS} apart).
  *
@@ -297,8 +305,28 @@ export async function pickReachableBaseUrl(
     const ordered = serverAddressEndpoints(profile);
     if (ordered.length === 0) return { ok: false, reason: 'unreachable' };
 
-    // Apply sticky: move the cached endpoint (if still in the list) to the front.
     const cached = connectCache.get(profile.id);
+
+    // LAN reclaim (see doc): when stuck on a *public* sticky endpoint but a
+    // higher-priority LAN endpoint is configured, try to reclaim LAN first with
+    // a single, no-retry probe. A dead LAN address fails and falls straight
+    // through to the sticky sequence below; a reachable one upgrades the session.
+    const preferred = ordered[0]!;
+    if (
+      cached &&
+      cached !== preferred.url &&
+      preferred.kind === 'local' &&
+      ordered.some(e => e.url === cached)
+    ) {
+      const ping = await pingWithCredentialsForProfile(profile, preferred.url);
+      if (ping.ok) {
+        connectCache.set(profile.id, preferred.url);
+        notifyConnectCacheChanged();
+        return { ok: true, baseUrl: preferred.url, endpoint: preferred, ping };
+      }
+    }
+
+    // Apply sticky: move the cached endpoint (if still in the list) to the front.
     const endpoints =
       cached && ordered.some(e => e.url === cached)
         ? [

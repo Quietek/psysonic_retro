@@ -446,10 +446,29 @@ describe('pingWithCredentials — explicit URL/credentials path', () => {
   });
 });
 
-describe('pingWithCredentialsForProfile — custom gate headers', () => {
-  it('sends resolved custom headers on the ping request', async () => {
-    vi.mocked(axios.get).mockResolvedValue(okResponse({ type: 'navidrome' }));
-    await pingWithCredentialsForProfile(
+describe('pingWithCredentialsForProfile — custom gate headers (native probe)', () => {
+  // Gate-header servers probe over the native reqwest command, not the WebView
+  // axios path, so a non-safelisted header (CF-Access / Pangolin token) can't
+  // trip a CORS preflight the gate would reject. See `probe_server_connection`.
+  type ProbeArgs = {
+    baseUrl: string;
+    username: string;
+    password: string;
+    httpContext: {
+      endpoints: { url: string; kind: string }[];
+      customHeaders: { name: string; value: string }[];
+      customHeadersApplyTo: string;
+    } | null;
+  };
+
+  it('routes header-bearing probes through the native command with the full header context', async () => {
+    let received: ProbeArgs | undefined;
+    onInvoke('probe_server_connection', (args) => {
+      received = args as ProbeArgs;
+      return { ok: true, type: 'navidrome', serverVersion: '0.62.0', openSubsonic: true };
+    });
+
+    const result = await pingWithCredentialsForProfile(
       {
         url: 'https://music.example.com',
         alternateUrl: 'http://192.168.0.10:4533',
@@ -460,12 +479,30 @@ describe('pingWithCredentialsForProfile — custom gate headers', () => {
       },
       'https://music.example.com',
     );
-    const config = vi.mocked(axios.get).mock.calls[0]?.[1] as { headers?: Record<string, string> };
-    expect(config.headers?.['CF-Access-Client-Secret']).toBe('gate-secret');
+
+    // No WebView request for gate-header servers.
+    expect(axios.get).not.toHaveBeenCalled();
+    expect(result).toEqual({ ok: true, type: 'navidrome', serverVersion: '0.62.0', openSubsonic: true });
+    expect(received?.baseUrl).toBe('https://music.example.com');
+    expect(received?.httpContext?.customHeaders).toEqual([
+      { name: 'CF-Access-Client-Secret', value: 'gate-secret' },
+    ]);
+    expect(received?.httpContext?.customHeadersApplyTo).toBe('public');
+    // Both dual-address endpoints are forwarded so the native resolver applies
+    // the header per-endpoint (public only, here).
+    expect(received?.httpContext?.endpoints).toEqual([
+      { url: 'http://192.168.0.10:4533', kind: 'local' },
+      { url: 'https://music.example.com', kind: 'public' },
+    ]);
   });
 
-  it('omits gate headers when probing the LAN endpoint with applyTo=public', async () => {
-    vi.mocked(axios.get).mockResolvedValue(okResponse({}));
+  it('still probes the LAN endpoint through the native command (header omission delegated to Rust)', async () => {
+    let received: ProbeArgs | undefined;
+    onInvoke('probe_server_connection', (args) => {
+      received = args as ProbeArgs;
+      return { ok: true, type: null, serverVersion: null, openSubsonic: false };
+    });
+
     await pingWithCredentialsForProfile(
       {
         url: 'https://music.example.com',
@@ -477,7 +514,148 @@ describe('pingWithCredentialsForProfile — custom gate headers', () => {
       },
       'http://192.168.0.10:4533',
     );
-    const config = vi.mocked(axios.get).mock.calls[0]?.[1] as { headers?: Record<string, string> };
-    expect(config.headers?.['CF-Access-Client-Secret']).toBeUndefined();
+
+    expect(axios.get).not.toHaveBeenCalled();
+    expect(received?.baseUrl).toBe('http://192.168.0.10:4533');
+  });
+
+  it('returns ok=false when the native probe errors', async () => {
+    onInvoke('probe_server_connection', () => {
+      throw new Error('gate rejected');
+    });
+    const r = await pingWithCredentialsForProfile(
+      {
+        url: 'https://music.example.com',
+        username: 'u',
+        password: 'p',
+        customHeaders: [{ name: 'CF-Access-Client-Secret', value: 'gate-secret' }],
+        customHeadersApplyTo: 'public',
+      },
+      'https://music.example.com',
+    );
+    expect(r.ok).toBe(false);
+  });
+
+  it('surfaces the server-supplied failure reason so the add form can show it', async () => {
+    onInvoke('probe_server_connection', () => ({
+      ok: false,
+      type: null,
+      serverVersion: null,
+      openSubsonic: false,
+      error: 'Wrong username or password',
+    }));
+    const r = await pingWithCredentialsForProfile(
+      {
+        url: 'https://music.example.com',
+        username: 'u',
+        password: 'wrong',
+        customHeaders: [{ name: 'CF-Access-Client-Secret', value: 'gate-secret' }],
+        customHeadersApplyTo: 'public',
+      },
+      'https://music.example.com',
+    );
+    expect(r.ok).toBe(false);
+    expect(r.error).toBe('Wrong username or password');
+  });
+
+  it('keeps the WebView axios path for header-less servers', async () => {
+    vi.mocked(axios.get).mockResolvedValue(okResponse({ type: 'navidrome' }));
+    const r = await pingWithCredentialsForProfile(
+      { url: 'https://music.example.com', username: 'u', password: 'p' },
+      'https://music.example.com',
+    );
+    expect(r.ok).toBe(true);
+    expect(axios.get).toHaveBeenCalledTimes(1);
+    const calledUrl = vi.mocked(axios.get).mock.calls[0]?.[0] as string;
+    expect(calledUrl).toBe('https://music.example.com/rest/ping.view');
+  });
+
+  it('carries the server error message on the header-less axios path too', async () => {
+    vi.mocked(axios.get).mockResolvedValue(errorResponse('Wrong username or password', 40));
+    const r = await pingWithCredentialsForProfile(
+      { url: 'https://music.example.com', username: 'u', password: 'wrong' },
+      'https://music.example.com',
+    );
+    expect(r.ok).toBe(false);
+    expect(r.error).toBe('Wrong username or password');
+  });
+});
+
+describe('api() transport routing — gated servers use the native proxy', () => {
+  // Browse / stats / search all funnel through `api()` → axios in the WebView.
+  // For gate-header servers that axios request dies on a CORS preflight, so the
+  // transport must switch to the native `subsonic_proxy_request` command. This
+  // pins that routing decision (and the header-less axios path staying put).
+  type ProxyArgs = {
+    baseUrl: string;
+    endpoint: string;
+    params: [string, string][];
+    postForm: boolean;
+    httpContext: { customHeaders: { name: string; value: string }[] } | null;
+  };
+
+  function addGatedActiveServer() {
+    resetAuthStore();
+    const id = useAuthStore.getState().addServer({
+      name: 'Gated',
+      url: 'https://gated.example.com',
+      username: 'u',
+      password: 'p',
+      customHeaders: [{ name: 'CF-Access-Client-Secret', value: 'gate-secret' }],
+      customHeadersApplyTo: 'public',
+    });
+    useAuthStore.getState().setActiveServer(id);
+  }
+
+  it('routes getAlbumList2 through the native command with the gate header context', async () => {
+    addGatedActiveServer();
+    let received: ProxyArgs | undefined;
+    onInvoke('subsonic_proxy_request', (args) => {
+      received = args as ProxyArgs;
+      return JSON.stringify({
+        'subsonic-response': { status: 'ok', randomSongs: { song: [] } },
+      });
+    });
+
+    const songs = await getRandomSongs();
+
+    expect(songs).toEqual([]);
+    expect(axios.get).not.toHaveBeenCalled();
+    expect(received?.endpoint).toBe('getRandomSongs.view');
+    expect(received?.baseUrl).toBe('https://gated.example.com');
+    expect(received?.httpContext?.customHeaders).toEqual([
+      { name: 'CF-Access-Client-Secret', value: 'gate-secret' },
+    ]);
+    // Auth params still ride in the forwarded query.
+    expect(received?.params.some(([k]) => k === 'u')).toBe(true);
+  });
+
+  it('propagates a server failure envelope from the proxied body', async () => {
+    addGatedActiveServer();
+    onInvoke('subsonic_proxy_request', () =>
+      JSON.stringify({
+        'subsonic-response': { status: 'failed', error: { code: 40, message: 'Wrong username or password' } },
+      }),
+    );
+    await expect(getRandomSongs()).rejects.toThrow(/wrong username/i);
+  });
+
+  it('keeps the WebView axios path for header-less active servers', async () => {
+    resetAuthStore();
+    const id = useAuthStore.getState().addServer({
+      name: 'Plain', url: 'https://plain.example.com', username: 'u', password: 'p',
+    });
+    useAuthStore.getState().setActiveServer(id);
+    vi.mocked(axios.get).mockResolvedValue(okResponse({ randomSongs: { song: [] } }));
+    let proxyCalled = false;
+    onInvoke('subsonic_proxy_request', () => {
+      proxyCalled = true;
+      return JSON.stringify({ 'subsonic-response': { status: 'ok' } });
+    });
+
+    await getRandomSongs();
+
+    expect(axios.get).toHaveBeenCalledTimes(1);
+    expect(proxyCalled).toBe(false);
   });
 });

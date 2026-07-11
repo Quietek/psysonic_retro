@@ -271,32 +271,34 @@ impl ServerHttpRegistry {
         None
     }
 
-    pub fn apply_for_http_url(
+    /// Resolve a context by `server_ref` first, then fall back to matching the
+    /// request URL against the registered endpoints. The URL fallback is what
+    /// keeps gated servers working when a caller passes a stale/foreign ref
+    /// (e.g. the audio engine's playback server id vs. the index key): endpoint
+    /// matching only ever hits a registered gated server, and `apply_to` is
+    /// still enforced downstream, so non-gated servers are never touched.
+    pub fn resolve_context(
         &self,
-        server_ref: &str,
+        server_ref: Option<&str>,
         full_http_url: &str,
-        builder: RequestBuilder,
-    ) -> RequestBuilder {
-        let Some(ctx) = self.get_for_server_ref(server_ref) else {
-            return builder;
-        };
-        apply_server_headers_for_http_url(builder, &ctx, full_http_url)
+    ) -> Option<Arc<ServerHttpContext>> {
+        if let Some(sid) = server_ref.filter(|s| !s.is_empty()) {
+            if let Some(ctx) = self.get_for_server_ref(sid) {
+                return Some(ctx);
+            }
+        }
+        self.get_for_server_url(full_http_url)
     }
 
-    pub fn apply_for_base_url(
-        &self,
-        server_ref: &str,
-        request_base_url: &str,
-        builder: RequestBuilder,
-    ) -> RequestBuilder {
-        let Some(ctx) = self.get_for_server_ref(server_ref) else {
-            return builder;
-        };
-        apply_server_headers(builder, &ctx, request_base_url)
-    }
 }
 
-/// Apply custom headers when `registry` is present — prefers `server_ref`, falls back to URL match.
+/// The single entry point for attaching a gated server's custom headers to any
+/// native request. Resolves the context by `server_ref` first, then falls back
+/// to matching the request URL against a registered gated endpoint; a non-gated
+/// server (no match) leaves the builder untouched. Every raw-download call site
+/// (streaming, cover art, analysis prefetch, Navidrome auth, offline transfer)
+/// and `SubsonicClient::with_registry` funnel through this / `resolve_context`,
+/// so gate-header behaviour lives in exactly one place.
 pub fn apply_optional_registry_headers(
     registry: Option<&ServerHttpRegistry>,
     server_ref: Option<&str>,
@@ -304,10 +306,7 @@ pub fn apply_optional_registry_headers(
     builder: RequestBuilder,
 ) -> RequestBuilder {
     if let Some(reg) = registry {
-        if let Some(sid) = server_ref.filter(|s| !s.is_empty()) {
-            return reg.apply_for_http_url(sid, full_http_url, builder);
-        }
-        if let Some(ctx) = reg.get_for_server_url(full_http_url) {
+        if let Some(ctx) = reg.resolve_context(server_ref, full_http_url) {
             return apply_server_headers_for_http_url(builder, &ctx, full_http_url);
         }
     }
@@ -341,6 +340,40 @@ mod tests {
         assert!(lan.is_empty());
         let pub_ = headers_for_request_base_url(&ctx, "https://music.example");
         assert_eq!(pub_.get("X-Gate").map(|v| v.to_str().ok()), Some(Some("secret")));
+    }
+
+    #[test]
+    fn resolve_context_falls_back_to_url_when_ref_is_stale() {
+        // Registry keyed by index key with an app-id alias; endpoint is the gate.
+        let reg = ServerHttpRegistry::new();
+        reg.sync(ServerHttpContextSyncWire {
+            server_id: "127.0.0.1".into(),
+            app_server_id: "uuid-1".into(),
+            endpoints: vec![ServerHttpEndpointWire {
+                url: "http://127.0.0.1:8899".into(),
+                kind: EndpointKind::Local,
+            }],
+            custom_headers: vec![CustomHeaderEntryWire {
+                name: "X-Gate".into(),
+                value: "tok".into(),
+            }],
+            custom_headers_apply_to: Some(CustomHeadersApplyTo::Both),
+        });
+
+        let stream_url = "http://127.0.0.1:8899/rest/stream.view?id=42&u=x&t=y";
+
+        // The audio engine passes a playback server id that is neither the index
+        // key nor the app-id alias — it must still resolve via the request URL.
+        let ctx = reg
+            .resolve_context(Some("some-stale-playback-id"), stream_url)
+            .expect("stale ref must fall back to URL endpoint match");
+        let headers = headers_for_request_base_url(&ctx, "http://127.0.0.1:8899");
+        assert_eq!(headers.get("X-Gate").map(|v| v.to_str().ok()), Some(Some("tok")));
+
+        // A non-gated server URL never resolves — foreign servers stay untouched.
+        assert!(reg
+            .resolve_context(Some("some-stale-playback-id"), "https://other.example/rest/stream.view?id=1")
+            .is_none());
     }
 
     #[test]
