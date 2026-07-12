@@ -7,9 +7,13 @@ vi.mock('@/lib/api/subsonicPlayQueue', () => ({
   getPlayQueueForServer: (...args: unknown[]) => getPlayQueueForServerMock(...args),
 }));
 
-vi.mock('@/lib/server/serverLookup', () => ({
-  resolveServerIdForIndexKey: (id: string) => id,
-}));
+vi.mock('@/lib/server/serverLookup', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/lib/server/serverLookup')>();
+  return {
+    ...actual,
+    resolveServerIdForIndexKey: (id: string) => id,
+  };
+});
 
 vi.mock('@/lib/media/songToTrack', () => ({
   songToTrack: (s: { id: string }) => ({
@@ -36,6 +40,7 @@ vi.mock('@/features/playback/store/queueSyncUiState', () => ({
 }));
 
 const playerState = {
+  queueServerId: null as string | null,
   queueItems: [] as QueueItemRef[],
   queueIndex: 0,
   currentTrack: null as { id: string; title: string; artist: string; album: string; albumId: string; duration: number } | null,
@@ -65,6 +70,7 @@ describe('applyServerPlayQueue idle guards', () => {
   beforeEach(() => {
     _resetQueuePlaybackIdleForTest();
     getPlayQueueForServerMock.mockReset();
+    playerState.queueServerId = null;
     playerState.queueItems = [{ serverId: 'srv-a', trackId: 'local-only' }];
     playerState.queueIndex = 0;
     playerState.currentTrack = {
@@ -128,5 +134,45 @@ describe('applyServerPlayQueue idle guards', () => {
 
     expect(result).toBe('noop');
     expect(playerState.queueItems).toEqual([{ serverId: 'srv-a', trackId: 'local-only' }]);
+  });
+
+  it('does not overwrite an active Navidrome public share queue in idle mode', async () => {
+    playerState.queueServerId = 'navidrome-public-share';
+    playerState.queueItems = [{
+      serverId: 'navidrome-public-share',
+      trackId: 'ndshare:abc:0',
+      directStreamUrl: 'https://music.example.com/share/s/jwt-a',
+    }];
+    getPlayQueueForServerMock.mockResolvedValue({
+      songs: [{ id: 'remote-a' }],
+      current: 'remote-a',
+      position: 0,
+    });
+
+    const result = await applyServerPlayQueue('srv-a', { mode: 'idle' });
+
+    expect(result).toBe('noop');
+    expect(getPlayQueueForServerMock).not.toHaveBeenCalled();
+    expect(playerState.queueItems[0]?.trackId).toBe('ndshare:abc:0');
+  });
+
+  it('applies server queue on startup even when share refs are still in memory', async () => {
+    playerState.queueServerId = 'navidrome-public-share';
+    playerState.queueItems = [{
+      serverId: 'navidrome-public-share',
+      trackId: 'ndshare:abc:0',
+      directStreamUrl: 'https://music.example.com/share/s/jwt-a',
+    }];
+    getPlayQueueForServerMock.mockResolvedValue({
+      songs: [{ id: 'remote-a' }],
+      current: 'remote-a',
+      position: 0,
+    });
+
+    const result = await applyServerPlayQueue('srv-a', { mode: 'startup' });
+
+    expect(result).toBe('applied');
+    expect(getPlayQueueForServerMock).toHaveBeenCalledWith('srv-a');
+    expect(playerState.queueItems[0]?.trackId).toBe('remote-a');
   });
 });

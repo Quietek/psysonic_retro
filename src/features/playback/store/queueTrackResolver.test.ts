@@ -100,6 +100,50 @@ describe('queueTrackResolver', () => {
     expect(getCachedTrack(ref('t1'))?.title).toBe('Seeded');
   });
 
+  it('seedQueueResolver keeps an entire large replacement queue in cache', () => {
+    const tracks = Array.from({ length: 555 }, (_, i) => ({
+      id: `bulk-${i}`,
+      title: `Track ${i}`,
+      artist: 'Artist',
+      album: 'Album',
+      albumId: '',
+      duration: 200,
+    }));
+    seedQueueResolver('navidrome-public-share', tracks);
+    expect(getCachedTrack(ref('bulk-0', { serverId: 'navidrome-public-share' }))?.title).toBe('Track 0');
+    expect(getCachedTrack(ref('bulk-554', { serverId: 'navidrome-public-share' }))?.title).toBe('Track 554');
+  });
+
+  it('resolveBatch builds public share tracks from ref directStreamUrl', async () => {
+    await resolveBatch([{
+      serverId: 'navidrome-public-share',
+      trackId: 'ndshare:Ab12:0',
+      directStreamUrl: 'https://music.example.com/share/s/jwt-a',
+      directCoverArtUrl: 'https://music.example.com/share/img/jwt-a?size=300',
+    }]);
+    expect(getCachedTrack({
+      serverId: 'navidrome-public-share',
+      trackId: 'ndshare:Ab12:0',
+    })?.directStreamUrl).toBe('https://music.example.com/share/s/jwt-a');
+  });
+
+  it('single-track seed does not evict a bulk-seeded public share queue', () => {
+    const tracks = Array.from({ length: 555 }, (_, i) => ({
+      id: `bulk-${i}`,
+      title: `Track ${i}`,
+      artist: 'Artist',
+      album: 'Album',
+      albumId: '',
+      duration: 200,
+      directStreamUrl: `https://music.example.com/share/s/token-${i}`,
+    }));
+    seedQueueResolver('navidrome-public-share', tracks);
+    seedQueueResolver('navidrome-public-share', [tracks[10]!]);
+    expect(getCachedTrack(ref('bulk-0', { serverId: 'navidrome-public-share' }))?.title).toBe('Track 0');
+    expect(getCachedTrack(ref('bulk-100', { serverId: 'navidrome-public-share' }))?.directStreamUrl)
+      .toBe('https://music.example.com/share/s/token-100');
+  });
+
   it('invalidateQueueResolver drops the cached entry', async () => {
     ready();
     echoBatch();
