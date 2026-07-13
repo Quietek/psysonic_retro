@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  errorDetail,
   errorI18nKey,
   isMusicNetworkError,
   listPresets,
@@ -33,8 +34,12 @@ export function ConnectProviderForm({
     p => !(p.manifest.credentials === 'bundled' && connectedPresetIds.includes(p.manifest.presetId)),
   );
 
-  const toMessage = (e: unknown): string =>
-    isMusicNetworkError(e) ? t(errorI18nKey(e.code)) : t('musicNetwork.connectFailed');
+  const toMessage = (e: unknown): string => {
+    if (!isMusicNetworkError(e)) return t('musicNetwork.connectFailed');
+    const message = t(errorI18nKey(e.code));
+    const detail = errorDetail(e);
+    return detail ? `${message} (${detail})` : message;
+  };
 
   const run = async (presetId: PresetId, payload: Record<string, string>) => {
     // Enforce the manifest's `required` fields client-side so an empty URL/token
@@ -126,7 +131,9 @@ export function ConnectProviderForm({
           </div>
         );
       })}
-      {error && <p style={{ fontSize: 12, color: 'var(--danger)' }}>{error}</p>}
+      {/* Selectable: the transport detail in a NETWORK error is what a bug report
+          needs verbatim, and the app disables text selection everywhere else. */}
+      {error && <p data-selectable style={{ fontSize: 12, color: 'var(--danger)' }}>{error}</p>}
     </div>
   );
 }
